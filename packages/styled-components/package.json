@@ -1,6 +1,6 @@
 {
-  "name": "styled-components",
-  "version": "6.1.18",
+  "name": "@sanity/styled-components",
+  "version": "6.1.18-0",
   "description": "CSS for the <Component> Age. Style components your way with speed, strong typing, and flexibility.",
   "publishConfig": {
     "access": "public"
@@ -8,7 +8,6 @@
   "types": "dist/index.d.ts",
   "main": "dist/styled-components.cjs.js",
   "module": "./dist/styled-components.esm.js",
-  "react-native": "native/dist/styled-components.native.cjs.js",
   "browser": {
     "./dist/styled-components.cjs.js": "./dist/styled-components.browser.cjs.js",
     "./dist/styled-components.esm.js": "./dist/styled-components.browser.esm.js"
@@ -16,29 +15,21 @@
   "sideEffects": false,
   "scripts": {
     "generateErrors": "node scripts/generateErrorMap.js",
-    "prebuild": "rimraf dist && yarn run generateErrors",
+    "prebuild": "rimraf dist && pnpm generateErrors",
     "build": "rollup -c",
-    "postbuild": "yarn run size",
-    "pretest": "yarn run generateErrors",
-    "test": "yarn run test:web && yarn run test:native",
-    "test:web": "jest -c jest.config.main.js",
-    "test:native": "jest -c jest.config.native.js --forceExit",
-    "test:integration": "jest -c jest.config.integration.js --runInBand --forceExit",
-    "size": "bundlewatch",
-    "prettier": "prettier src --write",
-    "prettier:check": "prettier src --check",
-    "prepublishOnly": "cp ../../README.md . && yarn run build"
+    "pretest": "pnpm generateErrors",
+    "test": "jest -c jest.config.main.js",
+    "prepublishOnly": "pnpm build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/styled-components/styled-components.git"
+    "url": "git+https://github.com/sanity-io/css-in-js.git",
+      "directory": "packages/styled-components"
   },
   "files": [
     "LICENSE",
     "README.md",
-    "dist",
-    "native",
-    "test-utils"
+    "dist"
   ],
   "keywords": [
     "react",
@@ -47,12 +38,12 @@
     "styled-components",
     "styling"
   ],
-  "author": "Glen Maddern",
+  "author": "Sanity.io <hello@sanity.io>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/styled-components/styled-components/issues"
+    "url": "https://github.com/sanity-io/sanity/issues"
   },
-  "homepage": "https://styled-components.com",
+  "homepage": "https://www.sanity.io/",
   "dependencies": {
     "@emotion/is-prop-valid": "1.2.2",
     "@emotion/unitless": "0.8.1",
@@ -65,8 +56,8 @@
     "tslib": "2.6.2"
   },
   "peerDependencies": {
-    "react": ">= 16.8.0",
-    "react-dom": ">= 16.8.0"
+    "react": ">= 18.3.0",
+    "react-dom": ">= 18.3.0"
   },
   "devDependencies": {
     "@babel/core": "7.24.5",
@@ -106,6 +97,7 @@
     "react-frame-component": "4.1.3",
     "react-native": "0.70.15",
     "react-test-renderer": "17.0.2",
+    "rimraf": "^6.0.1",
     "rollup": "3.29.4",
     "rollup-plugin-commonjs": "10.1.0",
     "rollup-plugin-json": "4.0.0",
@@ -124,14 +116,6 @@
         "maxSize": "11.5kB"
       }
     ]
-  },
-  "collective": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/styled-components"
-  },
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/styled-components"
   },
   "engines": {
     "node": ">= 16"

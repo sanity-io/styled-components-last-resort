@@ -13,7 +13,7 @@
   "dependencies": {
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "styled-components": "workspace:*"
+    "styled-components": "@sanity/styled-components@workspace:*"
   },
   "engines": {
     "node": ">= 14"

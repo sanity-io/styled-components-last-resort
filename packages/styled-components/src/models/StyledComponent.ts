@@ -1,6 +1,6 @@
 import isPropValid from '@emotion/is-prop-valid';
-import React, { createElement, Ref, useDebugValue } from 'react';
-import { SC_VERSION } from '../constants';
+import React, { createElement, Ref, useDebugValue, useInsertionEffect } from 'react';
+import { IS_BROWSER, SC_VERSION } from '../constants';
 import type {
   AnyComponent,
   Attrs,
@@ -61,11 +61,23 @@ function useInjectedStyle<T extends ExecutionContext>(
 ) {
   const ssc = useStyleSheetContext();
 
+  const insertionEffectBuffer: [name: string, rules: string[]][] | false =
+    !ssc.styleSheet.server && IS_BROWSER && [];
   const className = componentStyle.generateAndInjectStyles(
     resolvedAttrs,
     ssc.styleSheet,
-    ssc.stylis
+    ssc.stylis,
+    insertionEffectBuffer
   );
+
+  if (IS_BROWSER) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useInsertionEffect(() => {
+      if (Array.isArray(insertionEffectBuffer) && insertionEffectBuffer.length > 0) {
+        componentStyle.flushStyles(insertionEffectBuffer, ssc.styleSheet);
+      }
+    });
+  }
 
   if (process.env.NODE_ENV !== 'production') useDebugValue(className);
 

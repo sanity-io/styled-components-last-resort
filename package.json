@@ -1,33 +1,25 @@
 {
-  "name": "styled-components-project",
+  "name": "css-in-js-root",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "yarn workspace styled-components build",
-    "release": "yarn workspace styled-components prepublishOnly && changeset publish",
-    "postbuild": "cp README.md packages/styled-components/",
-    "postinstall": "yarn workspace styled-components generateErrors",
-    "prettier": "yarn workspace styled-components prettier:check",
-    "size": "yarn workspace styled-components size",
-    "test": "yarn workspace styled-components test"
+    "build": "pnpm --filter=styled-components build",
+    "postinstall": "pnpm --filter=styled-components generateErrors",
+    "test": "pnpm --filter=styled-components test"
   },
-  "author": "Glen Maddern",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/styled-components/styled-components/issues"
+  "dependencies": {
+    "@types/react": "19.1.4",
+    "@types/react-dom": "19.1.5"
   },
-  "homepage": "https://styled-components.com",
-  "workspaces": [
-    "packages/*"
-  ],
+  "packageManager": "pnpm@10.8.0",
   "engines": {
-    "node": ">= 14"
+    "node": ">=20.0.0"
   },
-  "resolutions": {
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0"
-  },
-  "packageManager": "yarn@4.0.2",
-  "devDependencies": {
-    "@changesets/cli": "2.27.7"
+  "pnpm": {
+    "overrides": {
+      "@types/react": "$@types/react",
+      "@types/react-dom": "$@types/react-dom"
+
+    }
   }
 }

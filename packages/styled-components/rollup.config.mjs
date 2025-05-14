@@ -5,7 +5,7 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import replace from 'rollup-plugin-replace';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import { terser } from 'rollup-plugin-terser';
-import pkg from './package.json' assert { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 
 /**
  * NODE_ENV explicit replacement is only needed for standalone packages, as webpack
@@ -28,28 +28,14 @@ const esm = {
 const getCJS = override => ({ ...cjs, ...override });
 const getESM = override => ({ ...esm, ...override });
 
-const defaultTypescriptPlugin =
-  typescript({
-    // The build breaks if the tests are included by the typescript plugin.
-    // Since un-excluding them in tsconfig.json, we must explicitly exclude them
-    // here.
-    exclude: ['**/*.test.ts', '**/*.test.tsx', 'dist', 'src/test/types.tsx'],
-    outputToFilesystem: true,
-    tsconfig: './tsconfig.json',
-  });
-
-const nativeTypescriptPlugin =
-  typescript({
-    // The build breaks if the tests are included by the typescript plugin.
-    // Since un-excluding them in tsconfig.json, we must explicitly exclude them
-    // here.
-    exclude: ['**/*.test.ts', '**/*.test.tsx', 'dist', 'src/test/types.tsx'],
-    outputToFilesystem: true,
-    tsconfig: './tsconfig.json',
-    compilerOptions: {
-      outDir: 'native/dist'
-    }
-  });
+const defaultTypescriptPlugin = typescript({
+  // The build breaks if the tests are included by the typescript plugin.
+  // Since un-excluding them in tsconfig.json, we must explicitly exclude them
+  // here.
+  exclude: ['**/*.test.ts', '**/*.test.tsx', 'dist', 'src/test/types.tsx'],
+  outputToFilesystem: true,
+  tsconfig: './tsconfig.json',
+});
 
 const basePlugins = [
   sourceMaps(),
@@ -101,10 +87,7 @@ const minifierPlugin = terser({
   },
 });
 
-const commonPlugins = [
-  defaultTypescriptPlugin,
-  basePlugins
-];
+const commonPlugins = [defaultTypescriptPlugin, basePlugins];
 
 const configBase = {
   input: './src/index.ts',
@@ -188,22 +171,4 @@ const browserConfig = {
   ),
 };
 
-const nativeConfig = {
-  ...configBase,
-  input: './src/native/index.ts',
-  output: [
-    getCJS({
-      file: 'native/dist/styled-components.native.cjs.js',
-    }),
-    getESM({
-      file: 'native/dist/styled-components.native.esm.js',
-    }),
-  ],
-  plugins: [
-    nativeTypescriptPlugin,
-    ...commonPlugins,
-    minifierPlugin
-  ],
-};
-
-export default [standaloneConfig, standaloneProdConfig, serverConfig, browserConfig, nativeConfig];
+export default [standaloneConfig, standaloneProdConfig, serverConfig, browserConfig];
