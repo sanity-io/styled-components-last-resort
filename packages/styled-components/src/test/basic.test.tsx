@@ -493,6 +493,29 @@ describe('basic', () => {
       expect(Named2.styledComponentId).toBe('Name-bar');
     });
 
+    it('ignores edge case where the swc plugin might add a componentId to an npm library that uses the babel plugin to add them at build time', () => {
+      const Named1 = styled.div
+        .withConfig({
+          componentId: 'foo',
+          displayName: 'Name',
+        })
+        .withConfig({ componentId: 'fubar' })`
+        color: blue;
+      `;
+
+      const Named2 = styled.div
+        .withConfig({
+          componentId: 'bar',
+          displayName: 'Name',
+        })
+        .withConfig({ componentId: 'fubar' })`
+        color: red;
+      `;
+
+      expect(Named1.styledComponentId).toBe('Name-foo');
+      expect(Named2.styledComponentId).toBe('Name-bar');
+    });
+
     // this no longer is possible in React 16.6 because
     // of the deprecation of findDOMNode; need to find an alternative
     it('should work in StrictMode without warnings', () => {

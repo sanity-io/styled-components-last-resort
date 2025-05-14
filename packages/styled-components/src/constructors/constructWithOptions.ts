@@ -152,6 +152,8 @@ export default function constructWithOptions<
     constructWithOptions<R, Target, OuterProps, OuterStatics>(componentConstructor, tag, {
       ...options,
       ...config,
+      // If .withConfig() is called twice with a componentId we need to ignore outer ones
+      componentId: options.componentId || config.componentId,
     });
 
   return templateFunction;
