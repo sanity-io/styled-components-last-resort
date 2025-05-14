@@ -14,9 +14,13 @@
     "next": "15.3.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "styled-components": "npm:@sanity/styled-components@0.0.0-experimental.5"
+    "styled-components": "workspace:@sanity/styled-components@*"
   },
-
+  "dependenciesMeta": {
+    "styled-components": {
+      "injected": true
+    }
+  },
   "engines": {
     "node": ">= 20"
   }

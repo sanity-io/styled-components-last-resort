@@ -26,7 +26,7 @@ importers:
         version: 3.7.0(react@19.1.0)
       '@sanity/ui':
         specifier: ^2.15.17
-        version: 2.15.17(@emotion/is-prop-valid@1.2.2)(@sanity/styled-components@0.0.0-experimental.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)
+        version: 2.15.17(@emotion/is-prop-valid@1.2.2)(@sanity/styled-components@file:packages/styled-components(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)
       next:
         specifier: 15.3.2
         version: 15.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -37,8 +37,11 @@ importers:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
       styled-components:
-        specifier: npm:@sanity/styled-components@0.0.0-experimental.5
-        version: '@sanity/styled-components@0.0.0-experimental.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
+        specifier: workspace:@sanity/styled-components@*
+        version: '@sanity/styled-components@file:packages/styled-components(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
+    dependenciesMeta:
+      styled-components:
+        injected: true
 
   examples/styled-components/next-app-router:
     dependencies:
@@ -47,7 +50,7 @@ importers:
         version: 3.7.0(react@19.1.0)
       '@sanity/ui':
         specifier: ^2.15.17
-        version: 2.15.17(@emotion/is-prop-valid@1.2.2)(@sanity/styled-components@file:packages/styled-components(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)
+        version: 2.15.17(@emotion/is-prop-valid@1.2.2)(@sanity/styled-components@6.1.18-0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)
       next:
         specifier: 15.3.2
         version: 15.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -58,11 +61,8 @@ importers:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
       styled-components:
-        specifier: workspace:@sanity/styled-components@*
-        version: '@sanity/styled-components@file:packages/styled-components(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
-    dependenciesMeta:
-      styled-components:
-        injected: true
+        specifier: npm:@sanity/styled-components@latest
+        version: '@sanity/styled-components@6.1.18-0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
 
   examples/styled-components/next-pages-router:
     dependencies:
@@ -71,7 +71,7 @@ importers:
         version: 3.7.0(react@19.1.0)
       '@sanity/ui':
         specifier: ^2.15.17
-        version: 2.15.17(@emotion/is-prop-valid@1.2.2)(@sanity/styled-components@file:packages/styled-components(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)
+        version: 2.15.17(@emotion/is-prop-valid@1.2.2)(@sanity/styled-components@6.1.18-0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)
       next:
         specifier: 15.3.2
         version: 15.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -82,11 +82,8 @@ importers:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
       styled-components:
-        specifier: workspace:@sanity/styled-components@*
-        version: '@sanity/styled-components@file:packages/styled-components(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
-    dependenciesMeta:
-      styled-components:
-        injected: true
+        specifier: npm:@sanity/styled-components@latest
+        version: '@sanity/styled-components@6.1.18-0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
 
   packages/benchmarks:
     dependencies:
@@ -166,6 +163,181 @@ importers:
       webpack-cli:
         specifier: 5.1.4
         version: 5.1.4(webpack@5.91.0)
+
+  packages/css-in-js:
+    dependencies:
+      '@emotion/is-prop-valid':
+        specifier: 1.2.2
+        version: 1.2.2
+      '@emotion/unitless':
+        specifier: 0.8.1
+        version: 0.8.1
+      '@types/stylis':
+        specifier: 4.2.5
+        version: 4.2.5
+      css-to-react-native:
+        specifier: 3.2.0
+        version: 3.2.0
+      csstype:
+        specifier: 3.1.3
+        version: 3.1.3
+      postcss:
+        specifier: 8.4.49
+        version: 8.4.49
+      shallowequal:
+        specifier: 1.1.0
+        version: 1.1.0
+      stylis:
+        specifier: 4.3.2
+        version: 4.3.2
+      tslib:
+        specifier: 2.6.2
+        version: 2.6.2
+    devDependencies:
+      '@babel/core':
+        specifier: 7.24.5
+        version: 7.24.5
+      '@babel/helper-module-imports':
+        specifier: 7.24.3
+        version: 7.24.3
+      '@babel/plugin-external-helpers':
+        specifier: 7.24.1
+        version: 7.24.1(@babel/core@7.24.5)
+      '@babel/plugin-proposal-class-properties':
+        specifier: 7.18.6
+        version: 7.18.6(@babel/core@7.24.5)
+      '@babel/plugin-proposal-object-rest-spread':
+        specifier: 7.20.7
+        version: 7.20.7(@babel/core@7.24.5)
+      '@babel/plugin-transform-flow-strip-types':
+        specifier: 7.24.1
+        version: 7.24.1(@babel/core@7.24.5)
+      '@babel/preset-env':
+        specifier: 7.24.5
+        version: 7.24.5(@babel/core@7.24.5)
+      '@babel/preset-react':
+        specifier: 7.24.1
+        version: 7.24.1(@babel/core@7.24.5)
+      '@babel/preset-typescript':
+        specifier: 7.24.1
+        version: 7.24.1(@babel/core@7.24.5)
+      '@rollup/plugin-typescript':
+        specifier: 11.1.6
+        version: 11.1.6(rollup@3.29.4)(tslib@2.6.2)(typescript@5.4.5)
+      '@types/enzyme':
+        specifier: 3.10.18
+        version: 3.10.18
+      '@types/jest':
+        specifier: 29.5.12
+        version: 29.5.12
+      '@types/js-beautify':
+        specifier: 1.14.3
+        version: 1.14.3
+      '@types/node':
+        specifier: 18.19.31
+        version: 18.19.31
+      '@types/react':
+        specifier: 19.1.4
+        version: 19.1.4
+      '@types/react-dom':
+        specifier: 19.1.5
+        version: 19.1.5(@types/react@19.1.4)
+      '@types/react-frame-component':
+        specifier: 4.1.6
+        version: 4.1.6
+      '@types/react-native':
+        specifier: 0.69.26
+        version: 0.69.26
+      '@types/react-test-renderer':
+        specifier: 17.0.9
+        version: 17.0.9
+      '@types/shallowequal':
+        specifier: 1.1.5
+        version: 1.1.5
+      babel-jest:
+        specifier: 29.7.0
+        version: 29.7.0(@babel/core@7.24.5)
+      babel-plugin-add-module-exports:
+        specifier: 1.0.4
+        version: 1.0.4
+      babel-plugin-styled-components:
+        specifier: 2.1.4
+        version: 2.1.4(@babel/core@7.24.5)(styled-components@6.1.18(react-dom@17.0.2(react@17.0.2))(react@17.0.2))
+      babel-plugin-tester:
+        specifier: 10.1.0
+        version: 10.1.0(@babel/core@7.24.5)
+      bundlewatch:
+        specifier: 0.3.3
+        version: 0.3.3
+      jest:
+        specifier: 29.7.0
+        version: 29.7.0(@types/node@18.19.31)(babel-plugin-macros@3.1.0)
+      jest-environment-jsdom:
+        specifier: 29.7.0
+        version: 29.7.0
+      jest-serializer-html:
+        specifier: 7.1.0
+        version: 7.1.0
+      jest-watch-typeahead:
+        specifier: 2.2.2
+        version: 2.2.2(jest@29.7.0(@types/node@18.19.31)(babel-plugin-macros@3.1.0))
+      js-beautify:
+        specifier: 1.15.1
+        version: 1.15.1
+      prettier:
+        specifier: 3.2.5
+        version: 3.2.5
+      prop-types:
+        specifier: 15.8.1
+        version: 15.8.1
+      react:
+        specifier: 17.0.2
+        version: 17.0.2
+      react-dom:
+        specifier: 17.0.2
+        version: 17.0.2(react@17.0.2)
+      react-frame-component:
+        specifier: 4.1.3
+        version: 4.1.3(prop-types@15.8.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      react-native:
+        specifier: 0.70.15
+        version: 0.70.15(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(react@17.0.2)
+      react-test-renderer:
+        specifier: 17.0.2
+        version: 17.0.2(react@17.0.2)
+      rimraf:
+        specifier: ^6.0.1
+        version: 6.0.1
+      rollup:
+        specifier: 3.29.4
+        version: 3.29.4
+      rollup-plugin-commonjs:
+        specifier: 10.1.0
+        version: 10.1.0(rollup@3.29.4)
+      rollup-plugin-json:
+        specifier: 4.0.0
+        version: 4.0.0
+      rollup-plugin-node-resolve:
+        specifier: 5.2.0
+        version: 5.2.0(rollup@3.29.4)
+      rollup-plugin-replace:
+        specifier: 2.2.0
+        version: 2.2.0
+      rollup-plugin-sourcemaps:
+        specifier: 0.6.3
+        version: 0.6.3(@types/node@18.19.31)(rollup@3.29.4)
+      rollup-plugin-terser:
+        specifier: 7.0.2
+        version: 7.0.2(rollup@3.29.4)
+      stylis-plugin-rtl:
+        specifier: 2.1.1
+        version: 2.1.1(stylis@4.3.2)
+      ts-toolbelt:
+        specifier: 9.6.0
+        version: 9.6.0
+      typescript:
+        specifier: 5.4.5
+        version: 5.4.5
 
   packages/styled-components:
     dependencies:
@@ -1133,11 +1305,6 @@ packages:
   '@emotion/unitless@0.8.1':
     resolution: {integrity: sha512-KOEGMu6dmJZtpadb476IsZBclKvILjopjUii3V+7MnXIQCYh8W3NgNcgwo21n9LXZX6EDIKvqfjYxXebDwxKmQ==}
 
-  '@emotion/use-insertion-effect-with-fallbacks@1.0.1':
-    resolution: {integrity: sha512-jT/qyKZ9rzLErtrjGgdkMBn2OP8wl0G3sQlBb3YPryvKHsjvINUhVaPFfP+fpBcOkmrVOVEEHQFJ7nbj2TH2gw==}
-    peerDependencies:
-      react: '>=16.8.0'
-
   '@emotion/use-insertion-effect-with-fallbacks@1.2.0':
     resolution: {integrity: sha512-yJMtVdH59sxi/aVJBpk9FQq+OR8ll5GT8oWd57UpeaKEVGab41JWaCFA7FRLoMLloOZF/c/wsPoe+bfGmRKgDg==}
     peerDependencies:
@@ -1543,12 +1710,12 @@ packages:
     peerDependencies:
       react: ^18.3 || ^19.0.0-0
 
-  '@sanity/styled-components@0.0.0-experimental.5':
-    resolution: {integrity: sha512-LaIRUaBl6xOlqlzu3jM6djS181RLIw4nzxo+F4nd3WDwxpzL6BoJ+tuKeDcTvXHcXzTLo+LWi2DEYZLXKnMGSw==}
+  '@sanity/styled-components@6.1.18-0':
+    resolution: {integrity: sha512-YpvK+v8yTzWeR2gAeC64PSkxJrUu+5aY9bfrF0XrcLgPNvlL9H/oErwy+1rlr7eXJf7GerrPS9+WFncw61DAZQ==}
     engines: {node: '>= 16'}
     peerDependencies:
-      react: '>= 16.8.0'
-      react-dom: '>= 16.8.0'
+      react: '>= 18.3.0'
+      react-dom: '>= 18.3.0'
 
   '@sanity/styled-components@file:packages/styled-components':
     resolution: {directory: packages/styled-components, type: directory}
@@ -1559,6 +1726,7 @@ packages:
 
   '@sanity/ui@2.15.17':
     resolution: {integrity: sha512-imPxjioQJqPISepvB4f7qag4Izfs5boQ5KN8zeO3/t3IS2EUcfSVbJsAd7n5BEScIUsYEAIP72ibHI214PsiDw==}
+    version: 2.15.17
     engines: {node: '>=14.0.0'}
     peerDependencies:
       react: ^18 || >=19.0.0-0
@@ -5998,10 +6166,6 @@ snapshots:
 
   '@emotion/unitless@0.8.1': {}
 
-  '@emotion/use-insertion-effect-with-fallbacks@1.0.1(react@19.1.0)':
-    dependencies:
-      react: 19.1.0
-
   '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@17.0.2)':
     dependencies:
       react: 17.0.2
@@ -6565,15 +6729,14 @@ snapshots:
     dependencies:
       react: 19.1.0
 
-  '@sanity/styled-components@0.0.0-experimental.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@sanity/styled-components@6.1.18-0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@emotion/is-prop-valid': 1.2.2
       '@emotion/unitless': 0.8.1
-      '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@19.1.0)
       '@types/stylis': 4.2.5
       css-to-react-native: 3.2.0
       csstype: 3.1.3
-      postcss: 8.4.38
+      postcss: 8.4.49
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       shallowequal: 1.1.0
@@ -6594,7 +6757,7 @@ snapshots:
       stylis: 4.3.2
       tslib: 2.6.2
 
-  '@sanity/ui@2.15.17(@emotion/is-prop-valid@1.2.2)(@sanity/styled-components@0.0.0-experimental.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)':
+  '@sanity/ui@2.15.17(@emotion/is-prop-valid@1.2.2)(@sanity/styled-components@6.1.18-0(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)':
     dependencies:
       '@floating-ui/react-dom': 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@juggle/resize-observer': 3.4.0
@@ -6607,7 +6770,7 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
       react-is: 18.3.1
       react-refractor: 2.2.0(react@19.1.0)
-      styled-components: '@sanity/styled-components@0.0.0-experimental.5(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
+      styled-components: '@sanity/styled-components@6.1.18-0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
       use-effect-event: 1.0.2(react@19.1.0)
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
