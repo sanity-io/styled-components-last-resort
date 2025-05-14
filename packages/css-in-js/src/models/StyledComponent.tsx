@@ -5,7 +5,6 @@ import React, {
   useCallback,
   useDebugValue,
   useInsertionEffect,
-  useMemo,
   useSyncExternalStore,
 } from 'react';
 import { IS_BROWSER, SC_VERSION } from '../constants';
@@ -70,11 +69,10 @@ function useInjectedStyle<T extends ExecutionContext>(
   componentStyle: ComponentStyle,
   styleSheet: StyleSheet,
   resolvedAttrs: T
-): [className: string, insertionEffectBuffer: [name: string, rules: string[]][] | false] {
+): [className: string, insertionEffectBuffer: [name: string, rules: string[]][]] {
   const ssc = useStyleSheetContext();
 
-  const insertionEffectBuffer: [name: string, rules: string[]][] | false =
-    !ssc.styleSheet.server && IS_BROWSER && [];
+  const insertionEffectBuffer: [name: string, rules: string[]][] = [];
   const className = componentStyle.generateAndInjectStyles(
     resolvedAttrs,
     styleSheet,
@@ -251,7 +249,6 @@ function useStyledComponentImpl<Props extends object>(
   if (isHydrating && Array.isArray(styles) && styles.length > 0) {
     componentStyle.flushStyles(styles, styleSheet);
     const css = outputSheetModern(styleSheet);
-    console.log('css', css);
 
     return (
       <>
@@ -259,7 +256,7 @@ function useStyledComponentImpl<Props extends object>(
         {css.map(([id, cssRules]) => (
           <style
             key={id}
-            href={hash(id)}
+            href={hash(cssRules)}
             // href={styledComponentId + '-' + hash(cssRules)}
             // precedence="scc"
             // precedence={SC_VERSION}
@@ -273,7 +270,7 @@ function useStyledComponentImpl<Props extends object>(
     );
   }
 
-  return createElement(ElementToBeCreated, propsForElement);
+  return children;
 }
 
 const outputSheetModern = (sheet: Sheet) => {
@@ -289,8 +286,6 @@ const outputSheetModern = (sheet: Sheet) => {
     if (rules.length === 0) continue;
 
     css.push([id, rules]);
-
-    sheet.clearRules(id);
   }
 
   return css;
