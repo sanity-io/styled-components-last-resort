@@ -19,6 +19,30 @@ importers:
         specifier: 19.1.5
         version: 19.1.5(@types/react@19.1.4)
 
+  examples/styled-components/next-app-router:
+    dependencies:
+      '@sanity/icons':
+        specifier: ^3.7.0
+        version: 3.7.0(react@19.1.0)
+      '@sanity/ui':
+        specifier: ^2.15.17
+        version: 2.15.17(@emotion/is-prop-valid@1.2.2)(@sanity/styled-components@file:packages/styled-components(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)
+      next:
+        specifier: 15.3.2
+        version: 15.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react:
+        specifier: 19.1.0
+        version: 19.1.0
+      react-dom:
+        specifier: 19.1.0
+        version: 19.1.0(react@19.1.0)
+      styled-components:
+        specifier: workspace:@sanity/styled-components@*
+        version: '@sanity/styled-components@file:packages/styled-components(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
+    dependenciesMeta:
+      styled-components:
+        injected: true
+
   examples/styled-components/next-pages-router:
     dependencies:
       '@sanity/icons':

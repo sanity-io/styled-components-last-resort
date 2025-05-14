@@ -1,0 +1,27 @@
+{
+  "name": "@repo/styled-components-next-app-router",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@sanity/icons": "^3.7.0",
+    "@sanity/ui": "^2.15.17",
+    "next": "15.3.2",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "styled-components": "workspace:@sanity/styled-components@*"
+  },
+  "dependenciesMeta": {
+    "styled-components": {
+      "injected": true
+    }
+  },
+  "engines": {
+    "node": ">= 20"
+  }
+}
