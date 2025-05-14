@@ -1,6 +1,6 @@
 {
   "name": "@sanity/styled-components",
-  "version": "6.1.18-0",
+  "version": "6.1.18-1",
   "description": "CSS for the <Component> Age. Style components your way with speed, strong typing, and flexibility.",
   "publishConfig": {
     "access": "public"
@@ -19,7 +19,7 @@
     "build": "rollup -c",
     "pretest": "pnpm generateErrors",
     "test": "jest -c jest.config.main.js",
-    "prepublishOnly": "pnpm build"
+    "prepare": "pnpm build"
   },
   "repository": {
     "type": "git",
