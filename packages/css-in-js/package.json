@@ -1,6 +1,6 @@
 {
   "name": "@sanity/css-in-js",
-  "version": "6.1.18-1",
+  "version": "6.1.18-2",
   "description": "CSS for the <Component> Age. Style components your way with speed, strong typing, and flexibility.",
   "publishConfig": {
     "access": "public"
@@ -19,7 +19,7 @@
     "build": "rollup -c",
     "pretest": "pnpm generateErrors",
     "test": "jest -c jest.config.main.js",
-    "prepares": "pnpm build"
+    "prepare": "pnpm build"
   },
   "repository": {
     "type": "git",

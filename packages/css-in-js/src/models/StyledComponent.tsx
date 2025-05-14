@@ -1,5 +1,13 @@
 import isPropValid from '@emotion/is-prop-valid';
-import React, { createElement, Ref, useDebugValue, useInsertionEffect } from 'react';
+import React, {
+  createElement,
+  Ref,
+  useCallback,
+  useDebugValue,
+  useInsertionEffect,
+  useMemo,
+  useSyncExternalStore,
+} from 'react';
 import { IS_BROWSER, SC_VERSION } from '../constants';
 import type {
   AnyComponent,
@@ -34,6 +42,9 @@ import { setToString } from '../utils/setToString';
 import ComponentStyle from './ComponentStyle';
 import { useStyleSheetContext } from './StyleSheetManager';
 import { DefaultTheme, ThemeContext } from './ThemeProvider';
+import StyleSheet from '../sheet';
+import type Sheet from '../sheet';
+import { getIdForGroup } from '../sheet/GroupIDAllocator';
 
 const identifiers: { [key: string]: number } = {};
 
@@ -57,28 +68,29 @@ function generateId(
 
 function useInjectedStyle<T extends ExecutionContext>(
   componentStyle: ComponentStyle,
+  styleSheet: StyleSheet,
   resolvedAttrs: T
-) {
+): [className: string, insertionEffectBuffer: [name: string, rules: string[]][] | false] {
   const ssc = useStyleSheetContext();
 
   const insertionEffectBuffer: [name: string, rules: string[]][] | false =
     !ssc.styleSheet.server && IS_BROWSER && [];
   const className = componentStyle.generateAndInjectStyles(
     resolvedAttrs,
-    ssc.styleSheet,
+    styleSheet,
     ssc.stylis,
     insertionEffectBuffer
   );
 
-  useInsertionEffect(() => {
-    if (Array.isArray(insertionEffectBuffer) && insertionEffectBuffer.length > 0) {
-      componentStyle.flushStyles(insertionEffectBuffer, ssc.styleSheet);
-    }
-  });
+  // useInsertionEffect(() => {
+  //   if (Array.isArray(insertionEffectBuffer) && insertionEffectBuffer.length > 0) {
+  //     componentStyle.flushStyles(insertionEffectBuffer, ssc.styleSheet);
+  //   }
+  // });
 
   if (process.env.NODE_ENV !== 'production') useDebugValue(className);
 
-  return className;
+  return [className, insertionEffectBuffer];
 }
 
 function resolveContext<Props extends object>(
@@ -145,7 +157,7 @@ function useStyledComponentImpl<Props extends object>(
   const theme = determineTheme(props, contextTheme, defaultProps) || EMPTY_OBJECT;
 
   const context = resolveContext<Props>(componentAttrs, props, theme);
-  const elementToBeCreated: WebTarget = context.as || target;
+  const ElementToBeCreated: WebTarget = context.as || target;
   const propsForElement: Dict<any> = {};
 
   for (const key in context) {
@@ -156,7 +168,7 @@ function useStyledComponentImpl<Props extends object>(
       // Omit transient props and execution props.
     } else if (key === 'forwardedAs') {
       propsForElement.as = context.forwardedAs;
-    } else if (!shouldForwardProp || shouldForwardProp(key, elementToBeCreated)) {
+    } else if (!shouldForwardProp || shouldForwardProp(key, ElementToBeCreated)) {
       propsForElement[key] = context[key];
 
       if (
@@ -165,7 +177,7 @@ function useStyledComponentImpl<Props extends object>(
         !isPropValid(key) &&
         !seenUnknownProps.has(key) &&
         // Only warn on DOM Element.
-        domElements.has(elementToBeCreated as any)
+        domElements.has(ElementToBeCreated as any)
       ) {
         seenUnknownProps.add(key);
         console.warn(
@@ -175,7 +187,13 @@ function useStyledComponentImpl<Props extends object>(
     }
   }
 
-  const generatedClassName = useInjectedStyle(componentStyle, context);
+  const isHydrating = useSyncExternalStore(
+    useCallback(() => () => {}, []),
+    () => false,
+    () => true
+  );
+  const styleSheet = isHydrating ? new StyleSheet({ isServer: true }) : ssc.styleSheet;
+  const [generatedClassName, styles] = useInjectedStyle(componentStyle, styleSheet, context);
 
   if (process.env.NODE_ENV !== 'production' && forwardedComponent.warnTooManyClasses) {
     forwardedComponent.warnTooManyClasses(generatedClassName);
@@ -191,8 +209,8 @@ function useStyledComponentImpl<Props extends object>(
 
   propsForElement[
     // handle custom elements which React doesn't properly alias
-    isTag(elementToBeCreated) &&
-    !domElements.has(elementToBeCreated as Extract<typeof domElements, string>)
+    isTag(ElementToBeCreated) &&
+    !domElements.has(ElementToBeCreated as Extract<typeof domElements, string>)
       ? 'class'
       : 'className'
   ] = classString;
@@ -204,8 +222,79 @@ function useStyledComponentImpl<Props extends object>(
     propsForElement.ref = forwardedRef;
   }
 
-  return createElement(elementToBeCreated, propsForElement);
+  useInsertionEffect(() => {
+    if (!isHydrating && Array.isArray(styles) && styles.length > 0) {
+      // for (const style of document.querySelectorAll(`[data-href*="${styledComponentId}"]`)) {
+      // const remove = [] as HTMLStyleElement[];
+      // for (const style of document.querySelectorAll(`[data-precedence^="sc"]`)) {
+      //   if (style.hasAttribute('data-rehydrated')) continue;
+      //   rehydrateSheetFromTag(ssc.styleSheet, style as HTMLStyleElement);
+      //   style.setAttribute('data-rehydrated', 'true');
+      //   console.log('rehydrating the style', style);
+      //   // remove.push(style as HTMLStyleElement);
+      // }
+
+      componentStyle.flushStyles(styles, ssc.styleSheet);
+      // for (const style of document.querySelectorAll(`[data-href^="${styledComponentId}"]`)) {
+      //   console.log('removing the style', style);
+      //   style.remove();
+      // }
+      // for (const style of remove) {
+      //   console.log('removing the rehydrated style', style);
+      //   style.remove();
+      // }
+    }
+  }, [isHydrating, styles]);
+
+  const children = <ElementToBeCreated {...propsForElement} />;
+
+  if (isHydrating && Array.isArray(styles) && styles.length > 0) {
+    componentStyle.flushStyles(styles, styleSheet);
+    const css = outputSheetModern(styleSheet);
+    console.log('css', css);
+
+    return (
+      <>
+        {children}
+        {css.map(([id, cssRules]) => (
+          <style
+            key={id}
+            href={hash(id)}
+            // href={styledComponentId + '-' + hash(cssRules)}
+            // precedence="scc"
+            // precedence={SC_VERSION}
+            precedence="sc"
+            // precedence={`sc:${i}`}
+          >
+            {cssRules}
+          </style>
+        ))}
+      </>
+    );
+  }
+
+  return createElement(ElementToBeCreated, propsForElement);
 }
+
+const outputSheetModern = (sheet: Sheet) => {
+  const tag = sheet.getTag();
+  const { length } = tag;
+
+  let css: [id: string, css: string][] = [];
+  for (let group = 0; group < length; group++) {
+    const id = getIdForGroup(group);
+    if (id === undefined) continue;
+
+    const rules = tag.getGroup(group);
+    if (rules.length === 0) continue;
+
+    css.push([id, rules]);
+
+    sheet.clearRules(id);
+  }
+
+  return css;
+};
 
 function createStyledComponent<
   Target extends WebTarget,
@@ -337,3 +426,13 @@ function createStyledComponent<
 }
 
 export default createStyledComponent;
+
+/** Hash a string using the djb2 algorithm. */
+// from: https://github.com/souporserious/restyle/blob/4e71e9aa295803dd3cb47a47e3600a52b68bac38/src/utils.ts#L70C1-L77C2
+function hash(value: string): string {
+  let h = 5381;
+  for (let index = 0, len = value.length; index < len; index++) {
+    h = ((h << 5) + h + value.charCodeAt(index)) >>> 0;
+  }
+  return h.toString(36);
+}
