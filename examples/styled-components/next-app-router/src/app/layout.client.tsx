@@ -1,19 +1,13 @@
-import type { AppProps } from 'next/app';
+'use client';
+
 import { buildTheme } from '@sanity/ui/theme';
 import { ThemeProvider } from '@sanity/ui';
 
 const theme = buildTheme();
 
-import { Inter } from 'next/font/google';
 import { createGlobalStyle } from 'styled-components';
 
-const inter = Inter({ subsets: ['latin'] });
-
 const GlobalStyle = createGlobalStyle`
-  html {
-    font-family: ${inter.style.fontFamily};
-  }
-
   html,
   body {
     height: 100%;
@@ -23,17 +17,13 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
-
-  #__next {
-    display: contents;
-  }
 `;
 
-export default function App({ Component, pageProps }: AppProps) {
+export function LayoutProvider({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Component {...pageProps} />
+      {children}
     </ThemeProvider>
   );
 }

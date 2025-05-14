@@ -154,6 +154,8 @@ export default function constructWithOptions<
       ...config,
       // If .withConfig() is called twice with a componentId we need to ignore outer ones
       componentId: options.componentId || config.componentId,
+      // The same goes for displayName
+      displayName: options.displayName || config.displayName,
     });
 
   return templateFunction;
