@@ -22,7 +22,12 @@ export function TestStartTransition({ children }: { children: React.ReactNode })
   }, [hydrating]);
 
   return (
-    <main className="test">
+    <main
+      className="test"
+      ref={node => {
+        node.classList.add('running');
+      }}
+    >
       {pending && !suspending && children}
       {pending && <Suspend />}
       {suspending && <Resolve />}
@@ -32,10 +37,8 @@ export function TestStartTransition({ children }: { children: React.ReactNode })
 
 function Resolve() {
   useEffect(() => {
-    const node = document.querySelector('.test');
-    node.classList.add('running');
     const timeout = setTimeout(() => {
-      node.classList.remove('running');
+      const node = document.querySelector('.test');
       const result =
         window.getComputedStyle(node).getPropertyValue('--test') === '0' ? 'fail' : 'pass';
       node.classList.add(result);

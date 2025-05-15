@@ -29,7 +29,7 @@ body {
   width: 100%;
   --test: 1;
 
-  &.running {
+  &.running:not(:has(.pass)):not(:has(.fail)) {
     background-color: var(--success-fg);
     color: var(--success-bg);
   }
