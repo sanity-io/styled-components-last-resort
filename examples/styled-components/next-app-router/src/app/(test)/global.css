@@ -1,0 +1,41 @@
+:root {
+  --failure-bg: oklch(44.4% 0.177 26.899);
+  --failure-fg: oklch(0.885 0.062 18.334);
+  --success-bg: oklch(0.448 0.119 151.328);
+  --success-fg: oklch(0.925 0.084 155.995);
+}
+
+html {
+  font-family: system-ui;
+  height: 100%;
+  font-size: 10vw;
+  text-transform: uppercase;
+}
+
+body {
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.test {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  --test: 1;
+
+  &.pass {
+    background-color: var(--success-bg);
+    color: var(--success-fg);
+  }
+
+  &.fail {
+    background-color: var(--failure-bg);
+    color: var(--failure-fg);
+  }
+}

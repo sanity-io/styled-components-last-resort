@@ -1,7 +1,11 @@
 import type { NextConfig } from 'next';
 
 const config: NextConfig = {
-  compiler: { styledComponents: true },
+  compiler: {
+    styledComponents: {
+      topLevelImportPaths: ['styled-components', 'styled-components-original'],
+    },
+  },
   env: { SC_DISABLE_SPEEDY: 'false' },
 };
 
