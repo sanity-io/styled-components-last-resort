@@ -25,7 +25,7 @@ export function TestStartTransition({ children }: { children: React.ReactNode })
     <main
       className="test"
       ref={node => {
-        node.classList.add('running');
+        node?.classList.add('running');
       }}
     >
       {pending && !suspending && children}
