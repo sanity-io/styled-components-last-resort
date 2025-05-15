@@ -32,8 +32,10 @@ export function TestStartTransition({ children }: { children: React.ReactNode })
 
 function Resolve() {
   useEffect(() => {
+    const node = document.querySelector('.test');
+    node.classList.add('running');
     const timeout = setTimeout(() => {
-      const node = document.querySelector('.test');
+      node.classList.remove('running');
       const result =
         window.getComputedStyle(node).getPropertyValue('--test') === '0' ? 'fail' : 'pass';
       node.classList.add(result);
