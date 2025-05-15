@@ -28,6 +28,7 @@ export function TestStartTransition({ children }: { children: React.ReactNode })
         node?.classList.add('mounted');
       }}
     >
+      {hydrating && 'running...'}
       {pending && !suspending && children}
       {pending && <Suspend />}
       {suspending && <Resolve />}
