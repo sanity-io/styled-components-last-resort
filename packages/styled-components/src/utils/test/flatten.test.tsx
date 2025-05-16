@@ -1,5 +1,4 @@
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
+import { render, act } from '@testing-library/react';
 import styled from '../../constructors/styled';
 import flatten from '../flatten';
 
@@ -124,8 +123,8 @@ describe('flatten', () => {
     expect(flatten(['foo', func], { bool: false } as any)).toEqual(['foo', 'static', 'baz']);
   });
 
-  it('throws if trying to interpolate a normal React component', () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+  it('throws if trying to interpolate a normal React component', async () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
     const Foo = ({ className }: { className?: string }) => (
       <div className={className}>hello there!</div>
     );
@@ -139,15 +138,15 @@ describe('flatten', () => {
       }
     `;
 
-    TestRenderer.create(<Bar />);
+    await act(() => render(<Bar />));
 
-    expect((console.error as jest.Mock<Console['warn']>).mock.calls[0][0]).toMatchInlineSnapshot(
+    expect(error.mock.calls[0][0]).toMatchInlineSnapshot(
       `"Foo is not a styled component and cannot be referred to via component selector. See https://www.styled-components.com/docs/advanced#referring-to-other-components for more details."`
     );
   });
 
-  it('does not error for regular functions', () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+  it('does not error for regular functions', async () => {
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
 
     const SvgIcon = styled.svg`
       vertical-align: middle;
@@ -157,26 +156,28 @@ describe('flatten', () => {
       font-size: 40px;
     `;
 
-    expect(() =>
-      TestRenderer.create(
-        <SvgIcon viewBox="0 0 512 512">
-          <path d="M39.6,95.6z" />
-        </SvgIcon>
+    await expect(() =>
+      act(() =>
+        render(
+          <SvgIcon viewBox="0 0 512 512">
+            <path d="M39.6,95.6z" />
+          </SvgIcon>
+        )
       )
     ).not.toThrowError();
 
-    expect(console.error).not.toHaveBeenCalled();
+    expect(error).not.toHaveBeenCalled();
   });
 });
 
-it('does not error for functions that return null', () => {
-  jest.spyOn(console, 'error').mockImplementation(() => {});
+it('does not error for functions that return null', async () => {
+  const error = vi.spyOn(console, 'error').mockImplementation(() => {});
 
   const Bar = styled.div`
     ${() => null}
   `;
 
-  expect(() => TestRenderer.create(<Bar />)).not.toThrowError();
+  await expect(() => act(() => render(<Bar />))).not.toThrowError();
 
-  expect(console.error).not.toHaveBeenCalled();
+  expect(error).not.toHaveBeenCalled();
 });

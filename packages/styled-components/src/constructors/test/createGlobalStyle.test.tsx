@@ -153,20 +153,24 @@ describe(`createGlobalStyle`, () => {
     expect(StyleSheet.registerId).toHaveBeenCalledTimes(1);
   });
 
-  it(`renders to StyleSheetManager.target`, () => {
+  it(`renders to StyleSheetManager.target`, async () => {
     const container = document.createElement('div');
     document.body.appendChild(container);
 
     const Component = createGlobalStyle`[data-test-target]{color:red;} `;
-    render(
-      <StyleSheetManager target={container}>
-        <Component />
-      </StyleSheetManager>
+    await act(() =>
+      render(
+        <StyleSheetManager target={container}>
+          <Component />
+        </StyleSheetManager>
+      )
     );
 
     const style = container.firstElementChild!;
     expect(style.tagName).toBe('STYLE');
-    expect(style.textContent).toContain(`[data-test-target]{color:red;}`);
+    expect((style as HTMLStyleElement).sheet?.cssRules[0].cssText).toContain(
+      `[data-test-target] {color: red;}`
+    );
 
     document.body.removeChild(container);
   });
