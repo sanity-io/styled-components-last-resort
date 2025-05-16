@@ -1,3 +1,8 @@
+import '@testing-library/jest-dom';
+import { beforeEach, afterEach } from 'vitest';
+
+// Suppress errors from JSDOM CSS parser
+// Adapted from the original setupTestFramework.ts
 const consoleError = console.error;
 
 const suppressedErrors = [
@@ -7,8 +12,6 @@ const suppressedErrors = [
 ];
 
 beforeEach(() => {
-  // Suppress errors from JSDOM CSS parser
-  // See: https://github.com/jsdom/jsdom/issues/2177
   console.error = (logged: any) => {
     const message = logged.stack || logged;
 
