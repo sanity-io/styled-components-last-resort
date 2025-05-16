@@ -1,44 +1,44 @@
 import * as CSS from 'csstype';
 import React from 'react';
-import TestRenderer from 'react-test-renderer';
+import { render, fireEvent, screen, act } from '@testing-library/react';
 import ThemeProvider from '../models/ThemeProvider';
 import { AnyComponent, DataAttributes } from '../types';
 import { getRenderedCSS, resetStyled } from './utils';
 
 // Disable isStaticRules optimisation since we're not
 // testing for ComponentStyle specifics here
-jest.mock('../utils/isStaticRules', () => () => false);
+vi.mock('../utils/isStaticRules', () => ({ default: () => false }));
 
 let styled: ReturnType<typeof resetStyled>;
 
 describe('attrs', () => {
   beforeEach(() => {
-    jest.spyOn(console, 'warn');
+    vi.spyOn(console, 'warn');
     styled = resetStyled();
   });
 
   it('work fine with an empty object', () => {
     const Comp = styled.div.attrs({})``;
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('work fine with a function that returns an empty object', () => {
     const Comp = styled.div.attrs(() => ({}))``;
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('pass a simple attr via object', () => {
     const Comp = styled.button.attrs({
       type: 'button',
     })``;
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('pass a simple attr via function with object return', () => {
     const Comp = styled.button.attrs(() => ({
       type: 'button',
     }))``;
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('pass a React component', () => {
@@ -62,7 +62,7 @@ describe('attrs', () => {
       component: ReactComponent,
     }))``;
 
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('should not call a function passed to attrs as an object value', () => {
@@ -72,7 +72,7 @@ describe('attrs', () => {
       foo: stub,
     }))``;
 
-    TestRenderer.create(<Comp />);
+    render(<Comp />);
 
     expect(stub).not.toHaveBeenCalled();
   });
@@ -83,16 +83,18 @@ describe('attrs', () => {
     }))``;
 
     expect(
-      TestRenderer.create(
+      render(
         <ThemeProvider theme={{ color: 'red' }}>
           <Comp />
         </ThemeProvider>
-      ).toJSON()
+      ).container
     ).toMatchInlineSnapshot(`
-      <button
-        className="sc-a"
-        data-color="red"
-      />
+      <div>
+        <button
+          class="sc-a"
+          data-color="red"
+        />
+      </div>
     `);
   });
 
@@ -107,11 +109,13 @@ describe('attrs', () => {
       },
     };
 
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchInlineSnapshot(`
-      <button
-        className="sc-a"
-        data-color="red"
-      />
+    expect(render(<Comp />).container).toMatchInlineSnapshot(`
+      <div>
+        <button
+          class="sc-a"
+          data-color="red"
+        />
+      </div>
     `);
   });
 
@@ -120,8 +124,8 @@ describe('attrs', () => {
       type: p.$submit ? 'submit' : 'button',
     }))``;
 
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
-    expect(TestRenderer.create(<Comp $submit />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
+    expect(render(<Comp $submit />).container).toMatchSnapshot();
   });
 
   it('should replace props with attrs', () => {
@@ -130,9 +134,9 @@ describe('attrs', () => {
       tabIndex: 0,
     }))``;
 
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
-    expect(TestRenderer.create(<Comp type="reset" />).toJSON()).toMatchSnapshot();
-    expect(TestRenderer.create(<Comp type="reset" tabIndex={-1} />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
+    expect(render(<Comp type="reset" />).container).toMatchSnapshot();
+    expect(render(<Comp type="reset" tabIndex={-1} />).container).toMatchSnapshot();
   });
 
   it('should merge className', () => {
@@ -140,7 +144,7 @@ describe('attrs', () => {
       className: 'meow nya',
     }))``;
 
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('should merge className from folded attrs', () => {
@@ -150,10 +154,12 @@ describe('attrs', () => {
       className: 'meow nya',
     }))``;
 
-    expect(TestRenderer.create(<Comp className="something" />).toJSON()).toMatchInlineSnapshot(`
-      <div
-        className="sc-a sc-b foo meow nya something"
-      />
+    expect(render(<Comp className="something" />).container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="sc-a sc-b foo meow nya something"
+        />
+      </div>
     `);
   });
 
@@ -162,8 +168,8 @@ describe('attrs', () => {
       className: `meow ${p.$purr ? 'purr' : 'nya'}`,
     }))``;
 
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
-    expect(TestRenderer.create(<Comp $purr />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
+    expect(render(<Comp $purr />).container).toMatchSnapshot();
   });
 
   it('should merge style', () => {
@@ -171,19 +177,15 @@ describe('attrs', () => {
       style: { color: 'red', background: 'blue' },
     }))``;
 
-    expect(TestRenderer.create(<Comp style={{ color: 'green', borderStyle: 'dotted' }} />).toJSON())
+    expect(render(<Comp style={{ color: 'green', borderStyle: 'dotted' }} />).container)
       .toMatchInlineSnapshot(`
-      <div
-        className="sc-a"
-        style={
-          {
-            "background": "blue",
-            "borderStyle": "dotted",
-            "color": "red",
-          }
-        }
-      />
-    `);
+        <div>
+          <div
+            class="sc-a"
+            style="color: red; border-style: dotted; background: blue;"
+          />
+        </div>
+      `);
   });
 
   it('should work with data and aria attributes', () => {
@@ -191,7 +193,7 @@ describe('attrs', () => {
       'data-foo': 'bar',
       'aria-label': 'A simple FooBar',
     }))``;
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('merge attrs', () => {
@@ -203,7 +205,7 @@ describe('attrs', () => {
       .attrs(() => ({
         type: 'submit',
       }))``;
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('merge attrs when inheriting SC', () => {
@@ -214,7 +216,7 @@ describe('attrs', () => {
     const Child = styled(Parent).attrs(() => ({
       type: 'submit',
     }))``;
-    expect(TestRenderer.create(<Child />).toJSON()).toMatchSnapshot();
+    expect(render(<Child />).container).toMatchSnapshot();
   });
 
   it('pass attrs to style block', () => {
@@ -228,7 +230,7 @@ describe('attrs', () => {
         color: red;
       }
     `;
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: blue;
@@ -243,21 +245,21 @@ describe('attrs', () => {
     const Comp = styled.div.attrs(() => ({
       children: 'Probably a bad idea',
     }))``;
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('should pass through complex children as well', () => {
     const Comp = styled.div.attrs(() => ({
       children: <span>Probably a bad idea</span>,
     }))``;
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp />).container).toMatchSnapshot();
   });
 
   it('should override children of course', () => {
     const Comp = styled.div.attrs(() => ({
       children: <span>Amazing</span>,
     }))``;
-    expect(TestRenderer.create(<Comp>Something else</Comp>).toJSON()).toMatchSnapshot();
+    expect(render(<Comp>Something else</Comp>).container).toMatchSnapshot();
   });
 
   it('should shallow merge "style" prop + attr instead of overwriting', () => {
@@ -297,7 +299,7 @@ describe('attrs', () => {
       background: blue;
     `;
 
-    const rendered = TestRenderer.create(<BlueText>Hello</BlueText>);
+    const rendered = render(<BlueText>Hello</BlueText>);
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".d {
@@ -307,18 +309,15 @@ describe('attrs', () => {
         background: blue;
       }"
     `);
-    expect(rendered.toJSON()).toMatchInlineSnapshot(`
-      <p
-        className="sc-a d sc-b c"
-        style={
-          {
-            "color": "blue",
-            "fontSize": "4em",
-          }
-        }
-      >
-        Hello
-      </p>
+    expect(rendered.container).toMatchInlineSnapshot(`
+      <div>
+        <p
+          class="sc-a d sc-b c"
+          style="color: blue; font-size: 4em;"
+        >
+          Hello
+        </p>
+      </div>
     `);
   });
 
@@ -333,13 +332,13 @@ describe('attrs', () => {
       $textColor: 'red',
     }))``;
 
-    expect(TestRenderer.create(<StyledComp />).toJSON()).toMatchSnapshot();
+    expect(render(<StyledComp />).container).toMatchSnapshot();
   });
 
   it('should apply given "as" prop to the progressive type', () => {
     const Comp = styled.div.attrs({ as: 'video' as const })``;
 
-    expect(TestRenderer.create(<Comp loop />).toJSON()).toMatchSnapshot();
+    expect(render(<Comp loop />).container).toMatchSnapshot();
   });
 
   it('aliasing an alternate theme via attrs makes it through to the child component', () => {
@@ -350,8 +349,6 @@ describe('attrs', () => {
       theme: p.alternateTheme!,
     }))``;
 
-    expect(
-      TestRenderer.create(<Comp alternateTheme={{ foo: 'bar' }} />).toJSON()
-    ).toMatchSnapshot();
+    expect(render(<Comp alternateTheme={{ foo: 'bar' }} />).container).toMatchSnapshot();
   });
 });
