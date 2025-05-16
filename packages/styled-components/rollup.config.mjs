@@ -97,52 +97,6 @@ const configBase = {
   plugins: commonPlugins,
 };
 
-const globals = { react: 'React', 'react-dom': 'ReactDOM' };
-
-const standaloneBaseConfig = {
-  ...configBase,
-  input: './src/index-standalone.ts',
-  output: {
-    file: 'dist/styled-components.js',
-    format: 'umd',
-    globals,
-    name: 'styled',
-    sourcemap: true,
-  },
-  external: Object.keys(globals),
-  plugins: configBase.plugins.concat(
-    replace({
-      __SERVER__: JSON.stringify(false),
-    })
-  ),
-  treeshake: {
-    propertyReadSideEffects: false,
-  },
-};
-
-const standaloneConfig = {
-  ...standaloneBaseConfig,
-  plugins: standaloneBaseConfig.plugins.concat(
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-    })
-  ),
-};
-
-const standaloneProdConfig = {
-  ...standaloneBaseConfig,
-  output: {
-    ...standaloneBaseConfig.output,
-    file: 'dist/styled-components.min.js',
-  },
-  plugins: standaloneBaseConfig.plugins.concat(
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
-    minifierPlugin
-  ),
-};
-
 const serverConfig = {
   ...configBase,
   output: [
@@ -171,4 +125,4 @@ const browserConfig = {
   ),
 };
 
-export default [standaloneConfig, standaloneProdConfig, serverConfig, browserConfig];
+export default [serverConfig, browserConfig];
