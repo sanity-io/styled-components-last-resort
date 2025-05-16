@@ -1,6 +1,6 @@
 import { render, fireEvent, screen, act } from '@testing-library/react';
 
-import * as constants from '../../constants';
+import { DISABLE_SPEEDY } from '../../constants';
 import { StyleSheetManager } from '../../models/StyleSheetManager';
 import ThemeProvider from '../../models/ThemeProvider';
 import StyleSheet from '../../sheet';
@@ -10,7 +10,7 @@ import keyframes from '../keyframes';
 import { Component, StrictMode } from 'react';
 
 describe(`createGlobalStyle`, () => {
-  afterEach(() => {
+  beforeEach(() => {
     resetStyled();
   });
 
@@ -80,7 +80,7 @@ describe(`createGlobalStyle`, () => {
     `);
   });
 
-  it(`updates theme correctly`, () => {
+  it(`updates theme correctly`, async () => {
     const TheComponent = createGlobalStyle`div {color:${props => props.theme.color};} `;
     let update: any;
     class App extends Component {
@@ -108,7 +108,7 @@ describe(`createGlobalStyle`, () => {
       }"
     `);
 
-    update({ color: 'red' });
+    await act(() => update({ color: 'red' }));
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "div {
         color: red;
@@ -255,7 +255,7 @@ describe(`createGlobalStyle`, () => {
       `);
   });
 
-  it(`removes styling injected for multiple <GlobalStyle> components correctly`, () => {
+  it(`removes styling injected for multiple <GlobalStyle> components correctly`, async () => {
     const A = createGlobalStyle`body { background: palevioletred; }`;
     const B = createGlobalStyle`body { color: white; }`;
 
@@ -294,8 +294,8 @@ describe(`createGlobalStyle`, () => {
       }
     }
 
-    render(<Comp />);
-    const el = document.querySelector('[data-test-el]')!;
+    await act(() => render(<Comp />));
+
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "body {
         background: palevioletred;
@@ -324,21 +324,21 @@ describe(`createGlobalStyle`, () => {
       body { background: ${props => props.bgColor}; }
     `;
 
-    render(<A bgColor="blue" />);
+    const { rerender } = render(<A bgColor="blue" />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "body {
         background: blue;
       }"
     `);
 
-    render(<A bgColor="red" />);
+    rerender(<A bgColor="red" />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "body {
         background: red;
       }"
     `);
 
-    render(<A />);
+    rerender(<A />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`""`);
   });
 
@@ -422,10 +422,8 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`removes style tag in StyleSheetManager.target when unmounted after target detached and no other global styles`, () => {
-    // Set DISABLE_SPEEDY flag to false to force using speedy tag
-    const flag = constants.DISABLE_SPEEDY;
-    // @ts-expect-error it's ok
-    constants.DISABLE_SPEEDY = false;
+    // This test requires speedy to be enabled
+    expect(DISABLE_SPEEDY).toBe(false);
 
     const container = document.createElement('div');
     document.body.appendChild(container);
@@ -462,16 +460,12 @@ describe(`createGlobalStyle`, () => {
 
       unmount();
     }).not.toThrow();
-
-    // Reset DISABLE_SPEEDY flag
-    // @ts-expect-error it's ok
-    constants.DISABLE_SPEEDY = flag;
   });
 
-  it.only(`injects multiple global styles in definition order, not composition order`, async () => {
+  it(`injects multiple global styles in definition order, not composition order`, async () => {
     const GlobalStyleOne = createGlobalStyle`[data-test-inject]{color:red;} `;
     const GlobalStyleTwo = createGlobalStyle`[data-test-inject]{color:green;} `;
-    await act(async () =>
+    await act(() =>
       render(
         <>
           <GlobalStyleTwo />
