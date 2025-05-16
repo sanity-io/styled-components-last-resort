@@ -1,14 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`props shouldForwardProp should inherit shouldForwardProp for wrapped styled components 2`] = `
-[
+exports[`props > shouldForwardProp > should inherit shouldForwardProp for wrapped styled components 2`] = `
+<div>
   <div
-    className="sc-a c"
+    class="sc-a c"
     id="test-1"
-  />,
+  />
   <div
-    className="sc-a sc-b d"
+    class="sc-a sc-b d"
     id="test-2"
-  />,
-]
+  />
+</div>
 `;

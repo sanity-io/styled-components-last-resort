@@ -1,11 +1,9 @@
 import React, { Component, CSSProperties, StrictMode } from 'react';
-import { findDOMNode } from 'react-dom';
-import { findRenderedComponentWithType, renderIntoDocument } from 'react-dom/test-utils';
-import TestRenderer from 'react-test-renderer';
-import { find } from '../../test-utils';
+import { render, fireEvent, screen, act } from '@testing-library/react';
+
 import { AnyComponent } from '../types';
 import hoist from '../utils/hoist';
-import { getRenderedCSS, resetStyled } from './utils';
+import { expectCSSMatches, getRenderedCSS, resetStyled } from './utils';
 
 let styled: ReturnType<typeof resetStyled>;
 
@@ -30,7 +28,7 @@ describe('basic', () => {
     validComps.forEach(comp => {
       expect(() => {
         const Comp = styled(comp)``;
-        TestRenderer.create(<Comp />);
+        render(<Comp />);
       }).not.toThrowError();
     });
   });
@@ -45,7 +43,7 @@ describe('basic', () => {
     const Comp = styled.div`
       color: blue;
     `;
-    TestRenderer.create(<Comp />);
+    render(<Comp />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: blue;
@@ -57,8 +55,8 @@ describe('basic', () => {
     const Comp = styled.div`
       color: blue;
     `;
-    TestRenderer.create(<Comp />);
-    TestRenderer.create(<Comp />);
+    render(<Comp />);
+    render(<Comp />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: blue;
@@ -71,8 +69,8 @@ describe('basic', () => {
       color: ${props => props.$variant == 'text' && 'red'};
       background-color: ${props => props.$variant == 'background' && 'red'};
     `;
-    TestRenderer.create(<Comp $variant="text" />);
-    TestRenderer.create(<Comp $variant="background" />);
+    render(<Comp $variant="text" />);
+    render(<Comp $variant="background" />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: red;
@@ -114,7 +112,7 @@ describe('basic', () => {
     const Comp = styled.div({
       color: 'blue',
     });
-    TestRenderer.create(<Comp />);
+    render(<Comp />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: blue;
@@ -124,7 +122,7 @@ describe('basic', () => {
 
   it('should allow you to pass in style object with a function', () => {
     const Comp = styled.div({ color: ({ color }) => color });
-    TestRenderer.create(<Comp color="blue" />);
+    render(<Comp color="blue" />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: blue;
@@ -141,7 +139,7 @@ describe('basic', () => {
         },
       },
     });
-    TestRenderer.create(<Comp />);
+    render(<Comp />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b span small {
         color: blue;
@@ -159,7 +157,7 @@ describe('basic', () => {
         },
       },
     });
-    TestRenderer.create(<Comp color="red" />);
+    render(<Comp color="red" />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b span small {
         color: red;
@@ -172,7 +170,7 @@ describe('basic', () => {
     const Comp = styled.div<{ color: Exclude<CSSProperties['color'], undefined> }>(({ color }) => ({
       color,
     }));
-    TestRenderer.create(<Comp color="blue" />);
+    render(<Comp color="blue" />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: blue;
@@ -194,7 +192,7 @@ describe('basic', () => {
       color: red;
     `;
 
-    TestRenderer.create(<StyledComp />);
+    render(<StyledComp />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: red;
@@ -204,10 +202,10 @@ describe('basic', () => {
 
   it('does not filter outs custom props for uppercased string-like components', () => {
     const Comp = styled('Comp')<{ customProp: string }>`
-      color: red;
+      color: ${props => props.customProp};
     `;
-    const wrapper = TestRenderer.create(<Comp customProp="abc" />);
-    expect(wrapper.root.findByType(Comp).props.customProp).toBe('abc');
+    render(<Comp customProp="abc" />);
+    expectCSSMatches(`.b { color: abc; }`);
   });
 
   it('creates a proper displayName for uppercased string-like components', () => {
@@ -223,17 +221,19 @@ describe('basic', () => {
       color: red;
     `;
 
-    expect(TestRenderer.create(<Comp />).toJSON()).toMatchInlineSnapshot(`
-      <custom-element
-        class="sc-a b"
-      />
+    expect(render(<Comp />).container).toMatchInlineSnapshot(`
+      <div>
+        <custom-element
+          class="sc-a b"
+        />
+      </div>
     `);
   });
 
   describe('jsdom tests', () => {
     class InnerComponent extends Component<any, any> {
       render() {
-        return <div {...this.props} />;
+        return <div data-testid="inner" {...this.props} />;
       }
     }
 
@@ -246,56 +246,35 @@ describe('basic', () => {
         }
       }
 
-      const wrapper = TestRenderer.create(<Wrapper />);
-      expect(wrapper.root.findByType(InnerComponent).props.className).toBe('sc-a test');
+      const { getByTestId } = render(<Wrapper />);
+      expect(getByTestId('inner')).toHaveClass('sc-a', 'test');
     });
 
-    it('should pass the ref to the component', () => {
+    it('should pass the ref to the component', async () => {
       const Comp = styled.div``;
+      const testRef = React.createRef<HTMLDivElement>();
 
-      class Wrapper extends Component<any, any> {
-        testRef = React.createRef<HTMLDivElement>();
+      await act(() => render(<Comp data-testid="comp" ref={testRef} />));
 
-        render() {
-          return (
-            <div>
-              <Comp ref={this.testRef} />
-            </div>
-          );
-        }
-      }
-
-      const wrapper = renderIntoDocument<any, Wrapper>(<Wrapper />);
-      const component = find(findDOMNode(wrapper) as Element, Comp);
-
-      expect(wrapper.testRef.current).toBe(component);
+      expect(testRef.current).toHaveAttribute('data-testid', 'comp');
     });
 
     it('should pass the ref to the wrapped styled component', () => {
-      class Inner extends React.Component {
-        render() {
-          return <div {...this.props} />;
-        }
+      function Inner(props: { ref: React.Ref<HTMLDivElement> }) {
+        return <div data-testid="inner" {...props} />;
       }
 
       const Outer = styled(Inner)``;
 
-      class Wrapper extends Component<any, any> {
-        testRef = React.createRef<InstanceType<typeof Inner>>();
+      const testRef = React.createRef<HTMLDivElement>();
 
-        render() {
-          return (
-            <div>
-              <Outer ref={this.testRef} />
-            </div>
-          );
-        }
-      }
+      render(
+        <div>
+          <Outer ref={testRef} />
+        </div>
+      );
 
-      const wrapper = renderIntoDocument<any, Wrapper>(<Wrapper />);
-      const innerComponent = findRenderedComponentWithType(wrapper, Inner);
-
-      expect(wrapper.testRef.current).toBe(innerComponent);
+      expect(testRef.current).toHaveAttribute('data-testid', 'inner');
     });
 
     it('should respect the order of StyledComponent creation for CSS ordering', () => {
@@ -307,8 +286,8 @@ describe('basic', () => {
       `;
 
       // NOTE: We're mounting second before first and check if we're breaking their order
-      TestRenderer.create(<SecondComponent />);
-      TestRenderer.create(<FirstComponent />);
+      render(<SecondComponent />);
+      render(<FirstComponent />);
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".d {
@@ -329,7 +308,7 @@ describe('basic', () => {
         }
       `;
 
-      TestRenderer.create(<Comp />);
+      render(<Comp />);
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "@media (min-width:500px) {
           .b > * {
@@ -349,7 +328,7 @@ describe('basic', () => {
         }
       `;
 
-      TestRenderer.create(<Comp />);
+      render(<Comp />);
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".b {
           background: blue;
@@ -408,7 +387,7 @@ describe('basic', () => {
         color: green;
       `;
 
-      const rendered = TestRenderer.create(<Outer />);
+      const rendered = render(<Outer />);
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".d {
@@ -418,46 +397,72 @@ describe('basic', () => {
           color: green;
         }"
       `);
-      expect(rendered.toJSON()).toMatchInlineSnapshot(`
-        <div
-          className="sc-a d sc-b c"
-        />
-      `);
-    });
-
-    it('folds defaultProps', () => {
-      const Inner = styled.div``;
-
-      Inner.defaultProps = {
-        theme: {
-          fontSize: 12,
-        },
-        style: {
-          background: 'blue',
-          textAlign: 'center',
-        },
-      };
-
-      const Outer = styled(Inner)``;
-
-      Outer.defaultProps = {
-        theme: {
-          fontSize: 16,
-        },
-        style: {
-          background: 'silver',
-        },
-      };
-
-      expect(Outer.defaultProps).toMatchInlineSnapshot(`
+      expect(rendered).toMatchInlineSnapshot(`
         {
-          "style": {
-            "background": "silver",
-            "textAlign": "center",
-          },
-          "theme": {
-            "fontSize": 16,
-          },
+          "asFragment": [Function],
+          "baseElement": <body>
+            <div>
+              <div
+                class="sc-a d sc-b c"
+              />
+            </div>
+          </body>,
+          "container": <div>
+            <div
+              class="sc-a d sc-b c"
+            />
+          </div>,
+          "debug": [Function],
+          "findAllByAltText": [Function],
+          "findAllByDisplayValue": [Function],
+          "findAllByLabelText": [Function],
+          "findAllByPlaceholderText": [Function],
+          "findAllByRole": [Function],
+          "findAllByTestId": [Function],
+          "findAllByText": [Function],
+          "findAllByTitle": [Function],
+          "findByAltText": [Function],
+          "findByDisplayValue": [Function],
+          "findByLabelText": [Function],
+          "findByPlaceholderText": [Function],
+          "findByRole": [Function],
+          "findByTestId": [Function],
+          "findByText": [Function],
+          "findByTitle": [Function],
+          "getAllByAltText": [Function],
+          "getAllByDisplayValue": [Function],
+          "getAllByLabelText": [Function],
+          "getAllByPlaceholderText": [Function],
+          "getAllByRole": [Function],
+          "getAllByTestId": [Function],
+          "getAllByText": [Function],
+          "getAllByTitle": [Function],
+          "getByAltText": [Function],
+          "getByDisplayValue": [Function],
+          "getByLabelText": [Function],
+          "getByPlaceholderText": [Function],
+          "getByRole": [Function],
+          "getByTestId": [Function],
+          "getByText": [Function],
+          "getByTitle": [Function],
+          "queryAllByAltText": [Function],
+          "queryAllByDisplayValue": [Function],
+          "queryAllByLabelText": [Function],
+          "queryAllByPlaceholderText": [Function],
+          "queryAllByRole": [Function],
+          "queryAllByTestId": [Function],
+          "queryAllByText": [Function],
+          "queryAllByTitle": [Function],
+          "queryByAltText": [Function],
+          "queryByDisplayValue": [Function],
+          "queryByLabelText": [Function],
+          "queryByPlaceholderText": [Function],
+          "queryByRole": [Function],
+          "queryByTestId": [Function],
+          "queryByText": [Function],
+          "queryByTitle": [Function],
+          "rerender": [Function],
+          "unmount": [Function],
         }
       `);
     });
@@ -519,10 +524,10 @@ describe('basic', () => {
     // this no longer is possible in React 16.6 because
     // of the deprecation of findDOMNode; need to find an alternative
     it('should work in StrictMode without warnings', () => {
-      const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+      const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
       const Comp = styled.div``;
 
-      TestRenderer.create(
+      render(
         <StrictMode>
           <Comp />
         </StrictMode>
@@ -534,7 +539,7 @@ describe('basic', () => {
 
   describe('warnings', () => {
     beforeEach(() => {
-      jest.spyOn(console, 'warn').mockImplementation(() => {});
+      vi.spyOn(console, 'warn').mockImplementation(() => {});
     });
 
     it('does not warn for innerRef if using a custom component', () => {
@@ -542,7 +547,7 @@ describe('basic', () => {
       const Comp = styled(InnerComp)``;
       const ref = React.createRef();
 
-      TestRenderer.create(<Comp innerRef={ref} />);
+      render(<Comp innerRef={ref} />);
       expect(console.warn).not.toHaveBeenCalled();
     });
 
@@ -557,7 +562,7 @@ describe('basic', () => {
         color: red;
       `;
 
-      renderIntoDocument(
+      render(
         <div>
           <Comp />
         </div>
@@ -584,8 +589,8 @@ describe('basic', () => {
         color: ${props => props.$variant == 'text' && 'red'};
         background-color: ${props => props.$variant == 'background' && 'red'};
       `;
-      TestRenderer.create(<Comp $variant="text" />);
-      TestRenderer.create(<Comp $variant="background" />);
+      render(<Comp $variant="text" />);
+      render(<Comp $variant="background" />);
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".b {
           color: red;

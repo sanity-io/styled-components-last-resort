@@ -1,79 +1,295 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`expanded api "as" prop changes the rendered element type 1`] = `
-<span
-  className="sc-a b"
-/>
+exports[`expanded api > "as" prop > changes the rendered element type 1`] = `
+<div>
+  <span
+    class="sc-a b"
+  />
+</div>
 `;
 
-exports[`expanded api "as" prop changes the rendered element type when used with attrs 1`] = `
-<header
-  className="sc-a b"
-/>
+exports[`expanded api > "as" prop > changes the rendered element type when used with attrs 1`] = `
+<div>
+  <header
+    class="sc-a b"
+  />
+</div>
 `;
 
-exports[`expanded api "as" prop works with custom components 1`] = `
-<figure
-  className="sc-a b"
-/>
+exports[`expanded api > "as" prop > works with custom components 1`] = `
+<div>
+  <figure
+    class="sc-a b"
+  />
+</div>
 `;
 
-exports[`expanded api chaining should keep the last value passed in when merging 1`] = `
-<div
-  className="dn-5-id-4"
-/>
+exports[`expanded api > chaining > should merge the options strings 1`] = `
+<div>
+  <div
+    class="dn-2-id-1"
+  />
+</div>
 `;
 
-exports[`expanded api chaining should merge the options strings 1`] = `
-<div
-  className="dn-2-id-1"
-/>
+exports[`expanded api > componentId > should be attached if passed in 1`] = `
+<div>
+  <div
+    class="LOLOMG"
+  />
+</div>
 `;
 
-exports[`expanded api componentId should be attached if passed in 1`] = `
-<div
-  className="LOLOMG"
-/>
+exports[`expanded api > componentId > should be attached if passed in 2`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="LOLOMG"
+      />
+    </div>
+    <div>
+      <div
+        class="OMGLOL"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="OMGLOL"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
-exports[`expanded api componentId should be attached if passed in 2`] = `
-<div
-  className="OMGLOL"
-/>
+exports[`expanded api > componentId > should be combined with displayName if both passed in 1`] = `
+<div>
+  <div
+    class="Comp-LOLOMG"
+  />
+</div>
 `;
 
-exports[`expanded api componentId should be combined with displayName if both passed in 1`] = `
-<div
-  className="Comp-LOLOMG"
-/>
+exports[`expanded api > componentId > should be combined with displayName if both passed in 2`] = `
+<div>
+  <div
+    class="Comp2-OMGLOL"
+  />
+</div>
 `;
 
-exports[`expanded api componentId should be combined with displayName if both passed in 2`] = `
-<div
-  className="Comp2-OMGLOL"
-/>
+exports[`expanded api > componentId > should be generated as "sc" + hash 1`] = `
+<div>
+  <div
+    class="sc-a"
+  />
+</div>
 `;
 
-exports[`expanded api componentId should be generated as "sc" + hash 1`] = `
-<div
-  className="sc-a"
-/>
+exports[`expanded api > componentId > should be generated as "sc" + hash 2`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="sc-a"
+      />
+    </div>
+    <div>
+      <div
+        class="sc-b"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="sc-b"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
-exports[`expanded api componentId should be generated as "sc" + hash 2`] = `
-<div
-  className="sc-b"
-/>
+exports[`expanded api > componentId > should be generated from displayName + hash 1`] = `
+<div>
+  <div
+    class="Comp-a"
+  />
+</div>
 `;
 
-exports[`expanded api componentId should be generated from displayName + hash 1`] = `
-<div
-  className="Comp-a"
-/>
-`;
-
-exports[`expanded api componentId should be generated from displayName + hash 2`] = `
-<div
-  className="Comp2-b"
-/>
+exports[`expanded api > componentId > should be generated from displayName + hash 2`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="Comp-a"
+      />
+    </div>
+    <div>
+      <div
+        class="Comp2-b"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="Comp2-b"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

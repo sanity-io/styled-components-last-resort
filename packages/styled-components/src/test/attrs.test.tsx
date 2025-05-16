@@ -66,7 +66,7 @@ describe('attrs', () => {
   });
 
   it('should not call a function passed to attrs as an object value', () => {
-    const stub = jest.fn(() => 'div');
+    const stub = vi.fn(() => 'div');
 
     const Comp = styled.button.attrs<{ foo?: typeof stub }>(() => ({
       foo: stub,
