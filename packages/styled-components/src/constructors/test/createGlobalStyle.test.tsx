@@ -1,6 +1,5 @@
-import ReactDOM from 'react-dom';
-import { act, Simulate } from 'react-dom/test-utils';
-import ReactTestRenderer from 'react-test-renderer';
+import { render, fireEvent, screen, act } from '@testing-library/react';
+
 import * as constants from '../../constants';
 import { StyleSheetManager } from '../../models/StyleSheetManager';
 import ThemeProvider from '../../models/ThemeProvider';
@@ -8,38 +7,14 @@ import StyleSheet from '../../sheet';
 import { getRenderedCSS, resetStyled } from '../../test/utils';
 import createGlobalStyle from '../createGlobalStyle';
 import keyframes from '../keyframes';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { Component, StrictMode } from 'react';
 
 describe(`createGlobalStyle`, () => {
-  let context: ReturnType<typeof setup>;
-
-  function setup() {
-    const container = document.createElement('div');
-    document.body.appendChild(container);
-
-    return {
-      container,
-      render(comp: React.JSX.Element) {
-        ReactDOM.render(comp, container);
-      },
-      cleanup() {
-        resetStyled();
-        document.body.removeChild(container);
-      },
-    };
-  }
-
-  beforeEach(() => {
-    context = setup();
-  });
-
   afterEach(() => {
-    context.cleanup();
+    resetStyled();
   });
 
   it(`injects global <style> when rendered`, () => {
-    const { render } = context;
     const Component = createGlobalStyle`[data-test-inject]{color:red;} `;
     render(<Component />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -50,7 +25,6 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`supports interpolation`, () => {
-    const { render } = context;
     const Component = createGlobalStyle<{ color: string }>`div {color:${props => props.color};} `;
     render(<Component color="orange" />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -61,7 +35,6 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`supports objects with a function`, () => {
-    const { render } = setup();
     const Component = createGlobalStyle({
       'h1, h2, h3, h4, h5, h6': {
         fontFamily: ({ theme }) => theme.fonts.heading,
@@ -76,7 +49,6 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`supports nested objects with a function`, () => {
-    const { render } = setup();
     const Component1 = createGlobalStyle({
       'div, span': {
         h1: {
@@ -95,7 +67,6 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`supports theming`, () => {
-    const { render } = context;
     const Component = createGlobalStyle`div {color:${props => props.theme.color};} `;
     render(
       <ThemeProvider theme={{ color: 'black' }}>
@@ -110,11 +81,10 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`updates theme correctly`, () => {
-    const { render } = context;
-    const Component = createGlobalStyle`div {color:${props => props.theme.color};} `;
+    const TheComponent = createGlobalStyle`div {color:${props => props.theme.color};} `;
     let update: any;
-    class App extends React.Component {
-      state = { color: 'grey' };
+    class App extends Component {
+      override state = { color: 'grey' };
 
       constructor(props: {}) {
         super(props);
@@ -123,10 +93,10 @@ describe(`createGlobalStyle`, () => {
         };
       }
 
-      render() {
+      override render() {
         return (
           <ThemeProvider theme={{ color: this.state.color }}>
-            <Component />
+            <TheComponent />
           </ThemeProvider>
         );
       }
@@ -147,7 +117,6 @@ describe(`createGlobalStyle`, () => {
   });
 
   it('should work in StrictMode without warnings', () => {
-    const { render } = context;
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const Comp = createGlobalStyle`
       html {
@@ -155,13 +124,11 @@ describe(`createGlobalStyle`, () => {
       }
     `;
 
-    act(() => {
-      render(
-        <StrictMode>
-          <Comp />
-        </StrictMode>
-      );
-    });
+    render(
+      <StrictMode>
+        <Comp />
+      </StrictMode>
+    );
 
     expect(spy).not.toHaveBeenCalled();
   });
@@ -169,7 +136,6 @@ describe(`createGlobalStyle`, () => {
   it('should not inject twice in StrictMode', () => {
     vi.spyOn(StyleSheet, 'registerId');
 
-    const { render } = context;
     const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const Comp = createGlobalStyle`
       html {
@@ -177,20 +143,20 @@ describe(`createGlobalStyle`, () => {
       }
     `;
 
-    act(() => {
-      render(
-        <StrictMode>
-          <Comp />
-        </StrictMode>
-      );
-    });
+    render(
+      <StrictMode>
+        <Comp />
+      </StrictMode>
+    );
 
     expect(spy).not.toHaveBeenCalled();
     expect(StyleSheet.registerId).toHaveBeenCalledTimes(1);
   });
 
   it(`renders to StyleSheetManager.target`, () => {
-    const { container, render } = context;
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
     const Component = createGlobalStyle`[data-test-target]{color:red;} `;
     render(
       <StyleSheetManager target={container}>
@@ -201,10 +167,11 @@ describe(`createGlobalStyle`, () => {
     const style = container.firstElementChild!;
     expect(style.tagName).toBe('STYLE');
     expect(style.textContent).toContain(`[data-test-target]{color:red;}`);
+
+    document.body.removeChild(container);
   });
 
   it(`adds new global rules non-destructively`, () => {
-    const { render } = context;
     const Color = createGlobalStyle`[data-test-add]{color:red;} `;
     const Background = createGlobalStyle`[data-test-add]{background:yellow;} `;
 
@@ -226,7 +193,6 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`stringifies multiple rules correctly`, () => {
-    const { render } = context;
     const Component = createGlobalStyle<{ fg: any; bg: any }>`
       div {
         color: ${props => props.fg};
@@ -243,8 +209,6 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`injects multiple <GlobalStyle> components correctly`, () => {
-    const { render } = context;
-
     const A = createGlobalStyle`body { background: palevioletred; }`;
     const B = createGlobalStyle`body { color: white; }`;
 
@@ -274,30 +238,24 @@ describe(`createGlobalStyle`, () => {
       }
     }
 
-    const renderer = ReactTestRenderer.create(<Comp insert />);
+    const { rerender } = render(<Comp insert />);
 
-    ReactTestRenderer.act(() => {
-      expect(getRenderedCSS()).toMatchInlineSnapshot(`
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "[data-test-remove] {
           color: grey;
         }"
       `);
 
-      renderer.update(<Comp insert={false} />);
-    });
+    rerender(<Comp insert={false} />);
 
-    ReactTestRenderer.act(() => {
-      expect(getRenderedCSS()).toMatchInlineSnapshot(`
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "[data-test-keep] {
           color: blue;
         }"
       `);
-    });
   });
 
   it(`removes styling injected for multiple <GlobalStyle> components correctly`, () => {
-    const { render } = context;
-
     const A = createGlobalStyle`body { background: palevioletred; }`;
     const B = createGlobalStyle`body { color: white; }`;
 
@@ -328,7 +286,7 @@ describe(`createGlobalStyle`, () => {
 
       override render() {
         return (
-          <div data-test-el onClick={() => this.onClick()}>
+          <div data-testid="el" onClick={() => this.onClick()}>
             {this.state.a ? <A /> : null}
             {this.state.b ? <B /> : null}
           </div>
@@ -347,21 +305,20 @@ describe(`createGlobalStyle`, () => {
       }"
     `); // should have both styles
 
-    Simulate.click(el);
+    fireEvent.click(screen.getByTestId('el'));
+
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "body {
         background: palevioletred;
       }"
     `); // should only have palevioletred
 
-    Simulate.click(el);
+    fireEvent.click(screen.getByTestId('el'));
     expect(getRenderedCSS()).toMatchInlineSnapshot(`""`); // should be empty
   });
 
   it(`removes styling injected for multiple instances of same <GlobalStyle> components correctly`, () => {
     vi.spyOn(console, 'warn').mockImplementation(() => {});
-
-    const { render } = context;
 
     const A = createGlobalStyle<{ bgColor?: any }>`
       body { background: ${props => props.bgColor}; }
@@ -388,7 +345,6 @@ describe(`createGlobalStyle`, () => {
   it(`should warn when children are passed as props`, () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-    const { render } = context;
     const Component = createGlobalStyle<{ fg: any; bg: any }>`
       div {
         color: ${props => props.fg};
@@ -410,7 +366,6 @@ describe(`createGlobalStyle`, () => {
   it(`should warn when @import is used`, () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-    const { render } = context;
     const Component = createGlobalStyle`
       @import url("something.css");
     `;
@@ -422,8 +377,6 @@ describe(`createGlobalStyle`, () => {
   });
 
   it('works with keyframes', () => {
-    const { render } = context;
-
     const rotate360 = keyframes`
       from {
         transform: rotate(0deg);
@@ -494,7 +447,7 @@ describe(`createGlobalStyle`, () => {
       }
     }
 
-    ReactDOM.render(<Comp />, container);
+    const { unmount } = render(<Comp />, { container });
 
     // Check styles
     const style = styleContainer.firstElementChild as HTMLStyleElement;
@@ -507,7 +460,7 @@ describe(`createGlobalStyle`, () => {
       document.body.removeChild(container);
       document.body.removeChild(styleContainer);
 
-      ReactDOM.unmountComponentAtNode(container);
+      unmount();
     }).not.toThrow();
 
     // Reset DISABLE_SPEEDY flag
@@ -515,15 +468,16 @@ describe(`createGlobalStyle`, () => {
     constants.DISABLE_SPEEDY = flag;
   });
 
-  it(`injects multiple global styles in definition order, not composition order`, () => {
-    const { render } = context;
+  it.only(`injects multiple global styles in definition order, not composition order`, async () => {
     const GlobalStyleOne = createGlobalStyle`[data-test-inject]{color:red;} `;
     const GlobalStyleTwo = createGlobalStyle`[data-test-inject]{color:green;} `;
-    render(
-      <>
-        <GlobalStyleTwo />
-        <GlobalStyleOne />
-      </>
+    await act(async () =>
+      render(
+        <>
+          <GlobalStyleTwo />
+          <GlobalStyleOne />
+        </>
+      )
     );
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`

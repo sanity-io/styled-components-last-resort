@@ -4,7 +4,6 @@ import ReactDOMServer from 'react-dom/server';
 import ServerStyleSheet from '../../models/ServerStyleSheet';
 import { stripComments, stripWhitespace } from '../../test/utils';
 import createGlobalStyle from '../createGlobalStyle';
-import { beforeEach, describe, expect, it } from 'vitest';
 
 describe(`createGlobalStyle`, () => {
   let context: ReturnType<typeof setup>;

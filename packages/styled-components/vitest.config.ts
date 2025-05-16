@@ -5,11 +5,13 @@ import { resolve } from 'path';
 export default defineConfig({
   plugins: [react()],
   define: {
-    __SERVER__: `typeof document === 'undefined'`,
+    __SERVER__: `true`,
     __VERSION__: `'JEST_MOCK_VERSION'`,
   },
   test: {
     environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./test-utils/testSetup.ts'],
     coverage: {
       enabled: !!process.env.PULL_REQUEST,
       reporter: ['text', 'html'],

@@ -73,7 +73,11 @@ export const stripWhitespace = (str: string) =>
 
 export const getCSS = (scope: Document | HTMLElement) =>
   joinStringArray(
-    Array.from(scope.querySelectorAll('style')).map(tag => tag.innerHTML),
+    Array.from(scope.querySelectorAll('style')).map(tag =>
+      Array.from(tag.sheet?.cssRules || [])
+        .map(rule => rule.cssText || '')
+        .join('\n')
+    ),
     '\n'
   )
     .replace(/ {/g, '{')
