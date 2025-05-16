@@ -5,7 +5,6 @@ import { StyleSheetManager } from '../../models/StyleSheetManager';
 import { getRenderedCSS, resetStyled } from '../../test/utils';
 import css from '../css';
 import keyframes from '../keyframes';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Disable isStaticRules optimisation since we're not
 // testing for ComponentStyle specifics here
@@ -397,8 +396,19 @@ describe('keyframes', () => {
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(
-      `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style>"`
-    );
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".animparent .c {
+        color: blue;
+        animation: a 0.75s infinite linear;
+      }
+      @keyframes a {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }"
+    `);
   });
 });

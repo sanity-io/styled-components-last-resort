@@ -1,4 +1,3 @@
-import { describe, expect, it } from 'vitest';
 import Keyframes from '../Keyframes';
 
 describe('Keyframes', () => {
