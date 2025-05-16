@@ -35,7 +35,7 @@ describe('expanded api', () => {
       expect(Comp.styledComponentId).toBe('sc-a');
       expect(render(<Comp />).container).toMatchSnapshot();
       expect(Comp2.styledComponentId).toBe('sc-b');
-      expect(render(<Comp2 />)).toMatchSnapshot();
+      expect(render(<Comp2 />).container).toMatchSnapshot();
     });
 
     it('should be generated from displayName + hash', () => {
@@ -44,7 +44,7 @@ describe('expanded api', () => {
       expect(Comp.styledComponentId).toBe('Comp-a');
       expect(render(<Comp />).container).toMatchSnapshot();
       expect(Comp2.styledComponentId).toBe('Comp2-b');
-      expect(render(<Comp2 />)).toMatchSnapshot();
+      expect(render(<Comp2 />).container).toMatchSnapshot();
     });
 
     it('should be attached if passed in', () => {
@@ -53,7 +53,7 @@ describe('expanded api', () => {
       expect(Comp.styledComponentId).toBe('LOLOMG');
       expect(render(<Comp />).container).toMatchSnapshot();
       expect(Comp2.styledComponentId).toBe('OMGLOL');
-      expect(render(<Comp2 />)).toMatchSnapshot();
+      expect(render(<Comp2 />).container).toMatchSnapshot();
     });
 
     it('should be combined with displayName if both passed in', () => {
