@@ -475,7 +475,14 @@ describe('StyleSheetManager', () => {
       </div>
     );
 
-    expect(getRenderedCSS).toMatchInlineSnapshot(`[Function]`);
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".b {
+        padding-left: 5px;
+      }
+      .c {
+        padding-right: 5px;
+      }"
+    `);
 
     expect(container).toMatchInlineSnapshot(`
       <div>
