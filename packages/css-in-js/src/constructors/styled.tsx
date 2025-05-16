@@ -24,7 +24,7 @@ domElements.forEach(domElement => {
 });
 
 export default styled;
-export { StyledInstance };
+export type { StyledInstance };
 
 /**
  * This is the type of the `styled` HOC.

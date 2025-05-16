@@ -1,22 +1,25 @@
 {
   "name": "@sanity/css-in-js",
   "version": "6.1.18-2",
-  "description": "CSS for the <Component> Age. Style components your way with speed, strong typing, and flexibility.",
+  "description": "A fork of styled-components that supports React 19 streaming ssr without ServerStyleSheet or sheet.collectStyles techniques",
   "publishConfig": {
     "access": "public"
   },
-  "types": "dist/index.d.ts",
-  "main": "dist/styled-components.cjs.js",
-  "module": "./dist/styled-components.esm.js",
-  "browser": {
-    "./dist/styled-components.cjs.js": "./dist/styled-components.browser.cjs.js",
-    "./dist/styled-components.esm.js": "./dist/styled-components.browser.esm.js"
+  "types": "dist/default/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "node": "./dist/node/index.js",
+      "browser": "./dist/browser/index.js",
+      "default": "./dist/default/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "sideEffects": false,
   "scripts": {
-    "generateErrors": "node scripts/generateErrorMap.js",
-    "prebuild": "rimraf dist && pnpm generateErrors",
-    "build": "rollup -c",
+    "generateErrors": "node scripts/generateErrorMap.cjs",
+    "prebuild": "pnpm generateErrors",
+    "build": "tsdown",
     "pretest": "pnpm generateErrors",
     "test": "jest -c jest.config.main.js",
     "prepare": "pnpm build"
@@ -27,8 +30,6 @@
       "directory": "packages/css-in-js"
   },
   "files": [
-    "LICENSE",
-    "README.md",
     "dist"
   ],
   "keywords": [
@@ -56,8 +57,8 @@
     "tslib": "2.6.2"
   },
   "peerDependencies": {
-    "react": ">= 18.3.0",
-    "react-dom": ">= 18.3.0"
+    "react": "^19.1",
+    "react-dom": "^19.1"
   },
   "devDependencies": {
     "@babel/core": "7.24.5",
@@ -106,18 +107,11 @@
     "rollup-plugin-sourcemaps": "0.6.3",
     "rollup-plugin-terser": "7.0.2",
     "stylis-plugin-rtl": "2.1.1",
+    "tsdown": "0.11.9",
     "ts-toolbelt": "9.6.0",
-    "typescript": "5.4.5"
-  },
-  "bundlewatch": {
-    "files": [
-      {
-        "path": "./dist/styled-components.min.js",
-        "maxSize": "11.5kB"
-      }
-    ]
+    "typescript": "5.8.3"
   },
   "engines": {
-    "node": ">= 16"
+    "node": ">= 22"
   }
 }
