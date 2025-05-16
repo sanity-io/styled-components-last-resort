@@ -6,10 +6,11 @@ import { StyleSheetManager } from '../../models/StyleSheetManager';
 import { getRenderedCSS, resetStyled } from '../../test/utils';
 import css from '../css';
 import keyframes from '../keyframes';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Disable isStaticRules optimisation since we're not
 // testing for ComponentStyle specifics here
-jest.mock('../../utils/isStaticRules', () => () => false);
+vi.mock('../../utils/isStaticRules', () => ({ default: () => false }));
 
 let styled: ReturnType<typeof resetStyled>;
 

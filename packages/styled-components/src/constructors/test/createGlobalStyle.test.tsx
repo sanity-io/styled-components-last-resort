@@ -8,7 +8,8 @@ import StyleSheet from '../../sheet';
 import { getRenderedCSS, resetStyled } from '../../test/utils';
 import createGlobalStyle from '../createGlobalStyle';
 import keyframes from '../keyframes';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { Component, StrictMode } from 'react';
 
 describe(`createGlobalStyle`, () => {
   let context: ReturnType<typeof setup>;
@@ -147,7 +148,7 @@ describe(`createGlobalStyle`, () => {
 
   it('should work in StrictMode without warnings', () => {
     const { render } = context;
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const Comp = createGlobalStyle`
       html {
         color: red;
@@ -156,9 +157,9 @@ describe(`createGlobalStyle`, () => {
 
     act(() => {
       render(
-        <React.StrictMode>
+        <StrictMode>
           <Comp />
-        </React.StrictMode>
+        </StrictMode>
       );
     });
 
@@ -166,10 +167,10 @@ describe(`createGlobalStyle`, () => {
   });
 
   it('should not inject twice in StrictMode', () => {
-    jest.spyOn(StyleSheet, 'registerId');
+    vi.spyOn(StyleSheet, 'registerId');
 
     const { render } = context;
-    const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
     const Comp = createGlobalStyle`
       html {
         color: red;
@@ -178,9 +179,9 @@ describe(`createGlobalStyle`, () => {
 
     act(() => {
       render(
-        <React.StrictMode>
+        <StrictMode>
           <Comp />
-        </React.StrictMode>
+        </StrictMode>
       );
     });
 
@@ -208,10 +209,10 @@ describe(`createGlobalStyle`, () => {
     const Background = createGlobalStyle`[data-test-add]{background:yellow;} `;
 
     render(
-      <React.Fragment>
+      <>
         <Color />
         <Background />
-      </React.Fragment>
+      </>
     );
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -248,10 +249,10 @@ describe(`createGlobalStyle`, () => {
     const B = createGlobalStyle`body { color: white; }`;
 
     render(
-      <React.Fragment>
+      <>
         <A />
         <B />
-      </React.Fragment>
+      </>
     );
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "body {
@@ -267,8 +268,8 @@ describe(`createGlobalStyle`, () => {
     const ComponentA = createGlobalStyle`[data-test-remove]{color:grey;} `;
     const ComponentB = createGlobalStyle`[data-test-keep]{color:blue;} `;
 
-    class Comp extends React.Component<{ insert: boolean }> {
-      render() {
+    class Comp extends Component<{ insert: boolean }> {
+      override render() {
         return this.props.insert ? <ComponentA /> : <ComponentB />;
       }
     }
@@ -300,8 +301,8 @@ describe(`createGlobalStyle`, () => {
     const A = createGlobalStyle`body { background: palevioletred; }`;
     const B = createGlobalStyle`body { color: white; }`;
 
-    class Comp extends React.Component {
-      state = {
+    class Comp extends Component {
+      override state = {
         a: true,
         b: true,
       };
@@ -325,7 +326,7 @@ describe(`createGlobalStyle`, () => {
         }
       }
 
-      render() {
+      override render() {
         return (
           <div data-test-el onClick={() => this.onClick()}>
             {this.state.a ? <A /> : null}
@@ -358,7 +359,7 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`removes styling injected for multiple instances of same <GlobalStyle> components correctly`, () => {
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     const { render } = context;
 
@@ -385,7 +386,7 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`should warn when children are passed as props`, () => {
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     const { render } = context;
     const Component = createGlobalStyle<{ fg: any; bg: any }>`
@@ -401,23 +402,19 @@ describe(`createGlobalStyle`, () => {
       </Component>
     );
 
-    const warn = console.warn as jest.Mock<Console['warn']>;
-
     expect(warn.mock.calls[0][0]).toMatchInlineSnapshot(
       `"The global style component sc-global-a was given child JSX. createGlobalStyle does not render children."`
     );
   });
 
   it(`should warn when @import is used`, () => {
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     const { render } = context;
     const Component = createGlobalStyle`
       @import url("something.css");
     `;
     render(<Component />);
-
-    const warn = console.warn as jest.Mock<Console['warn']>;
 
     expect(warn.mock.calls[0][0]).toMatchInlineSnapshot(
       `"Please do not use @import CSS syntax in createGlobalStyle at this time, as the CSSOM APIs we use in production do not handle it well. Instead, we recommend using a library such as react-helmet to inject a typical <link> meta tag to the stylesheet, or simply embedding it manually in your index.html <head> section for a simpler app."`
@@ -483,14 +480,14 @@ describe(`createGlobalStyle`, () => {
     const styleContainer = document.createElement('div');
     document.body.appendChild(styleContainer);
 
-    const Component = createGlobalStyle`[data-test-unmount-remove]{color:grey;} `;
+    const TheComponent = createGlobalStyle`[data-test-unmount-remove]{color:grey;} `;
 
-    class Comp extends React.Component {
-      render() {
+    class Comp extends Component {
+      override render() {
         return (
           <div>
             <StyleSheetManager target={styleContainer}>
-              <Component />
+              <TheComponent />
             </StyleSheetManager>
           </div>
         );
@@ -506,14 +503,12 @@ describe(`createGlobalStyle`, () => {
     );
 
     // detach container and unmount react component
-    try {
+    expect(() => {
       document.body.removeChild(container);
       document.body.removeChild(styleContainer);
 
       ReactDOM.unmountComponentAtNode(container);
-    } catch (e) {
-      fail('should not throw exception');
-    }
+    }).not.toThrow();
 
     // Reset DISABLE_SPEEDY flag
     // @ts-expect-error it's ok

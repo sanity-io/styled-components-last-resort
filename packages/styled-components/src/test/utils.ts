@@ -9,7 +9,7 @@ import { resetGroupIds } from '../sheet/GroupIDAllocator';
 import { rehydrateSheet } from '../sheet/Rehydration';
 import styledError from '../utils/error';
 import { joinStringArray } from '../utils/joinStrings';
-import { vi } from 'vitest';
+import { expect, vi } from 'vitest';
 
 /* Ignore hashing, just return class names sequentially as .a .b .c etc */
 let mockIndex = 0;
