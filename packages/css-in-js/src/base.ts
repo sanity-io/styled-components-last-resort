@@ -53,11 +53,11 @@ if (
 
 /* Export everything */
 export * from './secretInternals';
-export { Attrs, DefaultTheme, ShouldForwardProp } from './types';
+export type { Attrs, DefaultTheme, ShouldForwardProp } from './types';
 export {
-  IStyleSheetContext,
-  IStyleSheetManager,
-  IStylisContext,
+  type IStyleSheetContext,
+  type IStyleSheetManager,
+  type IStylisContext,
   ServerStyleSheet,
   StyleSheetConsumer,
   StyleSheetContext,
