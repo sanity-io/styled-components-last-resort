@@ -391,6 +391,11 @@ describe('StyleSheetManager', () => {
     expect(document.head.innerHTML).toMatchInlineSnapshot(
       `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style>"`
     );
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".b {
+        padding-right: 5px;
+      }"
+    `);
 
     expect(container).toMatchInlineSnapshot(`
       <div>
@@ -529,6 +534,14 @@ describe('StyleSheetManager', () => {
     expect(document.head.innerHTML).toMatchInlineSnapshot(
       `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style><style data-styled="active" data-styled-version="JEST_MOCK_VERSION">.d{background:red;}</style>"`
     );
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".c {
+        padding-left: 5px;
+      }
+      .d {
+        background: red;
+      }"
+    `);
   });
 
   it('passing a namespace to StyleSheetManager works', () => {
@@ -542,9 +555,11 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(
-      `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style>"`
-    );
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      "#foo .b {
+        display: flex;
+      }"
+    `);
   });
 
   it('nested StyleSheetManager with different namespaces works', () => {
@@ -567,9 +582,14 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(
-      `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style>"`
-    );
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      "#foo .c {
+        padding-left: 5px;
+      }
+      #bar .d {
+        background: red;
+      }"
+    `);
   });
 
   it('namespaced StyleSheetManager works with ampersand selector', () => {
@@ -591,9 +611,14 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(
-      `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style>"`
-    );
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".parent .b {
+        padding-top: 5px;
+      }
+      .parent .child .b {
+        padding-top: 10px;
+      }"
+    `);
   });
 
   it('namespaced StyleSheetManager works with ampersand selector (complex)', () => {
