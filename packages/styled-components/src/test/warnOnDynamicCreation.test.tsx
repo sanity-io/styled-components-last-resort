@@ -1,14 +1,13 @@
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
+import { render, fireEvent, screen, act } from '@testing-library/react';
 
 import { resetStyled } from './utils';
 
 describe('warns on dynamic creation', () => {
-  let warn: ReturnType<typeof jest.spyOn>;
+  let warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
   let styled: ReturnType<typeof resetStyled>;
 
   beforeEach(() => {
-    warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     styled = resetStyled();
   });
 
@@ -25,7 +24,7 @@ describe('warns on dynamic creation', () => {
       return <Inner />;
     };
 
-    TestRenderer.create(<Outer />);
+    render(<Outer />);
     expect(warn).toHaveBeenCalledTimes(1);
     expect(warn.mock.calls[0][0]).toMatch(/has been created dynamically/i);
   });
@@ -42,8 +41,8 @@ describe('warns on dynamic creation', () => {
       return <Inner />;
     };
 
-    TestRenderer.create(<Outer />);
-    TestRenderer.create(<Outer />);
+    render(<Outer />);
+    render(<Outer />);
     expect(warn).toHaveBeenCalledTimes(1);
   });
 
@@ -53,7 +52,7 @@ describe('warns on dynamic creation', () => {
     `;
 
     const Outer = () => <Inner />;
-    TestRenderer.create(<Outer />);
+    render(<Outer />);
 
     expect(warn).toHaveBeenCalledTimes(0);
   });

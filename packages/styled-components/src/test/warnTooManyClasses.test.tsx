@@ -1,5 +1,4 @@
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
+import { render, fireEvent, screen, act } from '@testing-library/react';
 
 import { LIMIT } from '../utils/createWarnTooManyClasses';
 import { resetStyled } from './utils';
@@ -11,7 +10,7 @@ describe('warn too many classes', () => {
    * Make sure the setup is the same for every test
    */
   beforeEach(() => {
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
     styled = resetStyled();
   });
 
@@ -21,7 +20,7 @@ describe('warn too many classes', () => {
     `;
 
     for (let i = 0; i < LIMIT + 1; i++) {
-      TestRenderer.create(<Comp size={i} />);
+      render(<Comp size={i} />);
     }
 
     expect(console.warn).toHaveBeenCalledTimes(1);
@@ -33,7 +32,7 @@ describe('warn too many classes', () => {
     `;
 
     for (let i = 0; i < LIMIT; i++) {
-      TestRenderer.create(<Comp size={i} />);
+      render(<Comp size={i} />);
     }
 
     expect(console.warn).toHaveBeenCalledTimes(1);
@@ -45,7 +44,7 @@ describe('warn too many classes', () => {
     `;
 
     for (let i = 0; i < LIMIT - 1; i++) {
-      TestRenderer.create(<Comp size={i} />);
+      render(<Comp size={i} />);
     }
 
     expect(console.warn).toHaveBeenCalledTimes(0);

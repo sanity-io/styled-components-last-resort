@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useInsertionEffect } from 'react';
 import { STATIC_EXECUTION_CONTEXT } from '../constants';
 import GlobalStyle from '../models/GlobalStyle';
 import { useStyleSheetContext } from '../models/StyleSheetManager';
@@ -48,14 +48,12 @@ export default function createGlobalStyle<Props extends object>(
       renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis);
     }
 
-    if (!__SERVER__) {
-      React.useInsertionEffect(() => {
-        if (!ssc.styleSheet.server) {
-          renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis);
-          return () => globalStyle.removeStyles(instance, ssc.styleSheet);
-        }
-      }, [instance, props, ssc.styleSheet, theme, ssc.stylis]);
-    }
+    useInsertionEffect(() => {
+      if (!ssc.styleSheet.server) {
+        renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis);
+        return () => globalStyle.removeStyles(instance, ssc.styleSheet);
+      }
+    }, [instance, props, ssc.styleSheet, theme, ssc.stylis]);
 
     return null;
   };

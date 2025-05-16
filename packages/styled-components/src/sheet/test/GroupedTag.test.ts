@@ -41,7 +41,7 @@ it('inserts and retrieves rules by groups correctly', () => {
 
 it('inserts rules at correct indices if some rules are dropped', () => {
   const tag = new VirtualTag();
-  jest.spyOn(tag, 'insertRule').mockImplementationOnce(() => false);
+  vi.spyOn(tag, 'insertRule').mockImplementationOnce(() => false);
   const groupedTag = makeGroupedTag(tag);
 
   groupedTag.insertRules(1, ['.skipped {}', '.inserted {}']);

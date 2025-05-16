@@ -5,6 +5,7 @@
     "outDir": "dist",
     "declaration": true,
     "emitDeclarationOnly": true,
+    "types": ["vitest/globals", "@testing-library/jest-dom"],
 
     "target": "ESNext",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],

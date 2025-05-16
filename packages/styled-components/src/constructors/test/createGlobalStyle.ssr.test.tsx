@@ -1,6 +1,4 @@
-/**
- * @jest-environment node
- */
+// @vitest-environment node
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import ServerStyleSheet from '../../models/ServerStyleSheet';

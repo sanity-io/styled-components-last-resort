@@ -1,5 +1,4 @@
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
+import { render, fireEvent, screen, act } from '@testing-library/react';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import Keyframes from '../../models/Keyframes';
 import { StyleSheetManager } from '../../models/StyleSheetManager';
@@ -9,7 +8,7 @@ import keyframes from '../keyframes';
 
 // Disable isStaticRules optimisation since we're not
 // testing for ComponentStyle specifics here
-jest.mock('../../utils/isStaticRules', () => () => false);
+vi.mock('../../utils/isStaticRules', () => ({ default: () => false }));
 
 let styled: ReturnType<typeof resetStyled>;
 
@@ -59,7 +58,7 @@ describe('keyframes', () => {
     const Comp = styled.div`
       animation: ${animation} 2s linear infinite;
     `;
-    TestRenderer.create(<Comp />);
+    render(<Comp />);
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -96,7 +95,7 @@ describe('keyframes', () => {
       `,
     });
 
-    TestRenderer.create(<Comp />);
+    render(<Comp />);
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -140,10 +139,10 @@ describe('keyframes', () => {
       },
     });
 
-    TestRenderer.create(<Comp />);
+    render(<Comp />);
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
-      "@media(max-width:700px) {
+      "@media (max-width:700px) {
         .c {
           animation: a 2s linear infinite;
         }
@@ -176,10 +175,10 @@ describe('keyframes', () => {
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`""`);
 
-    const Comp = styled.div<{ animation: any }>`
-      animation: ${props => props.animation} 2s linear infinite;
+    const Comp = styled.div<{ $animation: any }>`
+      animation: ${props => props.$animation} 2s linear infinite;
     `;
-    TestRenderer.create(<Comp animation={animation} />);
+    render(<Comp $animation={animation} />);
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -237,15 +236,15 @@ describe('keyframes', () => {
     `;
 
     const App = () => (
-      <React.Fragment>
+      <>
         <Foo>hi</Foo>
         <Foo animation={['slide', 'fade']}>hi, I slide and fade.</Foo>
         <Foo animation="fade">hi I fade</Foo>
         <Foo animation="slide">hi I slide</Foo>
-      </React.Fragment>
+      </>
     );
 
-    TestRenderer.create(<App />);
+    render(<App />);
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".d {
@@ -302,7 +301,7 @@ describe('keyframes', () => {
     const Comp = styled.div`
       animation: ${animation} 2s linear infinite;
     `;
-    TestRenderer.create(
+    render(
       <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
         <Comp />
       </StyleSheetManager>
@@ -340,7 +339,7 @@ describe('keyframes', () => {
     const Comp = styled.div`
       animation: ${animation} 2s linear infinite;
     `;
-    TestRenderer.create(
+    render(
       <>
         <Comp />
         <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
@@ -389,7 +388,7 @@ describe('keyframes', () => {
       animation: ${rotate} 0.75s infinite linear;
     `;
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager namespace=".animparent">
         <div>
           <TestAnim>Foo</TestAnim>
@@ -397,12 +396,19 @@ describe('keyframes', () => {
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .animparent .c{color:blue;animation:a 0.75s infinite linear;}@keyframes a{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".animparent .c {
+        color: blue;
+        animation: a 0.75s infinite linear;
+      }
+      @keyframes a {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }"
     `);
   });
 });
