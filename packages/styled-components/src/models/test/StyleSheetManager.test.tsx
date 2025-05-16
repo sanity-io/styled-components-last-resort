@@ -135,6 +135,7 @@ describe('StyleSheetManager', () => {
 
     expect(document.head.innerHTML).toMatchSnapshot();
     expect(document.body.innerHTML).toMatchSnapshot();
+    expect(getRenderedCSS()).toMatchSnapshot();
   });
 
   // https://github.com/styled-components/styled-components/issues/1634
