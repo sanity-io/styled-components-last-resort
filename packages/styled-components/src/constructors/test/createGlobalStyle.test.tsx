@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
 import { act, Simulate } from 'react-dom/test-utils';
 import ReactTestRenderer from 'react-test-renderer';
@@ -9,6 +8,7 @@ import StyleSheet from '../../sheet';
 import { getRenderedCSS, resetStyled } from '../../test/utils';
 import createGlobalStyle from '../createGlobalStyle';
 import keyframes from '../keyframes';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 describe(`createGlobalStyle`, () => {
   let context: ReturnType<typeof setup>;

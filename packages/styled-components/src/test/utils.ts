@@ -9,31 +9,34 @@ import { resetGroupIds } from '../sheet/GroupIDAllocator';
 import { rehydrateSheet } from '../sheet/Rehydration';
 import styledError from '../utils/error';
 import { joinStringArray } from '../utils/joinStrings';
+import { vi } from 'vitest';
 
 /* Ignore hashing, just return class names sequentially as .a .b .c etc */
 let mockIndex = 0;
 let mockInputs: { [key: string]: string } = {};
 let mockSeededClasses: string[] = [];
 
-jest.mock('../utils/generateAlphabeticName', () => (input: string) => {
-  const seed = mockSeededClasses.shift();
-  if (seed) return seed;
+vi.mock('../utils/generateAlphabeticName', () => ({
+  default: (input: string) => {
+    const seed = mockSeededClasses.shift();
+    if (seed) return seed;
 
-  function colName(n: number) {
-    const ordA = 'a'.charCodeAt(0);
-    const ordZ = 'z'.charCodeAt(0);
-    const len = ordZ - ordA + 1;
+    function colName(n: number) {
+      const ordA = 'a'.charCodeAt(0);
+      const ordZ = 'z'.charCodeAt(0);
+      const len = ordZ - ordA + 1;
 
-    let s = '';
-    while (n >= 0) {
-      s = String.fromCharCode((n % len) + ordA) + s;
-      n = Math.floor(n / len) - 1;
+      let s = '';
+      while (n >= 0) {
+        s = String.fromCharCode((n % len) + ordA) + s;
+        n = Math.floor(n / len) - 1;
+      }
+      return s;
     }
-    return s;
-  }
 
-  return mockInputs[input] || (mockInputs[input] = colName(mockIndex++));
-});
+    return mockInputs[input] || (mockInputs[input] = colName(mockIndex++));
+  },
+}));
 
 export const seedNextClassnames = (names: string[]) => (mockSeededClasses = names);
 
