@@ -273,8 +273,8 @@ importers:
         specifier: 10.1.0
         version: 10.1.0(@babel/core@7.24.5)
       bundlewatch:
-        specifier: 0.3.3
-        version: 0.3.3
+        specifier: 0.4.1
+        version: 0.4.1
       jest:
         specifier: 29.7.0
         version: 29.7.0(@types/node@18.19.31)(babel-plugin-macros@3.1.0)
@@ -2528,8 +2528,8 @@ packages:
     engines: {node: '>= 4.5.0'}
     hasBin: true
 
-  axios@0.24.0:
-    resolution: {integrity: sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==}
+  axios@0.30.0:
+    resolution: {integrity: sha512-Z4F3LjCgfjZz8BMYalWdMgAQUnEtKDmpwNHjh/C8pQZWde32TF64cqnSeyL3xD/aTIASRU30RHTNzRiV/NpGMg==}
 
   babel-core@7.0.0-bridge.0:
     resolution: {integrity: sha512-poPX9mZH/5CSanm50Q+1toVci6pv5KSRv/5TWCwtzQS5XEwn40BcCrgIeMFWP9CKKIniKXNxoIOnOq4VVlGXhg==}
@@ -2661,9 +2661,9 @@ packages:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
     engines: {node: '>=6'}
 
-  bundlewatch@0.3.3:
-    resolution: {integrity: sha512-qzSVWrZyyWXa546JpAPRPTFmnXms9YNVnfzB05DRJKmN6wRRa7SkxE4OgKQmbAY74Z6CM2mKAc6vwvd2R+1lUQ==}
-    engines: {node: '>=10'}
+  bundlewatch@0.4.1:
+    resolution: {integrity: sha512-SIobIhMX8DhoGiNlZ+IqicXRBkp7NQTKGEoZP82Tu8FQhoykbTdTQlL4zYT7n6swjH9wahJ9RTefz0Xwva5FXA==}
+    engines: {node: '>=16'}
     hasBin: true
 
   busboy@1.6.0:
@@ -4754,6 +4754,9 @@ packages:
 
   proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
+
+  proxy-from-env@1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
 
   psl@1.15.0:
     resolution: {integrity: sha512-JZd3gMVBAVQkSs6HdNZo9Sdo0LNcQeMNP3CozBJb3JYC/QUYZTnKxP+f8oWRX4rHP5EurWxqAHTSwUCjlNKa1w==}
@@ -8367,9 +8370,11 @@ snapshots:
 
   atob@2.1.2: {}
 
-  axios@0.24.0:
+  axios@0.30.0:
     dependencies:
       follow-redirects: 1.15.9
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
 
@@ -8610,9 +8615,9 @@ snapshots:
 
   builtin-modules@3.3.0: {}
 
-  bundlewatch@0.3.3:
+  bundlewatch@0.4.1:
     dependencies:
-      axios: 0.24.0
+      axios: 0.30.0
       bytes: 3.1.2
       chalk: 4.1.2
       ci-env: 1.17.0
@@ -11143,6 +11148,8 @@ snapshots:
       xtend: 4.0.2
 
   proto-list@1.2.4: {}
+
+  proxy-from-env@1.1.0: {}
 
   psl@1.15.0:
     dependencies:
