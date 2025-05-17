@@ -106,8 +106,8 @@ importers:
         specifier: 2.5.1
         version: 2.5.1
       d3-scale-chromatic:
-        specifier: 1.5.0
-        version: 1.5.0
+        specifier: 2.0.0
+        version: 2.0.0
       goober:
         specifier: 2.1.14
         version: 2.1.14(csstype@3.1.3)
@@ -2999,8 +2999,8 @@ packages:
   d3-interpolate@1.4.0:
     resolution: {integrity: sha512-V9znK0zc3jOPV4VD2zZn0sDhZU3WAE2bmlxdIwwQPPzPjvyLkd8B3JUVdS1IDUFDkWZ72c9qnv1GK2ZagTZ8EA==}
 
-  d3-scale-chromatic@1.5.0:
-    resolution: {integrity: sha512-ACcL46DYImpRFMBcpk9HhtIyC7bTBR4fNOPxwVSl0LfulDAwyiHyPOTqcDG1+t5d4P9W7t/2NAuWu59aKko/cg==}
+  d3-scale-chromatic@2.0.0:
+    resolution: {integrity: sha512-LLqy7dJSL8yDy7NRmf6xSlsFZ6zYvJ4BcWFE4zBrOPnQERv9zj24ohnXKRbyi9YHnYV+HN1oEO3iFK971/gkzA==}
 
   data-urls@3.0.2:
     resolution: {integrity: sha512-Jy/tj3ldjZJo63sVAvg6LHt2mHvl4V6AgRAmNDtLdm7faqtsx+aJG42rsyCo9JCoRVKwPFzKlIPx3DIibwSIaQ==}
@@ -8981,7 +8981,7 @@ snapshots:
     dependencies:
       d3-color: 1.4.1
 
-  d3-scale-chromatic@1.5.0:
+  d3-scale-chromatic@2.0.0:
     dependencies:
       d3-color: 1.4.1
       d3-interpolate: 1.4.0
