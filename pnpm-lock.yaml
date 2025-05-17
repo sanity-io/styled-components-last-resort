@@ -342,8 +342,8 @@ importers:
         specifier: 9.6.0
         version: 9.6.0
       tsdown:
-        specifier: 0.11.9
-        version: 0.11.9(typescript@5.8.3)
+        specifier: 0.11.11
+        version: 0.11.11(typescript@5.8.3)
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -2626,6 +2626,9 @@ packages:
 
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+
+  birpc@2.3.0:
+    resolution: {integrity: sha512-ijbtkn/F3Pvzb6jHypHRyve2QApOCZDR25D/VnkY2G/lBNcXCTsnsCxgY4k4PkVB7zfwzYbY3O9Lcqe3xufS5g==}
 
   bl@4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
@@ -4995,8 +4998,8 @@ packages:
     engines: {node: 20 || >=22}
     hasBin: true
 
-  rolldown-plugin-dts@0.12.3:
-    resolution: {integrity: sha512-u3Z3VHWvWKlk5lqyFDJ5x1IW+SsUfE3nIeu4O0ktzTsYANJqM1R46HF3SbY4ExzrLRdRCMsNhCKC3c1UhsX9ww==}
+  rolldown-plugin-dts@0.13.2:
+    resolution: {integrity: sha512-3/jQZ2d+cOFuPQZ/QC0wmGQv3n6XbJswEgNIPaUoNusTtBrl2Owxn05EOhosr3jkv8eUlzOX4rf9klt2z14SRg==}
     engines: {node: '>=20.18.0'}
     peerDependencies:
       rolldown: ^1.0.0-beta.8-commit.2a5c6a6
@@ -5537,8 +5540,8 @@ packages:
   ts-toolbelt@9.6.0:
     resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
 
-  tsdown@0.11.9:
-    resolution: {integrity: sha512-Lp1lflza4U+Ennezzj7NyC3+OtoeAn7TuOe0fm7uKl0lt71I4gCGSj1HAdInRMD3uQhKUH3uU7nj+MpRSXL7Lg==}
+  tsdown@0.11.11:
+    resolution: {integrity: sha512-Hd3rOtoOKsHxBOQ9PhNkwe6nfkLtELQaV6cvIvqzVnU3SS42DChIdtK1kR48F9yBSrc7/InuLTlpayQbys18mw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
     peerDependencies:
@@ -8569,6 +8572,8 @@ snapshots:
 
   base64-js@1.5.1: {}
 
+  birpc@2.3.0: {}
+
   bl@4.1.0:
     dependencies:
       buffer: 5.7.1
@@ -11440,12 +11445,13 @@ snapshots:
       glob: 11.0.2
       package-json-from-dist: 1.0.1
 
-  rolldown-plugin-dts@0.12.3(rolldown@1.0.0-beta.8-commit.d95f99e)(typescript@5.8.3):
+  rolldown-plugin-dts@0.13.2(rolldown@1.0.0-beta.8-commit.d95f99e)(typescript@5.8.3):
     dependencies:
       '@babel/generator': 7.27.1
       '@babel/parser': 7.27.2
       '@babel/types': 7.27.1
       ast-kit: 2.0.0
+      birpc: 2.3.0
       debug: 4.4.1(supports-color@5.5.0)
       dts-resolver: 2.0.1
       get-tsconfig: 4.10.0
@@ -12049,7 +12055,7 @@ snapshots:
 
   ts-toolbelt@9.6.0: {}
 
-  tsdown@0.11.9(typescript@5.8.3):
+  tsdown@0.11.11(typescript@5.8.3):
     dependencies:
       ansis: 4.0.0
       cac: 6.7.14
@@ -12059,7 +12065,7 @@ snapshots:
       empathic: 1.1.0
       hookable: 5.5.3
       rolldown: 1.0.0-beta.8-commit.d95f99e
-      rolldown-plugin-dts: 0.12.3(rolldown@1.0.0-beta.8-commit.d95f99e)(typescript@5.8.3)
+      rolldown-plugin-dts: 0.13.2(rolldown@1.0.0-beta.8-commit.d95f99e)(typescript@5.8.3)
       semver: 7.7.2
       tinyexec: 1.0.1
       tinyglobby: 0.2.13
