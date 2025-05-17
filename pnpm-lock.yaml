@@ -158,8 +158,8 @@ importers:
         specifier: 6.11.0
         version: 6.11.0(webpack@5.91.0)
       source-map-loader:
-        specifier: 4.0.2
-        version: 4.0.2(webpack@5.91.0)
+        specifier: 5.0.0
+        version: 5.0.0(webpack@5.91.0)
       style-loader:
         specifier: 3.3.4
         version: 3.3.4(webpack@5.91.0)
@@ -5205,9 +5205,9 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
-  source-map-loader@4.0.2:
-    resolution: {integrity: sha512-oYwAqCuL0OZhBoSgmdrLa7mv9MjommVMiQIWgcztf+eS4+8BfcUee6nenFnDhKOhzAVnk5gpZdfnz1iiBv+5sg==}
-    engines: {node: '>= 14.15.0'}
+  source-map-loader@5.0.0:
+    resolution: {integrity: sha512-k2Dur7CbSLcAH73sBcIkV5xjPV4SzqO1NJ7+XaQl8if3VODDUj3FNchNGpqgJSKbvUfJuhVdv8K2Eu8/TNl2eA==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.72.1
 
@@ -11720,7 +11720,7 @@ snapshots:
 
   source-map-js@1.2.1: {}
 
-  source-map-loader@4.0.2(webpack@5.91.0):
+  source-map-loader@5.0.0(webpack@5.91.0):
     dependencies:
       iconv-lite: 0.6.3
       source-map-js: 1.2.1
