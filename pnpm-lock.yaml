@@ -152,8 +152,8 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       babel-plugin-react-native-web:
-        specifier: 0.18.12
-        version: 0.18.12
+        specifier: 0.20.0
+        version: 0.20.0
       css-loader:
         specifier: 6.11.0
         version: 6.11.0(webpack@5.91.0)
@@ -2588,8 +2588,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
 
-  babel-plugin-react-native-web@0.18.12:
-    resolution: {integrity: sha512-4djr9G6fMdwQoD6LQ7hOKAm39+y12flWgovAqS1k5O8f42YQ3A1FFMyV5kKfetZuGhZO5BmNmOdRRZQ1TixtDw==}
+  babel-plugin-react-native-web@0.20.0:
+    resolution: {integrity: sha512-n16dES+EBXCtZ0juCrOahIb2weO2ZD11DBEjj/VABclItWgajck1sX63+SyHJrGlbTPcW+d1Evh0SK1OmoUEDw==}
 
   babel-plugin-styled-components@2.1.4:
     resolution: {integrity: sha512-Xgp9g+A/cG47sUyRwwYxGM4bR/jDRg5N6it/8+HxCnbT5XNKSKDT9xm4oag/osgqjC2It/vH0yXsomOG6k558g==}
@@ -8462,7 +8462,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-plugin-react-native-web@0.18.12: {}
+  babel-plugin-react-native-web@0.20.0: {}
 
   babel-plugin-styled-components@2.1.4(@babel/core@7.24.5)(styled-components@6.1.18(react-dom@17.0.2(react@17.0.2))(react@17.0.2)):
     dependencies:
