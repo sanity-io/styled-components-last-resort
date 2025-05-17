@@ -90,7 +90,7 @@
     "jest-environment-jsdom": "29.7.0",
     "jest-serializer-html": "7.1.0",
     "jest-watch-typeahead": "2.2.2",
-    "js-beautify": "1.15.1",
+    "js-beautify": "1.15.4",
     "prettier": "3.2.5",
     "prop-types": "15.8.1",
     "react": "17.0.2",
