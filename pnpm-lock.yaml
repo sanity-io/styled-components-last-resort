@@ -155,8 +155,8 @@ importers:
         specifier: 0.18.12
         version: 0.18.12
       css-loader:
-        specifier: 6.11.0
-        version: 6.11.0(webpack@5.91.0)
+        specifier: 7.1.2
+        version: 7.1.2(webpack@5.91.0)
       source-map-loader:
         specifier: 4.0.2
         version: 4.0.2(webpack@5.91.0)
@@ -2942,12 +2942,12 @@ packages:
   css-in-js-utils@3.1.0:
     resolution: {integrity: sha512-fJAcud6B3rRu+KHYk+Bwf+WFL2MDCJJ1XG9x137tJQ0xYxor7XziQtuGFbWNdqrvF4Tk26O3H73nfVqXt/fW1A==}
 
-  css-loader@6.11.0:
-    resolution: {integrity: sha512-CTJ+AEQJjq5NzLga5pE39qdiSV56F8ywCIsqNIRF0r7BDgWsN25aazToqAFg7ZrtA/U016xudB3ffgweORxX7g==}
-    engines: {node: '>= 12.13.0'}
+  css-loader@7.1.2:
+    resolution: {integrity: sha512-6WvYYn7l/XEGN8Xu2vWFt9nVzrCn39vKyTEFf/ExEyoksJjjSZV/0/35XPlMbpnr6VGhZIUg5yJrL8tGfes/FA==}
+    engines: {node: '>= 18.12.0'}
     peerDependencies:
       '@rspack/core': 0.x || 1.x
-      webpack: ^5.0.0
+      webpack: ^5.27.0
     peerDependenciesMeta:
       '@rspack/core':
         optional: true
@@ -8925,7 +8925,7 @@ snapshots:
     dependencies:
       hyphenate-style-name: 1.1.0
 
-  css-loader@6.11.0(webpack@5.91.0):
+  css-loader@7.1.2(webpack@5.91.0):
     dependencies:
       icss-utils: 5.1.0(postcss@8.4.49)
       postcss: 8.4.49
