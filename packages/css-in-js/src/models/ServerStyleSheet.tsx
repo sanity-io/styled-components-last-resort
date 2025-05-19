@@ -1,14 +1,10 @@
 import React from 'react';
-import { IS_BROWSER, SC_ATTR, SC_ATTR_VERSION, SC_VERSION } from '../constants';
+import { SC_ATTR, SC_ATTR_VERSION, SC_VERSION } from '../constants';
 import StyleSheet from '../sheet';
 import styledError from '../utils/error';
 import { joinStringArray } from '../utils/joinStrings';
 import getNonce from '../utils/nonce';
 import { StyleSheetManager } from './StyleSheetManager';
-
-declare const __SERVER__: boolean;
-
-const CLOSING_TAG_R = /^\s*<\/[a-z]/i;
 
 export default class ServerStyleSheet {
   instance: StyleSheet;

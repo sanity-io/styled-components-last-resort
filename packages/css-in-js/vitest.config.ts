@@ -4,10 +4,7 @@ import { resolve } from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  define: {
-    __SERVER__: `true`,
-    __VERSION__: `'JEST_MOCK_VERSION'`,
-  },
+  define: { __VERSION__: `'JEST_MOCK_VERSION'` },
   test: {
     environment: 'jsdom',
     globals: true,

@@ -1,18 +1,14 @@
 {
   "name": "@sanity/css-in-js",
-  "version": "6.1.18-6",
+  "version": "6.1.18-7",
   "description": "A fork of styled-components that supports React 19 streaming ssr without ServerStyleSheet or sheet.collectStyles techniques",
   "publishConfig": {
     "access": "public"
   },
-  "types": "dist/default/index.d.ts",
+  "types": "dist/index.d.ts",
   "type": "module",
   "exports": {
-    ".": {
-      "node": "./dist/node/index.js",
-      "browser": "./dist/browser/index.js",
-      "default": "./dist/default/index.js"
-    },
+    ".": "./dist/index.js",
     "./package.json": "./package.json"
   },
   "sideEffects": false,
