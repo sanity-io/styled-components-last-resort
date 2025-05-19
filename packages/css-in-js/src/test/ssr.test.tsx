@@ -99,7 +99,7 @@ describe('ssr', () => {
     );
 
     expect(html).toMatchInlineSnapshot(`
-      "<style data-precedence="sc" data-href="sc-a">.b{padding-right:5px;}/*!sc*/
+      "<style data-precedence="sc" data-href="ahokr8">.b{padding-right:5px;}/*!sc*/
       </style><h1 class="sc-a b">Hello SSR!</h1>"
     `);
     expect(html).toContain('padding-right');
