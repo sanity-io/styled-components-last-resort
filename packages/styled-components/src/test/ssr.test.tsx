@@ -83,7 +83,7 @@ describe('ssr', () => {
     expect(cssTags).toMatchSnapshot();
 
     const cssElements = sheet.getStyleElement();
-    expect(cssElements).toMatchSnapshot();
+    expect(<>{cssElements}</>).toMatchSnapshot();
   });
 
   it('should not spill ServerStyleSheets into each other', () => {

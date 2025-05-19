@@ -7,24 +7,19 @@ data-styled.g1[id="sc-global-a1"]{content:"sc-global-a1,"}/*!sc*/
 `;
 
 exports[`ssr > should emit global styles without any other components 2`] = `
-[
-  {
-    "$$typeof": Symbol(react.transitional.element),
-    "_owner": null,
-    "_store": {},
-    "key": "sc-0-0",
-    "props": {
-      "dangerouslySetInnerHTML": {
+<React.Fragment>
+  <style
+    dangerouslySetInnerHTML={
+      {
         "__html": "body{background:papayawhip;}/*!sc*/
 data-styled.g1[id="sc-global-a1"]{content:"sc-global-a1,"}/*!sc*/
 ",
-      },
-      "data-styled": "",
-      "data-styled-version": "JEST_MOCK_VERSION",
-    },
-    "type": "style",
-  },
-]
+      }
+    }
+    data-styled=""
+    data-styled-version="JEST_MOCK_VERSION"
+  />
+</React.Fragment>
 `;
 
 exports[`ssr > should extract both global and local CSS 1`] = `"<h1 class="sc-b c">Hello SSR!</h1>"`;

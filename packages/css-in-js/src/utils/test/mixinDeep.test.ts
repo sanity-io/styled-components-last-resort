@@ -60,6 +60,7 @@ it('should shallow merge properties if target is not a POJO or array', () => {
         },
       },
       "bar": 6,
+      "baz": undefined,
       "foo": 5,
     }
   `);
@@ -136,10 +137,12 @@ it('should deep mixin arrays during mixin', () => {
       },
       MyObj {
         "bar": 8,
+        "baz": undefined,
         "foo": 7,
       },
       MyObj {
         "bar": 9,
+        "baz": undefined,
         "foo": 8,
       },
     ]

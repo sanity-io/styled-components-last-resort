@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from '../../';
+import { Component } from 'react';
+import { styled } from '../../';
 import isStyledComponent from '../isStyledComponent';
 
 describe('isStyledComponent(something)', () => {
@@ -9,7 +9,7 @@ describe('isStyledComponent(something)', () => {
   });
 
   it('returns false for everything else', () => {
-    [() => {}, class Foo extends React.Component {}, 'foo', 1234, true, false].forEach(test =>
+    [() => {}, class Foo extends Component {}, 'foo', 1234, true, false].forEach(test =>
       expect(isStyledComponent(test)).toBe(false)
     );
   });
