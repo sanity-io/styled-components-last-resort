@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import styled from '../../';
+import { Component } from 'react';
+import { styled } from '../../';
 import isStatelessFunction from '../isStatelessFunction';
 
 class MockComponent extends Component {
-  render() {
+  override render() {
     return <div {...this.props} />;
   }
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import getComponentName from '../getComponentName';
 
 describe('getComponentName', () => {
