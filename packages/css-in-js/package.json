@@ -71,7 +71,7 @@
     "@babel/preset-react": "7.24.1",
     "@babel/preset-typescript": "7.24.1",
     "@rollup/plugin-typescript": "11.1.6",
-    "@types/enzyme": "3.10.18",
+    "@types/enzyme": "3.10.19",
     "@types/jest": "29.5.12",
     "@types/js-beautify": "1.14.3",
     "@types/node": "18.19.31",
