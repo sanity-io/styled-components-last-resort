@@ -3,5 +3,12 @@
   "extends": [
     "local>sanity-io/renovate-config"
   ],
-  "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"]
+  "ignorePresets": [":ignoreModulesAndTests", "github>sanity-io/renovate-config:group-non-major"],
+  "packageRules": [
+    {
+      "description": "Prevent updates to jest-dom utils due to https://github.com/vitest-dev/vitest/issues/7668",
+      "matchPackagePatterns": ["@testing-library/jest-dom"],
+      "enabled": false
+    }
+  ]
 }
