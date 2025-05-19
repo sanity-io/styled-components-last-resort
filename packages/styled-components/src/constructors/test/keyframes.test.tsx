@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import Keyframes from '../../models/Keyframes';
 import { StyleSheetManager } from '../../models/StyleSheetManager';

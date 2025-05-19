@@ -7,7 +7,7 @@
   "packageRules": [
     {
       "description": "Prevent updates to jest-dom utils due to https://github.com/vitest-dev/vitest/issues/7668",
-      "matchPackagePatterns": ["@testing-library/jest-dom"],
+      "matchPackageNames": ["@testing-library/jest-dom"],
       "enabled": false
     }
   ]

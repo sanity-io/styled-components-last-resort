@@ -1,5 +1,4 @@
-import { render, fireEvent, screen, act } from '@testing-library/react';
-import { AnyComponent } from '../types';
+import { render } from '@testing-library/react';
 import { getRenderedCSS, resetStyled } from './utils';
 
 // Disable isStaticRules optimisation since we're not
@@ -91,31 +90,18 @@ describe('extending', () => {
         tertiary: 'green',
       };
 
-      const Parent = styled.h1<{ color?: keyof typeof colors }>`
+      const Parent = styled.h1<{ $color?: keyof typeof colors }>`
         position: relative;
-        color: ${props => colors[props.color!]};
+        color: ${props => colors[props.$color! || 'primary']};
       `;
 
       return Parent;
     };
 
-    const addDefaultProps = (Parent: AnyComponent, Child: AnyComponent, Grandson: AnyComponent) => {
-      Parent.defaultProps = {
-        color: 'primary',
-      };
-      Child.defaultProps = {
-        color: 'secondary',
-      };
-      Grandson.defaultProps = {
-        color: 'tertiary',
-      };
-    };
-
     it('should override parents defaultProps', () => {
       const Parent = setupParent();
-      const Child = styled(Parent)``;
-      const Grandson = styled(Child)``;
-      addDefaultProps(Parent, Child, Grandson);
+      const Child = styled(Parent).attrs({ $color: 'secondary' })``;
+      const Grandson = styled(Child).attrs({ $color: 'tertiary' })``;
       render(<Parent />);
       render(<Child />);
       render(<Grandson />);
@@ -123,6 +109,15 @@ describe('extending', () => {
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".d {
           position: relative;
+          color: red;
+        }
+        .e {
+          position: relative;
+          color: blue;
+        }
+        .f {
+          position: relative;
+          color: green;
         }"
       `);
     });
@@ -130,9 +125,8 @@ describe('extending', () => {
     describe('when overriding with another component', () => {
       it('should override parents defaultProps', () => {
         const Parent = setupParent();
-        const Child = styled(Parent).attrs({ as: 'h2' })``;
-        const Grandson = styled(Child).attrs(() => ({ as: 'h3' }))``;
-        addDefaultProps(Parent, Child, Grandson);
+        const Child = styled(Parent).attrs({ $color: 'secondary', as: 'h2' })``;
+        const Grandson = styled(Child).attrs(() => ({ $color: 'tertiary', as: 'h3' }))``;
         render(<Parent />);
         render(<Child />);
         render(<Grandson />);
@@ -140,15 +134,23 @@ describe('extending', () => {
         expect(getRenderedCSS()).toMatchInlineSnapshot(`
           ".d {
             position: relative;
+            color: red;
+          }
+          .e {
+            position: relative;
+            color: blue;
+          }
+          .f {
+            position: relative;
+            color: green;
           }"
         `);
       });
 
       it('should evaluate grandsons props', () => {
         const Parent = setupParent();
-        const Child = styled(Parent).attrs({ as: 'h2' })``;
-        const Grandson = styled(Child).attrs(() => ({ as: 'h3' }))``;
-        addDefaultProps(Parent, Child, Grandson);
+        const Child = styled(Parent).attrs({ $color: 'secondary', as: 'h2' })``;
+        const Grandson = styled(Child).attrs(() => ({ $color: 'tertiary', as: 'h3' }))``;
 
         expect(render(<Parent />).container).toMatchInlineSnapshot(`
           <div>
@@ -160,7 +162,7 @@ describe('extending', () => {
         expect(render(<Child />).container).toMatchInlineSnapshot(`
           <div>
             <h2
-              class="sc-a sc-b d"
+              class="sc-a sc-b e"
             />
           </div>
         `);
@@ -168,7 +170,7 @@ describe('extending', () => {
         expect(render(<Grandson color="primary" />).container).toMatchInlineSnapshot(`
           <div>
             <h3
-              class="sc-a sc-b sc-c e"
+              class="sc-a sc-b sc-c f"
               color="primary"
             />
           </div>
@@ -176,10 +178,15 @@ describe('extending', () => {
         expect(getRenderedCSS()).toMatchInlineSnapshot(`
           ".d {
             position: relative;
+            color: red;
           }
           .e {
             position: relative;
-            color: red;
+            color: blue;
+          }
+          .f {
+            position: relative;
+            color: green;
           }"
         `);
       });

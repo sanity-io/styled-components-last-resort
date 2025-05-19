@@ -1,11 +1,9 @@
-import React from 'react';
-import TestRenderer from 'react-test-renderer';
-import { AnyComponent } from '../types';
+import { render } from '@testing-library/react';
 import { getRenderedCSS, resetStyled } from './utils';
 
 // Disable isStaticRules optimisation since we're not
 // testing for ComponentStyle specifics here
-jest.mock('../utils/isStaticRules', () => () => false);
+vi.mock('../utils/isStaticRules', () => ({ default: () => false }));
 
 let styled: ReturnType<typeof resetStyled>;
 
@@ -28,8 +26,8 @@ describe('extending', () => {
         font-weight: bold;
       }
     `;
-    TestRenderer.create(<Inner />);
-    TestRenderer.create(<Outer />);
+    render(<Inner />);
+    render(<Outer />);
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -58,9 +56,9 @@ describe('extending', () => {
       padding: 1rem;
     `;
 
-    TestRenderer.create(<Inner />);
+    render(<Inner />);
 
-    const tree = TestRenderer.create(<Outer />);
+    const tree = render(<Outer />);
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -75,10 +73,12 @@ describe('extending', () => {
     `);
 
     // ensure both static classes are applied and dynamic classes are also present
-    expect(tree.toJSON()).toMatchInlineSnapshot(`
-      <div
-        className="sc-a sc-b c d"
-      />
+    expect(tree.container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="sc-a sc-b c d"
+        />
+      </div>
     `);
   });
 
@@ -90,34 +90,21 @@ describe('extending', () => {
         tertiary: 'green',
       };
 
-      const Parent = styled.h1<{ color?: keyof typeof colors }>`
+      const Parent = styled.h1<{ $color?: keyof typeof colors }>`
         position: relative;
-        color: ${props => colors[props.color!]};
+        color: ${props => colors[props.$color! || 'primary']};
       `;
 
       return Parent;
     };
 
-    const addDefaultProps = (Parent: AnyComponent, Child: AnyComponent, Grandson: AnyComponent) => {
-      Parent.defaultProps = {
-        color: 'primary',
-      };
-      Child.defaultProps = {
-        color: 'secondary',
-      };
-      Grandson.defaultProps = {
-        color: 'tertiary',
-      };
-    };
-
     it('should override parents defaultProps', () => {
       const Parent = setupParent();
-      const Child = styled(Parent)``;
-      const Grandson = styled(Child)``;
-      addDefaultProps(Parent, Child, Grandson);
-      TestRenderer.create(<Parent />);
-      TestRenderer.create(<Child />);
-      TestRenderer.create(<Grandson />);
+      const Child = styled(Parent).attrs({ $color: 'secondary' })``;
+      const Grandson = styled(Child).attrs({ $color: 'tertiary' })``;
+      render(<Parent />);
+      render(<Child />);
+      render(<Grandson />);
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".d {
@@ -138,12 +125,11 @@ describe('extending', () => {
     describe('when overriding with another component', () => {
       it('should override parents defaultProps', () => {
         const Parent = setupParent();
-        const Child = styled(Parent).attrs({ as: 'h2' })``;
-        const Grandson = styled(Child).attrs(() => ({ as: 'h3' }))``;
-        addDefaultProps(Parent, Child, Grandson);
-        TestRenderer.create(<Parent />);
-        TestRenderer.create(<Child />);
-        TestRenderer.create(<Grandson />);
+        const Child = styled(Parent).attrs({ $color: 'secondary', as: 'h2' })``;
+        const Grandson = styled(Child).attrs(() => ({ $color: 'tertiary', as: 'h3' }))``;
+        render(<Parent />);
+        render(<Child />);
+        render(<Grandson />);
 
         expect(getRenderedCSS()).toMatchInlineSnapshot(`
           ".d {
@@ -163,28 +149,31 @@ describe('extending', () => {
 
       it('should evaluate grandsons props', () => {
         const Parent = setupParent();
-        const Child = styled(Parent).attrs({ as: 'h2' })``;
-        const Grandson = styled(Child).attrs(() => ({ as: 'h3' }))``;
-        addDefaultProps(Parent, Child, Grandson);
+        const Child = styled(Parent).attrs({ $color: 'secondary', as: 'h2' })``;
+        const Grandson = styled(Child).attrs(() => ({ $color: 'tertiary', as: 'h3' }))``;
 
-        expect(TestRenderer.create(<Parent />).toJSON()).toMatchInlineSnapshot(`
-          <h1
-            className="sc-a d"
-            color="primary"
-          />
+        expect(render(<Parent />).container).toMatchInlineSnapshot(`
+          <div>
+            <h1
+              class="sc-a d"
+            />
+          </div>
         `);
-        expect(TestRenderer.create(<Child />).toJSON()).toMatchInlineSnapshot(`
-          <h2
-            className="sc-a sc-b e"
-            color="secondary"
-          />
+        expect(render(<Child />).container).toMatchInlineSnapshot(`
+          <div>
+            <h2
+              class="sc-a sc-b e"
+            />
+          </div>
         `);
 
-        expect(TestRenderer.create(<Grandson color="primary" />).toJSON()).toMatchInlineSnapshot(`
-          <h3
-            className="sc-a sc-b sc-c d"
-            color="primary"
-          />
+        expect(render(<Grandson color="primary" />).container).toMatchInlineSnapshot(`
+          <div>
+            <h3
+              class="sc-a sc-b sc-c f"
+              color="primary"
+            />
+          </div>
         `);
         expect(getRenderedCSS()).toMatchInlineSnapshot(`
           ".d {
@@ -194,6 +183,10 @@ describe('extending', () => {
           .e {
             position: relative;
             color: blue;
+          }
+          .f {
+            position: relative;
+            color: green;
           }"
         `);
       });

@@ -1,5 +1,4 @@
-import React, { ComponentProps } from 'react';
-import TestRenderer from 'react-test-renderer';
+import { render } from '@testing-library/react';
 import { getRenderedCSS, resetStyled } from '../../test/utils';
 import domElements from '../../utils/domElements';
 
@@ -17,11 +16,11 @@ describe('styled', () => {
   });
 
   it('should expose the component static attribute like components', () => {
-    const CollapseComponent = (props: ComponentProps<'div'>) => {
+    const CollapseComponent = (props: React.ComponentProps<'div'>) => {
       return <div {...props} />;
     };
 
-    const Panel = (props: ComponentProps<'div'>) => {
+    const Panel = (props: React.ComponentProps<'div'>) => {
       return <div {...props} />;
     };
 
@@ -39,7 +38,7 @@ describe('styled', () => {
     expect(StyledCollapse.Panel).toBeTruthy();
     expect(StyledCollapse.PI).toBe('3.14');
 
-    TestRenderer.create(<StyledCollapse />);
+    render(<StyledCollapse />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
     ".b {
       background: red;
