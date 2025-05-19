@@ -1,4 +1,4 @@
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { SC_ATTR, SC_ATTR_VERSION } from '../constants';
 import { getRenderedCSS, rehydrateTestStyles, resetStyled, seedNextClassnames } from './utils';
 
@@ -404,7 +404,8 @@ describe('rehydration', () => {
     beforeEach(() => {
       document.head.innerHTML = `
         <style ${SC_ATTR} ${SC_ATTR_VERSION}="${__VERSION__}">
-          @-webkit-keyframes keyframe_880 {from {opacity: 0;}}@keyframes keyframe_880 {from {opacity: 0;}}/*!sc*/
+          @-webkit-keyframes keyframe_880 {from {opacity: 0;}}/*!sc*/
+          @keyframes keyframe_880 {from {opacity: 0;}}/*!sc*/
           ${SC_ATTR}.g1[id="sc-keyframes-keyframe_880"]{content: "keyframe_880,"}/*!sc*/
         </style>
       `;
@@ -415,6 +416,11 @@ describe('rehydration', () => {
     it('should not touch existing styles', () => {
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "@-webkit-keyframes keyframe_880 {
+          from {
+            opacity: 0;
+          }
+        }
+        @keyframes keyframe_880 {
           from {
             opacity: 0;
           }
@@ -442,6 +448,11 @@ describe('rehydration', () => {
             opacity: 0;
           }
         }
+        @keyframes keyframe_880 {
+          from {
+            opacity: 0;
+          }
+        }
         .b {
           animation: keyframe_880 1s both;
         }"
@@ -464,6 +475,11 @@ describe('rehydration', () => {
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "@-webkit-keyframes keyframe_880 {
+          from {
+            opacity: 0;
+          }
+        }
+        @keyframes keyframe_880 {
           from {
             opacity: 0;
           }
@@ -507,6 +523,11 @@ describe('rehydration', () => {
             opacity: 0;
           }
         }
+        @keyframes keyframe_880 {
+          from {
+            opacity: 0;
+          }
+        }
         .d {
           animation: keyframe_880 1s both;
         }
@@ -543,6 +564,11 @@ describe('rehydration', () => {
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "@-webkit-keyframes keyframe_880 {
+          from {
+            opacity: 0;
+          }
+        }
+        @keyframes keyframe_880 {
           from {
             opacity: 0;
           }

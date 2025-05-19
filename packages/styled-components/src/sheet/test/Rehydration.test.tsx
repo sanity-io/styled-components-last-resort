@@ -1,5 +1,4 @@
-import { render, fireEvent, screen, act } from '@testing-library/react';
-
+import { render } from '@testing-library/react';
 import { ServerStyleSheet, StyleSheetManager } from '../../base';
 import { SC_ATTR, SC_ATTR_ACTIVE, SC_ATTR_VERSION, SC_VERSION } from '../../constants';
 import { resetStyled } from '../../test/utils';
