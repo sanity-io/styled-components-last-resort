@@ -79,7 +79,7 @@
     "@types/react-dom": "^19.1.5",
     "@types/react-frame-component": "4.1.6",
     "@types/shallowequal": "1.1.5",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@vitejs/plugin-react": "^4.4.1",
     "babel-plugin-add-module-exports": "1.0.4",
     "babel-plugin-styled-components": "2.1.4",
     "babel-plugin-tester": "10.1.0",
