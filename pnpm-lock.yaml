@@ -270,8 +270,8 @@ importers:
         specifier: 2.1.4
         version: 2.1.4(@babel/core@7.24.5)(styled-components@6.1.18(react-dom@17.0.2(react@17.0.2))(react@17.0.2))
       babel-plugin-tester:
-        specifier: 10.1.0
-        version: 10.1.0(@babel/core@7.24.5)
+        specifier: 11.0.4
+        version: 11.0.4(@babel/core@7.24.5)
       bundlewatch:
         specifier: 0.3.3
         version: 0.3.3
@@ -442,8 +442,8 @@ importers:
         specifier: 2.1.4
         version: 2.1.4(@babel/core@7.24.5)(styled-components@6.1.18(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
       babel-plugin-tester:
-        specifier: 10.1.0
-        version: 10.1.0(@babel/core@7.24.5)
+        specifier: 11.0.4
+        version: 11.0.4(@babel/core@7.24.5)
       js-beautify:
         specifier: 1.15.4
         version: 1.15.4
@@ -2137,9 +2137,6 @@ packages:
   '@types/aria-query@5.0.4':
     resolution: {integrity: sha512-rfT93uj5s0PRL7EzccGMs3brplhcrghnDoV26NqKhCAS1hVo+WdNsPvE/yb6ilfr5hi2MEk6d5EWJTKdxg8jVw==}
 
-  '@types/babel-plugin-tester@9.0.10':
-    resolution: {integrity: sha512-X+n3nZb8qIZ3a07qt7B5ONfptAZJ6nWLgU5I4U+gm0dRgtcjL+73P2tUkQAJ/iIbRF72BlW/2of5J0qbjlmsBw==}
-
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -2209,9 +2206,6 @@ packages:
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
-
-  '@types/prettier@2.7.3':
-    resolution: {integrity: sha512-+68kP9yzs4LMp7VNh8gdzMSPZFL44MLGqiHWvttYJe+6qnuVr4Ek9wSBQoveqY/r+LwjCcU29kNVkidwim+kYA==}
 
   '@types/react-dom@19.1.5':
     resolution: {integrity: sha512-CMCjrWucUBZvohgZxkjd6S9h0nZxXjzus6yDfUb+xLxYM7VvjKNH1tQrE9GWLql1XoOP4/Ds3bwFqShHUYraGg==}
@@ -2614,11 +2608,11 @@ packages:
   babel-plugin-syntax-trailing-function-commas@7.0.0-beta.0:
     resolution: {integrity: sha512-Xj9XuRuz3nTSbaTXWv3itLOcxyF4oPD8douBBmj7U9BBC6nEBYfyOJYQMf/8PJAFotC62UY5dFfIGEPr7WswzQ==}
 
-  babel-plugin-tester@10.1.0:
-    resolution: {integrity: sha512-4P2tNaM/Mtg6ytA9YAqmgONnMYqWvdbGDuwRTpIIC9yFZGQrEHoyvDPCx+X1QALAufVb5DKieOPGj5dffiEiNg==}
-    engines: {node: '>=10.13', npm: '>=6'}
+  babel-plugin-tester@11.0.4:
+    resolution: {integrity: sha512-cqswtpSPo0e++rZB0l/54EG17LL25l9gLgh59yXfnmNxX+2lZTIOpx2zt4YI9QIClVXc8xf63J6yWwKkzy0jNg==}
+    engines: {node: ^14.20.0 || ^16.16.0 || >=18.5.0}
     peerDependencies:
-      '@babel/core': ^7.11.6
+      '@babel/core': '>=7.11.6'
 
   babel-preset-current-node-syntax@1.1.0:
     resolution: {integrity: sha512-ldYss8SbBlWva1bs28q78Ju5Zq1F+8BrqBZZ0VFhLBvhh6lCpC2o3gDJi/5DRLs9FgYZCnmPYIVFU4lRXCkyUw==}
@@ -2917,6 +2911,9 @@ packages:
 
   core-js-compat@3.42.0:
     resolution: {integrity: sha512-bQasjMfyDGyaeWKBIu33lHh9qlSR0MFE/Nmc6nMjf/iU9b3rSMdAYz1Baxrv4lPdGUsTqZudHA4jIGSJy0SWZQ==}
+
+  core-js@3.42.0:
+    resolution: {integrity: sha512-Sz4PP4ZA+Rq4II21qkNqOEDTDrCvcANId3xpIgB34NDkWc3UduWj2dqEtN9yZIq8Dk3HyPI33x9sqqU5C8sr0g==}
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -7892,11 +7889,6 @@ snapshots:
 
   '@types/aria-query@5.0.4': {}
 
-  '@types/babel-plugin-tester@9.0.10':
-    dependencies:
-      '@types/babel__core': 7.20.5
-      '@types/prettier': 2.7.3
-
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.27.2
@@ -7985,8 +7977,6 @@ snapshots:
   '@types/normalize-package-data@2.4.4': {}
 
   '@types/parse-json@4.0.2': {}
-
-  '@types/prettier@2.7.3': {}
 
   '@types/react-dom@19.1.5(@types/react@19.1.4)':
     dependencies:
@@ -8461,13 +8451,16 @@ snapshots:
 
   babel-plugin-syntax-trailing-function-commas@7.0.0-beta.0: {}
 
-  babel-plugin-tester@10.1.0(@babel/core@7.24.5):
+  babel-plugin-tester@11.0.4(@babel/core@7.24.5):
     dependencies:
       '@babel/core': 7.24.5
-      '@types/babel-plugin-tester': 9.0.10
+      core-js: 3.42.0
+      debug: 4.4.1(supports-color@5.5.0)
       lodash.mergewith: 4.6.2
       prettier: 2.8.8
       strip-indent: 3.0.0
+    transitivePeerDependencies:
+      - supports-color
 
   babel-preset-current-node-syntax@1.1.0(@babel/core@7.24.5):
     dependencies:
@@ -8814,6 +8807,8 @@ snapshots:
   core-js-compat@3.42.0:
     dependencies:
       browserslist: 4.24.5
+
+  core-js@3.42.0: {}
 
   core-util-is@1.0.3: {}
 

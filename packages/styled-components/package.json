@@ -82,7 +82,7 @@
     "@vitejs/plugin-react": "^4.4.1",
     "babel-plugin-add-module-exports": "1.0.4",
     "babel-plugin-styled-components": "2.1.4",
-    "babel-plugin-tester": "10.1.0",
+    "babel-plugin-tester": "11.0.4",
     "js-beautify": "1.15.4",
     "jsdom": "^24.0.0",
     "prettier": "3.2.5",
