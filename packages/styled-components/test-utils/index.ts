@@ -1,4 +1,3 @@
-import { ReactWrapper } from 'enzyme';
 import { IStyledComponent } from '../src/types';
 
 function assertElement(element: any) {
@@ -18,12 +17,6 @@ function assertStyledComponent(styledComponent: any) {
       } is not a styled component.`
     );
   }
-}
-
-export function enzymeFind(wrapper: ReactWrapper, styledComponent: IStyledComponent<'web', any>) {
-  assertStyledComponent(styledComponent);
-
-  return wrapper.find(`.${styledComponent.styledComponentId}`);
 }
 
 export function find(element: Element, styledComponent: IStyledComponent<'web', any>) {

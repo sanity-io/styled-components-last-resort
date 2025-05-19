@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "pnpm --filter=styled-components build",
-    "postinstall": "pnpm --filter=styled-components generateErrors",
-    "test": "pnpm --filter=styled-components test"
+    "build": "pnpm -r build",
+    "postinstall": "pnpm -r generateErrors",
+    "test": "pnpm -r test"
   },
   "dependencies": {
     "@types/react": "19.1.4",
