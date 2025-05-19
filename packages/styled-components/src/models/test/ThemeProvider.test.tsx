@@ -1,5 +1,4 @@
 import { render, screen, act } from '@testing-library/react';
-import withTheme from '../../hoc/withTheme';
 import { expectCSSMatches, resetStyled } from '../../test/utils';
 import ThemeProvider, { useTheme } from '../ThemeProvider';
 
@@ -33,12 +32,11 @@ describe('ThemeProvider', () => {
       --main: ${props => props.theme.main};
       --secondary: ${props => props.theme.secondary};
     `;
-    const MyDivWithTheme = withTheme(MyDiv);
 
     render(
       <ThemeProvider theme={outerTheme}>
         <ThemeProvider theme={innerTheme}>
-          <MyDivWithTheme />
+          <MyDiv />
         </ThemeProvider>
       </ThemeProvider>
     );
@@ -59,13 +57,12 @@ describe('ThemeProvider', () => {
       --main: ${props => props.theme.main};
       --secondary: ${props => props.theme.secondary};
     `;
-    const MyDivWithTheme = withTheme(MyDiv);
 
     render(
       <ThemeProvider theme={outerestTheme}>
         <ThemeProvider theme={outerTheme}>
           <ThemeProvider theme={innerTheme}>
-            <MyDivWithTheme />
+            <MyDiv />
           </ThemeProvider>
         </ThemeProvider>
       </ThemeProvider>
@@ -84,24 +81,22 @@ describe('ThemeProvider', () => {
       two: { main: 'blue', other: 'green' },
     };
 
-    const MyDivOne = withTheme(styled.div`
+    const MyDivOne = styled.div`
       --main: ${props => props.theme.main};
       --secondary: ${props => props.theme.secondary};
-    `);
-    const MyDivWithThemeOne = withTheme(MyDivOne);
-    const MyDivTwo = withTheme(styled.div`
+    `;
+    const MyDivTwo = styled.div`
       --main: ${props => props.theme.main};
       --other: ${props => props.theme.other};
-    `);
-    const MyDivWithThemeTwo = withTheme(MyDivTwo);
+    `;
 
     render(
       <div>
         <ThemeProvider theme={themes.one}>
-          <MyDivWithThemeOne />
+          <MyDivOne />
         </ThemeProvider>
         <ThemeProvider theme={themes.two}>
-          <MyDivWithThemeTwo />
+          <MyDivTwo />
         </ThemeProvider>
       </div>
     );
@@ -122,20 +117,18 @@ describe('ThemeProvider', () => {
     const augment = (outerTheme: typeof theme) =>
       Object.assign({}, outerTheme, { augmented: true });
     const update = { updated: true };
-    const expected = { themed: true, augmented: true, updated: true };
 
     const MyDiv = styled.div`
       --themed: ${props => props.theme.themed};
       --augmented: ${props => props.theme.augmented};
       --updated: ${props => props.theme.updated};
     `;
-    const MyDivWithTheme = withTheme(MyDiv);
 
     function Component(props: { theme: React.ComponentProps<typeof ThemeProvider>['theme'] }) {
       return (
         <ThemeProvider theme={props.theme}>
           <ThemeProvider theme={augment}>
-            <MyDivWithTheme />
+            <MyDiv />
           </ThemeProvider>
         </ThemeProvider>
       );
@@ -172,10 +165,9 @@ describe('useTheme', () => {
   it('useTheme should get the same theme that is serving ThemeProvider', async () => {
     const mainTheme = { main: 'black' };
 
-    const MyDivOne = withTheme(styled.div`
+    const MyDivOne = styled.div`
       --main: ${props => props.theme.main};
-    `);
-    const MyDivWithThemeOne = withTheme(MyDivOne);
+    `;
     const MyDivWithThemeContext = () => {
       const theme = useTheme();
       return <div data-testid="theme" data-theme={theme.main} />;
@@ -186,7 +178,7 @@ describe('useTheme', () => {
         <div>
           <ThemeProvider theme={mainTheme}>
             <>
-              <MyDivWithThemeOne />
+              <MyDivOne />
               <MyDivWithThemeContext />
             </>
           </ThemeProvider>

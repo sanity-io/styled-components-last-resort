@@ -2,8 +2,6 @@
 import { SC_ATTR, SC_VERSION } from './constants';
 import css from './constructors/css';
 import keyframes from './constructors/keyframes';
-/* Import Higher Order Components */
-import withTheme from './hoc/withTheme';
 /* Import hooks */
 import ServerStyleSheet from './models/ServerStyleSheet';
 import {
@@ -70,5 +68,4 @@ export {
   keyframes,
   useTheme,
   SC_VERSION as version,
-  withTheme,
 };

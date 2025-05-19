@@ -1,7 +1,5 @@
 import { render } from '@testing-library/react';
-import { Component, createRef } from 'react';
-import withTheme from '../hoc/withTheme';
-import ThemeProvider, { DefaultTheme } from '../models/ThemeProvider';
+import ThemeProvider from '../models/ThemeProvider';
 import { getRenderedCSS, resetStyled } from './utils';
 
 let styled: ReturnType<typeof resetStyled>;
@@ -417,43 +415,6 @@ describe('theming', () => {
     expect(node).not.toHaveClass('b');
   });
 
-  it('should inject props.theme into a component that uses withTheme hoc', async () => {
-    const originalTheme = { color: 'black' };
-
-    const MyDiv = ({ theme }: any) => <div data-testid="color">{theme.color}</div>;
-    const MyDivWithTheme = withTheme(MyDiv);
-
-    const { findByTestId } = render(
-      <ThemeProvider theme={originalTheme}>
-        <MyDivWithTheme />
-      </ThemeProvider>
-    );
-
-    expect(await findByTestId('color')).toHaveTextContent('black');
-  });
-
-  it('should properly update theme prop on hoc component when theme is changed', async () => {
-    const MyDiv = ({ theme }: any) => <div data-testid="color">{theme.color}</div>;
-    const MyDivWithTheme = withTheme(MyDiv);
-
-    const originalTheme = { color: 'black' };
-    const newTheme = { color: 'blue' };
-
-    const Theme = ({ theme }: any) => (
-      <ThemeProvider theme={theme}>
-        <MyDivWithTheme />
-      </ThemeProvider>
-    );
-
-    const { findByTestId, rerender } = render(<Theme key="a" theme={originalTheme} />);
-    expect(await findByTestId('color')).toHaveTextContent('black');
-
-    // Change theme
-    rerender(<Theme key="a" theme={newTheme} />);
-
-    expect(await findByTestId('color')).toHaveTextContent('blue');
-  });
-
   // https://github.com/styled-components/styled-components/issues/445
   it('should use ThemeProvider theme instead of defaultProps theme after initial render', () => {
     const Text = styled.div`
@@ -485,61 +446,6 @@ describe('theming', () => {
         color: green;
       }"
     `);
-  });
-
-  // https://github.com/styled-components/styled-components/issues/596
-  it('should hoist static properties when using withTheme', () => {
-    class MyComponent extends Component<any, any> {
-      static myStaticProperty = true;
-    }
-
-    const MyComponentWithTheme = withTheme(MyComponent);
-
-    expect(MyComponentWithTheme.myStaticProperty).toBe(true);
-  });
-
-  it('should forward refs', () => {
-    class Comp extends Component<any, any> {
-      override render() {
-        return <div {...this.props} />;
-      }
-    }
-
-    const CompWithTheme = withTheme(Comp);
-    const ref = createRef<typeof Comp>();
-
-    render(
-      <ThemeProvider theme={{}}>
-        <CompWithTheme ref={ref} />
-      </ThemeProvider>
-    );
-
-    expect(ref.current).toBeInstanceOf(Comp);
-  });
-
-  // https://github.com/styled-components/styled-components/issues/1130
-  it('should not break without a ThemeProvider if it has a defaultTheme', async () => {
-    const MyDiv: React.FunctionComponent<{ theme: DefaultTheme }> = ({ theme }) => (
-      <div data-testid="color">{theme.color}</div>
-    );
-    const MyDivWithTheme = withTheme(MyDiv);
-    const theme = { color: 'red' };
-    const newTheme = { color: 'blue' };
-
-    const consoleWarn = console.warn;
-
-    vi.spyOn(console, 'warn').mockImplementation(msg =>
-      !msg.includes('You are not using a ThemeProvider') ? consoleWarn(msg) : null
-    );
-
-    const { findByTestId, rerender } = render(<MyDivWithTheme theme={theme} />);
-
-    expect(await findByTestId('color')).toHaveTextContent('red');
-
-    // Change theme
-    rerender(<MyDivWithTheme theme={newTheme} />);
-
-    expect(await findByTestId('color')).toHaveTextContent('blue');
   });
 
   // https://github.com/styled-components/styled-components/issues/1776

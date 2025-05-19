@@ -3,8 +3,6 @@ import { SC_ATTR, SC_VERSION } from './constants';
 import createGlobalStyle from './constructors/createGlobalStyle';
 import css from './constructors/css';
 import keyframes from './constructors/keyframes';
-/* Import Higher Order Components */
-import withTheme from './hoc/withTheme';
 /* Import hooks */
 import ServerStyleSheet from './models/ServerStyleSheet';
 import {
@@ -54,11 +52,11 @@ if (
 
 /* Export everything */
 export * from './secretInternals';
-export { Attrs, DefaultTheme, ShouldForwardProp } from './types';
+export type { Attrs, DefaultTheme, ShouldForwardProp } from './types';
 export {
-  IStyleSheetContext,
-  IStyleSheetManager,
-  IStylisContext,
+  type IStyleSheetContext,
+  type IStyleSheetManager,
+  type IStylisContext,
   ServerStyleSheet,
   StyleSheetConsumer,
   StyleSheetContext,
@@ -72,5 +70,4 @@ export {
   keyframes,
   useTheme,
   SC_VERSION as version,
-  withTheme,
 };
