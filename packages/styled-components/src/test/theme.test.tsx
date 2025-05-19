@@ -1,5 +1,5 @@
-import { render, fireEvent, screen, act } from '@testing-library/react';
-import React, { Component } from 'react';
+import { render } from '@testing-library/react';
+import { Component, createRef } from 'react';
 import withTheme from '../hoc/withTheme';
 import ThemeProvider, { DefaultTheme } from '../models/ThemeProvider';
 import { getRenderedCSS, resetStyled } from './utils';
@@ -500,13 +500,13 @@ describe('theming', () => {
 
   it('should forward refs', () => {
     class Comp extends Component<any, any> {
-      render() {
+      override render() {
         return <div {...this.props} />;
       }
     }
 
     const CompWithTheme = withTheme(Comp);
-    const ref = React.createRef<typeof Comp>();
+    const ref = createRef<typeof Comp>();
 
     render(
       <ThemeProvider theme={{}}>

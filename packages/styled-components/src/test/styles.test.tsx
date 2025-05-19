@@ -1,5 +1,4 @@
-import React from 'react';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { ThemeProvider } from '../base';
 import css from '../constructors/css';
 import { mainSheet } from '../models/StyleSheetManager';

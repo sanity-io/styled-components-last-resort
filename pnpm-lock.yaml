@@ -115,33 +115,6 @@ importers:
         specifier: 2.6.2
         version: 2.6.2
     devDependencies:
-      '@babel/core':
-        specifier: 7.24.5
-        version: 7.24.5
-      '@babel/helper-module-imports':
-        specifier: 7.24.3
-        version: 7.24.3
-      '@babel/plugin-external-helpers':
-        specifier: 7.24.1
-        version: 7.24.1(@babel/core@7.24.5)
-      '@babel/plugin-proposal-class-properties':
-        specifier: 7.18.6
-        version: 7.18.6(@babel/core@7.24.5)
-      '@babel/plugin-proposal-object-rest-spread':
-        specifier: 7.20.7
-        version: 7.20.7(@babel/core@7.24.5)
-      '@babel/plugin-transform-flow-strip-types':
-        specifier: 7.24.1
-        version: 7.24.1(@babel/core@7.24.5)
-      '@babel/preset-env':
-        specifier: 7.24.5
-        version: 7.24.5(@babel/core@7.24.5)
-      '@babel/preset-react':
-        specifier: 7.24.1
-        version: 7.24.1(@babel/core@7.24.5)
-      '@babel/preset-typescript':
-        specifier: 7.24.1
-        version: 7.24.1(@babel/core@7.24.5)
       '@rollup/plugin-typescript':
         specifier: 11.1.6
         version: 11.1.6(rollup@4.40.2)(tslib@2.6.2)(typescript@5.8.3)
@@ -175,12 +148,6 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.4.1
         version: 4.4.1(vite@5.4.19(@types/node@18.19.31)(terser@5.39.1))
-      babel-plugin-add-module-exports:
-        specifier: 1.0.4
-        version: 1.0.4
-      babel-plugin-styled-components:
-        specifier: 2.1.4
-        version: 2.1.4(@babel/core@7.24.5)(styled-components@6.1.18(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
       js-beautify:
         specifier: 1.15.4
         version: 1.15.4
