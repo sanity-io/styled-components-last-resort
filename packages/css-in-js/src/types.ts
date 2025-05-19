@@ -9,7 +9,10 @@ export { CSS, type DefaultTheme, SupportedHTMLElements };
 
 export interface ExoticComponentWithDisplayName<P extends object = {}>
   extends React.ExoticComponent<P> {
-  defaultProps?: Partial<P> | undefined;
+  /**
+   * @deprecated `defaultProps` is no longer supported in React 19 https://react.dev/blog/2024/04/25/react-19-upgrade-guide#removed-proptypes-and-defaultprops
+   */
+  defaultProps?: never;
   displayName?: string | undefined;
 }
 
@@ -225,7 +228,10 @@ export interface IStyledComponentBase<R extends Runtime, Props extends object = 
   extends PolymorphicComponent<R, Props>,
     IStyledStatics<R, Props>,
     StyledComponentBrand {
-  defaultProps?: (ExecutionProps & Partial<Props>) | undefined;
+  /**
+   * @deprecated `defaultProps` is no longer supported in React 19 https://react.dev/blog/2024/04/25/react-19-upgrade-guide#removed-proptypes-and-defaultprops
+   */
+  defaultProps?: never;
   toString: () => string;
 }
 
