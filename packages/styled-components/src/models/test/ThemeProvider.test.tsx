@@ -1,7 +1,6 @@
-import { render, fireEvent, screen, act } from '@testing-library/react';
-
+import { render, screen, act } from '@testing-library/react';
 import withTheme from '../../hoc/withTheme';
-import { expectCSSMatches, getRenderedCSS, resetStyled } from '../../test/utils';
+import { expectCSSMatches, resetStyled } from '../../test/utils';
 import ThemeProvider, { useTheme } from '../ThemeProvider';
 
 let styled: ReturnType<typeof resetStyled>;

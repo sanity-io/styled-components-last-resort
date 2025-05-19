@@ -1,7 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ThemeProvider should render its child 1`] = `
-<p>
-  Child!
-</p>
+exports[`ThemeProvider > should render its child 1`] = `
+<div>
+  <p>
+    Child!
+  </p>
+</div>
 `;

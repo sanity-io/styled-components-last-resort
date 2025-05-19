@@ -4,7 +4,7 @@ import { ExecutionContext } from '../../types';
 import withTheme from '../withTheme';
 
 describe('withTheme', () => {
-  let warn: ReturnType<typeof jest.spyOn>;
+  let warn: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     warn = vi.spyOn(console, 'warn').mockImplementation(() => {});

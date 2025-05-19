@@ -1,10 +1,10 @@
-import React from 'react';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import React, { Component } from 'react';
+import { render, act } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import Frame, { FrameContextConsumer } from 'react-frame-component';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import StyleSheet from '../../sheet';
-import { getCSS, getRenderedCSS, resetStyled } from '../../test/utils';
+import { getRenderedCSS, resetStyled } from '../../test/utils';
 import ServerStyleSheet from '../ServerStyleSheet';
 import { StyleSheetManager } from '../StyleSheetManager';
 
@@ -59,8 +59,8 @@ describe('StyleSheetManager', () => {
     const Title = styled.h1`
       color: palevioletred;
     `;
-    class Child extends React.Component {
-      render() {
+    class Child extends Component {
+      override render() {
         return <Title />;
       }
     }
@@ -90,8 +90,8 @@ describe('StyleSheetManager', () => {
       color: palevioletred;
     `;
 
-    class Child extends React.Component {
-      render() {
+    class Child extends Component {
+      override render() {
         return <Title />;
       }
     }
@@ -149,8 +149,8 @@ describe('StyleSheetManager', () => {
       <StyleSheetManager target={target}>{children}</StyleSheetManager>
     );
 
-    class Child extends React.Component<{ document: Document; resolve: Function }> {
-      componentDidMount() {
+    class Child extends Component<{ document: Document; resolve: Function }> {
+      override componentDidMount() {
         const style = this.props.document.querySelector('style') as HTMLStyleElement;
 
         expect(style?.sheet?.cssRules[0].cssText.includes(`palevioletred`)).toEqual(true);
@@ -158,7 +158,7 @@ describe('StyleSheetManager', () => {
         this.props.resolve();
       }
 
-      render() {
+      override render() {
         return <Title />;
       }
     }
@@ -206,6 +206,8 @@ describe('StyleSheetManager', () => {
 
   // https://github.com/styled-components/styled-components/issues/2973
   it('should inject common styles into both the main document and a child frame', async () => {
+    expect.hasAssertions();
+
     const CommonTitle = styled.h1`
       color: palevioletred;
     `;
@@ -215,26 +217,26 @@ describe('StyleSheetManager', () => {
       <StyleSheetManager target={target}>{children}</StyleSheetManager>
     );
 
-    class Main extends React.Component<{ document: Document }> {
-      componentDidMount() {
+    class Main extends Component<{ children: React.ReactNode; document: Document }> {
+      override componentDidMount() {
         const style = this.props.document.querySelector('style') as HTMLStyleElement;
 
         expect(style?.sheet?.cssRules[0].cssText.includes(`palevioletred`)).toEqual(true);
       }
 
-      render() {
+      override render() {
         return this.props.children;
       }
     }
 
-    class Child extends React.Component<{ document: Document }> {
-      componentDidMount() {
+    class Child extends Component<{ document: Document }> {
+      override componentDidMount() {
         const style = this.props.document.querySelector('style') as HTMLStyleElement;
 
         expect(style?.sheet?.cssRules[0].cssText.includes(`palevioletred`)).toEqual(true);
       }
 
-      render() {
+      override render() {
         return <CommonTitle />;
       }
     }
@@ -256,7 +258,7 @@ describe('StyleSheetManager', () => {
           </Frame>
         </div>
       </Main>,
-      div
+      { container: div }
     );
 
     div.parentElement!.removeChild(div);

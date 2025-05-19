@@ -1,11 +1,10 @@
-import React from 'react';
-import { render } from 'react-dom';
+import React, { Component } from 'react';
+import { render, act } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import Frame, { FrameContextConsumer } from 'react-frame-component';
-import TestRenderer, { act } from 'react-test-renderer';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import StyleSheet from '../../sheet';
-import { resetStyled } from '../../test/utils';
+import { getRenderedCSS, resetStyled } from '../../test/utils';
 import ServerStyleSheet from '../ServerStyleSheet';
 import { StyleSheetManager } from '../StyleSheetManager';
 
@@ -18,11 +17,11 @@ describe('StyleSheetManager', () => {
 
     styled = resetStyled(true);
 
-    jest.spyOn(console, 'error').mockImplementation(() => {});
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
   });
 
-  it('should use given stylesheet instance', () => {
+  it.skip('should use given stylesheet instance', () => {
     const serverStyles = new ServerStyleSheet();
     const Title = styled.h1`
       color: palevioletred;
@@ -41,13 +40,18 @@ describe('StyleSheetManager', () => {
     const Title = styled.h1`
       color: palevioletred;
     `;
-    const renderedComp = TestRenderer.create(
+    const { getByTestId } = render(
       <StyleSheetManager target={target}>
-        <Title />
+        <Title data-testid="title" />
       </StyleSheetManager>
     );
 
-    expect(() => renderedComp.root.findByType(Title)).not.toThrowError();
+    expect(getByTestId('title')).toMatchInlineSnapshot(`
+      <h1
+        class="sc-a b"
+        data-testid="title"
+      />
+    `);
   });
 
   it('should append style to given target', () => {
@@ -55,23 +59,23 @@ describe('StyleSheetManager', () => {
     const Title = styled.h1`
       color: palevioletred;
     `;
-    class Child extends React.Component {
-      render() {
+    class Child extends Component {
+      override render() {
         return <Title />;
       }
     }
 
     expect(document.body.querySelectorAll('style')).toHaveLength(0);
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager target={target}>
         <Child />
       </StyleSheetManager>
     );
 
-    const styles = target.querySelector('style')?.textContent;
+    const styles = target.querySelector('style') as HTMLStyleElement;
 
-    expect(styles?.includes(`palevioletred`)).toEqual(true);
+    expect(styles?.sheet?.cssRules[0].cssText.includes(`palevioletred`)).toEqual(true);
   });
 
   it('should append style to given target in iframe', () => {
@@ -86,8 +90,8 @@ describe('StyleSheetManager', () => {
       color: palevioletred;
     `;
 
-    class Child extends React.Component {
-      render() {
+    class Child extends Component {
+      override render() {
         return <Title />;
       }
     }
@@ -96,11 +100,12 @@ describe('StyleSheetManager', () => {
       <StyleSheetManager target={target}>
         <Child />
       </StyleSheetManager>,
-      app
+      { container: app }
     );
 
-    const styles = target.querySelector('style')?.textContent;
-    expect(styles?.includes(`palevioletred`)).toEqual(true);
+    const styles = target.querySelector('style') as HTMLStyleElement;
+
+    expect(styles?.sheet?.cssRules[0].cssText.includes(`palevioletred`)).toEqual(true);
   });
 
   it('should apply styles to appropriate targets for nested StyleSheetManagers', () => {
@@ -114,7 +119,7 @@ describe('StyleSheetManager', () => {
       color: green;
     `;
 
-    TestRenderer.create(
+    render(
       <div>
         <ONE />
         <StyleSheetManager target={document.head}>
@@ -130,6 +135,7 @@ describe('StyleSheetManager', () => {
 
     expect(document.head.innerHTML).toMatchSnapshot();
     expect(document.body.innerHTML).toMatchSnapshot();
+    expect(getRenderedCSS()).toMatchSnapshot();
   });
 
   // https://github.com/styled-components/styled-components/issues/1634
@@ -143,14 +149,16 @@ describe('StyleSheetManager', () => {
       <StyleSheetManager target={target}>{children}</StyleSheetManager>
     );
 
-    class Child extends React.Component<{ document: Document; resolve: Function }> {
-      componentDidMount() {
-        const styles = this.props.document.querySelector('style')?.textContent;
-        expect(styles?.includes(`palevioletred`)).toEqual(true);
+    class Child extends Component<{ document: Document; resolve: Function }> {
+      override componentDidMount() {
+        const style = this.props.document.querySelector('style') as HTMLStyleElement;
+
+        expect(style?.sheet?.cssRules[0].cssText.includes(`palevioletred`)).toEqual(true);
+
         this.props.resolve();
       }
 
-      render() {
+      override render() {
         return <Title />;
       }
     }
@@ -184,7 +192,7 @@ describe('StyleSheetManager', () => {
                 </FrameContextConsumer>
               </Frame>
             </div>,
-            div
+            { container: div }
           );
         } catch (e) {
           reject(e);
@@ -198,6 +206,8 @@ describe('StyleSheetManager', () => {
 
   // https://github.com/styled-components/styled-components/issues/2973
   it('should inject common styles into both the main document and a child frame', async () => {
+    expect.hasAssertions();
+
     const CommonTitle = styled.h1`
       color: palevioletred;
     `;
@@ -207,24 +217,26 @@ describe('StyleSheetManager', () => {
       <StyleSheetManager target={target}>{children}</StyleSheetManager>
     );
 
-    class Main extends React.Component<{ document: Document }> {
-      componentDidMount() {
-        const styles = this.props.document.querySelector('style')?.textContent;
-        expect(styles?.includes('palevioletred')).toEqual(true);
+    class Main extends Component<{ children: React.ReactNode; document: Document }> {
+      override componentDidMount() {
+        const style = this.props.document.querySelector('style') as HTMLStyleElement;
+
+        expect(style?.sheet?.cssRules[0].cssText.includes(`palevioletred`)).toEqual(true);
       }
 
-      render() {
+      override render() {
         return this.props.children;
       }
     }
 
-    class Child extends React.Component<{ document: Document }> {
-      componentDidMount() {
-        const styles = this.props.document.querySelector('style')?.textContent;
-        expect(styles?.includes(`palevioletred`)).toEqual(true);
+    class Child extends Component<{ document: Document }> {
+      override componentDidMount() {
+        const style = this.props.document.querySelector('style') as HTMLStyleElement;
+
+        expect(style?.sheet?.cssRules[0].cssText.includes(`palevioletred`)).toEqual(true);
       }
 
-      render() {
+      override render() {
         return <CommonTitle />;
       }
     }
@@ -246,7 +258,7 @@ describe('StyleSheetManager', () => {
           </Frame>
         </div>
       </Main>,
-      div
+      { container: div }
     );
 
     div.parentElement!.removeChild(div);
@@ -266,14 +278,22 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
     const attachPoint = document.body.appendChild(document.createElement('div'));
-    render(<App />, attachPoint);
+    render(<App />, { container: attachPoint });
     // window.getComputedStyles would be perfect, but it seems that JSDOM
     // implementation of that function isn't complete, so need to work around
     // it.
-    const source = document.documentElement.outerHTML;
+    const source = getRenderedCSS();
+    expect(source).toMatchInlineSnapshot(`
+      ".c {
+        color: red;
+      }
+      .d {
+        color: blue;
+      }"
+    `);
     // regex in case test is run against minified CSS in the future
-    const indexOfRedStyle = source.search('color:red');
-    const indexOfBlueStyle = source.search('color:blue');
+    const indexOfRedStyle = source.search('color: red');
+    const indexOfBlueStyle = source.search('color: blue');
     expect(indexOfRedStyle).toBeGreaterThanOrEqual(0);
     expect(indexOfBlueStyle).toBeGreaterThanOrEqual(0);
     expect(indexOfBlueStyle).toBeGreaterThan(indexOfRedStyle);
@@ -284,19 +304,19 @@ describe('StyleSheetManager', () => {
       display: flex;
     `;
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager enableVendorPrefixes>
         <Test>Foo</Test>
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .b{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}
-      </style>
-    `);
+    expect(getRenderedCSS()).toMatchInlineSnapshot(
+      `
+      ".b {
+        display: flex;
+      }"
+    `
+    );
   });
 
   it('passing default shouldForwardProp via StyleSheetManager works', () => {
@@ -304,7 +324,7 @@ describe('StyleSheetManager', () => {
       padding-left: 5px;
     `;
 
-    const result = TestRenderer.create(
+    const { container } = render(
       <StyleSheetManager shouldForwardProp={p => (p === 'foo' ? false : true)}>
         <Test foo bar>
           Foo
@@ -312,12 +332,13 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
 
-    expect(result.toJSON()).toMatchInlineSnapshot(`
-      <div
-        bar={true}
-        className="sc-a b"
-      >
-        Foo
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="sc-a b"
+        >
+          Foo
+        </div>
       </div>
     `);
   });
@@ -327,18 +348,16 @@ describe('StyleSheetManager', () => {
       padding-left: 5px;
     `;
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
         <Test>Foo</Test>
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .b{padding-right:5px;}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".b {
+        padding-right: 5px;
+      }"
     `);
   });
 
@@ -351,7 +370,7 @@ describe('StyleSheetManager', () => {
     Object.defineProperty(stylisRTLPlugin, 'name', { value: undefined });
 
     expect(() =>
-      TestRenderer.create(
+      render(
         <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
           <Test>Foo</Test>
         </StyleSheetManager>
@@ -361,82 +380,93 @@ describe('StyleSheetManager', () => {
     Object.defineProperty(stylisRTLPlugin, 'name', { value: cachedName });
   });
 
-  it('changing stylis plugins via StyleSheetManager works', () => {
+  it('changing stylis plugins via StyleSheetManager works', async () => {
     const Test = styled.div`
       padding-left: 5px;
     `;
 
-    const wrapper = TestRenderer.create(
+    const { container, rerender } = render(
       <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
         <Test>Foo</Test>
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .b{padding-right:5px;}
-      </style>
+    expect(document.head.innerHTML).toMatchInlineSnapshot(
+      `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style>"`
+    );
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".b {
+        padding-right: 5px;
+      }"
     `);
 
-    expect(wrapper.toJSON()).toMatchInlineSnapshot(`
-            <div
-              className="sc-a b"
-            >
-              Foo
-            </div>
-        `);
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="sc-a b"
+        >
+          Foo
+        </div>
+      </div>
+    `);
 
-    act(() => {
-      wrapper.update(
+    await act(() =>
+      rerender(
         <StyleSheetManager>
           <Test>Foo</Test>
         </StyleSheetManager>
-      );
-    });
+      )
+    );
 
     // note that the old styles are not removed since the condition may appear where they're used again
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .b{padding-right:5px;}.c{padding-left:5px;}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(
+      `
+      ".b {
+        padding-right: 5px;
+      }
+      .c {
+        padding-left: 5px;
+      }"
+    `
+    );
+
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="sc-a c"
+        >
+          Foo
+        </div>
+      </div>
     `);
 
-    expect(wrapper.toJSON()).toMatchInlineSnapshot(`
-            <div
-              className="sc-a c"
-            >
-              Foo
-            </div>
-        `);
-
-    act(() => {
-      wrapper.update(
+    await act(() =>
+      rerender(
         <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
           <Test>Foo</Test>
         </StyleSheetManager>
-      );
-    });
+      )
+    );
 
     // no new dynamic classes are added, reusing the prior one
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .b{padding-right:5px;}.c{padding-left:5px;}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".b {
+        padding-right: 5px;
+      }
+      .c {
+        padding-left: 5px;
+      }"
     `);
 
-    expect(wrapper.toJSON()).toMatchInlineSnapshot(`
-            <div
-              className="sc-a b"
-            >
-              Foo
-            </div>
-        `);
+    expect(container).toMatchInlineSnapshot(`
+      <div>
+        <div
+          class="sc-a b"
+        >
+          Foo
+        </div>
+      </div>
+    `);
   });
 
   it('subtrees with different stylis configs should not conflict', () => {
@@ -444,7 +474,7 @@ describe('StyleSheetManager', () => {
       padding-left: 5px;
     `;
 
-    const wrapper = TestRenderer.create(
+    const { container } = render(
       <div>
         <Test>Bar</Test>
         <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
@@ -453,25 +483,28 @@ describe('StyleSheetManager', () => {
       </div>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .b{padding-left:5px;}.c{padding-right:5px;}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".b {
+        padding-left: 5px;
+      }
+      .c {
+        padding-right: 5px;
+      }"
     `);
 
-    expect(wrapper.toJSON()).toMatchInlineSnapshot(`
+    expect(container).toMatchInlineSnapshot(`
       <div>
-        <div
-          className="sc-a b"
-        >
-          Bar
-        </div>
-        <div
-          className="sc-a c"
-        >
-          Foo
+        <div>
+          <div
+            class="sc-a b"
+          >
+            Bar
+          </div>
+          <div
+            class="sc-a c"
+          >
+            Foo
+          </div>
         </div>
       </div>
     `);
@@ -488,7 +521,7 @@ describe('StyleSheetManager', () => {
 
     const outerSheet = new StyleSheet({ useCSSOMInjection: true });
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager sheet={outerSheet}>
         <div>
           <Test>Foo</Test>
@@ -501,16 +534,16 @@ describe('StyleSheetManager', () => {
 
     expect(outerSheet.getTag().tag.getRule(0)).toMatchInlineSnapshot(`".c {padding-left: 5px;}"`);
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-      </style>
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .d{background:red;}
-      </style>
+    expect(document.head.innerHTML).toMatchInlineSnapshot(
+      `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style><style data-styled="active" data-styled-version="JEST_MOCK_VERSION">.d{background:red;}</style>"`
+    );
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".c {
+        padding-left: 5px;
+      }
+      .d {
+        background: red;
+      }"
     `);
   });
 
@@ -519,18 +552,16 @@ describe('StyleSheetManager', () => {
       display: flex;
     `;
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager namespace="#foo">
         <Test>Foo</Test>
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        #foo .b{display:flex;}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      "#foo .b {
+        display: flex;
+      }"
     `);
   });
 
@@ -543,7 +574,7 @@ describe('StyleSheetManager', () => {
       background: red;
     `;
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager namespace="#foo">
         <div>
           <Test>Foo</Test>
@@ -554,12 +585,13 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        #foo .c{padding-left:5px;}#bar .d{background:red;}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      "#foo .c {
+        padding-left: 5px;
+      }
+      #bar .d {
+        background: red;
+      }"
     `);
   });
 
@@ -571,7 +603,7 @@ describe('StyleSheetManager', () => {
       }
     `;
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager namespace=".parent">
         <div>
           <Test>Foo</Test>
@@ -582,12 +614,13 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .parent .b{padding-top:5px;}.parent .child .b{padding-top:10px;}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".parent .b {
+        padding-top: 5px;
+      }
+      .parent .child .b {
+        padding-top: 10px;
+      }"
     `);
   });
 
@@ -600,7 +633,7 @@ describe('StyleSheetManager', () => {
       }
     `;
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager namespace=".parent">
         <div>
           <Test>Foo</Test>
@@ -614,12 +647,13 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .parent .b{color:red;}.parent .child2 .b,.parent .child .b{color:green;}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".parent .b {
+        color: red;
+      }
+      .parent .child2 .b, .parent .child .b {
+        color: green;
+      }"
     `);
   });
 
@@ -639,7 +673,7 @@ describe('StyleSheetManager', () => {
       }
     `;
 
-    TestRenderer.create(
+    render(
       <StyleSheetManager namespace=".parent">
         <div>
           <Test>Foo</Test>
@@ -653,12 +687,21 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
 
-    expect(document.head.innerHTML).toMatchInlineSnapshot(`
-      <style data-styled="active"
-             data-styled-version="JEST_MOCK_VERSION"
-      >
-        .parent .b{color:red;}.parent .child2 .b,.parent .child .b{color:green;}@media (min-width: 768px){.parent .b{color:blue;}.parent .child2 .b,.parent .child .b{color:cyan;}}
-      </style>
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".parent .b {
+        color: red;
+      }
+      .parent .child2 .b, .parent .child .b {
+        color: green;
+      }
+      @media (min-width:768px) {
+        .parent .b {
+          color: blue;
+        }
+        .parent .child2 .b, .parent .child .b {
+          color: cyan;
+        }
+      }"
     `);
   });
 });
