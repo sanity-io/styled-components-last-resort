@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`props > shouldForwardProp > should inherit shouldForwardProp for wrapped styled components 2`] = `
+<div>
+  <div
+    class="sc-a c"
+    id="test-1"
+  />
+  <div
+    class="sc-a sc-b d"
+    id="test-2"
+  />
+</div>
+`;

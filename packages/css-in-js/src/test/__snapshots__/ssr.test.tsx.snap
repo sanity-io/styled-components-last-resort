@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ssr > should extract the CSS in a simple case 1`] = `
+"<style data-precedence="sc" data-href="1ufeysv">.b{color:red;}/*!sc*/
+</style><h1 class="sc-a b">Hello SSR!</h1>"
+`;
+
+exports[`ssr > should extract the CSS in a simple case 2`] = `""`;
+
+exports[`ssr > should render CSS in the order the components were defined, not rendered 1`] = `
+"<style data-precedence="sc" data-href="2t1ezf 1ufeysv">.a{color:blue;}/*!sc*/
+.b{color:red;}/*!sc*/
+</style><div><h2 class="TWO a"></h2><h1 class="ONE b"></h1></div>"
+`;
+
+exports[`ssr > should render CSS in the order the components were defined, not rendered 2`] = `""`;
+
+exports[`ssr > should return a generated React style element 1`] = `
+"<style data-precedence="sc" data-href="1ufeysv">.b{color:red;}/*!sc*/
+</style><h1 class="sc-a b">Hello SSR!</h1>"
+`;

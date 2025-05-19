@@ -48,9 +48,9 @@ describe('with styles', () => {
   });
 
   it('amperstand should refer to the static class when making a self-referential combo selector', () => {
-    const Comp = styled.div<{ color: string }>`
+    const Comp = styled.div<{ $color: string }>`
       background: red;
-      color: ${p => p.color};
+      color: ${p => p.$color};
 
       & {
         display: flex;
@@ -102,8 +102,8 @@ describe('with styles', () => {
     `;
     render(
       <>
-        <Comp color="white" />
-        <Comp color="red" />
+        <Comp $color="white" />
+        <Comp $color="red" />
       </>
     );
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -395,11 +395,11 @@ describe('with styles', () => {
   });
 
   it('should handle functions inside TTL that return css constructor', () => {
-    const Comp = styled.div<{ variant: 'foo' | 'bar' }>`
-      color: ${p => (p.variant === 'bar' ? css`green` : 'red')};
+    const Comp = styled.div<{ $variant: 'foo' | 'bar' }>`
+      color: ${p => (p.$variant === 'bar' ? css`green` : 'red')};
     `;
 
-    render(<Comp variant="bar" />);
+    render(<Comp $variant="bar" />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         color: green;

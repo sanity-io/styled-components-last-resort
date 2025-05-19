@@ -2,8 +2,7 @@
 
 import { resetStyled } from './utils';
 
-import React from 'react';
-import { renderToString, renderToReadableStream } from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import createGlobalStyle from '../constructors/createGlobalStyle';
 import ServerStyleSheet from '../models/ServerStyleSheet';
@@ -44,10 +43,10 @@ describe('ssr', () => {
     const sheet = new ServerStyleSheet();
     const html = renderToString(
       sheet.collectStyles(
-        <React.Fragment>
+        <>
           <Component />
           <Heading>Hello SSR!</Heading>
-        </React.Fragment>
+        </>
       )
     );
     const css = sheet.getStyleTags();
@@ -143,10 +142,10 @@ describe('ssr', () => {
 
     renderToString(
       sheet.collectStyles(
-        <React.Fragment>
+        <>
           <Component />
           <Heading>Hello SSR!</Heading>
-        </React.Fragment>
+        </>
       )
     );
 

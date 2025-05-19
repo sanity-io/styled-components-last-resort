@@ -309,9 +309,9 @@ describe('theming', () => {
   });
 
   it('should properly update style if props used in styles is changed', () => {
-    const Comp1 = styled.div<{ zIndex?: number }>`
+    const Comp1 = styled.div<{ $zIndex?: number }>`
       color: ${props => props.theme.color};
-      z-index: ${props => props.zIndex || 0};
+      z-index: ${props => props.$zIndex || 0};
     `;
 
     const { rerender } = render(
@@ -358,7 +358,7 @@ describe('theming', () => {
           color: 'pink',
         }}
       >
-        <Comp1 zIndex={1} />
+        <Comp1 $zIndex={1} />
       </ThemeProvider>
     );
     expect(getRenderedCSS()).toMatchInlineSnapshot(`

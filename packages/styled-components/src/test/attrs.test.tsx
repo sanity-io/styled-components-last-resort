@@ -1,9 +1,9 @@
 import * as CSS from 'csstype';
-import React from 'react';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import ThemeProvider from '../models/ThemeProvider';
 import { AnyComponent, DataAttributes } from '../types';
 import { getRenderedCSS, resetStyled } from './utils';
+import { Component } from 'react';
 
 // Disable isStaticRules optimisation since we're not
 // testing for ComponentStyle specifics here
@@ -42,8 +42,8 @@ describe('attrs', () => {
   });
 
   it('pass a React component', () => {
-    class ReactComponent extends React.Component {
-      render() {
+    class ReactComponent extends Component {
+      override render() {
         return <p>React Component</p>;
       }
     }
@@ -272,17 +272,17 @@ describe('attrs', () => {
       background: red;
     `;
 
-    class Text extends React.Component<
+    class Text extends Component<
       Partial<React.ComponentProps<typeof Paragraph>>,
       { fontScale: number }
     > {
-      state = {
+      override state = {
         // Assume that will be changed automatically
         // according to the dimensions of the container
         fontScale: 4,
       };
 
-      render() {
+      override render() {
         return (
           <Paragraph $fontScale={this.state.fontScale} {...this.props}>
             {this.props.children}

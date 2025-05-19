@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { expectCSSMatches, getRenderedCSS, resetStyled } from './utils';
 
 let styled: ReturnType<typeof resetStyled>;
@@ -177,10 +176,10 @@ describe('props', () => {
       `;
       const Div2 = styled(Div1)``;
       const wrapper = render(
-        <Fragment>
+        <>
           <Div1 color="red" id="test-1" />
           <Div2 color="green" id="test-2" />
-        </Fragment>
+        </>
       );
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".c {

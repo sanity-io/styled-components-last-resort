@@ -1,5 +1,5 @@
-import React, { Component, CSSProperties, StrictMode } from 'react';
-import { render, fireEvent, screen, act } from '@testing-library/react';
+import { Component, createRef, memo, StrictMode } from 'react';
+import { render, act } from '@testing-library/react';
 
 import { AnyComponent } from '../types';
 import hoist from '../utils/hoist';
@@ -20,7 +20,7 @@ describe('basic', () => {
 
     const FunctionalComponent = () => <div />;
     class ClassComponent extends Component<any, any> {
-      render() {
+      override render() {
         return <div />;
       }
     }
@@ -167,9 +167,11 @@ describe('basic', () => {
   });
 
   it('should allow you to pass in a function returning a style object', () => {
-    const Comp = styled.div<{ color: Exclude<CSSProperties['color'], undefined> }>(({ color }) => ({
-      color,
-    }));
+    const Comp = styled.div<{ color: Exclude<React.CSSProperties['color'], undefined> }>(
+      ({ color }) => ({
+        color,
+      })
+    );
     render(<Comp color="blue" />);
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
@@ -187,7 +189,7 @@ describe('basic', () => {
   });
 
   it('works with the React 16.6 "memo" API', () => {
-    const Comp = React.memo(props => <div {...props} />);
+    const Comp = memo(props => <div {...props} />);
     const StyledComp = styled(Comp)`
       color: red;
     `;
@@ -232,7 +234,7 @@ describe('basic', () => {
 
   describe('jsdom tests', () => {
     class InnerComponent extends Component<any, any> {
-      render() {
+      override render() {
         return <div data-testid="inner" {...this.props} />;
       }
     }
@@ -241,7 +243,7 @@ describe('basic', () => {
       const OuterComponent = styled(InnerComponent)``;
 
       class Wrapper extends Component<any, any> {
-        render() {
+        override render() {
           return <OuterComponent className="test" />;
         }
       }
@@ -252,7 +254,7 @@ describe('basic', () => {
 
     it('should pass the ref to the component', async () => {
       const Comp = styled.div``;
-      const testRef = React.createRef<HTMLDivElement>();
+      const testRef = createRef<HTMLDivElement>();
 
       await act(() => render(<Comp data-testid="comp" ref={testRef} />));
 
@@ -266,7 +268,7 @@ describe('basic', () => {
 
       const Outer = styled(Inner)``;
 
-      const testRef = React.createRef<HTMLDivElement>();
+      const testRef = createRef<HTMLDivElement>();
 
       render(
         <div>
@@ -545,7 +547,7 @@ describe('basic', () => {
     it('does not warn for innerRef if using a custom component', () => {
       const InnerComp: React.FC<any> = props => <div {...props} />;
       const Comp = styled(InnerComp)``;
-      const ref = React.createRef();
+      const ref = createRef();
 
       render(<Comp innerRef={ref} />);
       expect(console.warn).not.toHaveBeenCalled();
