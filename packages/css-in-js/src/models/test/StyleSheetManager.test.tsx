@@ -5,7 +5,6 @@ import Frame, { FrameContextConsumer } from 'react-frame-component';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import StyleSheet from '../../sheet';
 import { getRenderedCSS, resetStyled } from '../../test/utils';
-import ServerStyleSheet from '../ServerStyleSheet';
 import { StyleSheetManager } from '../StyleSheetManager';
 
 let styled: ReturnType<typeof resetStyled>;
@@ -19,19 +18,6 @@ describe('StyleSheetManager', () => {
 
     vi.spyOn(console, 'error').mockImplementation(() => {});
     vi.spyOn(console, 'warn').mockImplementation(() => {});
-  });
-
-  it.skip('should use given stylesheet instance', () => {
-    const serverStyles = new ServerStyleSheet();
-    const Title = styled.h1`
-      color: palevioletred;
-    `;
-    renderToString(
-      <StyleSheetManager sheet={serverStyles.instance}>
-        <Title />
-      </StyleSheetManager>
-    );
-    expect(serverStyles.getStyleTags().includes(`palevioletred`)).toEqual(true);
   });
 
   it('should render its child', () => {
@@ -262,41 +248,6 @@ describe('StyleSheetManager', () => {
     );
 
     div.parentElement!.removeChild(div);
-  });
-
-  it('should render styles in correct order when styled(StyledComponent) and StyleSheetManager is used', () => {
-    const Red = styled.div`
-      color: red;
-    `;
-    const RedChangedToBlue = styled(Red)`
-      color: blue;
-    `;
-    const sheet = new StyleSheet();
-    const App = () => (
-      <StyleSheetManager sheet={sheet}>
-        <RedChangedToBlue>I should be blue</RedChangedToBlue>
-      </StyleSheetManager>
-    );
-    const attachPoint = document.body.appendChild(document.createElement('div'));
-    render(<App />, { container: attachPoint });
-    // window.getComputedStyles would be perfect, but it seems that JSDOM
-    // implementation of that function isn't complete, so need to work around
-    // it.
-    const source = getRenderedCSS();
-    expect(source).toMatchInlineSnapshot(`
-      ".c {
-        color: red;
-      }
-      .d {
-        color: blue;
-      }"
-    `);
-    // regex in case test is run against minified CSS in the future
-    const indexOfRedStyle = source.search('color: red');
-    const indexOfBlueStyle = source.search('color: blue');
-    expect(indexOfRedStyle).toBeGreaterThanOrEqual(0);
-    expect(indexOfBlueStyle).toBeGreaterThanOrEqual(0);
-    expect(indexOfBlueStyle).toBeGreaterThan(indexOfRedStyle);
   });
 
   it('passing `enableVendorPrefixes` to StyleSheetManager works', () => {
@@ -532,10 +483,10 @@ describe('StyleSheetManager', () => {
       </StyleSheetManager>
     );
 
-    expect(outerSheet.getTag().tag.getRule(0)).toMatchInlineSnapshot(`".c {padding-left: 5px;}"`);
+    expect(outerSheet.getTag().tag.getRule(0)).toMatchInlineSnapshot(`""`);
 
     expect(document.head.innerHTML).toMatchInlineSnapshot(
-      `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style><style data-styled="active" data-styled-version="JEST_MOCK_VERSION">.d{background:red;}</style>"`
+      `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style><style data-styled="active" data-styled-version="JEST_MOCK_VERSION">.d{background:red;}</style><style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style>"`
     );
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {

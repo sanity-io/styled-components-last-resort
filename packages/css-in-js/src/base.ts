@@ -3,7 +3,6 @@ import { SC_ATTR, SC_VERSION } from './constants';
 import css from './constructors/css';
 import keyframes from './constructors/keyframes';
 /* Import hooks */
-import ServerStyleSheet from './models/ServerStyleSheet';
 import {
   IStyleSheetContext,
   IStyleSheetManager,
@@ -56,7 +55,6 @@ export {
   type IStyleSheetContext,
   type IStyleSheetManager,
   type IStylisContext,
-  ServerStyleSheet,
   StyleSheetConsumer,
   StyleSheetContext,
   StyleSheetManager,

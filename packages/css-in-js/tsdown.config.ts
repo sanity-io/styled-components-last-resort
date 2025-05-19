@@ -1,4 +1,4 @@
-import { defineConfig, type UserConfig } from 'tsdown/config';
+import { defineConfig } from 'tsdown/config';
 import pkg from './package.json' with { type: 'json' };
 
 export default defineConfig({

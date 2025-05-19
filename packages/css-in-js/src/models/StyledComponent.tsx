@@ -221,25 +221,7 @@ function useStyledComponentImpl<Props extends object>(
 
   useInsertionEffect(() => {
     if (!isHydrating && Array.isArray(styles) && styles.length > 0) {
-      // for (const style of document.querySelectorAll(`[data-href*="${styledComponentId}"]`)) {
-      // const remove = [] as HTMLStyleElement[];
-      // for (const style of document.querySelectorAll(`[data-precedence^="sc"]`)) {
-      //   if (style.hasAttribute('data-rehydrated')) continue;
-      //   rehydrateSheetFromTag(ssc.styleSheet, style as HTMLStyleElement);
-      //   style.setAttribute('data-rehydrated', 'true');
-      //   console.log('rehydrating the style', style);
-      //   // remove.push(style as HTMLStyleElement);
-      // }
-
       componentStyle.flushStyles(styles, ssc.styleSheet);
-      // for (const style of document.querySelectorAll(`[data-href^="${styledComponentId}"]`)) {
-      //   console.log('removing the style', style);
-      //   style.remove();
-      // }
-      // for (const style of remove) {
-      //   console.log('removing the rehydrated style', style);
-      //   style.remove();
-      // }
     }
   }, [isHydrating, styles]);
 
@@ -253,15 +235,7 @@ function useStyledComponentImpl<Props extends object>(
       <>
         {children}
         {css.map(([id, cssRules]) => (
-          <style
-            key={id}
-            href={hash(cssRules)}
-            // href={styledComponentId + '-' + hash(cssRules)}
-            // precedence="scc"
-            // precedence={SC_VERSION}
-            precedence="sc"
-            // precedence={`sc:${i}`}
-          >
+          <style key={id} href={hash(cssRules)} precedence="sc">
             {cssRules}
           </style>
         ))}

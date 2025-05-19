@@ -47,9 +47,9 @@ export type IStyleSheetManager = React.PropsWithChildren<{
    */
   namespace?: undefined | string;
   /**
-   * Create and provide your own `StyleSheet` if necessary for advanced SSR scenarios.
+   * @deprecated the `sheet` prop is no longer supported as it's not needed for SSR
    */
-  sheet?: undefined | StyleSheet;
+  sheet?: never;
   /**
    * Starting in v6, styled-components no longer does its own prop validation
    * and recommends use of transient props "$prop" to pass style-only props to
@@ -85,9 +85,7 @@ export function StyleSheetManager(props: IStyleSheetManager): React.JSX.Element 
   const resolvedStyleSheet = useMemo(() => {
     let sheet = styleSheet;
 
-    if (props.sheet) {
-      sheet = props.sheet;
-    } else if (props.target) {
+    if (props.target) {
       sheet = sheet.reconstructWithOptions({ target: props.target }, false);
     }
 
@@ -96,7 +94,7 @@ export function StyleSheetManager(props: IStyleSheetManager): React.JSX.Element 
     }
 
     return sheet;
-  }, [props.disableCSSOMInjection, props.sheet, props.target, styleSheet]);
+  }, [props.disableCSSOMInjection, props.target, styleSheet]);
 
   const stylis = useMemo(
     () =>

@@ -4,7 +4,6 @@ import { resetStyled } from './utils';
 
 import { renderToString } from 'react-dom/server';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
-import ServerStyleSheet from '../models/ServerStyleSheet';
 import { StyleSheetManager } from '../models/StyleSheetManager';
 
 vi.mock('../utils/nonce');
@@ -23,12 +22,9 @@ describe('ssr', () => {
       color: red;
     `;
 
-    const sheet = new ServerStyleSheet();
-    const html = renderToString(sheet.collectStyles(<Heading>Hello SSR!</Heading>));
-    const css = sheet.getStyleTags();
+    const html = renderToString(<Heading>Hello SSR!</Heading>);
 
     expect(html).toMatchSnapshot();
-    expect(css).toMatchSnapshot();
   });
 
   it('should emit nothing when no styles were generated', () => {
@@ -36,14 +32,9 @@ describe('ssr', () => {
       color: red;
     `;
 
-    const sheet = new ServerStyleSheet();
-    renderToString(sheet.collectStyles(<div />));
+    const html = renderToString(<div />);
 
-    const cssTags = sheet.getStyleTags();
-    expect(cssTags).toBe('');
-
-    const cssElements = sheet.getStyleElement();
-    expect(cssElements).toEqual([]);
+    expect(html).not.toContain('red');
   });
 
   it('should not spill ServerStyleSheets into each other', () => {
@@ -54,11 +45,8 @@ describe('ssr', () => {
       color: green;
     `;
 
-    const sheetA = new ServerStyleSheet();
-    const htmlA = renderToString(sheetA.collectStyles(<A />));
-
-    const sheetB = new ServerStyleSheet();
-    const htmlB = renderToString(sheetB.collectStyles(<B />));
+    const htmlA = renderToString(<A />);
+    const htmlB = renderToString(<B />);
 
     expect(htmlA).toContain('red');
     expect(htmlA).not.toContain('green');
@@ -74,19 +62,14 @@ describe('ssr', () => {
       color: blue;
     `;
 
-    const sheet = new ServerStyleSheet();
     const html = renderToString(
-      sheet.collectStyles(
-        <div>
-          <TWO />
-          <ONE />
-        </div>
-      )
+      <div>
+        <TWO />
+        <ONE />
+      </div>
     );
-    const css = sheet.getStyleTags();
 
     expect(html).toMatchSnapshot();
-    expect(css).toMatchSnapshot();
   });
 
   it('should return a generated React style element', () => {
@@ -94,14 +77,10 @@ describe('ssr', () => {
       color: red;
     `;
 
-    const sheet = new ServerStyleSheet();
-
     const html = renderToString(
-      sheet.collectStyles(
-        <>
-          <Heading>Hello SSR!</Heading>
-        </>
-      )
+      <>
+        <Heading>Hello SSR!</Heading>
+      </>
     );
 
     expect(html).toContain('style');
@@ -113,17 +92,14 @@ describe('ssr', () => {
       padding-left: 5px;
     `;
 
-    const sheet = new ServerStyleSheet();
     const html = renderToString(
-      sheet.collectStyles(
-        <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
-          <Heading>Hello SSR!</Heading>
-        </StyleSheetManager>
-      )
+      <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
+        <Heading>Hello SSR!</Heading>
+      </StyleSheetManager>
     );
 
     expect(html).toMatchInlineSnapshot(`
-      "<style data-precedence="sc" data-href="ahokr8">.b{padding-right:5px;}/*!sc*/
+      "<style data-precedence="sc" data-href="sc-a">.b{padding-right:5px;}/*!sc*/
       </style><h1 class="sc-a b">Hello SSR!</h1>"
     `);
     expect(html).toContain('padding-right');

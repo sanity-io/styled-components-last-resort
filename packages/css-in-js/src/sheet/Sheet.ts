@@ -1,14 +1,10 @@
 import { DISABLE_SPEEDY, IS_BROWSER } from '../constants';
 import { InsertionTarget } from '../types';
 import { EMPTY_OBJECT } from '../utils/empties';
-import { setToString } from '../utils/setToString';
 import { makeGroupedTag } from './GroupedTag';
 import { getGroupForId } from './GroupIDAllocator';
-import { outputSheet, rehydrateSheet } from './Rehydration';
 import { makeTag } from './Tag';
 import { GroupedTag, Sheet, SheetOptions } from './types';
-
-let SHOULD_REHYDRATE = IS_BROWSER;
 
 type SheetConstructorArgs = {
   isServer?: boolean;
@@ -52,20 +48,6 @@ export default class StyleSheet implements Sheet {
     this.gs = globalStyles;
     this.names = new Map(names as NamesAllocationMap);
     this.server = !!options.isServer;
-
-    // We rehydrate only once and use the sheet that is created first
-    if (!this.server && IS_BROWSER && SHOULD_REHYDRATE) {
-      SHOULD_REHYDRATE = false;
-      rehydrateSheet(this);
-    }
-
-    setToString(this, () => outputSheet(this));
-  }
-
-  rehydrate(): void {
-    if (!this.server && IS_BROWSER) {
-      rehydrateSheet(this);
-    }
   }
 
   reconstructWithOptions(options: SheetConstructorArgs, withNames = true) {
