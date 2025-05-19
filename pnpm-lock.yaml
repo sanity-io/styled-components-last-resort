@@ -95,10 +95,10 @@ importers:
     dependencies:
       '@emotion/react':
         specifier: 11.14.0
-        version: 11.14.0(@types/react@19.1.4)(react@17.0.2)
+        version: 11.14.0(@types/react@19.1.4)(react@18.3.1)
       '@emotion/styled':
         specifier: 11.14.0
-        version: 11.14.0(@emotion/react@11.14.0(@types/react@19.1.4)(react@17.0.2))(@types/react@19.1.4)(react@17.0.2)
+        version: 11.14.0(@emotion/react@11.14.0(@types/react@19.1.4)(react@18.3.1))(@types/react@19.1.4)(react@18.3.1)
       aphrodite:
         specifier: 2.4.0
         version: 2.4.0
@@ -112,35 +112,35 @@ importers:
         specifier: 2.1.14
         version: 2.1.14(csstype@3.1.3)
       react:
-        specifier: 17.0.2
-        version: 17.0.2
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: 17.0.2
-        version: 17.0.2(react@17.0.2)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       react-is:
-        specifier: 17.0.2
-        version: 17.0.2
+        specifier: 18.3.1
+        version: 18.3.1
       react-native-web:
         specifier: 0.17.7
-        version: 0.17.7(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+        version: 0.17.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       styled-components:
         specifier: '@sanity/styled-components@workspace:*'
         version: link:@sanity/styled-components@workspace:*
       styled-components-v5:
         specifier: npm:styled-components@5.3.9
-        version: styled-components@5.3.9(@babel/core@7.24.5)(react-dom@17.0.2(react@17.0.2))(react-is@17.0.2)(react@17.0.2)
+        version: styled-components@5.3.9(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)
       styled-components-v6:
         specifier: npm:styled-components@6.1.18
-        version: styled-components@6.1.18(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+        version: styled-components@6.1.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       styled-jsx:
         specifier: 5.1.2
-        version: 5.1.2(@babel/core@7.24.5)(react@17.0.2)
+        version: 5.1.2(@babel/core@7.24.5)(react@18.3.1)
       styletron-engine-atomic:
         specifier: 1.6.2
         version: 1.6.2
       styletron-react:
         specifier: 6.1.1
-        version: 6.1.1(react@17.0.2)
+        version: 6.1.1(react@18.3.1)
     devDependencies:
       '@babel/core':
         specifier: 7.24.5
@@ -268,7 +268,7 @@ importers:
         version: 1.0.4
       babel-plugin-styled-components:
         specifier: 2.1.4
-        version: 2.1.4(@babel/core@7.24.5)(styled-components@6.1.18(react-dom@17.0.2(react@17.0.2))(react@17.0.2))
+        version: 2.1.4(@babel/core@7.24.5)(styled-components@6.1.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       babel-plugin-tester:
         specifier: 10.1.0
         version: 10.1.0(@babel/core@7.24.5)
@@ -297,20 +297,20 @@ importers:
         specifier: 15.8.1
         version: 15.8.1
       react:
-        specifier: 17.0.2
-        version: 17.0.2
+        specifier: 18.3.1
+        version: 18.3.1
       react-dom:
-        specifier: 17.0.2
-        version: 17.0.2(react@17.0.2)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       react-frame-component:
         specifier: 4.1.3
-        version: 4.1.3(prop-types@15.8.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+        version: 4.1.3(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-native:
         specifier: 0.70.15
-        version: 0.70.15(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(react@17.0.2)
+        version: 0.70.15(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(react@18.3.1)
       react-test-renderer:
-        specifier: 17.0.2
-        version: 17.0.2(react@17.0.2)
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
@@ -4751,10 +4751,10 @@ packages:
   react-devtools-core@4.27.7:
     resolution: {integrity: sha512-12N0HrhCPbD76Z7SkyJdGdXdPGouUsgV6tlEsbSpAnLDO06tjXZP+irht4wPdYwJAJRQ85DxL48eQoz7UmrSuQ==}
 
-  react-dom@17.0.2:
-    resolution: {integrity: sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==}
+  react-dom@18.3.1:
+    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
-      react: 17.0.2
+      react: ^18.3.1
 
   react-dom@19.1.0:
     resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
@@ -4817,13 +4817,13 @@ packages:
     peerDependencies:
       react: ^16.0.0 || ^17.0.0 || ^18.0.0
 
-  react-test-renderer@17.0.2:
-    resolution: {integrity: sha512-yaQ9cB89c17PUb0x6UfWRs7kQCorVdHlutU1boVPEsB8IDZH6n9tHxMacc3y0JoXOJUsZb/t/Mb8FUWMKaM7iQ==}
+  react-test-renderer@18.3.1:
+    resolution: {integrity: sha512-KkAgygexHUkQqtvvx/otwxtuFu5cVjfzTCtjXLH9boS19/Nbtg84zS7wIQn39G8IlrhThBpQsMKkq5ZHZIYFXA==}
     peerDependencies:
-      react: 17.0.2
+      react: ^18.3.1
 
-  react@17.0.2:
-    resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
+  react@18.3.1:
+    resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
   react@19.1.0:
@@ -5047,11 +5047,11 @@ packages:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
     engines: {node: '>=v12.22.7'}
 
-  scheduler@0.20.2:
-    resolution: {integrity: sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==}
-
   scheduler@0.22.0:
     resolution: {integrity: sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==}
+
+  scheduler@0.23.2:
+    resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
 
   scheduler@0.26.0:
     resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
@@ -6969,17 +6969,17 @@ snapshots:
 
   '@emotion/memoize@0.9.0': {}
 
-  '@emotion/react@11.14.0(@types/react@19.1.4)(react@17.0.2)':
+  '@emotion/react@11.14.0(@types/react@19.1.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.27.1
       '@emotion/babel-plugin': 11.13.5
       '@emotion/cache': 11.14.0
       '@emotion/serialize': 1.3.3
-      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@17.0.2)
+      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@18.3.1)
       '@emotion/utils': 1.4.2
       '@emotion/weak-memoize': 0.4.0
       hoist-non-react-statics: 3.3.2
-      react: 17.0.2
+      react: 18.3.1
     optionalDependencies:
       '@types/react': 19.1.4
 
@@ -6993,16 +6993,16 @@ snapshots:
 
   '@emotion/sheet@1.4.0': {}
 
-  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.1.4)(react@17.0.2))(@types/react@19.1.4)(react@17.0.2)':
+  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.1.4)(react@18.3.1))(@types/react@19.1.4)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.27.1
       '@emotion/babel-plugin': 11.13.5
       '@emotion/is-prop-valid': 1.3.1
-      '@emotion/react': 11.14.0(@types/react@19.1.4)(react@17.0.2)
+      '@emotion/react': 11.14.0(@types/react@19.1.4)(react@18.3.1)
       '@emotion/serialize': 1.3.3
-      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@17.0.2)
+      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@18.3.1)
       '@emotion/utils': 1.4.2
-      react: 17.0.2
+      react: 18.3.1
     optionalDependencies:
       '@types/react': 19.1.4
 
@@ -7014,9 +7014,9 @@ snapshots:
 
   '@emotion/unitless@0.8.1': {}
 
-  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@17.0.2)':
+  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@18.3.1)':
     dependencies:
-      react: 17.0.2
+      react: 18.3.1
 
   '@emotion/utils@1.4.2': {}
 
@@ -8423,14 +8423,14 @@ snapshots:
 
   babel-plugin-react-native-web@0.18.12: {}
 
-  babel-plugin-styled-components@2.1.4(@babel/core@7.24.5)(styled-components@6.1.18(react-dom@17.0.2(react@17.0.2))(react@17.0.2)):
+  babel-plugin-styled-components@2.1.4(@babel/core@7.24.5)(styled-components@6.1.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@babel/helper-annotate-as-pure': 7.27.1
       '@babel/helper-module-imports': 7.24.3
       '@babel/plugin-syntax-jsx': 7.27.1(@babel/core@7.24.5)
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 6.1.18(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      styled-components: 6.1.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     transitivePeerDependencies:
       - '@babel/core'
 
@@ -11068,23 +11068,22 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  react-dom@17.0.2(react@17.0.2):
+  react-dom@18.3.1(react@18.3.1):
     dependencies:
       loose-envify: 1.4.0
-      object-assign: 4.1.1
-      react: 17.0.2
-      scheduler: 0.20.2
+      react: 18.3.1
+      scheduler: 0.23.2
 
   react-dom@19.1.0(react@19.1.0):
     dependencies:
       react: 19.1.0
       scheduler: 0.26.0
 
-  react-frame-component@4.1.3(prop-types@15.8.1)(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
+  react-frame-component@4.1.3(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       prop-types: 15.8.1
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   react-frame-component@4.1.3(prop-types@15.8.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
@@ -11112,7 +11111,7 @@ snapshots:
 
   react-native-gradle-plugin@0.70.3: {}
 
-  react-native-web@0.17.7(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
+  react-native-web@0.17.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       array-find-index: 1.0.2
       create-react-class: 15.7.0
@@ -11121,12 +11120,12 @@ snapshots:
       inline-style-prefixer: 6.0.4
       normalize-css-color: 1.0.2
       prop-types: 15.8.1
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
     transitivePeerDependencies:
       - encoding
 
-  react-native@0.70.15(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(react@17.0.2):
+  react-native@0.70.15(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(react@18.3.1):
     dependencies:
       '@jest/create-cache-key-function': 27.5.1
       '@react-native-community/cli': 9.3.5(@babel/core@7.24.5)
@@ -11149,16 +11148,16 @@ snapshots:
       nullthrows: 1.1.1
       pretty-format: 26.6.2
       promise: 8.3.0
-      react: 17.0.2
+      react: 18.3.1
       react-devtools-core: 4.27.7
       react-native-codegen: 0.70.7(@babel/preset-env@7.24.5(@babel/core@7.24.5))
       react-native-gradle-plugin: 0.70.3
       react-refresh: 0.4.3
-      react-shallow-renderer: 16.15.0(react@17.0.2)
+      react-shallow-renderer: 16.15.0(react@18.3.1)
       regenerator-runtime: 0.13.11
       scheduler: 0.22.0
       stacktrace-parser: 0.1.11
-      use-sync-external-store: 1.5.0(react@17.0.2)
+      use-sync-external-store: 1.5.0(react@18.3.1)
       whatwg-fetch: 3.6.20
       ws: 6.2.3
     transitivePeerDependencies:
@@ -11180,24 +11179,22 @@ snapshots:
 
   react-refresh@0.4.3: {}
 
-  react-shallow-renderer@16.15.0(react@17.0.2):
+  react-shallow-renderer@16.15.0(react@18.3.1):
     dependencies:
       object-assign: 4.1.1
-      react: 17.0.2
-      react-is: 17.0.2
+      react: 18.3.1
+      react-is: 18.3.1
 
-  react-test-renderer@17.0.2(react@17.0.2):
+  react-test-renderer@18.3.1(react@18.3.1):
     dependencies:
-      object-assign: 4.1.1
-      react: 17.0.2
-      react-is: 17.0.2
-      react-shallow-renderer: 16.15.0(react@17.0.2)
-      scheduler: 0.20.2
+      react: 18.3.1
+      react-is: 18.3.1
+      react-shallow-renderer: 16.15.0(react@18.3.1)
+      scheduler: 0.23.2
 
-  react@17.0.2:
+  react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
-      object-assign: 4.1.1
 
   react@19.1.0: {}
 
@@ -11463,12 +11460,11 @@ snapshots:
     dependencies:
       xmlchars: 2.2.0
 
-  scheduler@0.20.2:
+  scheduler@0.22.0:
     dependencies:
       loose-envify: 1.4.0
-      object-assign: 4.1.1
 
-  scheduler@0.22.0:
+  scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
 
@@ -11736,7 +11732,7 @@ snapshots:
     dependencies:
       webpack: 5.91.0(webpack-cli@5.1.4)
 
-  styled-components@5.3.9(@babel/core@7.24.5)(react-dom@17.0.2(react@17.0.2))(react-is@17.0.2)(react@17.0.2):
+  styled-components@5.3.9(@babel/core@7.24.5)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1):
     dependencies:
       '@babel/helper-module-imports': 7.24.3
       '@babel/traverse': 7.27.1(supports-color@5.5.0)
@@ -11746,15 +11742,15 @@ snapshots:
       babel-plugin-styled-components: 2.1.4(@babel/core@7.24.5)(styled-components@packages+benchmarks+@sanity+styled-components@workspace)
       css-to-react-native: 3.2.0
       hoist-non-react-statics: 3.3.2
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-      react-is: 17.0.2
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-is: 18.3.1
       shallowequal: 1.1.0
       supports-color: 5.5.0
     transitivePeerDependencies:
       - '@babel/core'
 
-  styled-components@6.1.18(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
+  styled-components@6.1.18(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@emotion/is-prop-valid': 1.2.2
       '@emotion/unitless': 0.8.1
@@ -11762,8 +11758,8 @@ snapshots:
       css-to-react-native: 3.2.0
       csstype: 3.1.3
       postcss: 8.4.49
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       shallowequal: 1.1.0
       stylis: 4.3.2
       tslib: 2.6.2
@@ -11782,10 +11778,10 @@ snapshots:
       stylis: 4.3.2
       tslib: 2.6.2
 
-  styled-jsx@5.1.2(@babel/core@7.24.5)(react@17.0.2):
+  styled-jsx@5.1.2(@babel/core@7.24.5)(react@18.3.1):
     dependencies:
       client-only: 0.0.1
-      react: 17.0.2
+      react: 18.3.1
     optionalDependencies:
       '@babel/core': 7.24.5
 
@@ -11799,10 +11795,10 @@ snapshots:
       inline-style-prefixer: 5.1.2
       styletron-standard: 3.1.0
 
-  styletron-react@6.1.1(react@17.0.2):
+  styletron-react@6.1.1(react@18.3.1):
     dependencies:
       prop-types: 15.8.1
-      react: 17.0.2
+      react: 18.3.1
       styletron-standard: 3.1.0
 
   styletron-standard@3.1.0:
@@ -12028,9 +12024,9 @@ snapshots:
     dependencies:
       react: 19.1.0
 
-  use-sync-external-store@1.5.0(react@17.0.2):
+  use-sync-external-store@1.5.0(react@18.3.1):
     dependencies:
-      react: 17.0.2
+      react: 18.3.1
 
   util-deprecate@1.0.2: {}
 
