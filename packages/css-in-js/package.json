@@ -21,7 +21,8 @@
     "prebuild": "pnpm generateErrors",
     "build": "tsdown",
     "pretest": "pnpm generateErrors",
-    "test": "jest -c jest.config.main.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepare": "pnpm build"
   },
   "repository": {
@@ -49,9 +50,7 @@
     "@emotion/is-prop-valid": "1.3.1",
     "@emotion/unitless": "0.10.0",
     "@types/stylis": "4.2.5",
-    "css-to-react-native": "3.2.0",
     "csstype": "3.1.3",
-    "postcss": "8.4.49",
     "shallowequal": "1.1.0",
     "stylis": "4.3.2",
     "tslib": "2.6.2"
