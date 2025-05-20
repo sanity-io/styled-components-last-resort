@@ -14,17 +14,19 @@ export type IStyleSheetContext = {
   stylis: Stringifier;
 };
 
-export const StyleSheetContext = createContext<IStyleSheetContext>({
-  shouldForwardProp: undefined,
-  styleSheet: mainSheet,
-  stylis: mainStylis,
-});
+export const StyleSheetContext: React.Context<IStyleSheetContext> =
+  createContext<IStyleSheetContext>({
+    shouldForwardProp: undefined,
+    styleSheet: mainSheet,
+    stylis: mainStylis,
+  });
 
-export const StyleSheetConsumer = StyleSheetContext.Consumer;
+export const StyleSheetConsumer: React.Consumer<IStyleSheetContext> = StyleSheetContext.Consumer;
 
 export type IStylisContext = Stringifier | void;
-export const StylisContext = createContext<IStylisContext>(undefined);
-export const StylisConsumer = StylisContext.Consumer;
+export const StylisContext: React.Context<IStylisContext> =
+  createContext<IStylisContext>(undefined);
+export const StylisConsumer: React.Consumer<IStylisContext> = StylisContext.Consumer;
 
 export function useStyleSheetContext() {
   return useContext(StyleSheetContext);

@@ -38,9 +38,11 @@ type Props = {
   theme: ThemeArgument;
 };
 
-export const ThemeContext = createContext<DefaultTheme | undefined>(undefined);
+export const ThemeContext: React.Context<DefaultTheme | undefined> = createContext<
+  DefaultTheme | undefined
+>(undefined);
 
-export const ThemeConsumer = ThemeContext.Consumer;
+export const ThemeConsumer: React.Consumer<DefaultTheme | undefined> = ThemeContext.Consumer;
 
 function mergeTheme(theme: ThemeArgument, outerTheme?: DefaultTheme | undefined): DefaultTheme {
   if (!theme) {
