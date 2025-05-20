@@ -6,11 +6,11 @@
 
 import React, {
   Profiler,
-  startTransition,
   useEffect,
   useImperativeHandle,
   useReducer,
   useRef,
+  useDeferredValue,
 } from 'react';
 import type { BenchmarkRef } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
@@ -91,6 +91,7 @@ export interface BenchmarkProps {
 interface BenchmarkState {
   cycle: number;
   running: boolean;
+  componentProps: Record<string, any>;
 }
 
 type BenchmarkAction = { type: 'start' } | { type: 'cycle' } | { type: 'complete' };
@@ -121,23 +122,23 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     () => ({
       start: () => {
         samplesRef.current = [];
-        if (forceConcurrent) {
-          startTransition(() => dispatch({ type: 'start' }));
-        } else {
-          dispatch({ type: 'start' });
-        }
+        dispatch({ type: 'start' });
       },
     }),
-    [forceConcurrent]
+    []
   );
 
-  const [state, dispatch] = useReducer(
+  const [_state, dispatch] = useReducer(
     (state: BenchmarkState, action: BenchmarkAction) => {
       switch (action.type) {
         case 'start':
           return { ...state, running: true, cycle: 0 };
         case 'cycle':
-          return { ...state, cycle: state.cycle + 1 };
+          return {
+            ...state,
+            cycle: state.cycle + 1,
+            componentProps: getComponentProps({ cycle: state.cycle + 1 }),
+          };
         case 'complete':
           return { ...state, running: false, cycle: 0 };
         default:
@@ -145,10 +146,16 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       }
     },
     { cycle: 0, running: false },
-    ({ cycle, running }) => ({ cycle, running, componentProps: getComponentProps({ cycle }) })
+    ({ cycle, running }) => ({
+      cycle,
+      running,
+      componentProps: getComponentProps({ cycle }),
+    })
   );
 
-  const { cycle, running } = state;
+  const deferredState = useDeferredValue(_state);
+  const state = forceConcurrent ? deferredState : _state;
+  const { cycle, running, componentProps } = state;
 
   const runningRef = useRef(false);
   useEffect(() => {
@@ -172,11 +179,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       }
       // startTransition(() => dispatch({ type: 'cycle' }));
       const raf = requestAnimationFrame(() => {
-        if (forceConcurrent) {
-          startTransition(() => dispatch({ type: 'cycle' }));
-        } else {
-          dispatch({ type: 'cycle' });
-        }
+        dispatch({ type: 'cycle' });
       });
       return () => cancelAnimationFrame(raf);
     } else {
@@ -200,11 +203,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       //   stdDev: getStdDev(sortedElapsedTimes),
       // });
       const raf = requestAnimationFrame(() => {
-        if (forceConcurrent) {
-          startTransition(() => dispatch({ type: 'complete' }));
-        } else {
-          dispatch({ type: 'complete' });
-        }
+        dispatch({ type: 'complete' });
 
         onComplete({
           sampleCount: samples.length,
@@ -214,7 +213,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       });
       return () => cancelAnimationFrame(raf);
     }
-  }, [cycle, forceConcurrent, forceLayout, onComplete, running, sampleCount, timeout, type]);
+  }, [cycle, forceLayout, onComplete, running, sampleCount, timeout, type]);
 
   return (
     <Profiler
@@ -241,9 +240,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     >
       {running && shouldRender(cycle, type) ? (
         <Component
-          // Since we're measuring the rendre of <Component /> with <Profiler /> we don't have to worry about
-          // calculating the component props during render skewing testing results
-          {...getComponentProps({ cycle })}
+          {...componentProps}
           // make sure props always change for update tests
           data-test={type === BenchmarkType.UPDATE ? cycle : undefined}
         />
