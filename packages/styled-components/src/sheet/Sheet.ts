@@ -1,7 +1,6 @@
 import { DISABLE_SPEEDY, IS_BROWSER } from '../constants';
 import { InsertionTarget } from '../types';
 import { EMPTY_OBJECT } from '../utils/empties';
-import { setToString } from '../utils/setToString';
 import { makeGroupedTag } from './GroupedTag';
 import { getGroupForId } from './GroupIDAllocator';
 import { outputSheet, rehydrateSheet } from './Rehydration';
@@ -58,9 +57,9 @@ export default class StyleSheet implements Sheet {
       SHOULD_REHYDRATE = false;
       rehydrateSheet(this);
     }
-
-    setToString(this, () => outputSheet(this));
   }
+
+  toString = () => outputSheet(this);
 
   rehydrate(): void {
     if (!this.server && IS_BROWSER) {

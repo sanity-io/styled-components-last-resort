@@ -1,6 +1,6 @@
 {
   "name": "@sanity/styled-components",
-  "version": "6.1.18-5",
+  "version": "6.1.18-6",
   "description": "A fork of styled-components that supports concurrent rendering",
   "publishConfig": {
     "access": "public"
@@ -59,15 +59,6 @@
     "react-dom": "^18.3"
   },
   "devDependencies": {
-    "@babel/core": "7.24.5",
-    "@babel/helper-module-imports": "7.24.3",
-    "@babel/plugin-external-helpers": "7.24.1",
-    "@babel/plugin-proposal-class-properties": "7.18.6",
-    "@babel/plugin-proposal-object-rest-spread": "7.20.7",
-    "@babel/plugin-transform-flow-strip-types": "7.24.1",
-    "@babel/preset-env": "7.24.5",
-    "@babel/preset-react": "7.24.1",
-    "@babel/preset-typescript": "7.24.1",
     "@rollup/plugin-typescript": "11.1.6",
     "@testing-library/jest-dom": "6.4.7",
     "@testing-library/react": "^16.3.0",
@@ -79,8 +70,6 @@
     "@types/react-frame-component": "4.1.6",
     "@types/shallowequal": "1.1.5",
     "@vitejs/plugin-react": "^4.4.1",
-    "babel-plugin-add-module-exports": "1.0.4",
-    "babel-plugin-styled-components": "2.1.4",
     "js-beautify": "1.15.4",
     "jsdom": "^24.0.0",
     "prettier": "3.2.5",

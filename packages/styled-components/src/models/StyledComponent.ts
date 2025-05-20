@@ -30,7 +30,6 @@ import isStyledComponent from '../utils/isStyledComponent';
 import isTag from '../utils/isTag';
 import { joinStrings } from '../utils/joinStrings';
 import merge from '../utils/mixinDeep';
-import { setToString } from '../utils/setToString';
 import ComponentStyle from './ComponentStyle';
 import { useStyleSheetContext } from './StyleSheetManager';
 import { DefaultTheme, ThemeContext } from './ThemeProvider';
@@ -315,7 +314,9 @@ function createStyledComponent<
     );
   }
 
-  setToString(WrappedStyledComponent, () => `.${WrappedStyledComponent.styledComponentId}`);
+  Object.defineProperty(WrappedStyledComponent, 'toString', {
+    value: () => `.${WrappedStyledComponent.styledComponentId}`,
+  });
 
   if (isCompositeComponent) {
     const compositeComponentTarget = target as AnyComponent;
