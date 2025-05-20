@@ -1,7 +1,7 @@
 /**
  * This file is meant for typing-related tests that don't need to go through Jest.
  */
-import React from 'react';
+import { Component, forwardRef, useRef } from 'react';
 import { css, CSSProp, IStyledComponent, StyledObject } from '../index';
 import { styled } from '../index';
 import { DataAttributes } from '../types';
@@ -11,13 +11,11 @@ import { VeryLargeUnionType } from './veryLargeUnionType';
  * Prop inference when using forwardRef
  * https://github.com/styled-components/styled-components/issues/3800#issuecomment-1313445733
  */
-const ComponentBase = React.forwardRef<HTMLDivElement, { prop: 'foo' }>(
-  ({ prop, ...props }, ref) => (
-    <div ref={ref} {...props}>
-      {prop}
-    </div>
-  )
-);
+const ComponentBase = forwardRef<HTMLDivElement, { prop: 'foo' }>(({ prop, ...props }, ref) => (
+  <div ref={ref} {...props}>
+    {prop}
+  </div>
+));
 
 const Component1 = styled(ComponentBase)`
   border: 1px solid black;
@@ -471,7 +469,7 @@ StyledTargetWithStaticProperties.foo;
 const StyledCard = styled.div``;
 
 const App = () => {
-  const listRef = React.useRef<HTMLUListElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
   return (
     <StyledCard forwardedAs="ul" ref={listRef}>
       {' '}
@@ -523,7 +521,7 @@ const ParentStyledComponent3 = styled(ParentStyledComponent2)<{ $prop3?: boolean
 /**
  * Nested class component
  */
-class ParentClassComponent1 extends React.Component<{ $prop1?: boolean }> {}
+class ParentClassComponent1 extends Component<{ $prop1?: boolean }> {}
 const ParentClassComponent2 = styled(ParentClassComponent1)<{ $prop2?: boolean }>``;
 
 <ParentClassComponent2 $prop1={true} $prop2={true} />;

@@ -1,4 +1,3 @@
-import React from 'react';
 import { AnyComponent } from '../types';
 
 const hasSymbol = typeof Symbol === 'function' && Symbol.for;

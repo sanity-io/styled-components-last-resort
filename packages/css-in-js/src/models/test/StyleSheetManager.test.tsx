@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { render, act } from '@testing-library/react';
-import { renderToString } from 'react-dom/server';
 import Frame, { FrameContextConsumer } from 'react-frame-component';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import StyleSheet from '../../sheet';

@@ -1,7 +1,6 @@
 /**
  * This file is meant for typing-related tests that don't need to go through Jest.
  */
-import React from 'react';
 import { css, CSSProp, IStyledComponent, StyledObject } from '../index';
 import { styled } from '../index';
 import { DataAttributes } from '../types';

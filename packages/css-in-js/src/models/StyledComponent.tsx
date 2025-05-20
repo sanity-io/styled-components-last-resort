@@ -1,7 +1,8 @@
 import isPropValid from '@emotion/is-prop-valid';
-import React, {
-  Ref,
+import {
+  forwardRef,
   useCallback,
+  useContext,
   useDebugValue,
   useInsertionEffect,
   useSyncExternalStore,
@@ -130,7 +131,7 @@ let seenUnknownProps = new Set();
 function useStyledComponentImpl<Props extends object>(
   forwardedComponent: IStyledComponent<'web', Props>,
   props: ExecutionProps & Props,
-  forwardedRef: Ref<Element>
+  forwardedRef: React.Ref<Element>
 ) {
   const {
     attrs: componentAttrs,
@@ -141,7 +142,7 @@ function useStyledComponentImpl<Props extends object>(
     target,
   } = forwardedComponent;
 
-  const contextTheme = React.useContext(ThemeContext);
+  const contextTheme = useContext(ThemeContext);
   const ssc = useStyleSheetContext();
   const shouldForwardProp = forwardedComponent.shouldForwardProp || ssc.shouldForwardProp;
 
@@ -316,7 +317,7 @@ function createStyledComponent<
     isTargetStyledComp ? (styledComponentTarget.componentStyle as ComponentStyle) : undefined
   );
 
-  function forwardRefRender(props: ExecutionProps & OuterProps, ref: Ref<Element>) {
+  function forwardRefRender(props: ExecutionProps & OuterProps, ref: React.Ref<Element>) {
     return useStyledComponentImpl<OuterProps>(WrappedStyledComponent, props, ref);
   }
 
@@ -326,7 +327,7 @@ function createStyledComponent<
    * forwardRef creates a new interim component, which we'll take advantage of
    * instead of extending ParentComponent to create _another_ interim class
    */
-  let WrappedStyledComponent = React.forwardRef(forwardRefRender) as unknown as IStyledComponent<
+  let WrappedStyledComponent = forwardRef(forwardRefRender) as unknown as IStyledComponent<
     'web',
     any
   > &

@@ -9,7 +9,7 @@ export const makeGroupedTag = (tag: Tag) => {
 
 const BASE_SIZE = 1 << 9;
 
-const DefaultGroupedTag = class DefaultGroupedTag implements GroupedTag {
+class DefaultGroupedTag implements GroupedTag {
   groupSizes: Uint32Array;
   length: number;
   tag: Tag;
@@ -91,4 +91,4 @@ const DefaultGroupedTag = class DefaultGroupedTag implements GroupedTag {
 
     return css;
   }
-};
+}

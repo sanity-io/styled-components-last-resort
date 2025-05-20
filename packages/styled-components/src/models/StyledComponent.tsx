@@ -1,5 +1,5 @@
 import isPropValid from '@emotion/is-prop-valid';
-import React, { Ref, useDebugValue, useInsertionEffect } from 'react';
+import { forwardRef, useContext, useDebugValue, useInsertionEffect } from 'react';
 import { IS_BROWSER, SC_VERSION } from '../constants';
 import type {
   AnyComponent,
@@ -123,7 +123,8 @@ let seenUnknownProps = new Set();
 
 function useStyledComponentImpl<Props extends object>(
   forwardedComponent: IStyledComponent<'web', Props>,
-  props: ExecutionProps & Props
+  props: ExecutionProps & Props,
+  forwardedRef: React.Ref<Element>
 ) {
   const {
     attrs: componentAttrs,
@@ -134,7 +135,7 @@ function useStyledComponentImpl<Props extends object>(
     target,
   } = forwardedComponent;
 
-  const contextTheme = React.useContext(ThemeContext);
+  const contextTheme = useContext(ThemeContext);
   const ssc = useStyleSheetContext();
   const shouldForwardProp = forwardedComponent.shouldForwardProp || ssc.shouldForwardProp;
 
@@ -201,9 +202,9 @@ function useStyledComponentImpl<Props extends object>(
   // forwardedRef is coming from React.forwardRef.
   // But it might not exist. Since React 19 handles `ref` like a prop, it only define it if there is a value.
   // We don't want to inject an empty ref.
-  // if (forwardedRef) {
-  // propsForElement.ref = forwardedRef;
-  // }
+  if (forwardedRef) {
+    propsForElement.ref = forwardedRef;
+  }
 
   return <ElementToBeCreated {...propsForElement} />;
 }
@@ -261,8 +262,8 @@ function createStyledComponent<
     isTargetStyledComp ? (styledComponentTarget.componentStyle as ComponentStyle) : undefined
   );
 
-  function forwardRefRender(props: ExecutionProps & OuterProps, ref: Ref<Element>) {
-    return useStyledComponentImpl<OuterProps>(WrappedStyledComponent, props);
+  function forwardRefRender(props: ExecutionProps & OuterProps, ref: React.Ref<Element>) {
+    return useStyledComponentImpl<OuterProps>(WrappedStyledComponent, props, ref);
   }
 
   forwardRefRender.displayName = displayName;
@@ -271,7 +272,7 @@ function createStyledComponent<
    * forwardRef creates a new interim component, which we'll take advantage of
    * instead of extending ParentComponent to create _another_ interim class
    */
-  let WrappedStyledComponent = React.memo(forwardRefRender) as unknown as IStyledComponent<
+  let WrappedStyledComponent = forwardRef(forwardRefRender) as unknown as IStyledComponent<
     'web',
     any
   > &

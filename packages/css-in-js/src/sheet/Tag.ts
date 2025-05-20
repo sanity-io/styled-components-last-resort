@@ -13,7 +13,7 @@ export const makeTag = ({ isServer, useCSSOMInjection, target }: SheetOptions) =
   }
 };
 
-export const CSSOMTag = class CSSOMTag implements Tag {
+export class CSSOMTag implements Tag {
   element: HTMLStyleElement;
 
   sheet: CSSStyleSheet;
@@ -55,10 +55,10 @@ export const CSSOMTag = class CSSOMTag implements Tag {
       return '';
     }
   }
-};
+}
 
 /** A Tag that emulates the CSSStyleSheet API but uses text nodes */
-export const TextTag = class TextTag implements Tag {
+export class TextTag implements Tag {
   element: HTMLStyleElement;
   nodes: NodeListOf<Node>;
   length: number;
@@ -93,10 +93,10 @@ export const TextTag = class TextTag implements Tag {
       return '';
     }
   }
-};
+}
 
 /** A completely virtual (server-side) Tag that doesn't manipulate the DOM */
-export const VirtualTag = class VirtualTag implements Tag {
+export class VirtualTag implements Tag {
   rules: string[];
 
   length: number;
@@ -128,4 +128,4 @@ export const VirtualTag = class VirtualTag implements Tag {
       return '';
     }
   }
-};
+}

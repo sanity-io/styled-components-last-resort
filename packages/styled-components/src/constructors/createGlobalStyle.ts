@@ -1,4 +1,4 @@
-import React, { useInsertionEffect } from 'react';
+import { Children, memo, useContext, useInsertionEffect, useRef } from 'react';
 import { STATIC_EXECUTION_CONTEXT } from '../constants';
 import GlobalStyle from '../models/GlobalStyle';
 import { useStyleSheetContext } from '../models/StyleSheetManager';
@@ -24,12 +24,12 @@ export default function createGlobalStyle<Props extends object>(
 
   const GlobalStyleComponent: React.ComponentType<ExecutionProps & Props> = props => {
     const ssc = useStyleSheetContext();
-    const theme = React.useContext(ThemeContext);
-    const instanceRef = React.useRef(ssc.styleSheet.allocateGSInstance(styledComponentId));
+    const theme = useContext(ThemeContext);
+    const instanceRef = useRef(ssc.styleSheet.allocateGSInstance(styledComponentId));
 
     const instance = instanceRef.current;
 
-    if (process.env.NODE_ENV !== 'production' && React.Children.count(props.children)) {
+    if (process.env.NODE_ENV !== 'production' && Children.count(props.children)) {
       console.warn(
         `The global style component ${styledComponentId} was given child JSX. createGlobalStyle does not render children.`
       );
@@ -82,5 +82,5 @@ export default function createGlobalStyle<Props extends object>(
     }
   }
 
-  return React.memo(GlobalStyleComponent);
+  return memo(GlobalStyleComponent);
 }

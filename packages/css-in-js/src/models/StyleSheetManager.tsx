@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import shallowequal from 'shallowequal';
 import type stylis from 'stylis';
 import StyleSheet from '../sheet';
@@ -14,7 +14,7 @@ export type IStyleSheetContext = {
   stylis: Stringifier;
 };
 
-export const StyleSheetContext = React.createContext<IStyleSheetContext>({
+export const StyleSheetContext = createContext<IStyleSheetContext>({
   shouldForwardProp: undefined,
   styleSheet: mainSheet,
   stylis: mainStylis,
@@ -23,7 +23,7 @@ export const StyleSheetContext = React.createContext<IStyleSheetContext>({
 export const StyleSheetConsumer = StyleSheetContext.Consumer;
 
 export type IStylisContext = Stringifier | void;
-export const StylisContext = React.createContext<IStylisContext>(undefined);
+export const StylisContext = createContext<IStylisContext>(undefined);
 export const StylisConsumer = StylisContext.Consumer;
 
 export function useStyleSheetContext() {

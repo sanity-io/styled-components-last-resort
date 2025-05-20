@@ -1,5 +1,4 @@
 import type * as CSS from 'csstype';
-import React from 'react';
 import ComponentStyle from './models/ComponentStyle';
 import { DefaultTheme } from './models/ThemeProvider';
 import createWarnTooManyClasses from './utils/createWarnTooManyClasses';

@@ -1,4 +1,3 @@
-import React from 'react';
 import type * as streamInternal from 'stream';
 import { Readable } from 'stream';
 import { IS_BROWSER, SC_ATTR, SC_ATTR_VERSION, SC_VERSION } from '../constants';

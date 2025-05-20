@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 import generateDisplayName from '../generateDisplayName';
 
 it('handles a string type', () => {
@@ -6,13 +6,13 @@ it('handles a string type', () => {
 });
 
 it('handles a React class type', () => {
-  class Foo extends React.Component {}
+  class Foo extends Component {}
 
   expect(generateDisplayName(Foo)).toBe('Styled(Foo)');
 });
 
 it('handles a React class type with displayName', () => {
-  class Foo extends React.Component {
+  class Foo extends Component {
     static displayName = 'Bar';
   }
 
