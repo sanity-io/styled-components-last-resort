@@ -1,7 +1,8 @@
 packages:
-  - packages/*
+  - benchmarks
   - examples/css-in-js/*
   - examples/styled-components/*
+  - packages/*
 
 onlyBuiltDependencies:
   - esbuild

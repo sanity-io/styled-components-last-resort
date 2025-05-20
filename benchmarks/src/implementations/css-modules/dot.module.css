@@ -1,0 +1,16 @@
+.dot.dot {
+  position: absolute;
+  cursor: pointer;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-top-width: 0;
+  transform: translate(50%, 50%);
+  border-bottom-color: var(--css-module-dot-color);
+  border-right-width: var(--css-module-dot-size);
+  border-bottom-width: var(--css-module-dot-size);
+  border-left-width: var(--css-module-dot-size);
+  margin-left: var(--css-module-dot-x);
+  margin-top: var(--css-module-dot-y);
+}

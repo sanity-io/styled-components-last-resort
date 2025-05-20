@@ -1,0 +1,10 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: clip;
+}
+#root {
+  height: 100%;
+  overflow: clip;
+}
