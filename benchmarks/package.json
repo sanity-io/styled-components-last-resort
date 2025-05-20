@@ -15,6 +15,8 @@
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
+    "@sanity/css-in-js": "6.1.18-16",
+    "@sanity/styled-components": "6.1.18-11",
     "aphrodite": "2.4.0",
     "classnames": "2.5.1",
     "d3-scale-chromatic": "3.1.0",
@@ -28,7 +30,7 @@
     "restyle": "3.0.0",
     "styled-components-use-insertion-effect": "npm:@sanity/styled-components@6.1.13",
     "styled-components-v5": "npm:styled-components@5.3.11",
-    "styled-components-v6": "npm:styled-components@6.1.13",
+    "styled-components-v6": "npm:styled-components@6.1.18",
     "styled-jsx": "5.1.6",
     "styletron-engine-atomic": "1.6.2",
     "styletron-react": "6.1.1"
