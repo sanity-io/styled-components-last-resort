@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import type { BoxProps } from '../../types';
 import { viewStyle } from './View';
 
@@ -9,16 +8,16 @@ export const Box = ({
   $outer = false,
   ...other
 }: BoxProps) => {
-  const end = performance.now() + 1;
-  while (performance.now() < end) {
-    // spinning like a villain
-  }
-  useEffect(() => {
-    const end = performance.now() + 1;
-    while (performance.now() < end) {
-      // spinning like a villain
-    }
-  }, []);
+  // const end = performance.now() + 1;
+  // while (performance.now() < end) {
+  //   // spinning like a villain
+  // }
+  // useEffect(() => {
+  //   const end = performance.now() + 1;
+  //   while (performance.now() < end) {
+  //     // spinning like a villain
+  //   }
+  // }, []);
   return (
     <div
       {...other}

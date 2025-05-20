@@ -73,7 +73,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
   );
   const [currentBenchmarkRunner, setCurrentBenchmarkRunner] =
     useState<RunnerType>('benchmark-force-layout');
-  const [currentLibraryName, setCurrentLibraryName] = useState('styled-components');
+  const [currentLibraryName, setCurrentLibraryName] = useState('inline-styles');
   const [status, setStatus] = useState<'idle' | 'running' | 'complete'>('idle');
   const [results, setResults] = useState<
     (BenchmarkResults & { benchmarkName: string; libraryName: string; libraryVersion?: string })[]
