@@ -85,6 +85,7 @@ export interface BenchmarkProps {
   component: any;
   onComplete: (results: BenchmarkResults) => void;
   forceLayout: boolean;
+  forceConcurrent: boolean;
 }
 
 interface BenchmarkState {
@@ -104,6 +105,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     component: Component,
     onComplete,
     forceLayout,
+    forceConcurrent,
   } = props;
 
   const samplesRef = useRef<
@@ -119,10 +121,14 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     () => ({
       start: () => {
         samplesRef.current = [];
-        dispatch({ type: 'start' });
+        if (forceConcurrent) {
+          startTransition(() => dispatch({ type: 'start' }));
+        } else {
+          dispatch({ type: 'start' });
+        }
       },
     }),
-    []
+    [forceConcurrent]
   );
 
   const [state, dispatch] = useReducer(
@@ -166,7 +172,11 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       }
       // startTransition(() => dispatch({ type: 'cycle' }));
       const raf = requestAnimationFrame(() => {
-        dispatch({ type: 'cycle' });
+        if (forceConcurrent) {
+          startTransition(() => dispatch({ type: 'cycle' }));
+        } else {
+          dispatch({ type: 'cycle' });
+        }
       });
       return () => cancelAnimationFrame(raf);
     } else {
@@ -190,7 +200,12 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       //   stdDev: getStdDev(sortedElapsedTimes),
       // });
       const raf = requestAnimationFrame(() => {
-        dispatch({ type: 'complete' });
+        if (forceConcurrent) {
+          startTransition(() => dispatch({ type: 'complete' }));
+        } else {
+          dispatch({ type: 'complete' });
+        }
+
         onComplete({
           sampleCount: samples.length,
           mean: getMean(sortedElapsedTimes),
@@ -199,7 +214,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       });
       return () => cancelAnimationFrame(raf);
     }
-  }, [cycle, forceLayout, onComplete, running, sampleCount, timeout, type]);
+  }, [cycle, forceConcurrent, forceLayout, onComplete, running, sampleCount, timeout, type]);
 
   return (
     <Profiler

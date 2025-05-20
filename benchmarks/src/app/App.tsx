@@ -64,6 +64,16 @@ function shouldUseBenchmarkProfiler(runner: RunnerType) {
   }
 }
 
+function shouldForceConcurrent(runner: RunnerType) {
+  switch (runner) {
+    case 'benchmark-profiler-concurrent':
+    case 'benchmark-profiler-force-layout-concurrent':
+      return true;
+    default:
+      return false;
+  }
+}
+
 const timeout = 20_000;
 
 export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
@@ -86,6 +96,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
   const isBenchmarkProfiler = shouldUseBenchmarkProfiler(currentBenchmarkRunner);
 
   const forceLayout = getForceLayout(currentBenchmarkRunner);
+  const forceConcurrent = shouldForceConcurrent(currentBenchmarkRunner);
 
   const benchmarkRef = useRef<BenchmarkRef>(null);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -257,6 +268,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                   <BenchmarkProfiler
                     component={Component}
                     forceLayout={forceLayout}
+                    forceConcurrent={forceConcurrent}
                     getComponentProps={getComponentProps}
                     onComplete={results => {
                       setProfilerResults(state =>
