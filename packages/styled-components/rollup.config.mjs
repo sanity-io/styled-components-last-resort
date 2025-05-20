@@ -1,10 +1,9 @@
 import typescript from '@rollup/plugin-typescript';
-import commonjs from 'rollup-plugin-commonjs';
-import json from 'rollup-plugin-json';
-import nodeResolve from 'rollup-plugin-node-resolve';
-import replace from 'rollup-plugin-replace';
-import sourceMaps from 'rollup-plugin-sourcemaps';
-import { terser } from 'rollup-plugin-terser';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import nodeResolve from '@rollup/plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import terser from '@rollup/plugin-terser';
 import pkg from './package.json' with { type: 'json' };
 
 /**
@@ -38,7 +37,6 @@ const defaultTypescriptPlugin = typescript({
 });
 
 const basePlugins = [
-  sourceMaps(),
   json(),
   nodeResolve(),
   commonjs({
