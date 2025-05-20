@@ -25,7 +25,7 @@
     "react-native-web": "0.19.13",
     "react-scan": "^0.3.4",
     "react-strict-dom": "0.0.32",
-    "restyle": "3.0.0",
+    "restyle": "3.4.2",
     "styled-components-use-insertion-effect": "npm:@sanity/styled-components@6.1.13",
     "styled-components-v5": "npm:styled-components@5.3.11",
     "styled-components-v6": "npm:styled-components@6.1.13",

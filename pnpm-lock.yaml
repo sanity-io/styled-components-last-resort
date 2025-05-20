@@ -61,8 +61,8 @@ importers:
         specifier: 0.0.32
         version: 0.0.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0)
       restyle:
-        specifier: 3.0.0
-        version: 3.0.0(react@19.0.0)
+        specifier: 3.4.2
+        version: 3.4.2(react@19.0.0)
       styled-components-use-insertion-effect:
         specifier: npm:@sanity/styled-components@6.1.13
         version: '@sanity/styled-components@6.1.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
@@ -3671,8 +3671,9 @@ packages:
     engines: {node: '>= 0.4'}
     hasBin: true
 
-  restyle@3.0.0:
-    resolution: {integrity: sha512-5Z83GoT7pnrsk3++JNbmPTzsJ/wv2J/jinWssiI+2iRBhwW/hr4EakWVO7OtonDY+aYmnfLJXJbPle4BHNuSAw==}
+  restyle@3.4.2:
+    resolution: {integrity: sha512-JdpIaPav0aJC/Q+aEc1jyEx0yQGjZHDRC/YUjjqZT01tfr8ymLepvgvcP2qnxVRGW1PDalKbNFgURPB3nXo/tg==}
+    engines: {node: '>=20.0.0'}
     peerDependencies:
       react: '>=19.0.0'
 
@@ -7965,7 +7966,7 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  restyle@3.0.0(react@19.0.0):
+  restyle@3.4.2(react@19.0.0):
     dependencies:
       react: 19.0.0
 
