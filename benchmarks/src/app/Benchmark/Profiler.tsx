@@ -164,9 +164,13 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
         const layoutEnd = Timing.now();
         console.log('layout', layoutStart, layoutEnd, layoutEnd - layoutStart);
       }
-      startTransition(() => dispatch({ type: 'cycle' }));
+      // startTransition(() => dispatch({ type: 'cycle' }));
+      const raf = requestAnimationFrame(() => {
+        dispatch({ type: 'cycle' });
+      });
+      return () => cancelAnimationFrame(raf);
     } else {
-      startTransition(() => dispatch({ type: 'complete' }));
+      // startTransition(() => dispatch({ type: 'complete' }));
 
       const samples = samplesRef.current.reduce(
         (memo, sample) => {
@@ -180,11 +184,20 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
         .map(({ start, end }) => end - start)
         .sort(sortNumbers);
 
-      onComplete({
-        sampleCount: samples.length,
-        mean: getMean(sortedElapsedTimes),
-        stdDev: getStdDev(sortedElapsedTimes),
+      // onComplete({
+      //   sampleCount: samples.length,
+      //   mean: getMean(sortedElapsedTimes),
+      //   stdDev: getStdDev(sortedElapsedTimes),
+      // });
+      const raf = requestAnimationFrame(() => {
+        dispatch({ type: 'complete' });
+        onComplete({
+          sampleCount: samples.length,
+          mean: getMean(sortedElapsedTimes),
+          stdDev: getStdDev(sortedElapsedTimes),
+        });
       });
+      return () => cancelAnimationFrame(raf);
     }
   }, [cycle, forceLayout, onComplete, running, sampleCount, timeout, type]);
 
