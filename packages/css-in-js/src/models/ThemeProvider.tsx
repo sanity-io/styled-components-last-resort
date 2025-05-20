@@ -99,5 +99,5 @@ export default function ThemeProvider(props: Props): React.JSX.Element | null {
     return null;
   }
 
-  return <ThemeContext.Provider value={themeContext}>{props.children}</ThemeContext.Provider>;
+  return <ThemeContext value={themeContext}>{props.children}</ThemeContext>;
 }

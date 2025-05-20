@@ -6,5 +6,5 @@ export default defineConfig({
   sourcemap: true,
   dts: true,
   platform: 'neutral',
-  define: { __VERSION__: JSON.stringify(pkg.version) },
+  env: { __VERSION__: pkg.version },
 });

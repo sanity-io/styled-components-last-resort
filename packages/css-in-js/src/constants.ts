@@ -1,6 +1,3 @@
-declare let SC_DISABLE_SPEEDY: boolean | null | undefined;
-declare let __VERSION__: string;
-
 export const SC_ATTR: string =
   (typeof process !== 'undefined' &&
     typeof process.env !== 'undefined' &&
@@ -9,7 +6,7 @@ export const SC_ATTR: string =
 
 export const SC_ATTR_ACTIVE = 'active';
 export const SC_ATTR_VERSION = 'data-styled-version';
-export const SC_VERSION = __VERSION__;
+export const SC_VERSION = process.env.__VERSION__;
 export const SPLITTER = '/*!sc*/\n';
 
 export const IS_BROWSER = typeof window !== 'undefined' && typeof document !== 'undefined';

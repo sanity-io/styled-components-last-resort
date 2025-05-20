@@ -6,7 +6,6 @@ const config: NextConfig = {
       topLevelImportPaths: ['styled-components', 'styled-components-original'],
     },
   },
-  env: { SC_DISABLE_SPEEDY: 'false' },
 };
 
 export default config;

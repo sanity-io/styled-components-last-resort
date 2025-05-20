@@ -1,5 +1,5 @@
 import isPropValid from '@emotion/is-prop-valid';
-import React, { createElement, Ref, useDebugValue, useInsertionEffect } from 'react';
+import React, { Ref, useDebugValue, useInsertionEffect } from 'react';
 import { IS_BROWSER, SC_VERSION } from '../constants';
 import type {
   AnyComponent,

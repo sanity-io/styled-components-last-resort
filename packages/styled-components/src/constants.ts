@@ -1,4 +1,3 @@
-declare let SC_DISABLE_SPEEDY: boolean | null | undefined;
 declare let __VERSION__: string;
 
 export const SC_ATTR: string =
