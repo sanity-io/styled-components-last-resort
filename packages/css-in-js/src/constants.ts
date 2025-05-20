@@ -6,7 +6,7 @@ export const SC_ATTR: string =
 
 export const SC_ATTR_ACTIVE = 'active';
 export const SC_ATTR_VERSION = 'data-styled-version';
-export const SC_VERSION = process.env.__VERSION__;
+export const SC_VERSION = process.env.__VERSION__!;
 export const SPLITTER = '/*!sc*/\n';
 
 export const IS_BROWSER = typeof window !== 'undefined' && typeof document !== 'undefined';

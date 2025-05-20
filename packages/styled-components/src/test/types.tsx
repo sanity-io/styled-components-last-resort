@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { css, CSSProp, IStyledComponent, StyledObject } from '../index';
-import styled from '../index-standalone';
+import { styled } from '../index';
 import { DataAttributes } from '../types';
 import { VeryLargeUnionType } from './veryLargeUnionType';
 
