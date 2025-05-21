@@ -62,13 +62,5 @@
     "vite": "^6.0.7",
     "vite-plugin-stylex": "0.13.0",
     "vite-plugin-stylex-dev": "0.8.0"
-  },
-  "dependenciesMeta": {
-    "@sanity/css-in-js": {
-      "injected": true
-    },
-    "@sanity/styled-components": {
-      "injected": true
-    }
   }
 }

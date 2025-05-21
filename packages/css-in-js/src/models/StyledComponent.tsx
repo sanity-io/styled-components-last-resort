@@ -1,8 +1,8 @@
 import isPropValid from '@emotion/is-prop-valid';
 import {
   forwardRef,
+  use,
   useCallback,
-  useContext,
   useDebugValue,
   useInsertionEffect,
   useSyncExternalStore,
@@ -133,7 +133,7 @@ function useStyledComponentImpl<Props extends object>(
     target,
   } = forwardedComponent;
 
-  const contextTheme = useContext(ThemeContext);
+  const contextTheme = componentStyle.isStatic ? EMPTY_OBJECT : use(ThemeContext);
   const ssc = useStyleSheetContext();
   const shouldForwardProp = forwardedComponent.shouldForwardProp || ssc.shouldForwardProp;
 
@@ -216,14 +216,14 @@ function useStyledComponentImpl<Props extends object>(
   }
 
   useInsertionEffect(() => {
-    if (!isHydrating && Array.isArray(styles) && styles.length > 0) {
+    if (!isHydrating && styles.length > 0) {
       componentStyle.flushStyles(styles, ssc.styleSheet);
     }
   }, [isHydrating, styles]);
 
   const children = <ElementToBeCreated {...propsForElement} />;
 
-  if (isHydrating && Array.isArray(styles) && styles.length > 0) {
+  if (isHydrating && styles.length > 0) {
     componentStyle.flushStyles(styles, styleSheet);
     const css = outputSheetModern(styleSheet);
 

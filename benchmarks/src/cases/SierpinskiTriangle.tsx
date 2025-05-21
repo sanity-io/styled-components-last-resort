@@ -14,7 +14,6 @@ export function SierpinskiTriangle({
   const { Dot } = components;
 
   if (Dot) {
-    console.log({ s, targetSize });
     if (s <= targetSize) {
       let fn;
       switch (depth) {

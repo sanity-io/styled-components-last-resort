@@ -106,8 +106,9 @@ export default class ComponentStyle {
   }
 
   flushStyles(buffer: [name: string, rules: string[]][], styleSheet: StyleSheet) {
-    for (let i = 0; i < buffer.length; i++) {
-      const [name, rules] = buffer[i];
+    // for (let i = 0; i < buffer.length; i++) {
+    for (const [name, rules] of buffer) {
+      // const [name, rules] = buffer[i];
 
       if (!styleSheet.hasNameForId(this.componentId, name)) {
         styleSheet.insertRules(this.componentId, name, rules);
