@@ -8,7 +8,7 @@ export default defineConfig({
   dts: true,
   platform: 'neutral',
   env: { __VERSION__: pkg.version },
-  // /*
+  /*
   plugins: [react({ babel: { plugins: [['babel-plugin-react-compiler', { target: '19' }]] } })],
   // */
 });
