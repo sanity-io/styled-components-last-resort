@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react({ babel: { plugins: [['babel-plugin-react-compiler', { target: '19' }]] } })],
   test: {
     env: { __VERSION__: 'JEST_MOCK_VERSION' },
     environment: 'jsdom',
