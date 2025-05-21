@@ -7,7 +7,7 @@ export const phash = (h: number, x: string) => {
   let i = x.length;
 
   while (i) {
-    h = (h * 33) ^ x.charCodeAt(--i);
+    h = Math.imul(h, 33) ^ x.charCodeAt(--i);
   }
 
   return h;
