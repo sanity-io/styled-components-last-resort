@@ -4,7 +4,7 @@
  * https://github.com/paularmstrong/react-component-benchmark
  */
 
-import { Component, Profiler } from 'react';
+import { Component, Profiler, unstable_Activity as Activity } from 'react';
 import type { SafeAny, Test } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
 import { getMean, getMedian, getStdDev } from './math';
@@ -154,7 +154,16 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
         id="cycle"
         onRender={(...args) => running && shouldRender(cycle, type) && handleProfileRender(...args)}
       >
-        {running && shouldRender(cycle, type) ? <Component {...componentProps} /> : null}
+        <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
+          <Component
+            key={
+              type === BenchmarkType.UPDATE
+                ? undefined
+                : `${type}-${shouldRender(cycle, type) ? cycle - 1 : cycle}`
+            }
+            {...componentProps}
+          />
+        </Activity>
       </Profiler>
     );
   }
