@@ -11,6 +11,9 @@ import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    sourcemap: true,
+  },
   define: {
     __VERSION__: JSON.stringify('benchmark'),
     'process.env.SC_DISABLE_SPEEDY': JSON.stringify('false'),
