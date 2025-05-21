@@ -1,0 +1,13 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index 26903345e61c1ef84006c9210809624099c4f4ae..d14ba3f1d2d548ec8eb28007e346b10d42f285a8 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -123,7 +123,7 @@ function viteReact(opts = {}) {
+   const jsxImportDevRuntime = `${jsxImportSource}/jsx-dev-runtime`;
+   let isProduction = true;
+   let projectRoot = process.cwd();
+-  let skipFastRefresh = false;
++  let skipFastRefresh = isProduction;
+   let runPluginOverrides;
+   let staticBabelOptions;
+   const importReactRE = /\bimport\s+(?:\*\s+as\s+)?React\b/;
