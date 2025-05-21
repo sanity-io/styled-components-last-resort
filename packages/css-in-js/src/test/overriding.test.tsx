@@ -110,6 +110,14 @@ describe('extending', () => {
         ".d {
           position: relative;
           color: red;
+        }
+        .e {
+          position: relative;
+          color: blue;
+        }
+        .f {
+          position: relative;
+          color: green;
         }"
       `);
     });
@@ -127,6 +135,14 @@ describe('extending', () => {
           ".d {
             position: relative;
             color: red;
+          }
+          .e {
+            position: relative;
+            color: blue;
+          }
+          .f {
+            position: relative;
+            color: green;
           }"
         `);
       });
@@ -163,6 +179,14 @@ describe('extending', () => {
           ".d {
             position: relative;
             color: red;
+          }
+          .e {
+            position: relative;
+            color: blue;
+          }
+          .f {
+            position: relative;
+            color: green;
           }"
         `);
       });
