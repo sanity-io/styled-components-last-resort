@@ -115,4 +115,112 @@ export default class ComponentStyle {
       }
     }
   }
+
+  generateClassName(
+    executionContext: ExecutionContext,
+    styleSheet: StyleSheet,
+    stylis: Stringifier
+  ): string {
+    let className = this.baseStyle
+      ? this.baseStyle.generateClassName(executionContext, styleSheet, stylis)
+      : '';
+
+    // force dynamic classnames if user-supplied stylis plugins are in use
+    if (this.isStatic && !stylis.hash) {
+      if (this.staticRulesId && styleSheet.hasNameForId(this.componentId, this.staticRulesId)) {
+        className = joinStrings(className, this.staticRulesId);
+      } else {
+        const cssStatic = joinStringArray(
+          flatten(this.rules, executionContext, styleSheet, stylis) as string[]
+        );
+        const name = generateName(phash(this.baseHash, cssStatic) >>> 0);
+
+        className = joinStrings(className, name);
+        this.staticRulesId = name;
+      }
+    } else {
+      let dynamicHash = phash(this.baseHash, stylis.hash);
+      let hasCss = false;
+
+      for (let i = 0; i < this.rules.length; i++) {
+        const partRule = this.rules[i];
+
+        if (typeof partRule === 'string') {
+          hasCss = true;
+
+          if (process.env.NODE_ENV !== 'production') dynamicHash = phash(dynamicHash, partRule);
+        } else if (partRule) {
+          const partString = joinStringArray(
+            flatten(partRule, executionContext, styleSheet, stylis) as string[]
+          );
+          // The same value can switch positions in the array, so we include "i" in the hash.
+          dynamicHash = phash(dynamicHash, partString + i);
+          hasCss = true;
+        }
+      }
+
+      if (hasCss) {
+        const name = generateName(dynamicHash >>> 0);
+        className = joinStrings(className, name);
+      }
+    }
+
+    return className;
+  }
+
+  insertStyles(
+    executionContext: ExecutionContext,
+    styleSheet: StyleSheet,
+    stylis: Stringifier
+  ): void {
+    this.baseStyle?.insertStyles(executionContext, styleSheet, stylis);
+
+    // force dynamic classnames if user-supplied stylis plugins are in use
+    if (this.isStatic && !stylis.hash) {
+      if (this.staticRulesId && styleSheet.hasNameForId(this.componentId, this.staticRulesId)) {
+        // do nothing
+      } else {
+        const cssStatic = joinStringArray(
+          flatten(this.rules, executionContext, styleSheet, stylis) as string[]
+        );
+        const name = generateName(phash(this.baseHash, cssStatic) >>> 0);
+
+        if (!styleSheet.hasNameForId(this.componentId, name)) {
+          const cssStaticFormatted = stylis(cssStatic, `.${name}`, undefined, this.componentId);
+          styleSheet.insertRules(this.componentId, name, cssStaticFormatted);
+        }
+
+        this.staticRulesId = name;
+      }
+    } else {
+      let dynamicHash = phash(this.baseHash, stylis.hash);
+      let css = '';
+
+      for (let i = 0; i < this.rules.length; i++) {
+        const partRule = this.rules[i];
+
+        if (typeof partRule === 'string') {
+          css += partRule;
+
+          if (process.env.NODE_ENV !== 'production') dynamicHash = phash(dynamicHash, partRule);
+        } else if (partRule) {
+          const partString = joinStringArray(
+            flatten(partRule, executionContext, styleSheet, stylis) as string[]
+          );
+          // The same value can switch positions in the array, so we include "i" in the hash.
+          dynamicHash = phash(dynamicHash, partString + i);
+          css += partString;
+        }
+      }
+
+      if (css) {
+        const name = generateName(dynamicHash >>> 0);
+
+        if (!styleSheet.hasNameForId(this.componentId, name)) {
+          const cssFormatted = stylis(css, `.${name}`, undefined, this.componentId);
+          styleSheet.insertRules(this.componentId, name, cssFormatted);
+        }
+      }
+    }
+  }
 }

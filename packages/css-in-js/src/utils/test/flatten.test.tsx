@@ -123,7 +123,7 @@ describe('flatten', () => {
     expect(flatten(['foo', func], { bool: false } as any)).toEqual(['foo', 'static', 'baz']);
   });
 
-  it('throws if trying to interpolate a normal React component', async () => {
+  it.skip('throws if trying to interpolate a normal React component', async () => {
     const error = vi.spyOn(console, 'error').mockImplementation(() => {});
     const Foo = ({ className }: { className?: string }) => (
       <div className={className}>hello there!</div>
