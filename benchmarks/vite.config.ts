@@ -32,7 +32,7 @@ export default defineConfig({
         plugins: [
           'babel-plugin-react-native-web',
           ['styled-jsx/babel', { optimizeForSpeed: true }],
-          ['babel-plugin-react-compiler', { target: '19' }],
+          // ['babel-plugin-react-compiler', { target: '19' }],
         ],
         // presets: [[reactStrictDomPreset, { debug: true, dev: true }]],
       },
