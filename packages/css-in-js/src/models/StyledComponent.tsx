@@ -70,7 +70,7 @@ function useInjectedStyle<T extends ExecutionContext>(
   styleSheet: StyleSheet,
   resolvedAttrs: T
 ): [className: string, insertionEffectBuffer: [name: string, rules: string[]][]] {
-  const [className, insertionEffectBuffer] = componentStyle.generateAndInjectStyles(
+  const [className, insertionEffectBuffer] = componentStyle.generateRules(
     resolvedAttrs,
     styleSheet,
     stylis
@@ -196,14 +196,14 @@ function useStyledComponentImpl<Props extends object>(
     () => true
   );
   const styleSheet = isHydrating ? new StyleSheet({ isServer: true }) : ssc.styleSheet;
-  // const [generatedClassName, styles] = useInjectedStyle(
-  //   componentStyle,
-  //   ssc.stylis,
-  //   styleSheet,
-  //   context
-  // );
+  const [generatedClassName, styles] = useInjectedStyle(
+    componentStyle,
+    ssc.stylis,
+    styleSheet,
+    context
+  );
 
-  const generatedClassName = useClassName(componentStyle, ssc.stylis, styleSheet, context);
+  // const generatedClassName = useClassName(componentStyle, ssc.stylis, styleSheet, context);
 
   if (process.env.NODE_ENV !== 'production' && forwardedComponent.warnTooManyClasses) {
     forwardedComponent.warnTooManyClasses(generatedClassName);
@@ -232,24 +232,24 @@ function useStyledComponentImpl<Props extends object>(
     propsForElement.ref = forwardedRef;
   }
 
-  // useInsertionEffect(() => {
-  //   if (!isHydrating && styles.length > 0) {
-  //     componentStyle.flushStyles(styles, ssc.styleSheet);
-  //   }
-  // }, [isHydrating, styles]);
-
   useInsertionEffect(() => {
-    if (!isHydrating) {
-      componentStyle.insertStyles(context, ssc.styleSheet, ssc.stylis);
+    if (!isHydrating && styles.length > 0) {
+      componentStyle.flushStyles(styles, ssc.styleSheet);
     }
-  }, [isHydrating, componentStyle, context, ssc.styleSheet, ssc.stylis]);
+  }, [isHydrating, styles, componentStyle, ssc.styleSheet]);
+
+  // useInsertionEffect(() => {
+  //   if (!isHydrating) {
+  //     componentStyle.insertStyles(context, ssc.styleSheet, ssc.stylis);
+  //   }
+  // }, [isHydrating, componentStyle, context, ssc.styleSheet, ssc.stylis]);
 
   const children = <ElementToBeCreated {...propsForElement} />;
 
-  // if (isHydrating && styles.length > 0) {
-  if (isHydrating) {
-    componentStyle.insertStyles(context, styleSheet, ssc.stylis);
-    // componentStyle.flushStyles(styles, styleSheet);
+  if (isHydrating && styles.length > 0) {
+    // if (isHydrating) {
+    // componentStyle.insertStyles(context, styleSheet, ssc.stylis);
+    componentStyle.flushStyles(styles, styleSheet);
     const css = outputSheetModern(styleSheet);
 
     return (

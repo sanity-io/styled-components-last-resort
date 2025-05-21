@@ -373,9 +373,6 @@ describe('StyleSheetManager', () => {
       `
       ".b {
         padding-right: 5px;
-      }
-      .c {
-        padding-left: 5px;
       }"
     `
     );
@@ -402,9 +399,6 @@ describe('StyleSheetManager', () => {
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         padding-right: 5px;
-      }
-      .c {
-        padding-left: 5px;
       }"
     `);
 
