@@ -134,10 +134,12 @@ function useStyledComponentImpl<Props extends object>(
   } = forwardedComponent;
 
   const contextTheme = componentStyle.isStatic ? EMPTY_OBJECT : use(ThemeContext);
+  useDebugValue(componentStyle.isStatic ? 'static' : 'dynamic');
+
   const ssc = useStyleSheetContext();
   const shouldForwardProp = forwardedComponent.shouldForwardProp || ssc.shouldForwardProp;
 
-  useDebugValue(styledComponentId);
+  useDebugValue(styledComponentId, value => `styledComponentId: ${value}`);
 
   // NOTE: the non-hooks version only subscribes to this when !componentStyle.isStatic,
   // but that'd be against the rules-of-hooks. We could be naughty and do it anyway as it
