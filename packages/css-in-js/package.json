@@ -1,6 +1,6 @@
 {
   "name": "@sanity/css-in-js",
-  "version": "6.1.18-16",
+  "version": "6.1.18-17",
   "description": "A fork of styled-components that supports React 19 streaming ssr without ServerStyleSheet or sheet.collectStyles techniques",
   "publishConfig": {
     "access": "public"
@@ -66,6 +66,7 @@
     "@types/react-frame-component": "4.1.6",
     "@types/shallowequal": "1.1.5",
     "@vitejs/plugin-react": "^4.4.1",
+    "babel-plugin-react-compiler": "19.1.0-rc.2",
     "js-beautify": "1.15.4",
     "prettier": "3.5.3",
     "react": "^19.1.0",
