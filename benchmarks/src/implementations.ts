@@ -1,5 +1,10 @@
 import packageJson from '../package.json';
 import type { Implementation, ImplementationComponents } from './types';
+import { version as sanityCssInJsVersion } from '@sanity/css-in-js/package.json';
+import { version as sanityStyledComponentsVersion } from '@sanity/styled-components/package.json';
+import { version as styledComponentsV6Version } from 'styled-components-v6/package.json';
+import { version as styledComponentsUseInsertionEffectVersion } from 'styled-components-use-insertion-effect/package.json';
+import { version as styledComponentsV5Version } from 'styled-components-v5/package.json';
 
 const { dependencies } = packageJson;
 const modules = import.meta.glob('./implementations/*/index.ts', {
@@ -18,16 +23,12 @@ const dependencyMap = {
 
 type ValueOf<T> = T[keyof T];
 const versionMap = {
-  '@sanity/css-in-js': import('@sanity/css-in-js/package.json').then(r => r.version),
-  '@sanity/styled-components': import('@sanity/styled-components/package.json').then(
-    r => r.version
-  ),
-  'styled-components-v6': import('styled-components-v6/package.json').then(r => r.version),
-  'styled-components-use-insertion-effect': import(
-    'styled-components-use-insertion-effect/package.json'
-  ).then(r => r.version),
-  'styled-components-v5': import('styled-components-v5/package.json').then(r => r.version),
-} as const satisfies Partial<Record<ValueOf<typeof dependencyMap>, Promise<string>>>;
+  '@sanity/css-in-js': sanityCssInJsVersion,
+  '@sanity/styled-components': sanityStyledComponentsVersion,
+  'styled-components-v6': styledComponentsV6Version,
+  'styled-components-use-insertion-effect': styledComponentsUseInsertionEffectVersion,
+  'styled-components-v5': styledComponentsV5Version,
+} as const satisfies Partial<Record<ValueOf<typeof dependencyMap>, string>>;
 
 export const implementations: Record<string, Implementation> = {};
 
@@ -37,9 +38,7 @@ for (const [path, components] of Object.entries(modules)) {
   let version = dependencies[dependencyMap[name] || name] || '';
   if (name in dependencyMap && dependencyMap[name as keyof typeof dependencyMap] in versionMap) {
     version =
-      await versionMap[
-        dependencyMap[name as keyof typeof dependencyMap] as keyof typeof versionMap
-      ];
+      versionMap[dependencyMap[name as keyof typeof dependencyMap] as keyof typeof versionMap];
   }
   implementations[name] = { components, name, version };
 }
