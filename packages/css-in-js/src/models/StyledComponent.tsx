@@ -181,8 +181,6 @@ function useStyledComponentImpl<Props extends object>(
   const styleSheet = isHydrating ? new StyleSheet({ isServer: true }) : ssc.styleSheet;
   const generatedClassName = useInjectedStyle(componentStyle, ssc.stylis, styleSheet, context);
 
-  // const generatedClassName = useClassName(componentStyle, ssc.stylis, styleSheet, context);
-
   if (process.env.NODE_ENV !== 'production' && forwardedComponent.warnTooManyClasses) {
     forwardedComponent.warnTooManyClasses(generatedClassName);
   }
@@ -216,17 +214,9 @@ function useStyledComponentImpl<Props extends object>(
     }
   });
 
-  // useInsertionEffect(() => {
-  //   if (!isHydrating) {
-  //     componentStyle.insertStyles(context, ssc.styleSheet, ssc.stylis);
-  //   }
-  // }, [isHydrating, componentStyle, context, ssc.styleSheet, ssc.stylis]);
-
   const children = <ElementToBeCreated {...propsForElement} />;
 
   if (isHydrating) {
-    // if (isHydrating) {
-    // componentStyle.insertStyles(context, styleSheet, ssc.stylis);
     componentStyle.flushStyles(styleSheet);
     const css = outputSheetModern(styleSheet);
 
