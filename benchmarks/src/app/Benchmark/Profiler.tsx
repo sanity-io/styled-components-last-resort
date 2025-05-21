@@ -17,37 +17,7 @@ import type { BenchmarkRef } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
 import { getMean, getStdDev } from './math';
 import * as Timing from './timing';
-
-const shouldRender = (cycle: number, type: string) => {
-  switch (type) {
-    // Render every odd iteration (first, third, etc)
-    // Mounts and unmounts the component
-    case BenchmarkType.MOUNT:
-    case BenchmarkType.UNMOUNT:
-      return !((cycle + 1) % 2);
-    // Render every iteration (updates previously rendered module)
-    case BenchmarkType.UPDATE:
-      return true;
-    default:
-      return false;
-  }
-};
-
-const shouldRecord = (cycle: number, type: string) => {
-  switch (type) {
-    // Record every odd iteration (when mounted: first, third, etc)
-    case BenchmarkType.MOUNT:
-      return !((cycle + 1) % 2);
-    // Record every iteration
-    case BenchmarkType.UPDATE:
-      return true;
-    // Record every even iteration (when unmounted)
-    case BenchmarkType.UNMOUNT:
-      return !(cycle % 2);
-    default:
-      return false;
-  }
-};
+import { shouldRecord, shouldRender } from './utils';
 
 const isDone = (cycle: number, sampleCount: number, type: string) => {
   switch (type) {
@@ -63,13 +33,6 @@ const isDone = (cycle: number, sampleCount: number, type: string) => {
 };
 
 const sortNumbers = (a: number, b: number) => a - b;
-
-type Sample = {
-  scriptingStart: number;
-  scriptingEnd?: number;
-  layoutStart?: number;
-  layoutEnd?: number;
-};
 
 export interface BenchmarkResults {
   sampleCount: number;
@@ -220,8 +183,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     <Profiler
       id="benchmark"
       onRender={(_id, _phase, _actualDuration, _baseDuration, startTime, commitTime) => {
-        // if (running && shouldRecord(cycle, type)) {
-        if (running) {
+        if (running && shouldRecord(cycle, type)) {
           samplesRef.current[cycle] = {
             start: startTime,
             // end: startTime + actualDuration,

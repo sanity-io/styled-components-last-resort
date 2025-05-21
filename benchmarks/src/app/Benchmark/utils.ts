@@ -19,15 +19,13 @@ export const shouldRecord = (cycle: number, type: string) => {
   switch (type) {
     // Record every odd iteration (when mounted: first, third, etc)
     case BenchmarkType.MOUNT:
-      return true;
-    // return !((cycle + 1) % 2);
+      return !((cycle + 1) % 2);
     // Record every iteration
     case BenchmarkType.UPDATE:
       return true;
     // Record every even iteration (when unmounted)
     case BenchmarkType.UNMOUNT:
-      return true;
-    // return !(cycle % 2);
+      return !(cycle % 2);
     default:
       return false;
   }
