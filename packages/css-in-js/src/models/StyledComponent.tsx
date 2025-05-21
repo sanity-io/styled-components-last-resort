@@ -69,25 +69,8 @@ function useInjectedStyle<T extends ExecutionContext>(
   stylis: IStyleSheetContext['stylis'],
   styleSheet: StyleSheet,
   resolvedAttrs: T
-): [className: string, insertionEffectBuffer: [name: string, rules: string[]][]] {
-  const [className, insertionEffectBuffer] = componentStyle.generateRules(
-    resolvedAttrs,
-    styleSheet,
-    stylis
-  );
-
-  useDebugValue(className);
-
-  return [className, insertionEffectBuffer];
-}
-
-function useClassName<T extends ExecutionContext>(
-  componentStyle: ComponentStyle,
-  stylis: IStyleSheetContext['stylis'],
-  styleSheet: StyleSheet,
-  resolvedAttrs: T
 ): string {
-  const className = componentStyle.generateClassName(resolvedAttrs, styleSheet, stylis);
+  const className = componentStyle.generateStyles(resolvedAttrs, styleSheet, stylis);
 
   useDebugValue(className);
 
@@ -196,12 +179,7 @@ function useStyledComponentImpl<Props extends object>(
     () => true
   );
   const styleSheet = isHydrating ? new StyleSheet({ isServer: true }) : ssc.styleSheet;
-  const [generatedClassName, styles] = useInjectedStyle(
-    componentStyle,
-    ssc.stylis,
-    styleSheet,
-    context
-  );
+  const generatedClassName = useInjectedStyle(componentStyle, ssc.stylis, styleSheet, context);
 
   // const generatedClassName = useClassName(componentStyle, ssc.stylis, styleSheet, context);
 
@@ -233,10 +211,10 @@ function useStyledComponentImpl<Props extends object>(
   }
 
   useInsertionEffect(() => {
-    if (!isHydrating && styles.length > 0) {
-      componentStyle.flushStyles(styles, ssc.styleSheet);
+    if (!isHydrating) {
+      componentStyle.flushStyles(ssc.styleSheet);
     }
-  }, [isHydrating, styles, componentStyle, ssc.styleSheet]);
+  });
 
   // useInsertionEffect(() => {
   //   if (!isHydrating) {
@@ -246,10 +224,10 @@ function useStyledComponentImpl<Props extends object>(
 
   const children = <ElementToBeCreated {...propsForElement} />;
 
-  if (isHydrating && styles.length > 0) {
+  if (isHydrating) {
     // if (isHydrating) {
     // componentStyle.insertStyles(context, styleSheet, ssc.stylis);
-    componentStyle.flushStyles(styles, styleSheet);
+    componentStyle.flushStyles(styleSheet);
     const css = outputSheetModern(styleSheet);
 
     return (

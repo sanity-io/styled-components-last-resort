@@ -299,6 +299,9 @@ describe('theming', () => {
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: purple;
+      }
+      .c {
+        color: pink;
       }"
     `);
   });
@@ -340,6 +343,10 @@ describe('theming', () => {
       ".b {
         color: purple;
         z-index: 0;
+      }
+      .c {
+        color: pink;
+        z-index: 0;
       }"
     `);
 
@@ -356,6 +363,14 @@ describe('theming', () => {
       ".b {
         color: purple;
         z-index: 0;
+      }
+      .c {
+        color: pink;
+        z-index: 0;
+      }
+      .d {
+        color: pink;
+        z-index: 1;
       }"
     `);
   });
@@ -389,6 +404,9 @@ describe('theming', () => {
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         color: black;
+      }
+      .c {
+        color: blue;
       }"
     `);
 
