@@ -13,6 +13,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     sourcemap: true,
+    minify: false,
   },
   define: {
     __VERSION__: JSON.stringify('benchmark'),
