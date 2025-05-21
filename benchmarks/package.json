@@ -15,8 +15,8 @@
   "dependencies": {
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
-    "@sanity/css-in-js": "6.1.18-16",
-    "@sanity/styled-components": "6.1.18-11",
+    "@sanity/css-in-js": "workspace:*",
+    "@sanity/styled-components": "workspace:*",
     "aphrodite": "2.4.0",
     "classnames": "2.5.1",
     "d3-scale-chromatic": "3.1.0",
@@ -62,5 +62,13 @@
     "vite": "^6.0.7",
     "vite-plugin-stylex": "0.13.0",
     "vite-plugin-stylex-dev": "0.8.0"
+  },
+  "dependenciesMeta": {
+    "@sanity/css-in-js": {
+      "injected": true
+    },
+    "@sanity/styled-components": {
+      "injected": true
+    }
   }
 }
