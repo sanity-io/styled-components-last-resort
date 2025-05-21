@@ -323,11 +323,10 @@ function createStyledComponent<
    * forwardRef creates a new interim component, which we'll take advantage of
    * instead of extending ParentComponent to create _another_ interim class
    */
-  let WrappedStyledComponent = forwardRef(forwardRefRender) as unknown as IStyledComponent<
-    'web',
-    any
-  > &
-    Statics;
+  let WrappedStyledComponent = forwardRef(
+    // @ts-expect-error fix later
+    forwardRefRender
+  ) as unknown as IStyledComponent<'web', any> & Statics;
   WrappedStyledComponent.attrs = finalAttrs;
   WrappedStyledComponent.componentStyle = componentStyle;
   WrappedStyledComponent.displayName = displayName;
