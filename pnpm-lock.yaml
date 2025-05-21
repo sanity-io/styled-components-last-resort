@@ -184,7 +184,7 @@ importers:
         version: 3.7.0(react@19.1.0)
       '@sanity/ui':
         specifier: ^2.15.17
-        version: 2.15.18(@emotion/is-prop-valid@1.3.1)(@sanity/css-in-js@6.1.18-13(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@19.0.0)(react@19.1.0)
+        version: 2.15.18(@emotion/is-prop-valid@1.3.1)(@sanity/css-in-js@6.1.18-20(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@19.0.0)(react@19.1.0)
       next:
         specifier: 15.3.2
         version: 15.3.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -195,8 +195,8 @@ importers:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
       styled-components:
-        specifier: npm:@sanity/css-in-js@6.1.18-13
-        version: '@sanity/css-in-js@6.1.18-13(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
+        specifier: npm:@sanity/css-in-js@6.1.18-20
+        version: '@sanity/css-in-js@6.1.18-20(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
 
   examples/styled-components/next-app-router:
     dependencies:
@@ -1588,8 +1588,8 @@ packages:
     resolution: {integrity: sha512-2TjYEvOftD0v7ukx3Csdh9QIu44P2z7NDJtlC3qITJRYV36J7R6Vfd3trVhFnN77/7CZrGjqngrtohv8VqO5nw==}
     engines: {node: '>=18.0.0'}
 
-  '@sanity/css-in-js@6.1.18-13':
-    resolution: {integrity: sha512-3DrGb1LQI1NfhJX+WlWcIV9Op/ZLvQqunBzYDFrdIea/FaTntrU8fOKlc6JwpsIJ2MmK97q7hAM9ln79Dkjt6g==}
+  '@sanity/css-in-js@6.1.18-20':
+    resolution: {integrity: sha512-xs7idIK2D2Wu/iM/ggQllKEl9gQNcN/fDn3nvn10Y6aSMBWr7kA/EgAokYfwoZWSjrf2M0TUBA453SQNJtxFKg==}
     engines: {node: '>= 22'}
     peerDependencies:
       react: ^19.1
@@ -5497,16 +5497,16 @@ snapshots:
 
   '@sanity/color@3.0.6': {}
 
-  '@sanity/css-in-js@6.1.18-13(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+  '@sanity/css-in-js@6.1.18-20(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
     dependencies:
       '@emotion/is-prop-valid': 1.3.1
       '@emotion/unitless': 0.10.0
-      '@types/stylis': 4.2.5
+      '@types/stylis': 4.2.7
       csstype: 3.1.3
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
       shallowequal: 1.1.0
-      stylis: 4.3.2
+      stylis: 4.3.6
 
   '@sanity/css-in-js@file:packages/css-in-js(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -5560,7 +5560,7 @@ snapshots:
       shallowequal: 1.1.0
       stylis: 4.3.6
 
-  '@sanity/ui@2.15.18(@emotion/is-prop-valid@1.3.1)(@sanity/css-in-js@6.1.18-13(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@19.0.0)(react@19.1.0)':
+  '@sanity/ui@2.15.18(@emotion/is-prop-valid@1.3.1)(@sanity/css-in-js@6.1.18-20(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react-dom@19.1.0(react@19.1.0))(react-is@19.0.0)(react@19.1.0)':
     dependencies:
       '@floating-ui/react-dom': 2.1.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@juggle/resize-observer': 3.4.0
@@ -5573,7 +5573,7 @@ snapshots:
       react-dom: 19.1.0(react@19.1.0)
       react-is: 19.0.0
       react-refractor: 2.2.0(react@19.1.0)
-      styled-components: '@sanity/css-in-js@6.1.18-13(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
+      styled-components: '@sanity/css-in-js@6.1.18-20(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
       use-effect-event: 1.0.2(react@19.1.0)
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'

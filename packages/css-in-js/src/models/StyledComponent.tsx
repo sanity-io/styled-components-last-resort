@@ -38,7 +38,7 @@ import isTag from '../utils/isTag';
 import { joinStrings } from '../utils/joinStrings';
 import merge from '../utils/mixinDeep';
 import ComponentStyle from './ComponentStyle';
-import { useStyleSheetContext } from './StyleSheetManager';
+import { useStyleSheetContext, type IStyleSheetContext } from './StyleSheetManager';
 import { DefaultTheme, ThemeContext } from './ThemeProvider';
 import StyleSheet from '../sheet';
 import type Sheet from '../sheet';
@@ -66,24 +66,15 @@ function generateId(
 
 function useInjectedStyle<T extends ExecutionContext>(
   componentStyle: ComponentStyle,
+  stylis: IStyleSheetContext['stylis'],
   styleSheet: StyleSheet,
   resolvedAttrs: T
 ): [className: string, insertionEffectBuffer: [name: string, rules: string[]][]] {
-  const ssc = useStyleSheetContext();
-
-  const insertionEffectBuffer: [name: string, rules: string[]][] = [];
-  const className = componentStyle.generateAndInjectStyles(
+  const [className, insertionEffectBuffer] = componentStyle.generateAndInjectStyles(
     resolvedAttrs,
     styleSheet,
-    ssc.stylis,
-    insertionEffectBuffer
+    stylis
   );
-
-  // useInsertionEffect(() => {
-  //   if (Array.isArray(insertionEffectBuffer) && insertionEffectBuffer.length > 0) {
-  //     componentStyle.flushStyles(insertionEffectBuffer, ssc.styleSheet);
-  //   }
-  // });
 
   useDebugValue(className);
 
@@ -190,7 +181,12 @@ function useStyledComponentImpl<Props extends object>(
     () => true
   );
   const styleSheet = isHydrating ? new StyleSheet({ isServer: true }) : ssc.styleSheet;
-  const [generatedClassName, styles] = useInjectedStyle(componentStyle, styleSheet, context);
+  const [generatedClassName, styles] = useInjectedStyle(
+    componentStyle,
+    ssc.stylis,
+    styleSheet,
+    context
+  );
 
   if (process.env.NODE_ENV !== 'production' && forwardedComponent.warnTooManyClasses) {
     forwardedComponent.warnTooManyClasses(generatedClassName);
