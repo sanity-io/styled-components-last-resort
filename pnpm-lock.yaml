@@ -31,10 +31,10 @@ importers:
     dependencies:
       '@emotion/react':
         specifier: 11.14.0
-        version: 11.14.0(@types/react@19.1.4)(react@19.0.0)
+        version: 11.14.0(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520)
       '@emotion/styled':
         specifier: 11.14.0
-        version: 11.14.0(@emotion/react@11.14.0(@types/react@19.1.4)(react@19.0.0))(@types/react@19.1.4)(react@19.0.0)
+        version: 11.14.0(@emotion/react@11.14.0(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520)
       '@sanity/css-in-js':
         specifier: workspace:*
         version: link:../packages/css-in-js
@@ -54,44 +54,44 @@ importers:
         specifier: 2.1.16
         version: 2.1.16(csstype@3.1.3)
       react:
-        specifier: 19.0.0
-        version: 19.0.0
+        specifier: 0.0.0-experimental-23884812-20250520
+        version: 0.0.0-experimental-23884812-20250520
       react-dom:
-        specifier: 19.0.0
-        version: 19.0.0(react@19.0.0)
+        specifier: 0.0.0-experimental-23884812-20250520
+        version: 0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520)
       react-is:
-        specifier: 19.0.0
-        version: 19.0.0
+        specifier: 0.0.0-experimental-23884812-20250520
+        version: 0.0.0-experimental-23884812-20250520
       react-native-web:
         specifier: 0.19.13
-        version: 0.19.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 0.19.13(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)
       react-scan:
         specifier: ^0.3.4
-        version: 0.3.4(@types/react@19.1.4)(next@15.3.2(@babel/core@7.27.1)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(rollup@4.41.0)
+        version: 0.3.4(@types/react@19.1.4)(next@15.3.2(@babel/core@7.27.1)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520))(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)(rollup@4.41.0)
       react-strict-dom:
         specifier: 0.0.32
-        version: 0.0.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0)
+        version: 0.0.32(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)
       restyle:
         specifier: 3.4.2
-        version: 3.4.2(react@19.0.0)
+        version: 3.4.2(react@0.0.0-experimental-23884812-20250520)
       styled-components-use-insertion-effect:
         specifier: npm:@sanity/styled-components@6.1.13
-        version: '@sanity/styled-components@6.1.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0)'
+        version: '@sanity/styled-components@6.1.13(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)'
       styled-components-v5:
         specifier: npm:styled-components@5.3.11
-        version: styled-components@5.3.11(@babel/core@7.27.1)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0)
+        version: styled-components@5.3.11(@babel/core@7.27.1)(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-is@0.0.0-experimental-23884812-20250520)(react@0.0.0-experimental-23884812-20250520)
       styled-components-v6:
         specifier: npm:styled-components@6.1.18
-        version: styled-components@6.1.18(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: styled-components@6.1.18(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)
       styled-jsx:
         specifier: 5.1.6
-        version: 5.1.6(@babel/core@7.27.1)(react@19.0.0)
+        version: 5.1.6(@babel/core@7.27.1)(react@0.0.0-experimental-23884812-20250520)
       styletron-engine-atomic:
         specifier: 1.6.2
         version: 1.6.2
       styletron-react:
         specifier: 6.1.1
-        version: 6.1.1(react@19.0.0)
+        version: 6.1.1(react@0.0.0-experimental-23884812-20250520)
     devDependencies:
       '@babel/plugin-syntax-jsx':
         specifier: 7.25.9
@@ -119,7 +119,7 @@ importers:
         version: 19.1.5(@types/react@19.1.4)
       '@types/react-native-web':
         specifier: 0.19.0
-        version: 0.19.0(@babel/core@7.27.1)(react@19.0.0)
+        version: 0.19.0(@babel/core@7.27.1)(react@0.0.0-experimental-23884812-20250520)
       '@types/styled-components-v5':
         specifier: npm:@types/styled-components@5.1.34
         version: '@types/styled-components@5.1.34'
@@ -137,7 +137,7 @@ importers:
         version: 0.19.13
       babel-plugin-styled-components:
         specifier: 2.1.4
-        version: 2.1.4(@babel/core@7.27.1)(styled-components@6.1.18(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(supports-color@5.5.0)
+        version: 2.1.4(@babel/core@7.27.1)(styled-components@6.1.18(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520))(supports-color@5.5.0)
       eslint:
         specifier: ^9.17.0
         version: 9.27.0(jiti@2.4.2)
@@ -155,7 +155,7 @@ importers:
         version: 15.15.0
       postcss-react-strict-dom:
         specifier: 0.0.6
-        version: 0.0.6(postcss@8.5.3)(react-strict-dom@0.0.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0))
+        version: 0.0.6(postcss@8.5.3)(react-strict-dom@0.0.32(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520))
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -167,7 +167,7 @@ importers:
         version: 6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4)
       vite-plugin-stylex:
         specifier: 0.13.0
-        version: 0.13.0(@stylexjs/stylex@0.10.0)(react-strict-dom@0.0.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0))(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4))
+        version: 0.13.0(@stylexjs/stylex@0.10.0)(react-strict-dom@0.0.32(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520))(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4))
       vite-plugin-stylex-dev:
         specifier: 0.8.0
         version: 0.8.0(rollup@4.41.0)
@@ -3545,10 +3545,10 @@ packages:
   react-devtools-core@6.1.2:
     resolution: {integrity: sha512-ldFwzufLletzCikNJVYaxlxMLu7swJ3T2VrGfzXlMsVhZhPDKXA38DEROidaYZVgMAmQnIjymrmqto5pyfrwPA==}
 
-  react-dom@19.0.0:
-    resolution: {integrity: sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==}
+  react-dom@0.0.0-experimental-23884812-20250520:
+    resolution: {integrity: sha512-KOj47V4O5VGTiWQyepH+why76eZtLGL1FXtkujTFL7zfIx0AZ+pD4klI2FJJnpIW/32zQCv2B70N5AR2OwUUkQ==}
     peerDependencies:
-      react: ^19.0.0
+      react: 0.0.0-experimental-23884812-20250520
 
   react-dom@19.1.0:
     resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
@@ -3561,6 +3561,9 @@ packages:
       prop-types: ^15.5.9
       react: '>= 16.3'
       react-dom: '>= 16.3'
+
+  react-is@0.0.0-experimental-23884812-20250520:
+    resolution: {integrity: sha512-FSap045JnvQXTwSQlmkr/uP33EN6dC37uOccowcVO4SrcnN9rpea/DcAUurE+blvy37Bc1DelC8EtUuSnim4yg==}
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -3632,8 +3635,8 @@ packages:
       react-dom: ^18.2.0
       react-native: '>=0.75.2'
 
-  react@19.0.0:
-    resolution: {integrity: sha512-V8AVnmPIICiWpGfm6GLzCR/W5FXLchHop40W4nXBmdlEceh16rCN8O8LNWm5bh5XUX91fh7KpA+W0TgMKmgTpQ==}
+  react@0.0.0-experimental-23884812-20250520:
+    resolution: {integrity: sha512-0+z1WluucRDBndyhcOUYBC7FUe9HQwx8DTQ0ahQHryBwmUAqNYtGhPRj/tWwlr/jAUQ/lYeIa85KZ8KtDNdcxg==}
     engines: {node: '>=0.10.0'}
 
   react@19.1.0:
@@ -3756,6 +3759,9 @@ packages:
   saxes@6.0.0:
     resolution: {integrity: sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==}
     engines: {node: '>=v12.22.7'}
+
+  scheduler@0.0.0-experimental-23884812-20250520:
+    resolution: {integrity: sha512-5RioyNj+dvGFVfdyKirAWzz1YvRHkJbsGX8SnUd8n4GCuQVs9EZMcCl574XG7VhUMLnBMuy93yjq1tsXhec6tg==}
 
   scheduler@0.25.0:
     resolution: {integrity: sha512-xFVuu11jh+xcO7JOAGJNOXld8/TcEHK/4CituBUeUb5hqxJLj9YuemAEuvm9gQ/+pgXYfbQuqAkiYu+u7YEsNA==}
@@ -4791,17 +4797,17 @@ snapshots:
 
   '@emotion/memoize@0.9.0': {}
 
-  '@emotion/react@11.14.0(@types/react@19.1.4)(react@19.0.0)':
+  '@emotion/react@11.14.0(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520)':
     dependencies:
       '@babel/runtime': 7.27.1
       '@emotion/babel-plugin': 11.13.5
       '@emotion/cache': 11.14.0
       '@emotion/serialize': 1.3.3
-      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@19.0.0)
+      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@0.0.0-experimental-23884812-20250520)
       '@emotion/utils': 1.4.2
       '@emotion/weak-memoize': 0.4.0
       hoist-non-react-statics: 3.3.2
-      react: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
     optionalDependencies:
       '@types/react': 19.1.4
     transitivePeerDependencies:
@@ -4817,16 +4823,16 @@ snapshots:
 
   '@emotion/sheet@1.4.0': {}
 
-  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.1.4)(react@19.0.0))(@types/react@19.1.4)(react@19.0.0)':
+  '@emotion/styled@11.14.0(@emotion/react@11.14.0(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520)':
     dependencies:
       '@babel/runtime': 7.27.1
       '@emotion/babel-plugin': 11.13.5
       '@emotion/is-prop-valid': 1.3.1
-      '@emotion/react': 11.14.0(@types/react@19.1.4)(react@19.0.0)
+      '@emotion/react': 11.14.0(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520)
       '@emotion/serialize': 1.3.3
-      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@19.0.0)
+      '@emotion/use-insertion-effect-with-fallbacks': 1.2.0(react@0.0.0-experimental-23884812-20250520)
       '@emotion/utils': 1.4.2
-      react: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
     optionalDependencies:
       '@types/react': 19.1.4
     transitivePeerDependencies:
@@ -4840,13 +4846,13 @@ snapshots:
 
   '@emotion/unitless@0.8.1': {}
 
-  '@emotion/use-insertion-effect-with-fallbacks@1.0.1(react@19.0.0)':
+  '@emotion/use-insertion-effect-with-fallbacks@1.0.1(react@0.0.0-experimental-23884812-20250520)':
     dependencies:
-      react: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
 
-  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@19.0.0)':
+  '@emotion/use-insertion-effect-with-fallbacks@1.2.0(react@0.0.0-experimental-23884812-20250520)':
     dependencies:
-      react: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
 
   '@emotion/utils@1.4.2': {}
 
@@ -5229,10 +5235,10 @@ snapshots:
 
   '@oxc-project/types@0.70.0': {}
 
-  '@pivanov/utils@0.0.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@pivanov/utils@0.0.2(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)':
     dependencies:
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 0.0.0-experimental-23884812-20250520
+      react-dom: 0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520)
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -5302,12 +5308,12 @@ snapshots:
 
   '@react-native/normalize-colors@0.79.2': {}
 
-  '@react-native/virtualized-lists@0.79.2(@types/react@19.1.4)(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0)':
+  '@react-native/virtualized-lists@0.79.2(@types/react@19.1.4)(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)':
     dependencies:
       invariant: 2.2.4
       nullthrows: 1.1.1
-      react: 19.0.0
-      react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0)
+      react: 0.0.0-experimental-23884812-20250520
+      react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520)
     optionalDependencies:
       '@types/react': 19.1.4
 
@@ -5490,17 +5496,17 @@ snapshots:
     dependencies:
       react: 19.1.0
 
-  '@sanity/styled-components@6.1.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@sanity/styled-components@6.1.13(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)':
     dependencies:
       '@emotion/is-prop-valid': 1.2.2
       '@emotion/unitless': 0.8.1
-      '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@19.0.0)
+      '@emotion/use-insertion-effect-with-fallbacks': 1.0.1(react@0.0.0-experimental-23884812-20250520)
       '@types/stylis': 4.2.5
       css-to-react-native: 3.2.0
       csstype: 3.1.3
       postcss: 8.4.38
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 0.0.0-experimental-23884812-20250520
+      react-dom: 0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520)
       shallowequal: 1.1.0
       stylis: 4.3.2
       tslib: 2.6.2
@@ -5782,10 +5788,10 @@ snapshots:
     dependencies:
       '@types/react': 19.1.4
 
-  '@types/react-native-web@0.19.0(@babel/core@7.27.1)(react@19.0.0)':
+  '@types/react-native-web@0.19.0(@babel/core@7.27.1)(react@0.0.0-experimental-23884812-20250520)':
     dependencies:
       '@types/react': 19.1.4
-      react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0)
+      react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520)
     transitivePeerDependencies:
       - '@babel/core'
       - '@react-native-community/cli'
@@ -6103,14 +6109,14 @@ snapshots:
 
   babel-plugin-react-native-web@0.19.13: {}
 
-  babel-plugin-styled-components@2.1.4(@babel/core@7.27.1)(styled-components@6.1.18(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(supports-color@5.5.0):
+  babel-plugin-styled-components@2.1.4(@babel/core@7.27.1)(styled-components@6.1.18(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520))(supports-color@5.5.0):
     dependencies:
       '@babel/helper-annotate-as-pure': 7.27.1
       '@babel/helper-module-imports': 7.27.1(supports-color@5.5.0)
       '@babel/plugin-syntax-jsx': 7.25.9(@babel/core@7.27.1)
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 6.1.18(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      styled-components: 6.1.18(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)
     transitivePeerDependencies:
       - '@babel/core'
       - supports-color
@@ -6148,10 +6154,10 @@ snapshots:
 
   base64-js@1.5.1: {}
 
-  bippy@0.3.11(@types/react@19.1.4)(react@19.0.0):
+  bippy@0.3.11(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520):
     dependencies:
       '@types/react-reconciler': 0.28.9(@types/react@19.1.4)
-      react: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
     transitivePeerDependencies:
       - '@types/react'
 
@@ -7495,7 +7501,7 @@ snapshots:
 
   negotiator@0.6.3: {}
 
-  next@15.3.2(@babel/core@7.27.1)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  next@15.3.2(@babel/core@7.27.1)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520):
     dependencies:
       '@next/env': 15.3.2
       '@swc/counter': 0.1.3
@@ -7503,9 +7509,9 @@ snapshots:
       busboy: 1.6.0
       caniuse-lite: 1.0.30001718
       postcss: 8.4.31
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-      styled-jsx: 5.1.6(@babel/core@7.27.1)(react@19.0.0)
+      react: 0.0.0-experimental-23884812-20250520
+      react-dom: 0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520)
+      styled-jsx: 5.1.6(@babel/core@7.27.1)(react@0.0.0-experimental-23884812-20250520)
     optionalDependencies:
       '@next/swc-darwin-arm64': 15.3.2
       '@next/swc-darwin-x64': 15.3.2
@@ -7690,13 +7696,13 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  postcss-react-strict-dom@0.0.6(postcss@8.5.3)(react-strict-dom@0.0.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0)):
+  postcss-react-strict-dom@0.0.6(postcss@8.5.3)(react-strict-dom@0.0.32(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)):
     dependencies:
       fast-glob: 3.3.3
       glob-parent: 6.0.2
       is-glob: 4.0.3
       postcss: 8.5.3
-      react-strict-dom: 0.0.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0)
+      react-strict-dom: 0.0.32(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)
 
   postcss-value-parser@4.2.0: {}
 
@@ -7798,10 +7804,10 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  react-dom@19.0.0(react@19.0.0):
+  react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520):
     dependencies:
-      react: 19.0.0
-      scheduler: 0.25.0
+      react: 0.0.0-experimental-23884812-20250520
+      scheduler: 0.0.0-experimental-23884812-20250520
 
   react-dom@19.1.0(react@19.1.0):
     dependencies:
@@ -7814,6 +7820,8 @@ snapshots:
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
 
+  react-is@0.0.0-experimental-23884812-20250520: {}
+
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
@@ -7822,7 +7830,7 @@ snapshots:
 
   react-is@19.0.0: {}
 
-  react-native-web@0.19.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  react-native-web@0.19.13(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520):
     dependencies:
       '@babel/runtime': 7.27.1
       '@react-native/normalize-colors': 0.74.89
@@ -7831,13 +7839,13 @@ snapshots:
       memoize-one: 6.0.0
       nullthrows: 1.1.1
       postcss-value-parser: 4.2.0
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 0.0.0-experimental-23884812-20250520
+      react-dom: 0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520)
       styleq: 0.1.3
     transitivePeerDependencies:
       - encoding
 
-  react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0):
+  react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520):
     dependencies:
       '@jest/create-cache-key-function': 29.7.0
       '@react-native/assets-registry': 0.79.2
@@ -7846,7 +7854,7 @@ snapshots:
       '@react-native/gradle-plugin': 0.79.2
       '@react-native/js-polyfills': 0.79.2
       '@react-native/normalize-colors': 0.79.2
-      '@react-native/virtualized-lists': 0.79.2(@types/react@19.1.4)(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0)
+      '@react-native/virtualized-lists': 0.79.2(@types/react@19.1.4)(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)
       abort-controller: 3.0.0
       anser: 1.4.10
       ansi-regex: 5.0.1
@@ -7866,7 +7874,7 @@ snapshots:
       nullthrows: 1.1.1
       pretty-format: 29.7.0
       promise: 8.3.0
-      react: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
       react-devtools-core: 6.1.2
       react-refresh: 0.14.2
       regenerator-runtime: 0.13.11
@@ -7896,45 +7904,45 @@ snapshots:
 
   react-refresh@0.17.0: {}
 
-  react-scan@0.3.4(@types/react@19.1.4)(next@15.3.2(@babel/core@7.27.1)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(rollup@4.41.0):
+  react-scan@0.3.4(@types/react@19.1.4)(next@15.3.2(@babel/core@7.27.1)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520))(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)(rollup@4.41.0):
     dependencies:
       '@babel/core': 7.27.1
       '@babel/generator': 7.27.1
       '@babel/types': 7.27.1
       '@clack/core': 0.3.5
       '@clack/prompts': 0.8.2
-      '@pivanov/utils': 0.0.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@pivanov/utils': 0.0.2(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)
       '@preact/signals': 1.3.2(preact@10.26.6)
       '@rollup/pluginutils': 5.1.4(rollup@4.41.0)
       '@types/node': 20.17.48
-      bippy: 0.3.11(@types/react@19.1.4)(react@19.0.0)
+      bippy: 0.3.11(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520)
       esbuild: 0.25.4
       estree-walker: 3.0.3
       kleur: 4.1.5
       mri: 1.2.0
       playwright: 1.52.0
       preact: 10.26.6
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 0.0.0-experimental-23884812-20250520
+      react-dom: 0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520)
       tsx: 4.19.4
     optionalDependencies:
-      next: 15.3.2(@babel/core@7.27.1)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      next: 15.3.2(@babel/core@7.27.1)(babel-plugin-react-compiler@19.1.0-rc.2)(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)
       unplugin: 2.1.0
     transitivePeerDependencies:
       - '@types/react'
       - rollup
       - supports-color
 
-  react-strict-dom@0.0.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0):
+  react-strict-dom@0.0.32(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520):
     dependencies:
       '@stylexjs/stylex': 0.9.3
       css-mediaquery: 0.1.2
       postcss-value-parser: 4.2.0
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-      react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0)
+      react: 0.0.0-experimental-23884812-20250520
+      react-dom: 0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520)
+      react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520)
 
-  react@19.0.0: {}
+  react@0.0.0-experimental-23884812-20250520: {}
 
   react@19.1.0: {}
 
@@ -7973,9 +7981,9 @@ snapshots:
       path-parse: 1.0.7
       supports-preserve-symlinks-flag: 1.0.0
 
-  restyle@3.4.2(react@19.0.0):
+  restyle@3.4.2(react@0.0.0-experimental-23884812-20250520):
     dependencies:
-      react: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
 
   reusify@1.1.0: {}
 
@@ -8069,6 +8077,8 @@ snapshots:
   saxes@6.0.0:
     dependencies:
       xmlchars: 2.2.0
+
+  scheduler@0.0.0-experimental-23884812-20250520: {}
 
   scheduler@0.25.0: {}
 
@@ -8234,25 +8244,25 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  styled-components@5.3.11(@babel/core@7.27.1)(react-dom@19.0.0(react@19.0.0))(react-is@19.0.0)(react@19.0.0):
+  styled-components@5.3.11(@babel/core@7.27.1)(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-is@0.0.0-experimental-23884812-20250520)(react@0.0.0-experimental-23884812-20250520):
     dependencies:
       '@babel/helper-module-imports': 7.27.1(supports-color@5.5.0)
       '@babel/traverse': 7.27.1(supports-color@5.5.0)
       '@emotion/is-prop-valid': 1.3.1
       '@emotion/stylis': 0.8.5
       '@emotion/unitless': 0.7.5
-      babel-plugin-styled-components: 2.1.4(@babel/core@7.27.1)(styled-components@6.1.18(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(supports-color@5.5.0)
+      babel-plugin-styled-components: 2.1.4(@babel/core@7.27.1)(styled-components@6.1.18(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520))(supports-color@5.5.0)
       css-to-react-native: 3.2.0
       hoist-non-react-statics: 3.3.2
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
-      react-is: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
+      react-dom: 0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520)
+      react-is: 0.0.0-experimental-23884812-20250520
       shallowequal: 1.1.0
       supports-color: 5.5.0
     transitivePeerDependencies:
       - '@babel/core'
 
-  styled-components@6.1.18(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  styled-components@6.1.18(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520):
     dependencies:
       '@emotion/is-prop-valid': 1.2.2
       '@emotion/unitless': 0.8.1
@@ -8260,8 +8270,8 @@ snapshots:
       css-to-react-native: 3.2.0
       csstype: 3.1.3
       postcss: 8.4.49
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
+      react: 0.0.0-experimental-23884812-20250520
+      react-dom: 0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520)
       shallowequal: 1.1.0
       stylis: 4.3.2
       tslib: 2.6.2
@@ -8280,10 +8290,10 @@ snapshots:
       stylis: 4.3.2
       tslib: 2.6.2
 
-  styled-jsx@5.1.6(@babel/core@7.27.1)(react@19.0.0):
+  styled-jsx@5.1.6(@babel/core@7.27.1)(react@0.0.0-experimental-23884812-20250520):
     dependencies:
       client-only: 0.0.1
-      react: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
     optionalDependencies:
       '@babel/core': 7.27.1
 
@@ -8299,10 +8309,10 @@ snapshots:
       inline-style-prefixer: 5.1.2
       styletron-standard: 3.1.0
 
-  styletron-react@6.1.1(react@19.0.0):
+  styletron-react@6.1.1(react@0.0.0-experimental-23884812-20250520):
     dependencies:
       prop-types: 15.8.1
-      react: 19.0.0
+      react: 0.0.0-experimental-23884812-20250520
       styletron-standard: 3.1.0
 
   styletron-standard@3.1.0:
@@ -8562,7 +8572,7 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-stylex@0.13.0(@stylexjs/stylex@0.10.0)(react-strict-dom@0.0.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0))(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4)):
+  vite-plugin-stylex@0.13.0(@stylexjs/stylex@0.10.0)(react-strict-dom@0.0.32(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520))(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4)):
     dependencies:
       '@babel/core': 7.27.1
       '@babel/plugin-syntax-flow': 7.27.1(@babel/core@7.27.1)
@@ -8573,7 +8583,7 @@ snapshots:
       compare-versions: 6.1.1
       vite: 6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4)
     optionalDependencies:
-      react-strict-dom: 0.0.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@19.0.0))(react@19.0.0)
+      react-strict-dom: 0.0.32(react-dom@0.0.0-experimental-23884812-20250520(react@0.0.0-experimental-23884812-20250520))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-23884812-20250520))(react@0.0.0-experimental-23884812-20250520)
     transitivePeerDependencies:
       - supports-color
 

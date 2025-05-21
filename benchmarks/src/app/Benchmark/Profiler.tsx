@@ -11,6 +11,7 @@ import React, {
   useReducer,
   useRef,
   useDeferredValue,
+  unstable_Activity as Activity,
 } from 'react';
 import type { BenchmarkRef } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
@@ -219,7 +220,8 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     <Profiler
       id="benchmark"
       onRender={(_id, _phase, _actualDuration, _baseDuration, startTime, commitTime) => {
-        if (running && shouldRecord(cycle, type)) {
+        // if (running && shouldRecord(cycle, type)) {
+        if (running) {
           samplesRef.current[cycle] = {
             start: startTime,
             // end: startTime + actualDuration,
@@ -238,13 +240,18 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
         // */
       }}
     >
-      {running && shouldRender(cycle, type) ? (
+      <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
         <Component
+          key={
+            type === BenchmarkType.UPDATE
+              ? undefined
+              : `${type}-${shouldRender(cycle, type) ? cycle - 1 : cycle}`
+          }
           {...componentProps}
           // make sure props always change for update tests
           data-test={type === BenchmarkType.UPDATE ? cycle : undefined}
         />
-      ) : null}
+      </Activity>
     </Profiler>
   );
 }

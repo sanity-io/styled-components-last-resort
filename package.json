@@ -17,6 +17,13 @@
     "node": ">=20.0.0"
   },
   "pnpm": {
+    "peerDependencyRules": {
+      "allowAny": [
+        "react",
+        "react-dom",
+        "react-is"
+      ]
+    },
     "overrides": {
       "@types/react": "$@types/react",
       "@types/react-dom": "$@types/react-dom"
