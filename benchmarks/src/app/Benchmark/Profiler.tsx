@@ -10,27 +10,14 @@ import {
   useReducer,
   useRef,
   unstable_Activity as Activity,
+  useTransition,
+  use,
 } from 'react';
 import type { BenchmarkRef } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
 import { getMean, getMedian, getStdDev } from './math';
 import * as Timing from './timing';
-import { shouldRecord, shouldRender } from './utils';
-
-const isDone = (cycle: number, sampleCount: number, type: string) => {
-  switch (type) {
-    case BenchmarkType.MOUNT:
-      return cycle >= sampleCount * 2 - 1;
-    case BenchmarkType.UPDATE:
-      return cycle >= sampleCount - 1;
-    case BenchmarkType.UNMOUNT:
-      return cycle >= sampleCount * 2;
-    default:
-      return true;
-  }
-};
-
-const sortNumbers = (a: number, b: number) => a - b;
+import { isDone, shouldRecord, shouldRender, shouldSuspend, sortNumbers } from './utils';
 
 export interface BenchmarkResults {
   startTime: number;
@@ -70,9 +57,14 @@ interface BenchmarkState {
   componentProps: Record<string, any>;
   startTime: number;
   scriptingStart: number;
+  suspend: PromiseWithResolvers<true> | null;
 }
 
-type BenchmarkAction = { type: 'start' } | { type: 'cycle' } | { type: 'complete' };
+type BenchmarkAction =
+  | { type: 'start' }
+  | { type: 'cycle' }
+  | { type: 'complete' }
+  | { type: 'suspend' };
 
 export function BenchmarkProfiler(props: BenchmarkProps) {
   const {
@@ -104,6 +96,9 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     }),
     []
   );
+  const [suspending, startTransition] = useTransition();
+  // const suspending = false;
+  // const startTransition = (cb: () => void) => cb();
 
   const [state, dispatch] = useReducer(
     (state: BenchmarkState, action: BenchmarkAction) => {
@@ -115,6 +110,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             cycle: 0,
             startTime: Timing.now(),
             scriptingStart: Timing.now(),
+            suspend: null,
           };
         case 'cycle':
           return {
@@ -122,6 +118,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             cycle: state.cycle + 1,
             componentProps: getComponentProps({ cycle: state.cycle + 1 }),
             scriptingStart: Timing.now(),
+            suspend: null,
           };
         case 'complete':
           return {
@@ -131,6 +128,15 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             scriptingStart: 0,
             startTime: 0,
             componentProps: getComponentProps({ cycle: 0 }),
+            suspend: null,
+          };
+        case 'suspend':
+          return {
+            ...state,
+            cycle: state.cycle + 1,
+            componentProps: getComponentProps({ cycle: state.cycle + 1 }),
+            scriptingStart: Timing.now(),
+            suspend: Promise.withResolvers<true>(),
           };
         default:
           return state;
@@ -143,18 +149,13 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       cycle,
       running,
       componentProps: getComponentProps({ cycle }),
+      suspend: null,
     })
   );
-  const { cycle, running, componentProps, scriptingStart, startTime } = state;
+  const { cycle, running, componentProps, scriptingStart, startTime, suspend } = state;
 
-  // const runningRef = useRef(false);
   useEffect(() => {
-    // if (running && !runningRef.current) {
-    //   _startTime.current = Timing.now();
-    // }
-    // runningRef.current = running;
-
-    if (!running) return;
+    if (!running || suspending || suspend) return;
 
     if (shouldRecord(cycle, type)) {
       samplesRef.current[cycle] = { scriptingStart };
@@ -171,8 +172,13 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
 
     const now = Timing.now();
     if (!isDone(cycle, sampleCount, type) && now - startTime < timeout) {
+      const done = () => dispatch({ type: 'cycle' });
       const raf = requestAnimationFrame(() => {
-        dispatch({ type: 'cycle' });
+        if (shouldSuspend(cycle, type)) {
+          startTransition(() => dispatch({ type: 'suspend' }));
+        } else {
+          done();
+        }
       });
       return () => cancelAnimationFrame(raf);
     } else {
@@ -224,22 +230,74 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
         meanScripting: getMean(sortedScriptingElapsedTimes),
       });
     }
-  }, [cycle, onComplete, running, sampleCount, scriptingStart, startTime, timeout, type]);
+  }, [
+    cycle,
+    onComplete,
+    running,
+    sampleCount,
+    scriptingStart,
+    startTime,
+    suspend,
+    suspending,
+    timeout,
+    type,
+  ]);
 
   return (
     <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
       <Component
+        // Change the key during mount/unmount test runs to force remounts
         key={
           type === BenchmarkType.UPDATE
             ? undefined
             : `${type}-${shouldRender(cycle, type) ? cycle - 1 : cycle}`
         }
         {...componentProps}
-        // make sure props always change for update tests
-        // data-test={type === BenchmarkType.UPDATE ? cycle : undefined}
       />
+      {!suspending && suspend && (
+        <Suspend
+          promise={suspend.promise}
+          resolve={suspend.resolve}
+          proceed={() => {
+            if (shouldRecord(cycle, type)) {
+              samplesRef.current[cycle] = { scriptingStart };
+              samplesRef.current[cycle].scriptingEnd = Timing.now();
+
+              // force style recalc that would otherwise happen before the next frame
+              samplesRef.current[cycle].layoutStart = Timing.now();
+              if (document.body) {
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                document.body.offsetWidth;
+              }
+              samplesRef.current[cycle].layoutEnd = Timing.now();
+            }
+            dispatch({ type: 'cycle' });
+          }}
+        />
+      )}
     </Activity>
   );
 }
 BenchmarkProfiler.displayName = 'BenchmarkProfiler';
 BenchmarkProfiler.Type = BenchmarkType;
+
+function Suspend({
+  promise,
+  resolve,
+  proceed,
+}: {
+  promise: Promise<true>;
+  resolve: PromiseWithResolvers<true>['resolve'];
+  proceed: () => void;
+}) {
+  // Resolve the promise right away
+  resolve(true);
+  // Even though we resolved the promise it won't happen until the next microtask, so it'll suspend here
+  use(promise);
+  // Once it's no longer suspending it'll run the useEffect which dispatches another cycle
+  useEffect(() => {
+    const raf = requestAnimationFrame(proceed);
+    return () => cancelAnimationFrame(raf);
+  }, [proceed]);
+  return null;
+}

@@ -51,7 +51,7 @@ const tests = {
     }),
     Provider: components.Provider,
     sampleCount: 500,
-    // sampleCount: 1,
+    // sampleCount: 5,
   })),
   'Mount wide tree': createTestBlock(Tree, components => ({
     benchmarkType: 'mount',
@@ -64,7 +64,7 @@ const tests = {
     }),
     Provider: components.Provider,
     sampleCount: 500,
-    // sampleCount: 1,
+    // sampleCount: 5,
   })),
   'Update dynamic styles': createTestBlock(SierpinskiTriangle, components => ({
     benchmarkType: 'update',
@@ -77,7 +77,7 @@ const tests = {
     }),
     Provider: components.Provider,
     sampleCount: 1_000,
-    // sampleCount: 1,
+    // sampleCount: 5,
   })),
 };
 

@@ -1,6 +1,6 @@
 import { BenchmarkType } from './BenchmarkType';
 
-export const shouldRender = (cycle: number, type: string) => {
+export function shouldRender(cycle: number, type: string) {
   switch (type) {
     // Render every odd iteration (first, third, etc)
     // Mounts and unmounts the component
@@ -13,9 +13,18 @@ export const shouldRender = (cycle: number, type: string) => {
     default:
       return false;
   }
-};
+}
 
-export const shouldRecord = (cycle: number, type: string) => {
+export function shouldSuspend(cycle: number, type: string) {
+  switch (type) {
+    case BenchmarkType.UPDATE:
+      return !((cycle + 1) % 2);
+    default:
+      return false;
+  }
+}
+
+export function shouldRecord(cycle: number, type: string) {
   switch (type) {
     // Record every odd iteration (when mounted: first, third, etc)
     case BenchmarkType.MOUNT:
@@ -29,9 +38,9 @@ export const shouldRecord = (cycle: number, type: string) => {
     default:
       return false;
   }
-};
+}
 
-export const isDone = (cycle: number, sampleCount: number, type: string) => {
+export function isDone(cycle: number, sampleCount: number, type: string) {
   switch (type) {
     case BenchmarkType.MOUNT:
       return cycle >= sampleCount * 2 - 1;
@@ -42,7 +51,7 @@ export const isDone = (cycle: number, sampleCount: number, type: string) => {
     default:
       return true;
   }
-};
+}
 
 export const sortNumbers = (a: number, b: number) => a - b;
 
