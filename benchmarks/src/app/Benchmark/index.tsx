@@ -186,7 +186,7 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
       componentProps = getComponentProps({ cycle });
       // make sure props always change for update tests
       if (type === BenchmarkType.UPDATE) {
-        componentProps['data-test'] = cycle;
+        // componentProps['data-test'] = cycle;
       }
     }
 

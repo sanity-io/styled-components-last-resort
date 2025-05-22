@@ -271,7 +271,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                     forceConcurrent={forceConcurrent}
                     getComponentProps={getComponentProps}
                     onComplete={results => {
-                      setProfilerResults(state =>
+                      setResults(state =>
                         state.concat([
                           {
                             ...results,
