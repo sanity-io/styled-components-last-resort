@@ -45,7 +45,7 @@ export interface BenchmarkProps {
   sampleCount: number;
   timeout: number;
   type: (typeof BenchmarkType)[keyof typeof BenchmarkType];
-  getComponentProps: (props: { cycle: number }) => Record<string, any>;
+  getComponentProps: (props: { cycle: number; variant: 0 | 1 }) => Record<string, any>;
   ref: React.Ref<BenchmarkRef>;
   component: any;
   onComplete: (results: BenchmarkResults) => void;
@@ -116,7 +116,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
           return {
             ...state,
             cycle: state.cycle + 1,
-            componentProps: getComponentProps({ cycle: state.cycle + 1 }),
+            componentProps: getComponentProps({ cycle: state.cycle + 1, variant: 0 }),
             scriptingStart: Timing.now(),
             suspend: null,
           };
@@ -127,14 +127,14 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             cycle: 0,
             scriptingStart: 0,
             startTime: 0,
-            componentProps: getComponentProps({ cycle: 0 }),
+            componentProps: getComponentProps({ cycle: 0, variant: 0 }),
             suspend: null,
           };
         case 'suspend':
           return {
             ...state,
             cycle: state.cycle + 1,
-            componentProps: getComponentProps({ cycle: state.cycle + 1 }),
+            componentProps: getComponentProps({ cycle: state.cycle + 1, variant: 1 }),
             scriptingStart: Timing.now(),
             suspend: Promise.withResolvers<true>(),
           };
@@ -148,7 +148,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       scriptingStart: 0,
       cycle,
       running,
-      componentProps: getComponentProps({ cycle }),
+      componentProps: getComponentProps({ cycle, variant: 0 }),
       suspend: null,
     })
   );
@@ -244,7 +244,8 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
   ]);
 
   return (
-    <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
+    <>
+      {/* <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}> */}
       <Component
         // Change the key during mount/unmount test runs to force remounts
         key={
@@ -275,7 +276,8 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
           }}
         />
       )}
-    </Activity>
+      {/* </Activity> */}
+    </>
   );
 }
 BenchmarkProfiler.displayName = 'BenchmarkProfiler';

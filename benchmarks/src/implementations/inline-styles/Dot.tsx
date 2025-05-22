@@ -1,6 +1,6 @@
 import type { DotProps } from '../../types';
 
-export const Dot = ({ $size, $x, $y, $color }: DotProps) => (
+export const Dot = ({ $size, $x, $y, $color, $variant }: DotProps) => (
   <div
     style={{
       position: 'absolute',
@@ -8,7 +8,7 @@ export const Dot = ({ $size, $x, $y, $color }: DotProps) => (
       width: 0,
       height: 0,
       borderColor: 'transparent',
-      borderStyle: 'solid',
+      borderStyle: $variant === 1 ? 'none' : 'solid',
       borderTopWidth: 0,
       transform: 'translate(50%, 50%)',
       borderBottomColor: $color,

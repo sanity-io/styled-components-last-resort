@@ -318,7 +318,12 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                   </Profiler>
                 )
               ) : (
-                <Component {...getComponentProps({ cycle: 10 })} />
+                <Component
+                  {...getComponentProps({
+                    cycle: 10,
+                    variant: process.env.NODE_ENV === 'development' ? 1 : 0,
+                  })}
+                />
               )}
             </View>
           </Provider>

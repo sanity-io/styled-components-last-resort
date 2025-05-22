@@ -19,6 +19,7 @@ export interface DotProps {
   $size: number;
   $x: number;
   $y: number;
+  $variant: 0 | 1;
 }
 export interface ProviderProps {
   children: React.ReactNode;
@@ -47,6 +48,7 @@ export interface SierpinskiTriangleProps {
   s: number;
   x: number;
   y: number;
+  variant: 0 | 1;
 }
 
 export interface TreeProps {
@@ -71,7 +73,10 @@ export interface TestReport {
 
 export interface Test<ComponentType extends React.ComponentType<SafeAny>> {
   Component: ComponentType;
-  getComponentProps: (props: { cycle: number }) => React.ComponentProps<ComponentType>;
+  getComponentProps: (props: {
+    cycle: number;
+    variant?: 0 | 1;
+  }) => React.ComponentProps<ComponentType>;
   sampleCount: number;
   Provider: React.ComponentType<ProviderProps>;
   benchmarkType: 'mount' | 'update';

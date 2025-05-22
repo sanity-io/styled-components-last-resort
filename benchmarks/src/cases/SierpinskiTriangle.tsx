@@ -10,6 +10,7 @@ export function SierpinskiTriangle({
   y,
   depth = 0,
   renderCount = 0,
+  variant = 0,
 }: SierpinskiTriangleProps) {
   const { Dot } = components;
 
@@ -31,7 +32,13 @@ export function SierpinskiTriangle({
       // introduce randomness to ensure that repeated runs don't produce the same colors
       const color = fn((renderCount * Math.random()) / 20);
       return (
-        <Dot $color={color} $size={targetSize} $x={x - targetSize / 2} $y={y - targetSize / 2} />
+        <Dot
+          $color={color}
+          $size={targetSize}
+          $x={x - targetSize / 2}
+          $y={y - targetSize / 2}
+          $variant={variant}
+        />
       );
     }
 
@@ -46,6 +53,7 @@ export function SierpinskiTriangle({
           s={s}
           x={x}
           y={y - s / 2}
+          variant={variant}
         />
         <SierpinskiTriangle
           components={components}
@@ -54,6 +62,7 @@ export function SierpinskiTriangle({
           s={s}
           x={x - s}
           y={y + s / 2}
+          variant={variant}
         />
         <SierpinskiTriangle
           components={components}
@@ -62,6 +71,7 @@ export function SierpinskiTriangle({
           s={s}
           x={x + s}
           y={y + s / 2}
+          variant={variant}
         />
       </>
     );
