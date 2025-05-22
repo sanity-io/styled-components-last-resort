@@ -4,13 +4,11 @@
  * and omit scripting time from the benchmarker itself.
  */
 
-import React, {
-  Profiler,
+import {
   useEffect,
   useImperativeHandle,
   useReducer,
   useRef,
-  useDeferredValue,
   unstable_Activity as Activity,
 } from 'react';
 import type { BenchmarkRef } from '../../types';
@@ -64,8 +62,6 @@ export interface BenchmarkProps {
   ref: React.Ref<BenchmarkRef>;
   component: any;
   onComplete: (results: BenchmarkResults) => void;
-  forceLayout: boolean;
-  forceConcurrent: boolean;
 }
 
 interface BenchmarkState {
@@ -87,8 +83,6 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     ref,
     component: Component,
     onComplete,
-    forceLayout,
-    forceConcurrent,
   } = props;
 
   const samplesRef = useRef<
@@ -99,13 +93,11 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       layoutEnd?: number;
     }[]
   >([]);
-  const _startTime = useRef(0);
 
   useImperativeHandle(
     ref,
     () => ({
       start: () => {
-        _startTime.current = Timing.now();
         samplesRef.current = [];
         dispatch({ type: 'start' });
       },
@@ -117,7 +109,13 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     (state: BenchmarkState, action: BenchmarkAction) => {
       switch (action.type) {
         case 'start':
-          return { ...state, running: true, cycle: 0, startTime: Timing.now() };
+          return {
+            ...state,
+            running: true,
+            cycle: 0,
+            startTime: Timing.now(),
+            scriptingStart: Timing.now(),
+          };
         case 'cycle':
           return {
             ...state,
@@ -126,7 +124,14 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             scriptingStart: Timing.now(),
           };
         case 'complete':
-          return { ...state, running: false, cycle: 0 };
+          return {
+            ...state,
+            running: false,
+            cycle: 0,
+            scriptingStart: 0,
+            startTime: 0,
+            componentProps: getComponentProps({ cycle: 0 }),
+          };
         default:
           return state;
       }
@@ -201,37 +206,25 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       const sortedLayoutElapsedTimes = samples
         .map(({ layoutStart, layoutEnd }) => (layoutEnd || 0) - (layoutStart || 0))
         .sort(sortNumbers);
-      const raf = requestAnimationFrame(() => {
-        dispatch({ type: 'complete' });
 
-        onComplete({
-          startTime,
-          endTime: now,
-          runTime,
-          sampleCount: samples.length,
-          samples: samples,
-          max: sortedElapsedTimes[sortedElapsedTimes.length - 1],
-          min: sortedElapsedTimes[0],
-          median: getMedian(sortedElapsedTimes),
-          mean: getMean(sortedElapsedTimes),
-          stdDev: getStdDev(sortedElapsedTimes),
-          meanLayout: getMean(sortedLayoutElapsedTimes),
-          meanScripting: getMean(sortedScriptingElapsedTimes),
-        });
+      dispatch({ type: 'complete' });
+
+      onComplete({
+        startTime,
+        endTime: now,
+        runTime,
+        sampleCount: samples.length,
+        samples: samples,
+        max: sortedElapsedTimes[sortedElapsedTimes.length - 1],
+        min: sortedElapsedTimes[0],
+        median: getMedian(sortedElapsedTimes),
+        mean: getMean(sortedElapsedTimes),
+        stdDev: getStdDev(sortedElapsedTimes),
+        meanLayout: getMean(sortedLayoutElapsedTimes),
+        meanScripting: getMean(sortedScriptingElapsedTimes),
       });
-      return () => cancelAnimationFrame(raf);
     }
-  }, [
-    cycle,
-    forceLayout,
-    onComplete,
-    running,
-    sampleCount,
-    scriptingStart,
-    startTime,
-    timeout,
-    type,
-  ]);
+  }, [cycle, onComplete, running, sampleCount, scriptingStart, startTime, timeout, type]);
 
   return (
     <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
