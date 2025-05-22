@@ -63,12 +63,15 @@ export interface TestReport {
   benchmarkName: string;
   libraryName: string;
   libraryVersion?: string;
+  runner: string;
   sampleCount?: number;
   mean?: number;
   meanLayout?: number;
   meanScripting?: number;
   stdDev?: number;
   runTime?: number;
+  meanScriptingP75?: number;
+  meanScriptingP99?: number;
 }
 
 export interface Test<ComponentType extends React.ComponentType<SafeAny>> {

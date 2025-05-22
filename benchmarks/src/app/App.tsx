@@ -1,4 +1,4 @@
-import { Profiler, useRef, useState, useTransition } from 'react';
+import { useRef, useState, useTransition } from 'react';
 import { flushSync } from 'react-dom';
 import {
   // @ts-expect-error - fix later
@@ -8,13 +8,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import type { BenchmarkRef, SafeAny, TestReport, Tests } from '../types';
+import type { BenchmarkRef, SafeAny, Tests } from '../types';
 import { Benchmark, type BenchmarkResults } from './Benchmark';
 import { BenchmarkProfiler } from './Benchmark/Profiler';
 import { Button } from './Button';
 import { IconClear, IconEye } from './Icons';
 import { Layout } from './Layout';
-import { ProfilerReportCard } from './ProfilerReportCard';
 import { ReportCard } from './ReportCard';
 import { Text } from './Text';
 import { colors } from './theme';
@@ -54,9 +53,13 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
   const [currentLibraryName, setCurrentLibraryName] = useState('inline-styles');
   const [status, setStatus] = useState<'idle' | 'running' | 'complete'>('idle');
   const [results, setResults] = useState<
-    (BenchmarkResults & { benchmarkName: string; libraryName: string; libraryVersion?: string })[]
+    (BenchmarkResults & {
+      benchmarkName: string;
+      libraryName: string;
+      libraryVersion?: string;
+      runner: RunnerType;
+    })[]
   >([]);
-  const [profilerResults, setProfilerResults] = useState<TestReport[]>([]);
   const [shouldHideBenchmark, setShouldHideBenchmark] = useState(false);
   // Loading a new benchmark might take a moment, so we hide the benchmark while it is loading to make it clear it is not ready yet
   const [pending, startTransition] = useTransition();
@@ -81,7 +84,6 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
   };
   const _handleClear = () => {
     setResults([]);
-    setProfilerResults([]);
   };
 
   // scroll the most recent result into view
@@ -181,6 +183,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
             <ScrollView ref={scrollViewRef} style={styles.grow}>
               {results.map((r, i) => (
                 <ReportCard
+                  runner={r.runner}
                   benchmarkName={r.benchmarkName}
                   key={i}
                   libraryName={r.libraryName}
@@ -191,21 +194,16 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                   runTime={r.runTime}
                   sampleCount={r.sampleCount}
                   stdDev={r.stdDev}
-                />
-              ))}
-              {profilerResults.map((r, i) => (
-                <ProfilerReportCard
-                  benchmarkName={r.benchmarkName}
-                  key={i}
-                  libraryName={r.libraryName}
-                  libraryVersion={r.libraryVersion}
-                  mean={r.mean}
-                  sampleCount={r.sampleCount}
-                  stdDev={r.stdDev}
+                  meanScriptingP75={r.meanScriptingP75}
+                  meanScriptingP99={r.meanScriptingP99}
                 />
               ))}
               {status === 'running' ? (
-                <ReportCard benchmarkName={currentBenchmarkName} libraryName={currentLibraryName} />
+                <ReportCard
+                  runner={currentBenchmarkRunner}
+                  benchmarkName={currentBenchmarkName}
+                  libraryName={currentLibraryName}
+                />
               ) : null}
             </ScrollView>
           </View>
@@ -239,6 +237,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                             benchmarkName: currentBenchmarkName,
                             libraryName: currentLibraryName,
                             libraryVersion: tests[currentBenchmarkName][currentLibraryName].version,
+                            runner: currentBenchmarkRunner,
                           },
                         ])
                       );
@@ -259,9 +258,11 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                         state.concat([
                           {
                             ...results,
+
                             benchmarkName: currentBenchmarkName,
                             libraryName: currentLibraryName,
                             libraryVersion: tests[currentBenchmarkName][currentLibraryName].version,
+                            runner: currentBenchmarkRunner,
                           },
                         ])
                       );
