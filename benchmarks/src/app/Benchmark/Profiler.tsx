@@ -4,15 +4,7 @@
  * and omit scripting time from the benchmarker itself.
  */
 
-import {
-  useEffect,
-  useImperativeHandle,
-  useReducer,
-  useRef,
-  unstable_Activity as Activity,
-  useTransition,
-  use,
-} from 'react';
+import { useEffect, useImperativeHandle, useReducer, useRef, useTransition, use } from 'react';
 import type { BenchmarkRef } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
 import { getMean, getMedian, getStdDev } from './math';
@@ -186,7 +178,6 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       });
       return () => cancelAnimationFrame(raf);
     } else {
-      console.log('samplesRef.current', samplesRef.current);
       const samples = samplesRef.current.reduce(
         (memo, { scriptingStart, scriptingEnd, layoutStart, layoutEnd }) => {
           memo.push({
@@ -248,17 +239,10 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
   ]);
 
   return (
-    <>
-      <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
-        <Component
-          // Change the key during mount/unmount test runs to force remounts
-          key={
-            type === BenchmarkType.UPDATE
-              ? undefined
-              : `${type}-${shouldRender(cycle, type) ? cycle - 1 : cycle}`
-          }
-          {...componentProps}
-        />
+    running &&
+    shouldRender(cycle, type) && (
+      <>
+        <Component {...componentProps} />
         {!suspending && suspend && (
           <Suspend
             promise={suspend.promise}
@@ -280,8 +264,8 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             }}
           />
         )}
-      </Activity>
-    </>
+      </>
+    )
   );
 }
 BenchmarkProfiler.displayName = 'BenchmarkProfiler';

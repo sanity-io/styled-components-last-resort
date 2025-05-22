@@ -4,12 +4,12 @@
  * https://github.com/paularmstrong/react-component-benchmark
  */
 
-import { Component, Profiler, unstable_Activity as Activity } from 'react';
+import { Component } from 'react';
 import type { SafeAny, Test } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
 import { getMean, getMedian, getStdDev } from './math';
 import * as Timing from './timing';
-import { handleProfileRender, isDone, shouldRecord, shouldRender, sortNumbers } from './utils';
+import { isDone, shouldRecord, shouldRender, sortNumbers } from './utils';
 
 export interface BenchmarkResults {
   startTime: number;
@@ -68,7 +68,7 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
   _raf: number | undefined;
 
   constructor(props: BenchmarkProps) {
-    console.log('OLD.constructor', { props });
+    // console.log('OLD.constructor', { props });
     super(props);
 
     const cycle = 0;
@@ -85,7 +85,7 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
   // runs outside render to avoid skewing results?
   // use getDerivedStateFromProps instead?
   UNSAFE_componentWillReceiveProps(nextProps: BenchmarkProps) {
-    console.log('OLD.componentWillReceiveProps', { nextProps }, this.props, this.state);
+    // console.log('OLD.componentWillReceiveProps', { nextProps }, this.props, this.state);
     if (nextProps) {
       this.setState(state => ({
         componentProps: nextProps.getComponentProps({ cycle: state.cycle }),
@@ -95,15 +95,15 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
 
   // runs outside of render agai? Detects exactly when the running state has changed
   UNSAFE_componentWillUpdate(nextProps: BenchmarkProps, nextState: BenchmarkState) {
-    console.log('OLD.componentWillUpdate', { nextProps, nextState }, this.props, this.state);
+    // console.log('OLD.componentWillUpdate', { nextProps, nextState }, this.props, this.state);
     if (nextState.running && !this.state.running) {
       this._startTime = Timing.now();
-      console.log('OLD set start time', this._startTime);
+      // console.log('OLD set start time', this._startTime);
     }
   }
 
   componentDidUpdate() {
-    console.log('OLD.componentDidUpdate', this.props, this.state);
+    // console.log('OLD.componentDidUpdate', this.props, this.state);
     const { forceLayout, sampleCount, timeout, type } = this.props;
     const { cycle, running } = this.state;
 
@@ -132,50 +132,34 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
   }
 
   componentWillUnmount() {
-    console.log('OLD.componentWillUnmount', this.props, this.state);
+    // console.log('OLD.componentWillUnmount', this.props, this.state);
     if (this._raf) {
       window.cancelAnimationFrame(this._raf);
     }
   }
 
   render() {
-    console.log('OLD.render', this.props, this.state);
+    // console.log('OLD.render', this.props, this.state);
     const { Component, type } = this.props;
     const { componentProps, cycle, running } = this.state;
     if (running && shouldRecord(cycle, type)) {
-      console.log('OLD.render shouldRecord', Timing.now());
+      // console.log('OLD.render shouldRecord', Timing.now());
       this._samples[cycle] = { scriptingStart: Timing.now() };
     }
-    if (running && shouldRender(cycle, type)) {
-      console.log('OLD.render shouldRender', Timing.now());
-    }
-    return (
-      <Profiler
-        id="cycle"
-        onRender={(...args) => running && shouldRender(cycle, type) && handleProfileRender(...args)}
-      >
-        <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
-          <Component
-            key={
-              type === BenchmarkType.UPDATE
-                ? undefined
-                : `${type}-${shouldRender(cycle, type) ? cycle - 1 : cycle}`
-            }
-            {...componentProps}
-          />
-        </Activity>
-      </Profiler>
-    );
+    // if (running && shouldRender(cycle, type)) {
+    //   // console.log('OLD.render shouldRender', Timing.now());
+    // }
+    return running && shouldRender(cycle, type) && <Component {...componentProps} />;
   }
 
   start() {
-    console.log('OLD.start', Timing.now());
+    // console.log('OLD.start', Timing.now());
     this._samples = [];
     this.setState(() => ({ running: true, cycle: 0 }));
   }
 
   _handleCycleComplete() {
-    console.log('OLD._handleCycleComplete', this.props, this.state);
+    // console.log('OLD._handleCycleComplete', this.props, this.state);
     const { getComponentProps, type } = this.props;
     const { cycle } = this.state;
 
@@ -190,9 +174,9 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
       }
     }
 
-    console.log('OLD.requestAnimationFrame schedule');
+    // console.log('OLD.requestAnimationFrame schedule');
     this._raf = window.requestAnimationFrame(() => {
-      console.log('OLD.requestAnimationFrame fired');
+      // console.log('OLD.requestAnimationFrame fired');
       this.setState(state => ({
         cycle: state.cycle + 1,
         componentProps,
@@ -201,7 +185,7 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
   }
 
   getSamples() {
-    console.log('OLD.getSamples', this.props, this.state);
+    // console.log('OLD.getSamples', this.props, this.state);
     return this._samples.reduce(
       (memo, { scriptingStart, scriptingEnd, layoutStart, layoutEnd }) => {
         memo.push({
@@ -226,7 +210,7 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
   }
 
   _handleComplete(endTime: number) {
-    console.log('OLD._handleComplete', this.props, this.state);
+    // console.log('OLD._handleComplete', this.props, this.state);
     const { onComplete } = this.props;
     const samples = this.getSamples();
 
@@ -255,6 +239,5 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
       meanLayout: getMean(sortedLayoutElapsedTimes),
       meanScripting: getMean(sortedScriptingElapsedTimes),
     });
-    window.cody = samples;
   }
 }

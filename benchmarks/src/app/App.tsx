@@ -11,7 +11,6 @@ import {
 import type { BenchmarkRef, SafeAny, TestReport, Tests } from '../types';
 import { Benchmark, type BenchmarkResults } from './Benchmark';
 import { BenchmarkProfiler } from './Benchmark/Profiler';
-import { handleProfileRender } from './Benchmark/utils';
 import { Button } from './Button';
 import { IconClear, IconEye } from './Icons';
 import { Layout } from './Layout';
@@ -108,8 +107,6 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
     startTransition(() => setCurrentLibraryName(value));
   };
   const handleStart = () => {
-    window.cody = [];
-    window.olsen = [];
     flushSync(() => {
       setStatus('running');
     });
@@ -289,33 +286,30 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                     type={benchmarkType}
                   />
                 ) : (
-                  <Profiler id="benchmark" onRender={handleProfileRender}>
-                    <Benchmark
-                      Component={Component}
-                      forceLayout={forceLayout}
-                      getComponentProps={getComponentProps}
-                      onComplete={results => {
-                        setResults(state =>
-                          state.concat([
-                            {
-                              ...results,
-                              benchmarkName: currentBenchmarkName,
-                              libraryName: currentLibraryName,
-                              libraryVersion:
-                                tests[currentBenchmarkName][currentLibraryName].version,
-                            },
-                          ])
-                        );
-                        setStatus('complete');
-                      }}
-                      ref={ref => {
-                        benchmarkRef.current = ref ? { start: () => ref.start() } : null;
-                      }}
-                      sampleCount={sampleCount}
-                      timeout={timeout}
-                      type={benchmarkType}
-                    />
-                  </Profiler>
+                  <Benchmark
+                    Component={Component}
+                    forceLayout={forceLayout}
+                    getComponentProps={getComponentProps}
+                    onComplete={results => {
+                      setResults(state =>
+                        state.concat([
+                          {
+                            ...results,
+                            benchmarkName: currentBenchmarkName,
+                            libraryName: currentLibraryName,
+                            libraryVersion: tests[currentBenchmarkName][currentLibraryName].version,
+                          },
+                        ])
+                      );
+                      setStatus('complete');
+                    }}
+                    ref={ref => {
+                      benchmarkRef.current = ref ? { start: () => ref.start() } : null;
+                    }}
+                    sampleCount={sampleCount}
+                    timeout={timeout}
+                    type={benchmarkType}
+                  />
                 )
               ) : (
                 <Component
