@@ -7,7 +7,7 @@
 import { Component } from 'react';
 import type { SafeAny, Test } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
-import { getMean, getMedian, getStdDev } from './math';
+import { getMean, getMedian, getPercentile, getStdDev } from './math';
 import * as Timing from './timing';
 import { isDone, shouldRecord, shouldRender, sortNumbers } from './utils';
 
@@ -31,6 +31,8 @@ export interface BenchmarkResults {
   stdDev: number;
   meanLayout: number;
   meanScripting: number;
+  meanScriptingP75: number;
+  meanScriptingP99: number;
 }
 
 interface BenchmarkProps
@@ -238,6 +240,8 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
       stdDev: getStdDev(sortedElapsedTimes),
       meanLayout: getMean(sortedLayoutElapsedTimes),
       meanScripting: getMean(sortedScriptingElapsedTimes),
+      meanScriptingP75: getPercentile(sortedScriptingElapsedTimes, 75),
+      meanScriptingP99: getPercentile(sortedScriptingElapsedTimes, 99),
     });
   }
 }

@@ -21,31 +21,12 @@ import { colors } from './theme';
 
 const overlay = <View style={[StyleSheet.absoluteFill, { zIndex: 2 }]} />;
 
-const runnerTypes = [
-  'benchmark',
-  'benchmark-force-layout',
-  'benchmark-profiler',
-  'benchmark-profiler-force-layout',
-  'benchmark-profiler-concurrent',
-  'benchmark-profiler-force-layout-concurrent',
-] as const;
+const runnerTypes = ['Concurrent', 'Synchronous'] as const;
 type RunnerType = (typeof runnerTypes)[number];
 
 function isRunnerType(value: string): value is RunnerType {
   return runnerTypes.includes(value as RunnerType);
 }
-
-function getForceLayout(runner: RunnerType) {
-  switch (runner) {
-    case 'benchmark-force-layout':
-    case 'benchmark-profiler-force-layout':
-    case 'benchmark-profiler-force-layout-concurrent':
-      return true;
-    default:
-      return false;
-  }
-}
-
 function getRunnerLabel(runner: RunnerType) {
   switch (runner) {
     default:
@@ -55,18 +36,7 @@ function getRunnerLabel(runner: RunnerType) {
 
 function shouldUseBenchmarkProfiler(runner: RunnerType) {
   switch (runner) {
-    case 'benchmark':
-    case 'benchmark-force-layout':
-      return false;
-    default:
-      return true;
-  }
-}
-
-function shouldForceConcurrent(runner: RunnerType) {
-  switch (runner) {
-    case 'benchmark-profiler-concurrent':
-    case 'benchmark-profiler-force-layout-concurrent':
+    case 'Concurrent':
       return true;
     default:
       return false;
@@ -80,8 +50,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
   const [currentBenchmarkName, setCurrentBenchmarkName] = useState(
     () => Object.keys(props.tests)[0]
   );
-  const [currentBenchmarkRunner, setCurrentBenchmarkRunner] =
-    useState<RunnerType>('benchmark-force-layout');
+  const [currentBenchmarkRunner, setCurrentBenchmarkRunner] = useState<RunnerType>('Concurrent');
   const [currentLibraryName, setCurrentLibraryName] = useState('inline-styles');
   const [status, setStatus] = useState<'idle' | 'running' | 'complete'>('idle');
   const [results, setResults] = useState<
@@ -93,9 +62,6 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
   const [pending, startTransition] = useTransition();
 
   const isBenchmarkProfiler = shouldUseBenchmarkProfiler(currentBenchmarkRunner);
-
-  const forceLayout = getForceLayout(currentBenchmarkRunner);
-  const forceConcurrent = shouldForceConcurrent(currentBenchmarkRunner);
 
   const benchmarkRef = useRef<BenchmarkRef>(null);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -264,8 +230,6 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                 isBenchmarkProfiler ? (
                   <BenchmarkProfiler
                     component={Component}
-                    forceLayout={forceLayout}
-                    forceConcurrent={forceConcurrent}
                     getComponentProps={getComponentProps}
                     onComplete={results => {
                       setResults(state =>
@@ -288,7 +252,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                 ) : (
                   <Benchmark
                     Component={Component}
-                    forceLayout={forceLayout}
+                    forceLayout
                     getComponentProps={getComponentProps}
                     onComplete={results => {
                       setResults(state =>
