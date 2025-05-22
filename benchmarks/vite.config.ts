@@ -13,7 +13,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   build: {
     sourcemap: true,
-    minify: false,
+    // minify: false,
   },
   define: {
     __VERSION__: JSON.stringify('benchmark'),
@@ -22,7 +22,7 @@ export default defineConfig({
   resolve: {
     alias: {
       'react-native': 'react-native-web',
-      'react-dom/client': 'react-dom/profiling',
+      // 'react-dom/client': 'react-dom/profiling',
     },
   },
   plugins: [
