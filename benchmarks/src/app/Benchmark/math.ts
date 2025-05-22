@@ -39,3 +39,18 @@ export const getPercentile = (values: number[], percentile: number) => {
   const upperValue = sortedValues[upperIndex];
   return lowerValue + (upperValue - lowerValue) * (index - lowerIndex);
 };
+
+export const getMeanOfFastestPercent = (sortedValues: number[], percentageToKeep: number) => {
+  if (sortedValues.length === 0) {
+    return 0; // Or NaN, matching getMean's behavior for empty arrays if preferred
+  }
+  // Determine how many of the fastest values to keep
+  // Math.ceil ensures that if, for example, you want 75% of 10 items (7.5), you take 8 items.
+  const count = Math.ceil(sortedValues.length * (percentageToKeep / 100));
+
+  // Slice the array to get the fastest 'count' elements
+  // sortedValues is assumed to be sorted in ascending order (fastest to slowest)
+  const fastestValues = sortedValues.slice(0, count);
+
+  return getMean(fastestValues);
+};

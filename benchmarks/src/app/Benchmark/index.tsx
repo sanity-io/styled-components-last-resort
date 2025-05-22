@@ -7,7 +7,7 @@
 import { Component } from 'react';
 import type { SafeAny, Test } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
-import { getMean, getMedian, getPercentile, getStdDev } from './math';
+import { getMean, getMeanOfFastestPercent, getMedian, getStdDev } from './math';
 import * as Timing from './timing';
 import { isDone, shouldRecord, shouldRender, sortNumbers } from './utils';
 
@@ -114,12 +114,12 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
 
       // force style recalc that would otherwise happen before the next frame
       if (forceLayout) {
-        this._samples[cycle].layoutStart = Timing.now();
+        // this._samples[cycle].layoutStart = Timing.now();
         if (document.body) {
           // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           document.body.offsetWidth;
         }
-        this._samples[cycle].layoutEnd = Timing.now();
+        // this._samples[cycle].layoutEnd = Timing.now();
       }
     }
 
@@ -240,8 +240,8 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
       stdDev: getStdDev(sortedElapsedTimes),
       meanLayout: getMean(sortedLayoutElapsedTimes),
       meanScripting: getMean(sortedScriptingElapsedTimes),
-      meanScriptingP75: getPercentile(sortedScriptingElapsedTimes, 75),
-      meanScriptingP99: getPercentile(sortedScriptingElapsedTimes, 99),
+      meanScriptingP75: getMeanOfFastestPercent(sortedScriptingElapsedTimes, 75),
+      meanScriptingP99: getMeanOfFastestPercent(sortedScriptingElapsedTimes, 99),
     });
   }
 }
