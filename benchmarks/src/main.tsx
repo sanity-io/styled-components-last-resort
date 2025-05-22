@@ -68,13 +68,13 @@ const tests = {
   })),
   'Update dynamic styles': createTestBlock(SierpinskiTriangle, components => ({
     benchmarkType: 'update',
-    getComponentProps: ({ cycle, variant = 0 }) => ({
+    getComponentProps: ({ cycle, opacity = 1 }) => ({
       components,
       s: 256,
       renderCount: cycle,
       x: 0,
       y: 0,
-      variant,
+      opacity,
     }),
     Provider: components.Provider,
     sampleCount: 1_000,

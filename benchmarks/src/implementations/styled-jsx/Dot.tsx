@@ -7,6 +7,7 @@ export const Dot = ({
   $x,
   $y,
   $size,
+  $opacity,
   ...props
 }: DotProps & { children?: React.ReactNode }) => {
   return (
@@ -38,7 +39,7 @@ export const Dot = ({
             border-right-width: ${$size / 2}px;
             border-bottom-width: ${$size / 2}px;
             border-left-width: ${$size / 2}px;
-          }
+            opacity: ${$opacity};
         `}
       </style>
     </div>

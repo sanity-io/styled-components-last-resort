@@ -17,4 +17,5 @@ export const Dot = styled(View)<DotProps>`
   border-right-width: ${p => `${p.$size / 2}px`};
   border-bottom-width: ${p => `${p.$size / 2}px`};
   border-left-width: ${p => `${p.$size / 2}px`};
+  opacity: ${p => p.$opacity};
 `;

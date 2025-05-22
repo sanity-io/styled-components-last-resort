@@ -18,4 +18,5 @@ export const Dot = styled(View).attrs(p => ({
   border-right-width: ${props => `${props.$size / 2}px`};
   border-bottom-width: ${props => `${props.$size / 2}px`};
   border-left-width: ${props => `${props.$size / 2}px`};
+  opacity: ${props => props.$opacity};
 `;

@@ -19,7 +19,7 @@ export interface DotProps {
   $size: number;
   $x: number;
   $y: number;
-  $variant: 0 | 1;
+  $opacity: number;
 }
 export interface ProviderProps {
   children: React.ReactNode;
@@ -48,7 +48,7 @@ export interface SierpinskiTriangleProps {
   s: number;
   x: number;
   y: number;
-  variant: 0 | 1;
+  opacity: number;
 }
 
 export interface TreeProps {
@@ -75,7 +75,7 @@ export interface Test<ComponentType extends React.ComponentType<SafeAny>> {
   Component: ComponentType;
   getComponentProps: (props: {
     cycle: number;
-    variant?: 0 | 1;
+    opacity?: number;
   }) => React.ComponentProps<ComponentType>;
   sampleCount: number;
   Provider: React.ComponentType<ProviderProps>;

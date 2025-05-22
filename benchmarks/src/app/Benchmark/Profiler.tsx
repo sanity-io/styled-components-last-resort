@@ -45,7 +45,7 @@ export interface BenchmarkProps {
   sampleCount: number;
   timeout: number;
   type: (typeof BenchmarkType)[keyof typeof BenchmarkType];
-  getComponentProps: (props: { cycle: number; variant: 0 | 1 }) => Record<string, any>;
+  getComponentProps: (props: { cycle: number; opacity: number }) => Record<string, any>;
   ref: React.Ref<BenchmarkRef>;
   component: any;
   onComplete: (results: BenchmarkResults) => void;
@@ -116,7 +116,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
           return {
             ...state,
             cycle: state.cycle + 1,
-            componentProps: getComponentProps({ cycle: state.cycle + 1, variant: 0 }),
+            componentProps: getComponentProps({ cycle: state.cycle + 1, opacity: 1 }),
             scriptingStart: Timing.now(),
             suspend: null,
           };
@@ -127,14 +127,18 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             cycle: 0,
             scriptingStart: 0,
             startTime: 0,
-            componentProps: getComponentProps({ cycle: 0, variant: 0 }),
+            componentProps: getComponentProps({ cycle: 0, opacity: 1 }),
             suspend: null,
           };
         case 'suspend':
           return {
             ...state,
             cycle: state.cycle + 1,
-            componentProps: getComponentProps({ cycle: state.cycle + 1, variant: 1 }),
+            componentProps: getComponentProps({
+              cycle: state.cycle + 1,
+              // generate a random opacity to force generating new CSS styles during background rendering
+              opacity: Math.floor(Math.random() * 1000) / 1000,
+            }),
             scriptingStart: Timing.now(),
             suspend: Promise.withResolvers<true>(),
           };
@@ -148,7 +152,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       scriptingStart: 0,
       cycle,
       running,
-      componentProps: getComponentProps({ cycle, variant: 0 }),
+      componentProps: getComponentProps({ cycle, opacity: 1 }),
       suspend: null,
     })
   );
@@ -245,38 +249,38 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
 
   return (
     <>
-      {/* <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}> */}
-      <Component
-        // Change the key during mount/unmount test runs to force remounts
-        key={
-          type === BenchmarkType.UPDATE
-            ? undefined
-            : `${type}-${shouldRender(cycle, type) ? cycle - 1 : cycle}`
-        }
-        {...componentProps}
-      />
-      {!suspending && suspend && (
-        <Suspend
-          promise={suspend.promise}
-          resolve={suspend.resolve}
-          proceed={() => {
-            if (shouldRecord(cycle, type)) {
-              samplesRef.current[cycle] = { scriptingStart };
-              samplesRef.current[cycle].scriptingEnd = Timing.now();
-
-              // force style recalc that would otherwise happen before the next frame
-              samplesRef.current[cycle].layoutStart = Timing.now();
-              if (document.body) {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                document.body.offsetWidth;
-              }
-              samplesRef.current[cycle].layoutEnd = Timing.now();
-            }
-            dispatch({ type: 'cycle' });
-          }}
+      <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
+        <Component
+          // Change the key during mount/unmount test runs to force remounts
+          key={
+            type === BenchmarkType.UPDATE
+              ? undefined
+              : `${type}-${shouldRender(cycle, type) ? cycle - 1 : cycle}`
+          }
+          {...componentProps}
         />
-      )}
-      {/* </Activity> */}
+        {!suspending && suspend && (
+          <Suspend
+            promise={suspend.promise}
+            resolve={suspend.resolve}
+            proceed={() => {
+              if (shouldRecord(cycle, type)) {
+                samplesRef.current[cycle] = { scriptingStart };
+                samplesRef.current[cycle].scriptingEnd = Timing.now();
+
+                // force style recalc that would otherwise happen before the next frame
+                samplesRef.current[cycle].layoutStart = Timing.now();
+                if (document.body) {
+                  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                  document.body.offsetWidth;
+                }
+                samplesRef.current[cycle].layoutEnd = Timing.now();
+              }
+              dispatch({ type: 'cycle' });
+            }}
+          />
+        )}
+      </Activity>
     </>
   );
 }
@@ -296,10 +300,7 @@ function Suspend({
   resolve(true);
   // Even though we resolved the promise it won't happen until the next microtask, so it'll suspend here
   use(promise);
-  // Once it's no longer suspending it'll run the useEffect which dispatches another cycle
-  useEffect(() => {
-    const raf = requestAnimationFrame(proceed);
-    return () => cancelAnimationFrame(raf);
-  }, [proceed]);
+  // Once it's no longer suspending it'll run the dispatch
+  proceed();
   return null;
 }

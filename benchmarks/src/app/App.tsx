@@ -321,7 +321,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                 <Component
                   {...getComponentProps({
                     cycle: 10,
-                    variant: process.env.NODE_ENV === 'development' ? 1 : 0,
+                    opacity: process.env.NODE_ENV === 'development' ? 0 : 1,
                   })}
                 />
               )}

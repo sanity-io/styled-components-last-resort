@@ -10,7 +10,7 @@ export function SierpinskiTriangle({
   y,
   depth = 0,
   renderCount = 0,
-  variant = 0,
+  opacity = 1,
 }: SierpinskiTriangleProps) {
   const { Dot } = components;
 
@@ -37,7 +37,7 @@ export function SierpinskiTriangle({
           $size={targetSize}
           $x={x - targetSize / 2}
           $y={y - targetSize / 2}
-          $variant={variant}
+          $opacity={opacity}
         />
       );
     }
@@ -53,7 +53,7 @@ export function SierpinskiTriangle({
           s={s}
           x={x}
           y={y - s / 2}
-          variant={variant}
+          opacity={opacity}
         />
         <SierpinskiTriangle
           components={components}
@@ -62,7 +62,7 @@ export function SierpinskiTriangle({
           s={s}
           x={x - s}
           y={y + s / 2}
-          variant={variant}
+          opacity={opacity}
         />
         <SierpinskiTriangle
           components={components}
@@ -71,7 +71,7 @@ export function SierpinskiTriangle({
           s={s}
           x={x + s}
           y={y + s / 2}
-          variant={variant}
+          opacity={opacity}
         />
       </>
     );

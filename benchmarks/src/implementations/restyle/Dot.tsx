@@ -14,13 +14,14 @@ const StyledView = styled(View, {
 });
 
 export function Dot(props: DotProps) {
-  const { $color, $x, $y, $size } = props;
+  const { $color, $x, $y, $size, $opacity } = props;
   const [classNames, Styles] = css({
     borderBottomWidth: `${$size / 2}px`,
     borderLeftWidth: `${$size / 2}px`,
     borderRightWidth: `${$size / 2}px`,
     marginTop: `${$y}px`,
     marginLeft: `${$x}px`,
+    opacity: $opacity,
   });
   return (
     <>
