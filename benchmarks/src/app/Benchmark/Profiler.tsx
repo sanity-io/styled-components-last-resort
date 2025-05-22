@@ -113,7 +113,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     []
   );
 
-  const [_state, dispatch] = useReducer(
+  const [state, dispatch] = useReducer(
     (state: BenchmarkState, action: BenchmarkAction) => {
       switch (action.type) {
         case 'start':
@@ -140,9 +140,6 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       componentProps: getComponentProps({ cycle }),
     })
   );
-
-  const deferredState = useDeferredValue(_state);
-  const state = forceConcurrent ? deferredState : _state;
   const { cycle, running, componentProps, scriptingStart, startTime } = state;
 
   // const runningRef = useRef(false);
