@@ -25,7 +25,7 @@
     "react-dom": "0.0.0-experimental-8ce15b0f-20250522",
     "react-is": "0.0.0-experimental-8ce15b0f-20250522",
     "react-native-web": "0.20.0",
-    "react-strict-dom": "0.0.32",
+    "react-strict-dom": "0.0.35",
     "restyle": "3.4.2",
     "styled-components-use-insertion-effect": "npm:@sanity/styled-components@6.1.13",
     "styled-components-v5": "npm:styled-components@5.3.11",

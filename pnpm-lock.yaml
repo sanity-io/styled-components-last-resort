@@ -66,8 +66,8 @@ importers:
         specifier: 0.20.0
         version: 0.20.0(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522)
       react-strict-dom:
-        specifier: 0.0.32
-        version: 0.0.32(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522)
+        specifier: 0.0.35
+        version: 0.0.35(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522)
       restyle:
         specifier: 3.4.2
         version: 3.4.2(react@0.0.0-experimental-8ce15b0f-20250522)
@@ -155,7 +155,7 @@ importers:
         version: 15.15.0
       postcss-react-strict-dom:
         specifier: 0.0.6
-        version: 0.0.6(postcss@8.5.3)(react-strict-dom@0.0.32(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522))
+        version: 0.0.6(postcss@8.5.3)(react-strict-dom@0.0.35(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522))
       typescript:
         specifier: 5.8.3
         version: 5.8.3
@@ -167,7 +167,7 @@ importers:
         version: 6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4)
       vite-plugin-stylex:
         specifier: 0.13.0
-        version: 0.13.0(@stylexjs/stylex@0.10.0)(react-strict-dom@0.0.32(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522))(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4))
+        version: 0.13.0(@stylexjs/stylex@0.10.0)(react-strict-dom@0.0.35(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522))(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4))
       vite-plugin-stylex-dev:
         specifier: 0.8.0
         version: 0.8.0(rollup@4.41.0)
@@ -3549,8 +3549,8 @@ packages:
     resolution: {integrity: sha512-z6F7K9bV85EfseRCp2bzrpyQ0Gkw1uLoCel9XBVWPg/TjRj94SkJzUTGfOa4bs7iJvBWtQG0Wq7wnI0syw3EBQ==}
     engines: {node: '>=0.10.0'}
 
-  react-strict-dom@0.0.32:
-    resolution: {integrity: sha512-4NJunoNyw7GqMhWYc4khjBP4mo112J0pOHe2LvajqispkP/OdUnEsdL0lNA3EkowKvXBbjultaJC+Vo+QQKwXg==}
+  react-strict-dom@0.0.35:
+    resolution: {integrity: sha512-n94uAWOK54R78XL2lG4UsHO+gbH4xdDtashGEjce5fTdyWHgtzv4dBZaUcZreET48U4UqBktuUfh1IUS7F+xrw==}
     engines: {node: '>=20.11.0'}
     peerDependencies:
       react: ^18.2.0
@@ -7529,13 +7529,13 @@ snapshots:
 
   pirates@4.0.7: {}
 
-  postcss-react-strict-dom@0.0.6(postcss@8.5.3)(react-strict-dom@0.0.32(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522)):
+  postcss-react-strict-dom@0.0.6(postcss@8.5.3)(react-strict-dom@0.0.35(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522)):
     dependencies:
       fast-glob: 3.3.3
       glob-parent: 6.0.2
       is-glob: 4.0.3
       postcss: 8.5.3
-      react-strict-dom: 0.0.32(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522)
+      react-strict-dom: 0.0.35(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522)
 
   postcss-value-parser@4.2.0: {}
 
@@ -7735,14 +7735,17 @@ snapshots:
 
   react-refresh@0.17.0: {}
 
-  react-strict-dom@0.0.32(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522):
+  react-strict-dom@0.0.35(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522):
     dependencies:
+      '@babel/helper-module-imports': 7.27.1(supports-color@5.5.0)
+      '@stylexjs/babel-plugin': 0.9.3
       '@stylexjs/stylex': 0.9.3
-      css-mediaquery: 0.1.2
       postcss-value-parser: 4.2.0
       react: 0.0.0-experimental-8ce15b0f-20250522
       react-dom: 0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522)
       react-native: 0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522)
+    transitivePeerDependencies:
+      - supports-color
 
   react@0.0.0-experimental-8ce15b0f-20250522: {}
 
@@ -8363,7 +8366,7 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-stylex@0.13.0(@stylexjs/stylex@0.10.0)(react-strict-dom@0.0.32(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522))(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4)):
+  vite-plugin-stylex@0.13.0(@stylexjs/stylex@0.10.0)(react-strict-dom@0.0.35(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522))(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4)):
     dependencies:
       '@babel/core': 7.27.1
       '@babel/plugin-syntax-flow': 7.27.1(@babel/core@7.27.1)
@@ -8374,7 +8377,7 @@ snapshots:
       compare-versions: 6.1.1
       vite: 6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4)
     optionalDependencies:
-      react-strict-dom: 0.0.32(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522)
+      react-strict-dom: 0.0.35(react-dom@0.0.0-experimental-8ce15b0f-20250522(react@0.0.0-experimental-8ce15b0f-20250522))(react-native@0.79.2(@babel/core@7.27.1)(@types/react@19.1.4)(react@0.0.0-experimental-8ce15b0f-20250522))(react@0.0.0-experimental-8ce15b0f-20250522)
     transitivePeerDependencies:
       - supports-color
 
