@@ -12,6 +12,7 @@ import {
   useTransition,
   use,
   unstable_Activity as Activity,
+  useLayoutEffect,
 } from 'react';
 import type { BenchmarkRef } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
@@ -139,7 +140,8 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             componentProps: getComponentProps({
               cycle: state.cycle + 1,
               // generate a random opacity to force generating new CSS styles during background rendering
-              opacity: Math.floor(Math.random() * 1000) / 1000,
+              // opacity: Math.floor(Math.random() * 1000) / 1000,
+              opacity: 0,
             }),
             scriptingStart: Timing.now(),
             suspend: Promise.withResolvers<true>(),
@@ -300,7 +302,7 @@ function Suspend({
   // Even though we resolved the promise it won't happen until the next microtask, so it'll suspend here
   use(promise);
   // Once it's no longer suspending it'll run the dispatch
-  useEffect(() => {
+  useLayoutEffect(() => {
     const raf = requestAnimationFrame(proceed);
     return () => cancelAnimationFrame(raf);
   }, [proceed]);
