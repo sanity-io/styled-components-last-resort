@@ -59,18 +59,17 @@ function useStyles<T extends ExecutionContext>(
   componentStyle: ComponentStyle,
   stylis: IStyleSheetContext['stylis'],
   styleSheet: Sheet,
-  resolvedAttrs: T
+  resolvedAttrs: T,
+  isServer: boolean
 ) {
-  const ssc = useStyleSheetContext();
-
   const className = componentStyle.generateStyles(resolvedAttrs, styleSheet, stylis);
 
-  if (ssc.styleSheet.server) {
+  if (isServer) {
     componentStyle.flushStyles(styleSheet);
   }
 
   useInsertionEffect(() => {
-    if (!ssc.styleSheet.server) {
+    if (!isServer) {
       componentStyle.flushStyles(styleSheet);
     }
   });
@@ -174,7 +173,13 @@ function useStyledComponent<Props extends object>(
     }
   }
 
-  const generatedClassName = useStyles(componentStyle, ssc.stylis, ssc.styleSheet, context);
+  const generatedClassName = useStyles(
+    componentStyle,
+    ssc.stylis,
+    ssc.styleSheet,
+    context,
+    ssc.styleSheet.server
+  );
 
   if (process.env.NODE_ENV !== 'production' && forwardedComponent.warnTooManyClasses) {
     forwardedComponent.warnTooManyClasses(generatedClassName);
