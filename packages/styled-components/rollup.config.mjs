@@ -4,6 +4,7 @@ import json from '@rollup/plugin-json';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import terser from '@rollup/plugin-terser';
+import { babel } from '@rollup/plugin-babel';
 import pkg from './package.json' with { type: 'json' };
 
 /**
@@ -27,15 +28,6 @@ const esm = {
 const getCJS = override => ({ ...cjs, ...override });
 const getESM = override => ({ ...esm, ...override });
 
-const defaultTypescriptPlugin = typescript({
-  // The build breaks if the tests are included by the typescript plugin.
-  // Since un-excluding them in tsconfig.json, we must explicitly exclude them
-  // here.
-  exclude: ['**/*.test.ts', '**/*.test.tsx', 'dist', 'src/test/types.tsx'],
-  outputToFilesystem: true,
-  tsconfig: './tsconfig.json',
-});
-
 const basePlugins = [
   json(),
   nodeResolve(),
@@ -45,6 +37,21 @@ const basePlugins = [
   }),
   replace({
     __VERSION__: JSON.stringify(pkg.version),
+  }),
+  babel({
+    babelrc: false,
+    presets: ['@babel/preset-typescript'],
+    babelHelpers: 'bundled',
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    plugins: [['babel-plugin-react-compiler', { target: '18' }]],
+  }),
+  typescript({
+    // The build breaks if the tests are included by the typescript plugin.
+    // Since un-excluding them in tsconfig.json, we must explicitly exclude them
+    // here.
+    exclude: ['**/*.test.ts', '**/*.test.tsx', 'dist', 'src/test/types.tsx'],
+    outputToFilesystem: true,
+    tsconfig: './tsconfig.json',
   }),
   /** @type {import('rollup').Plugin} */
   ({
@@ -86,14 +93,12 @@ const minifierPlugin = terser({
   keep_fnames: true,
 });
 
-const commonPlugins = [defaultTypescriptPlugin, basePlugins];
-
 const configBase = {
   input: './src/index.ts',
 
   // \0 is rollup convention for generated in memory modules
   external: id => !id.startsWith('\0') && !id.startsWith('.') && !id.startsWith('/'),
-  plugins: commonPlugins,
+  plugins: basePlugins,
 };
 
 const serverConfig = {

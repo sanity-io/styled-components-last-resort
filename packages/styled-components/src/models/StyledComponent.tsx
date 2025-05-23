@@ -1,6 +1,6 @@
 import isPropValid from '@emotion/is-prop-valid';
 import { forwardRef, useContext, useDebugValue, useInsertionEffect } from 'react';
-import { IS_BROWSER, SC_VERSION } from '../constants';
+import { SC_VERSION } from '../constants';
 import type {
   AnyComponent,
   Attrs,
@@ -59,20 +59,9 @@ function useStyles<T extends ExecutionContext>(
   componentStyle: ComponentStyle,
   stylis: IStyleSheetContext['stylis'],
   styleSheet: Sheet,
-  resolvedAttrs: T,
-  isServer: boolean
+  resolvedAttrs: T
 ) {
   const className = componentStyle.generateStyles(resolvedAttrs, styleSheet, stylis);
-
-  if (isServer) {
-    componentStyle.flushStyles(styleSheet);
-  }
-
-  useInsertionEffect(() => {
-    if (!isServer) {
-      componentStyle.flushStyles(styleSheet);
-    }
-  });
 
   useDebugValue(className, value => `className: ${value}`);
 
@@ -173,13 +162,7 @@ function useStyledComponent<Props extends object>(
     }
   }
 
-  const generatedClassName = useStyles(
-    componentStyle,
-    ssc.stylis,
-    ssc.styleSheet,
-    context,
-    ssc.styleSheet.server
-  );
+  const generatedClassName = useStyles(componentStyle, ssc.stylis, ssc.styleSheet, context);
 
   if (process.env.NODE_ENV !== 'production' && forwardedComponent.warnTooManyClasses) {
     forwardedComponent.warnTooManyClasses(generatedClassName);
@@ -207,6 +190,17 @@ function useStyledComponent<Props extends object>(
   if (forwardedRef) {
     propsForElement.ref = forwardedRef;
   }
+
+  // If a ServerStyleSheet is used we need to flush styles during render
+  if (ssc.styleSheet.server) {
+    componentStyle.flushStyles(ssc.styleSheet);
+  }
+  // Otherwise we only flush in an insertion effect, which is the React hook that's designed for CSS writes
+  useInsertionEffect(() => {
+    if (!ssc.styleSheet.server) {
+      componentStyle.flushStyles(ssc.styleSheet);
+    }
+  });
 
   return <ElementToBeCreated {...propsForElement} />;
 }

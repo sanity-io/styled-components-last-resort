@@ -1,4 +1,4 @@
-import { Children, memo, useContext, useInsertionEffect, useRef } from 'react';
+import { Children, memo, useContext, useInsertionEffect, useState } from 'react';
 import { STATIC_EXECUTION_CONTEXT } from '../constants';
 import GlobalStyle from '../models/GlobalStyle';
 import { useStyleSheetContext } from '../models/StyleSheetManager';
@@ -25,9 +25,7 @@ export default function createGlobalStyle<Props extends object>(
   const GlobalStyleComponent: React.ComponentType<ExecutionProps & Props> = props => {
     const ssc = useStyleSheetContext();
     const theme = useContext(ThemeContext);
-    const instanceRef = useRef(ssc.styleSheet.allocateGSInstance(styledComponentId));
-
-    const instance = instanceRef.current;
+    const [instance] = useState(() => ssc.styleSheet.allocateGSInstance(styledComponentId));
 
     if (process.env.NODE_ENV !== 'production' && Children.count(props.children)) {
       console.warn(
