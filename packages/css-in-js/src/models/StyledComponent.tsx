@@ -64,15 +64,15 @@ function generateId(
   return parentComponentId ? `${parentComponentId}-${componentId}` : componentId;
 }
 
-function useInjectedStyle<T extends ExecutionContext>(
+function useStyles<T extends ExecutionContext>(
   componentStyle: ComponentStyle,
   stylis: IStyleSheetContext['stylis'],
-  styleSheet: StyleSheet,
+  styleSheet: Sheet,
   resolvedAttrs: T
 ): string {
   const className = componentStyle.generateStyles(resolvedAttrs, styleSheet, stylis);
 
-  useDebugValue(className);
+  useDebugValue(className, value => `className: ${value}`);
 
   return className;
 }
@@ -115,7 +115,7 @@ function resolveContext<Props extends object>(
 
 let seenUnknownProps = new Set();
 
-function useStyledComponentImpl<Props extends object>(
+function useStyledComponent<Props extends object>(
   forwardedComponent: IStyledComponent<'web', Props>,
   props: ExecutionProps & Props,
   forwardedRef: React.Ref<Element>
@@ -130,8 +130,6 @@ function useStyledComponentImpl<Props extends object>(
   } = forwardedComponent;
 
   const contextTheme = componentStyle.isStatic ? EMPTY_OBJECT : use(ThemeContext);
-  useDebugValue(componentStyle.isStatic ? 'static' : 'dynamic');
-
   const ssc = useStyleSheetContext();
   const shouldForwardProp = forwardedComponent.shouldForwardProp || ssc.shouldForwardProp;
 
@@ -179,7 +177,7 @@ function useStyledComponentImpl<Props extends object>(
     () => true
   );
   const styleSheet = isHydrating ? new StyleSheet({ isServer: true }) : ssc.styleSheet;
-  const generatedClassName = useInjectedStyle(componentStyle, ssc.stylis, styleSheet, context);
+  const generatedClassName = useStyles(componentStyle, ssc.stylis, styleSheet, context);
 
   if (process.env.NODE_ENV !== 'production' && forwardedComponent.warnTooManyClasses) {
     forwardedComponent.warnTooManyClasses(generatedClassName);
@@ -307,7 +305,7 @@ function createStyledComponent<
   );
 
   function forwardRefRender(props: ExecutionProps & OuterProps, ref: React.Ref<Element>) {
-    return useStyledComponentImpl<OuterProps>(WrappedStyledComponent, props, ref);
+    return useStyledComponent<OuterProps>(WrappedStyledComponent, props, ref);
   }
 
   forwardRefRender.displayName = displayName;

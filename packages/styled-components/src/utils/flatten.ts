@@ -11,7 +11,6 @@ import {
   StyledObject,
 } from '../types';
 import addUnitIfNeeded from './addUnitIfNeeded';
-import { EMPTY_ARRAY } from './empties';
 import getComponentName from './getComponentName';
 import hyphenate from './hyphenateStyleName';
 import isFunction from './isFunction';
@@ -104,11 +103,7 @@ export default function flatten<Props extends object>(
     return [chunk.toString()];
   }
 
-  return flatMap(chunk, chunklet =>
+  return chunk.flatMap(chunklet =>
     flatten<Props>(chunklet, executionContext, styleSheet, stylisInstance)
   );
-}
-
-function flatMap<T, U>(array: T[], transform: (value: T, index: number, array: T[]) => U[]): U[] {
-  return Array.prototype.concat.apply(EMPTY_ARRAY, array.map(transform));
 }
