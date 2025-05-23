@@ -16,6 +16,7 @@ const StyledDot = styled.div((p: DotProps) => ({
   borderLeftWidth: `${p.$size / 2}px`,
   marginLeft: `${p.$x}px`,
   marginTop: `${p.$y}px`,
+  opacity: p.$opacity,
 }));
 
 export function Dot({ $color, ...props }: DotProps) {

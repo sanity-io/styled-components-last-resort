@@ -12,7 +12,7 @@ const staticStyle = {
   transform: 'translate(50%, 50%)',
 } as const;
 
-export const Dot = styled('div', ({ $size, $x, $y, $color }: DotProps) => ({
+export const Dot = styled('div', ({ $size, $x, $y, $color, $opacity }: DotProps) => ({
   ...staticStyle,
   borderBottomColor: $color,
   borderRightWidth: `${$size / 2}px`,
@@ -20,4 +20,5 @@ export const Dot = styled('div', ({ $size, $x, $y, $color }: DotProps) => ({
   borderLeftWidth: `${$size / 2}px`,
   marginLeft: `${$x}px`,
   marginTop: `${$y}px`,
+  opacity: $opacity,
 }));

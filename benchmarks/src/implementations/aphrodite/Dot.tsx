@@ -15,7 +15,7 @@ const dotStyles = StyleSheet.create({
   },
 });
 
-export function Dot({ $color, $size, $x, $y, ...props }: DotProps) {
+export function Dot({ $color, $size, $x, $y, $opacity, ...props }: DotProps) {
   return (
     <View
       {...props}
@@ -27,6 +27,7 @@ export function Dot({ $color, $size, $x, $y, ...props }: DotProps) {
         borderRightWidth: $size / 2,
         borderBottomWidth: $size / 2,
         borderLeftWidth: $size / 2,
+        opacity: $opacity,
       }}
     />
   );

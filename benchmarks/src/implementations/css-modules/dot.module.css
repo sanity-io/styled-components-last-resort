@@ -13,4 +13,5 @@
   border-left-width: var(--css-module-dot-size);
   margin-left: var(--css-module-dot-x);
   margin-top: var(--css-module-dot-y);
+  opacity: var(--css-module-dot-opacity);
 }

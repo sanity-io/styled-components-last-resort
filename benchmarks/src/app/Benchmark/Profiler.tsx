@@ -4,97 +4,69 @@
  * and omit scripting time from the benchmarker itself.
  */
 
-import React, {
-  Profiler,
+import {
   useEffect,
   useImperativeHandle,
   useReducer,
   useRef,
-  useDeferredValue,
+  useTransition,
+  use,
+  unstable_Activity as Activity,
 } from 'react';
 import type { BenchmarkRef } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
-import { getMean, getStdDev } from './math';
+import { getMean, getMedian, getStdDev, getMeanOfFastestPercent } from './math';
 import * as Timing from './timing';
-
-const shouldRender = (cycle: number, type: string) => {
-  switch (type) {
-    // Render every odd iteration (first, third, etc)
-    // Mounts and unmounts the component
-    case BenchmarkType.MOUNT:
-    case BenchmarkType.UNMOUNT:
-      return !((cycle + 1) % 2);
-    // Render every iteration (updates previously rendered module)
-    case BenchmarkType.UPDATE:
-      return true;
-    default:
-      return false;
-  }
-};
-
-const shouldRecord = (cycle: number, type: string) => {
-  switch (type) {
-    // Record every odd iteration (when mounted: first, third, etc)
-    case BenchmarkType.MOUNT:
-      return !((cycle + 1) % 2);
-    // Record every iteration
-    case BenchmarkType.UPDATE:
-      return true;
-    // Record every even iteration (when unmounted)
-    case BenchmarkType.UNMOUNT:
-      return !(cycle % 2);
-    default:
-      return false;
-  }
-};
-
-const isDone = (cycle: number, sampleCount: number, type: string) => {
-  switch (type) {
-    case BenchmarkType.MOUNT:
-      return cycle >= sampleCount * 2 - 1;
-    case BenchmarkType.UPDATE:
-      return cycle >= sampleCount - 1;
-    case BenchmarkType.UNMOUNT:
-      return cycle >= sampleCount * 2;
-    default:
-      return true;
-  }
-};
-
-const sortNumbers = (a: number, b: number) => a - b;
-
-type Sample = {
-  scriptingStart: number;
-  scriptingEnd?: number;
-  layoutStart?: number;
-  layoutEnd?: number;
-};
+import { isDone, shouldRecord, shouldRender, shouldSuspend, sortNumbers } from './utils';
 
 export interface BenchmarkResults {
+  startTime: number;
+  endTime: number;
+  runTime: number;
   sampleCount: number;
+  samples: {
+    start: number;
+    end: number;
+    scriptingStart: number;
+    scriptingEnd: number;
+    layoutStart: number;
+    layoutEnd: number;
+  }[];
+  max: number;
+  min: number;
+  median: number;
   mean: number;
   stdDev: number;
+  meanLayout: number;
+  meanScripting: number;
+  meanScriptingP75: number;
+  meanScriptingP99: number;
 }
 
 export interface BenchmarkProps {
   sampleCount: number;
   timeout: number;
   type: (typeof BenchmarkType)[keyof typeof BenchmarkType];
-  getComponentProps: (props: { cycle: number }) => Record<string, any>;
+  getComponentProps: (props: { cycle: number; opacity: number }) => Record<string, any>;
   ref: React.Ref<BenchmarkRef>;
   component: any;
   onComplete: (results: BenchmarkResults) => void;
-  forceLayout: boolean;
-  forceConcurrent: boolean;
 }
 
 interface BenchmarkState {
   cycle: number;
   running: boolean;
   componentProps: Record<string, any>;
+  startTime: number;
+  scriptingStart: number;
+  suspend: PromiseWithResolvers<true> | null;
 }
 
-type BenchmarkAction = { type: 'start' } | { type: 'cycle' } | { type: 'complete' };
+type BenchmarkAction =
+  | { type: 'start' }
+  | { type: 'cycle' }
+  | { type: 'complete' }
+  | { type: 'suspend' };
 
 export function BenchmarkProfiler(props: BenchmarkProps) {
   const {
@@ -105,17 +77,16 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     ref,
     component: Component,
     onComplete,
-    forceLayout,
-    forceConcurrent,
   } = props;
 
   const samplesRef = useRef<
     {
-      start: number;
-      end: number;
+      scriptingStart: number;
+      scriptingEnd?: number;
+      layoutStart?: number;
+      layoutEnd?: number;
     }[]
   >([]);
-  const _startTime = useRef(0);
 
   useImperativeHandle(
     ref,
@@ -127,126 +98,211 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     }),
     []
   );
+  const [suspending, startTransition] = useTransition();
+  // const suspending = false;
+  // const startTransition = (cb: () => void) => cb();
 
-  const [_state, dispatch] = useReducer(
+  const [state, dispatch] = useReducer(
     (state: BenchmarkState, action: BenchmarkAction) => {
       switch (action.type) {
         case 'start':
-          return { ...state, running: true, cycle: 0 };
+          return {
+            ...state,
+            running: true,
+            cycle: 0,
+            startTime: Timing.now(),
+            scriptingStart: Timing.now(),
+            suspend: null,
+          };
         case 'cycle':
           return {
             ...state,
             cycle: state.cycle + 1,
-            componentProps: getComponentProps({ cycle: state.cycle + 1 }),
+            componentProps: getComponentProps({ cycle: state.cycle + 1, opacity: 1 }),
+            scriptingStart: Timing.now(),
+            suspend: null,
           };
         case 'complete':
-          return { ...state, running: false, cycle: 0 };
+          return {
+            ...state,
+            running: false,
+            cycle: 0,
+            scriptingStart: 0,
+            startTime: 0,
+            componentProps: getComponentProps({ cycle: 0, opacity: 1 }),
+            suspend: null,
+          };
+        case 'suspend':
+          return {
+            ...state,
+            cycle: state.cycle + 1,
+            componentProps: getComponentProps({
+              cycle: state.cycle + 1,
+              // generate a random opacity to force generating new CSS styles during background rendering
+              opacity: Math.floor(Math.random() * 1000) / 1000,
+            }),
+            scriptingStart: Timing.now(),
+            suspend: Promise.withResolvers<true>(),
+          };
         default:
           return state;
       }
     },
     { cycle: 0, running: false },
     ({ cycle, running }) => ({
+      startTime: 0,
+      scriptingStart: 0,
       cycle,
       running,
-      componentProps: getComponentProps({ cycle }),
+      componentProps: getComponentProps({ cycle, opacity: 1 }),
+      suspend: null,
     })
   );
+  const { cycle, running, componentProps, scriptingStart, startTime, suspend } = state;
 
-  const deferredState = useDeferredValue(_state);
-  const state = forceConcurrent ? deferredState : _state;
-  const { cycle, running, componentProps } = state;
-
-  const runningRef = useRef(false);
   useEffect(() => {
-    if (running && !runningRef.current) {
-      _startTime.current = Timing.now();
-    }
-    runningRef.current = running;
+    if (!running || suspending || suspend) return;
 
-    if (!running) return;
+    if (shouldRecord(cycle, type)) {
+      samplesRef.current[cycle] = { scriptingStart };
+      samplesRef.current[cycle].scriptingEnd = Timing.now();
+
+      // force style recalc that would otherwise happen before the next frame
+      samplesRef.current[cycle].layoutStart = Timing.now();
+      if (document.body) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        document.body.offsetWidth;
+      }
+      samplesRef.current[cycle].layoutEnd = Timing.now();
+    }
 
     const now = Timing.now();
-    if (!isDone(cycle, sampleCount, type) && now - _startTime.current < timeout) {
-      if (forceLayout) {
-        const layoutStart = Timing.now();
-        if (document.body) {
-          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-          document.body.offsetWidth;
-        }
-        const layoutEnd = Timing.now();
-        console.log('layout', layoutStart, layoutEnd, layoutEnd - layoutStart);
-      }
-      // startTransition(() => dispatch({ type: 'cycle' }));
+    if (!isDone(cycle, sampleCount, type) && now - startTime < timeout) {
+      const done = () => dispatch({ type: 'cycle' });
       const raf = requestAnimationFrame(() => {
-        dispatch({ type: 'cycle' });
+        if (shouldSuspend(cycle, type)) {
+          startTransition(() => dispatch({ type: 'suspend' }));
+        } else {
+          done();
+        }
       });
       return () => cancelAnimationFrame(raf);
     } else {
-      // startTransition(() => dispatch({ type: 'complete' }));
-
       const samples = samplesRef.current.reduce(
-        (memo, sample) => {
-          memo.push(sample);
+        (memo, { scriptingStart, scriptingEnd, layoutStart, layoutEnd }) => {
+          memo.push({
+            start: scriptingStart,
+            end: layoutEnd || scriptingEnd || 0,
+            scriptingStart,
+            scriptingEnd: scriptingEnd || 0,
+            layoutStart: layoutStart || 0,
+            layoutEnd: layoutEnd || 0,
+          });
           return memo;
         },
-        [] as typeof samplesRef.current
+        [] as {
+          start: number;
+          end: number;
+          scriptingStart: number;
+          scriptingEnd: number;
+          layoutStart: number;
+          layoutEnd: number;
+        }[]
       );
-      const sortedElapsedTimes = samples
-        .filter(Boolean)
-        .map(({ start, end }) => end - start)
+      const runTime = now - startTime;
+      const sortedElapsedTimes = samples.map(({ start, end }) => end - start).sort(sortNumbers);
+      const sortedScriptingElapsedTimes = samples
+        .map(({ scriptingStart, scriptingEnd }) => scriptingEnd - scriptingStart)
+        .sort(sortNumbers);
+      const sortedLayoutElapsedTimes = samples
+        .map(({ layoutStart, layoutEnd }) => (layoutEnd || 0) - (layoutStart || 0))
         .sort(sortNumbers);
 
-      // onComplete({
-      //   sampleCount: samples.length,
-      //   mean: getMean(sortedElapsedTimes),
-      //   stdDev: getStdDev(sortedElapsedTimes),
-      // });
-      const raf = requestAnimationFrame(() => {
-        dispatch({ type: 'complete' });
+      dispatch({ type: 'complete' });
 
-        onComplete({
-          sampleCount: samples.length,
-          mean: getMean(sortedElapsedTimes),
-          stdDev: getStdDev(sortedElapsedTimes),
-        });
+      onComplete({
+        startTime,
+        endTime: now,
+        runTime,
+        sampleCount: samples.length,
+        samples: samples,
+        max: sortedElapsedTimes[sortedElapsedTimes.length - 1],
+        min: sortedElapsedTimes[0],
+        median: getMedian(sortedElapsedTimes),
+        mean: getMean(sortedElapsedTimes),
+        stdDev: getStdDev(sortedElapsedTimes),
+        meanLayout: getMean(sortedLayoutElapsedTimes),
+        meanScripting: getMean(sortedScriptingElapsedTimes),
+        meanScriptingP75: getMeanOfFastestPercent(sortedScriptingElapsedTimes, 75),
+        meanScriptingP99: getMeanOfFastestPercent(sortedScriptingElapsedTimes, 99),
       });
-      return () => cancelAnimationFrame(raf);
     }
-  }, [cycle, forceLayout, onComplete, running, sampleCount, timeout, type]);
+  }, [
+    cycle,
+    onComplete,
+    running,
+    sampleCount,
+    scriptingStart,
+    startTime,
+    suspend,
+    suspending,
+    timeout,
+    type,
+  ]);
 
   return (
-    <Profiler
-      id="benchmark"
-      onRender={(_id, _phase, _actualDuration, _baseDuration, startTime, commitTime) => {
-        if (running && shouldRecord(cycle, type)) {
-          samplesRef.current[cycle] = {
-            start: startTime,
-            // end: startTime + actualDuration,
-            end: commitTime,
-          };
-        }
-        /*
-        console.log('NEW onRender', {
-          _id,
-          _phase,
-          _actualDuration,
-          _baseDuration,
-          startTime,
-          commitTime,
-        });
-        // */
-      }}
-    >
-      {running && shouldRender(cycle, type) ? (
+    <>
+      <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
         <Component
+          // Change the key during mount/unmount test runs to force remounts
+          key={type === BenchmarkType.UPDATE ? undefined : `cycle:${cycle}`}
           {...componentProps}
-          // make sure props always change for update tests
-          data-test={type === BenchmarkType.UPDATE ? cycle : undefined}
         />
-      ) : null}
-    </Profiler>
+        {!suspending && suspend && (
+          <Suspend
+            promise={suspend.promise}
+            resolve={suspend.resolve}
+            proceed={() => {
+              if (shouldRecord(cycle, type)) {
+                samplesRef.current[cycle] = { scriptingStart };
+                samplesRef.current[cycle].scriptingEnd = Timing.now();
+
+                // force style recalc that would otherwise happen before the next frame
+                samplesRef.current[cycle].layoutStart = Timing.now();
+                if (document.body) {
+                  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                  document.body.offsetWidth;
+                }
+                samplesRef.current[cycle].layoutEnd = Timing.now();
+              }
+              dispatch({ type: 'cycle' });
+            }}
+          />
+        )}
+      </Activity>
+    </>
   );
 }
 BenchmarkProfiler.displayName = 'BenchmarkProfiler';
 BenchmarkProfiler.Type = BenchmarkType;
+
+function Suspend({
+  promise,
+  resolve,
+  proceed,
+}: {
+  promise: Promise<true>;
+  resolve: PromiseWithResolvers<true>['resolve'];
+  proceed: () => void;
+}) {
+  // Resolve the promise right away
+  resolve(true);
+  // Even though we resolved the promise it won't happen until the next microtask, so it'll suspend here
+  use(promise);
+  // Once it's no longer suspending it'll run the dispatch
+  useEffect(() => {
+    const raf = requestAnimationFrame(proceed);
+    return () => cancelAnimationFrame(raf);
+  }, [proceed]);
+  return null;
+}

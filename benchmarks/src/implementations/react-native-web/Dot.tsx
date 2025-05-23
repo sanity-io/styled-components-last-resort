@@ -1,7 +1,7 @@
 import { createElement, StyleSheet } from 'react-native';
 import type { DotProps } from '../../types';
 
-export const Dot = ({ $size, $x, $y, $color }: DotProps) =>
+export const Dot = ({ $size, $x, $y, $color, $opacity }: DotProps) =>
   createElement('div', {
     style: [
       styles.root,
@@ -12,6 +12,7 @@ export const Dot = ({ $size, $x, $y, $color }: DotProps) =>
         borderLeftWidth: $size / 2,
         marginLeft: $x,
         marginTop: $y,
+        opacity: $opacity,
       },
     ],
   });

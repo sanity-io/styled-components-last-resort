@@ -18,4 +18,5 @@ export const Dot = styled(View).attrs(p => ({
   position: 'absolute',
   transform: 'translate(50%, 50%)',
   width: 0,
+  opacity: props.$opacity,
 }));

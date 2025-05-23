@@ -25,6 +25,9 @@ export const ReportCard = memo(function ReportCard(props: TestReport) {
     meanScripting,
     stdDev,
     libraryVersion,
+    meanScriptingP75,
+    meanScriptingP99,
+    runner,
   } = props;
 
   const sampleCountText = sampleCount != null ? `(${sampleCount})` : '';
@@ -33,7 +36,7 @@ export const ReportCard = memo(function ReportCard(props: TestReport) {
     <View style={styles.root}>
       <View style={styles.left}>
         <Text numberOfLines={1} style={styles.bold}>
-          {`${libraryName}${libraryVersion ? '@' + libraryVersion : ''}`}
+          {`${libraryName}${libraryVersion ? '@' + libraryVersion : ''} (${runner})`}
         </Text>
         <Text numberOfLines={1}>
           {benchmarkName} {sampleCountText}
@@ -46,7 +49,7 @@ export const ReportCard = memo(function ReportCard(props: TestReport) {
               {fmt(mean)} ±{fmt(stdDev)} ms
             </Text>
             <Text style={[styles.smallText, styles.monoFont]}>
-              (S/L) {fmt(meanScripting)}/{fmt(meanLayout)} ms
+              (P75/P99) {fmt(meanScriptingP75)}/{fmt(meanScriptingP99)} ms
             </Text>
           </View>
         ) : (

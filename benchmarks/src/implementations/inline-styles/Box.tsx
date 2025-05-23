@@ -8,16 +8,6 @@ export const Box = ({
   $outer = false,
   ...other
 }: BoxProps) => {
-  // const end = performance.now() + 1;
-  // while (performance.now() < end) {
-  //   // spinning like a villain
-  // }
-  // useEffect(() => {
-  //   const end = performance.now() + 1;
-  //   while (performance.now() < end) {
-  //     // spinning like a villain
-  //   }
-  // }, []);
   return (
     <div
       {...other}
