@@ -61,3 +61,4 @@ export type {
   WebTarget,
 } from './types';
 export { type LibraryStyled, type Styled, type StyledInstance, styled };
+export default styled;

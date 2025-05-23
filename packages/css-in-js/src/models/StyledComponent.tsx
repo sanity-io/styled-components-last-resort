@@ -1,5 +1,5 @@
 import isPropValid from '@emotion/is-prop-valid';
-import { forwardRef, use, useDebugValue, useInsertionEffect } from 'react';
+import { memo, use, useDebugValue, useInsertionEffect } from 'react';
 import { SC_VERSION } from '../constants';
 import type {
   AnyComponent,
@@ -111,8 +111,7 @@ let seenUnknownProps = new Set();
 
 function useStyledComponent<Props extends object>(
   forwardedComponent: IStyledComponent<'web', Props>,
-  props: ExecutionProps & Props,
-  forwardedRef: React.Ref<Element>
+  props: ExecutionProps & Props
 ) {
   const {
     attrs: componentAttrs,
@@ -188,13 +187,6 @@ function useStyledComponent<Props extends object>(
       ? 'class'
       : 'className'
   ] = classString;
-
-  // forwardedRef is coming from React.forwardRef.
-  // But it might not exist. Since React 19 handles `ref` like a prop, it only define it if there is a value.
-  // We don't want to inject an empty ref.
-  if (forwardedRef) {
-    propsForElement.ref = forwardedRef;
-  }
 
   useInsertionEffect(() => {
     if (!isHydrating) {
@@ -294,20 +286,17 @@ function createStyledComponent<
     isTargetStyledComp ? (styledComponentTarget.componentStyle as ComponentStyle) : undefined
   );
 
-  function forwardRefRender(props: ExecutionProps & OuterProps, ref: React.Ref<Element>) {
-    return useStyledComponent<OuterProps>(WrappedStyledComponent, props, ref);
+  function render(props: ExecutionProps & OuterProps) {
+    return useStyledComponent<OuterProps>(WrappedStyledComponent, props);
   }
 
-  forwardRefRender.displayName = displayName;
+  render.displayName = displayName;
 
   /**
-   * forwardRef creates a new interim component, which we'll take advantage of
+   * memo creates a new interim component, which we'll take advantage of
    * instead of extending ParentComponent to create _another_ interim class
    */
-  let WrappedStyledComponent = forwardRef(
-    // @ts-expect-error fix later
-    forwardRefRender
-  ) as unknown as IStyledComponent<'web', any> & Statics;
+  let WrappedStyledComponent = memo(render) as unknown as IStyledComponent<'web', any> & Statics;
   WrappedStyledComponent.attrs = finalAttrs;
   WrappedStyledComponent.componentStyle = componentStyle;
   WrappedStyledComponent.displayName = displayName;
