@@ -1,5 +1,3 @@
-// import { scan, setOptions } from 'react-scan';
-
 import 'virtual:stylex.css';
 import './index.css';
 
@@ -50,8 +48,7 @@ const tests = {
       wrap: 1,
     }),
     Provider: components.Provider,
-    sampleCount: 500,
-    // sampleCount: 5,
+    sampleCount: process.env.NODE_ENV === 'production' ? 500 : 5,
   })),
   'Mount wide tree': createTestBlock(Tree, components => ({
     benchmarkType: 'mount',
@@ -63,8 +60,7 @@ const tests = {
       wrap: 2,
     }),
     Provider: components.Provider,
-    sampleCount: 500,
-    // sampleCount: 5,
+    sampleCount: process.env.NODE_ENV === 'production' ? 500 : 5,
   })),
   'Update dynamic styles': createTestBlock(SierpinskiTriangle, components => ({
     benchmarkType: 'update',
@@ -77,8 +73,7 @@ const tests = {
       opacity,
     }),
     Provider: components.Provider,
-    sampleCount: 1_000,
-    // sampleCount: 5,
+    sampleCount: process.env.NODE_ENV === 'production' ? 1_000 : 10,
   })),
 };
 
@@ -87,34 +82,3 @@ createRoot(document.querySelector('#root')!).render(
     <App tests={tests} />
   </StrictMode>
 );
-
-window.report = (offset: number) => {
-  const results = new Map();
-  for (const result of window.olsen) {
-    if (!results.has(result.commitTime)) results.set(result.commitTime, []);
-    results.get(result.commitTime).push(result);
-  }
-
-  const timeline = [...results.values()].filter(result => result.some(item => item.id === 'cycle'));
-  const start = timeline.at(0).find(t => t.id === 'cycle');
-  const startTime = start.startTime - offset;
-  const report = timeline.map(group =>
-    group.map(item => ({ timestamp: item.startTime - startTime, ...item }))
-  );
-  console.log(report);
-};
-
-// scan({
-//   enabled: true,
-//   dangerouslyForceRunInProduction: true,
-//   // showToolbar: false,
-//   // log: true,
-// });
-
-// setOptions({
-//   onRender: (...args) => console.log('React Scan onRender', ...args),
-//   onCommitStart: (...args) => console.log('React Scan onCommitStart', ...args),
-//   onCommitFinish: (...args) => console.log('React Scan onCommitFinish', ...args),
-//   onPaintStart: (...args) => console.log('React Scan onPaintStart', ...args),
-//   onPaintFinish: (...args) => console.log('React Scan onPaintFinish', ...args),
-// });

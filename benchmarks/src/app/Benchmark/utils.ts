@@ -19,7 +19,8 @@ export function shouldSuspend(cycle: number, type: string) {
   switch (type) {
     case BenchmarkType.MOUNT:
     case BenchmarkType.UNMOUNT:
-      return Math.floor(cycle / 2) % 2 === 1;
+      return false;
+    // return Math.floor(cycle / 2) % 2 === 1;
     case BenchmarkType.UPDATE:
       return !((cycle + 1) % 2);
     default:

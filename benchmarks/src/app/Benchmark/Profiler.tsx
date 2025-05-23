@@ -255,11 +255,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
         <Component
           // Change the key during mount/unmount test runs to force remounts
-          key={
-            type === BenchmarkType.UPDATE
-              ? undefined
-              : `${type}-${shouldRender(cycle, type) ? cycle - 1 : cycle}`
-          }
+          key={type === BenchmarkType.UPDATE ? undefined : `cycle:${cycle}`}
           {...componentProps}
         />
         {!suspending && suspend && (
