@@ -138,8 +138,8 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             cycle: state.cycle + 1,
             componentProps: getComponentProps({
               cycle: state.cycle + 1,
-              // generate a random opacity to force generating new CSS styles during background rendering
-              opacity: Math.floor(Math.random() * 1000) / 1000,
+              // generate a random opacity that is less than 1 and 0 or larger, to force generating new CSS styles during background rendering
+              opacity: +Math.random().toFixed(1),
             }),
             scriptingStart: Timing.now(),
             suspend: Promise.withResolvers<true>(),
