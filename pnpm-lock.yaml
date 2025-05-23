@@ -340,6 +340,9 @@ importers:
       csstype:
         specifier: 3.1.3
         version: 3.1.3
+      react-compiler-runtime:
+        specifier: 19.1.0-rc.2
+        version: 19.1.0-rc.2(react@19.1.0)
       shallowequal:
         specifier: 1.1.0
         version: 1.1.0
@@ -347,6 +350,12 @@ importers:
         specifier: 4.3.6
         version: 4.3.6
     devDependencies:
+      '@babel/preset-typescript':
+        specifier: 7.27.1
+        version: 7.27.1(@babel/core@7.27.1)
+      '@rollup/plugin-babel':
+        specifier: ^6.0.4
+        version: 6.0.4(@babel/core@7.27.1)(@types/babel__core@7.20.5)(rollup@4.41.0)
       '@rollup/plugin-commonjs':
         specifier: ^28.0.3
         version: 28.0.3(rollup@4.41.0)
@@ -395,6 +404,12 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.4.1
         version: 4.4.1(patch_hash=aa3f331724db1b2ef024677efd5c14ccb4839d59686658d230fee4d7b8b424d6)(vite@6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4))
+      babel-plugin-react-compiler:
+        specifier: 19.1.0-rc.2
+        version: 19.1.0-rc.2
+      eslint-plugin-react-compiler:
+        specifier: 19.1.0-rc.2
+        version: 19.1.0-rc.2(eslint@9.27.0(jiti@2.4.2))
       js-beautify:
         specifier: 1.15.4
         version: 1.15.4
@@ -1388,6 +1403,19 @@ packages:
 
   '@rolldown/pluginutils@1.0.0-beta.9':
     resolution: {integrity: sha512-e9MeMtVWo186sgvFFJOPGy7/d2j2mZhLJIdVW0C/xDluuOvymEATqz6zKsP0ZmXGzQtqlyjz5sC1sYQUoJG98w==}
+
+  '@rollup/plugin-babel@6.0.4':
+    resolution: {integrity: sha512-YF7Y52kFdFT/xVSuVdjkV5ZdX/3YtmX0QulG+x0taQOtJdHYzVU61aSSkAgVJ7NOv6qPkIYiJSgSWWN/DM5sGw==}
+    engines: {node: '>=14.0.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0
+      '@types/babel__core': ^7.1.9
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+    peerDependenciesMeta:
+      '@types/babel__core':
+        optional: true
+      rollup:
+        optional: true
 
   '@rollup/plugin-commonjs@28.0.3':
     resolution: {integrity: sha512-pyltgilam1QPdn+Zd9gaCfOLcnjMEJ9gV+bTw6/r73INdvzf1ah9zLIJBm+kW7R6IUFIQ1YO+VqZtYxZNWFPEQ==}
@@ -5237,6 +5265,17 @@ snapshots:
     optional: true
 
   '@rolldown/pluginutils@1.0.0-beta.9': {}
+
+  '@rollup/plugin-babel@6.0.4(@babel/core@7.27.1)(@types/babel__core@7.20.5)(rollup@4.41.0)':
+    dependencies:
+      '@babel/core': 7.27.1
+      '@babel/helper-module-imports': 7.27.1(supports-color@5.5.0)
+      '@rollup/pluginutils': 5.1.4(rollup@4.41.0)
+    optionalDependencies:
+      '@types/babel__core': 7.20.5
+      rollup: 4.41.0
+    transitivePeerDependencies:
+      - supports-color
 
   '@rollup/plugin-commonjs@28.0.3(rollup@4.41.0)':
     dependencies:
