@@ -35,8 +35,8 @@
     "styletron-react": "6.1.1"
   },
   "devDependencies": {
-    "@babel/plugin-syntax-jsx": "7.25.9",
-    "@babel/preset-typescript": "7.26.0",
+    "@babel/plugin-syntax-jsx": "7.27.1",
+    "@babel/preset-typescript": "7.27.1",
     "@eslint/js": "^9.17.0",
     "@stylexjs/babel-plugin": "0.10.0",
     "@stylexjs/eslint-plugin": "0.10.0",
