@@ -73,7 +73,7 @@ const tests = {
       opacity,
     }),
     Provider: components.Provider,
-    sampleCount: process.env.NODE_ENV === 'production' ? 1_000 : 10,
+    sampleCount: process.env.NODE_ENV === 'production' ? 1_000 : 100,
   })),
 };
 
