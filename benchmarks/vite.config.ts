@@ -15,10 +15,7 @@ export default defineConfig({
     sourcemap: true,
     // minify: false,
   },
-  define: {
-    __VERSION__: JSON.stringify('benchmark'),
-    'process.env.SC_DISABLE_SPEEDY': JSON.stringify('false'),
-  },
+  define: { __VERSION__: JSON.stringify('benchmark') },
   resolve: {
     alias: {
       'react-native': 'react-native-web',

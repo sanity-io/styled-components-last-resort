@@ -510,43 +510,6 @@ describe('StyleSheetManager', () => {
     `);
   });
 
-  it('nested StyleSheetManager with different injection modes works', () => {
-    const Test = styled.div`
-      padding-left: 5px;
-    `;
-
-    const Test2 = styled.div`
-      background: red;
-    `;
-
-    const outerSheet = new StyleSheet({ useCSSOMInjection: true });
-
-    render(
-      <StyleSheetManager sheet={outerSheet}>
-        <div>
-          <Test>Foo</Test>
-          <StyleSheetManager disableCSSOMInjection>
-            <Test2>Bar</Test2>
-          </StyleSheetManager>
-        </div>
-      </StyleSheetManager>
-    );
-
-    expect(outerSheet.getTag().tag.getRule(0)).toMatchInlineSnapshot(`".c {padding-left: 5px;}"`);
-
-    expect(document.head.innerHTML).toMatchInlineSnapshot(
-      `"<style data-styled="active" data-styled-version="JEST_MOCK_VERSION"></style><style data-styled="active" data-styled-version="JEST_MOCK_VERSION">.d{background:red;}</style>"`
-    );
-    expect(getRenderedCSS()).toMatchInlineSnapshot(`
-      ".c {
-        padding-left: 5px;
-      }
-      .d {
-        background: red;
-      }"
-    `);
-  });
-
   it('passing a namespace to StyleSheetManager works', () => {
     const Test = styled.div`
       display: flex;

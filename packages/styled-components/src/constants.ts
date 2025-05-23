@@ -13,7 +13,5 @@ export const SPLITTER = '/*!sc*/\n';
 
 export const IS_BROWSER = typeof window !== 'undefined' && typeof document !== 'undefined';
 
-export const DISABLE_SPEEDY = false;
-
 // Shared empty execution context when generating static styles
 export const STATIC_EXECUTION_CONTEXT = {};
