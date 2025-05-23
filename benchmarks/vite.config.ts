@@ -22,7 +22,7 @@ export default defineConfig({
   resolve: {
     alias: {
       'react-native': 'react-native-web',
-      // 'react-dom/client': 'react-dom/profiling',
+      'react-dom/client': 'react-dom/profiling',
     },
   },
   plugins: [

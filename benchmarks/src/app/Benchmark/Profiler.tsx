@@ -4,7 +4,15 @@
  * and omit scripting time from the benchmarker itself.
  */
 
-import { useEffect, useImperativeHandle, useReducer, useRef, useTransition, use } from 'react';
+import {
+  useEffect,
+  useImperativeHandle,
+  useReducer,
+  useRef,
+  useTransition,
+  use,
+  unstable_Activity as Activity,
+} from 'react';
 import type { BenchmarkRef } from '../../types';
 import { BenchmarkType } from './BenchmarkType';
 import { getMean, getMedian, getStdDev, getMeanOfFastestPercent } from './math';
@@ -243,10 +251,17 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
   ]);
 
   return (
-    running &&
-    shouldRender(cycle, type) && (
-      <>
-        <Component {...componentProps} />
+    <>
+      <Activity mode={running && shouldRender(cycle, type) ? 'visible' : 'hidden'}>
+        <Component
+          // Change the key during mount/unmount test runs to force remounts
+          key={
+            type === BenchmarkType.UPDATE
+              ? undefined
+              : `${type}-${shouldRender(cycle, type) ? cycle - 1 : cycle}`
+          }
+          {...componentProps}
+        />
         {!suspending && suspend && (
           <Suspend
             promise={suspend.promise}
@@ -268,8 +283,8 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             }}
           />
         )}
-      </>
-    )
+      </Activity>
+    </>
   );
 }
 BenchmarkProfiler.displayName = 'BenchmarkProfiler';
@@ -289,6 +304,9 @@ function Suspend({
   // Even though we resolved the promise it won't happen until the next microtask, so it'll suspend here
   use(promise);
   // Once it's no longer suspending it'll run the dispatch
-  proceed();
+  useEffect(() => {
+    const raf = requestAnimationFrame(proceed);
+    return () => cancelAnimationFrame(raf);
+  }, [proceed]);
   return null;
 }
