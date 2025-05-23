@@ -1,6 +1,5 @@
 import { render, fireEvent, screen, act } from '@testing-library/react';
 
-import { DISABLE_SPEEDY } from '../../constants';
 import { StyleSheetManager } from '../../models/StyleSheetManager';
 import ThemeProvider from '../../models/ThemeProvider';
 import StyleSheet from '../../sheet';
@@ -426,9 +425,6 @@ describe(`createGlobalStyle`, () => {
   });
 
   it(`removes style tag in StyleSheetManager.target when unmounted after target detached and no other global styles`, () => {
-    // This test requires speedy to be enabled
-    expect(DISABLE_SPEEDY).toBe(false);
-
     const container = document.createElement('div');
     document.body.appendChild(container);
 

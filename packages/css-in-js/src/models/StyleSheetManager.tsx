@@ -34,12 +34,6 @@ export function useStyleSheetContext() {
 
 export type IStyleSheetManager = React.PropsWithChildren<{
   /**
-   * If desired, you can pass this prop to disable "speedy" insertion mode, which
-   * uses the browser [CSSOM APIs](https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet).
-   * When disabled, rules are inserted as simple text into style blocks.
-   */
-  disableCSSOMInjection?: undefined | boolean;
-  /**
    * If you are working exclusively with modern browsers, vendor prefixes can often be omitted
    * to reduce the weight of CSS on the page.
    */
@@ -91,12 +85,8 @@ export function StyleSheetManager(props: IStyleSheetManager): React.JSX.Element 
       sheet = sheet.reconstructWithOptions({ target: props.target }, false);
     }
 
-    if (props.disableCSSOMInjection) {
-      sheet = sheet.reconstructWithOptions({ useCSSOMInjection: false });
-    }
-
     return sheet;
-  }, [props.disableCSSOMInjection, props.target, styleSheet]);
+  }, [props.target, styleSheet]);
 
   const stylis = useMemo(
     () =>

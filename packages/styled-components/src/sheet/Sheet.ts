@@ -1,4 +1,4 @@
-import { DISABLE_SPEEDY, IS_BROWSER } from '../constants';
+import { IS_BROWSER } from '../constants';
 import { InsertionTarget } from '../types';
 import { EMPTY_OBJECT } from '../utils/empties';
 import { makeGroupedTag } from './GroupedTag';
@@ -11,7 +11,6 @@ let SHOULD_REHYDRATE = IS_BROWSER;
 
 type SheetConstructorArgs = {
   isServer?: boolean;
-  useCSSOMInjection?: boolean;
   target?: InsertionTarget | undefined;
 };
 
@@ -22,7 +21,6 @@ type NamesAllocationMap = Map<string, Set<string>>;
 
 const defaultOptions: SheetOptions = {
   isServer: !IS_BROWSER,
-  useCSSOMInjection: !DISABLE_SPEEDY,
 };
 
 /** Contains the main stylesheet logic for stringification and caching */

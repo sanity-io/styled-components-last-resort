@@ -21,7 +21,6 @@ export interface GroupedTag {
 export type SheetOptions = {
   isServer: boolean;
   target?: InsertionTarget | undefined;
-  useCSSOMInjection: boolean;
 };
 
 export interface Sheet {
