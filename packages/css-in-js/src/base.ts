@@ -1,5 +1,6 @@
 /* Import singletons */
 import { SC_VERSION } from './constants';
+import createGlobalStyle from './constructors/createGlobalStyle';
 import css from './constructors/css';
 import keyframes from './constructors/keyframes';
 /* Import hooks */
@@ -28,6 +29,7 @@ export {
   ThemeConsumer,
   ThemeContext,
   ThemeProvider,
+  createGlobalStyle,
   css,
   isStyledComponent,
   keyframes,

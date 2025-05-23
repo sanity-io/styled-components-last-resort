@@ -1,12 +1,5 @@
 import isPropValid from '@emotion/is-prop-valid';
-import {
-  forwardRef,
-  use,
-  useCallback,
-  useDebugValue,
-  useInsertionEffect,
-  useSyncExternalStore,
-} from 'react';
+import { forwardRef, use, useDebugValue, useInsertionEffect } from 'react';
 import { SC_VERSION } from '../constants';
 import type {
   AnyComponent,
@@ -43,6 +36,7 @@ import { DefaultTheme, ThemeContext } from './ThemeProvider';
 import StyleSheet from '../sheet';
 import type Sheet from '../sheet';
 import { getIdForGroup } from '../sheet/GroupIDAllocator';
+import { useHydrating } from '../utils/useHydrating';
 
 const identifiers: { [key: string]: number } = {};
 
@@ -171,11 +165,7 @@ function useStyledComponent<Props extends object>(
     }
   }
 
-  const isHydrating = useSyncExternalStore(
-    useCallback(() => () => {}, []),
-    () => false,
-    () => true
-  );
+  const isHydrating = useHydrating();
   const styleSheet = isHydrating ? new StyleSheet({ isServer: true }) : ssc.styleSheet;
   const generatedClassName = useStyles(componentStyle, ssc.stylis, styleSheet, context);
 
