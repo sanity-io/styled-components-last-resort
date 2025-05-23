@@ -31,8 +31,9 @@ import isTag from '../utils/isTag';
 import { joinStrings } from '../utils/joinStrings';
 import merge from '../utils/mixinDeep';
 import ComponentStyle from './ComponentStyle';
-import { useStyleSheetContext } from './StyleSheetManager';
+import { useStyleSheetContext, type IStyleSheetContext } from './StyleSheetManager';
 import { DefaultTheme, ThemeContext } from './ThemeProvider';
+import type Sheet from '../sheet';
 
 const identifiers: { [key: string]: number } = {};
 
@@ -54,31 +55,27 @@ function generateId(
   return parentComponentId ? `${parentComponentId}-${componentId}` : componentId;
 }
 
-function useInjectedStyle<T extends ExecutionContext>(
+function useStyles<T extends ExecutionContext>(
   componentStyle: ComponentStyle,
+  stylis: IStyleSheetContext['stylis'],
+  styleSheet: Sheet,
   resolvedAttrs: T
 ) {
   const ssc = useStyleSheetContext();
 
-  const insertionEffectBuffer: [name: string, rules: string[]][] | false =
-    !ssc.styleSheet.server && IS_BROWSER && [];
-  const className = componentStyle.generateAndInjectStyles(
-    resolvedAttrs,
-    ssc.styleSheet,
-    ssc.stylis,
-    insertionEffectBuffer
-  );
+  const className = componentStyle.generateStyles(resolvedAttrs, styleSheet, stylis);
 
-  if (IS_BROWSER) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useInsertionEffect(() => {
-      if (Array.isArray(insertionEffectBuffer) && insertionEffectBuffer.length > 0) {
-        componentStyle.flushStyles(insertionEffectBuffer, ssc.styleSheet);
-      }
-    });
+  if (ssc.styleSheet.server) {
+    componentStyle.flushStyles(styleSheet);
   }
 
-  if (process.env.NODE_ENV !== 'production') useDebugValue(className);
+  useInsertionEffect(() => {
+    if (!ssc.styleSheet.server) {
+      componentStyle.flushStyles(styleSheet);
+    }
+  });
+
+  useDebugValue(className, value => `className: ${value}`);
 
   return className;
 }
@@ -121,7 +118,7 @@ function resolveContext<Props extends object>(
 
 let seenUnknownProps = new Set();
 
-function useStyledComponentImpl<Props extends object>(
+function useStyledComponent<Props extends object>(
   forwardedComponent: IStyledComponent<'web', Props>,
   props: ExecutionProps & Props,
   forwardedRef: React.Ref<Element>
@@ -139,7 +136,7 @@ function useStyledComponentImpl<Props extends object>(
   const ssc = useStyleSheetContext();
   const shouldForwardProp = forwardedComponent.shouldForwardProp || ssc.shouldForwardProp;
 
-  if (process.env.NODE_ENV !== 'production') useDebugValue(styledComponentId);
+  useDebugValue(styledComponentId, value => `styledComponentId: ${value}`);
 
   // NOTE: the non-hooks version only subscribes to this when !componentStyle.isStatic,
   // but that'd be against the rules-of-hooks. We could be naughty and do it anyway as it
@@ -177,7 +174,7 @@ function useStyledComponentImpl<Props extends object>(
     }
   }
 
-  const generatedClassName = useInjectedStyle(componentStyle, context);
+  const generatedClassName = useStyles(componentStyle, ssc.stylis, ssc.styleSheet, context);
 
   if (process.env.NODE_ENV !== 'production' && forwardedComponent.warnTooManyClasses) {
     forwardedComponent.warnTooManyClasses(generatedClassName);
@@ -263,7 +260,7 @@ function createStyledComponent<
   );
 
   function forwardRefRender(props: ExecutionProps & OuterProps, ref: React.Ref<Element>) {
-    return useStyledComponentImpl<OuterProps>(WrappedStyledComponent, props, ref);
+    return useStyledComponent<OuterProps>(WrappedStyledComponent, props, ref);
   }
 
   forwardRefRender.displayName = displayName;

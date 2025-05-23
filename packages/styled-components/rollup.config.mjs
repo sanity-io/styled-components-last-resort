@@ -83,6 +83,7 @@ const minifierPlugin = terser({
     comments: /^\s*([@#]__[A-Z]+__\s*$|@cc_on)/,
     preserve_annotations: true,
   },
+  keep_fnames: true,
 });
 
 const commonPlugins = [defaultTypescriptPlugin, basePlugins];

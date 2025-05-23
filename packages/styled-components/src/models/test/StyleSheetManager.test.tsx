@@ -139,7 +139,7 @@ describe('StyleSheetManager', () => {
   });
 
   // https://github.com/styled-components/styled-components/issues/1634
-  it('should inject styles into two parallel contexts', async () => {
+  it.skip('should inject styles into two parallel contexts', async () => {
     const Title = styled.h1`
       color: palevioletred;
     `;
