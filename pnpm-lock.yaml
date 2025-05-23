@@ -163,7 +163,7 @@ importers:
         specifier: ^8.19.0
         version: 8.32.1(eslint@9.27.0(jiti@2.4.2))(typescript@5.8.3)
       vite:
-        specifier: ^6.0.7
+        specifier: ^6.3.5
         version: 6.3.5(@types/node@22.15.19)(jiti@2.4.2)(terser@5.39.2)(tsx@4.19.4)
       vite-plugin-stylex:
         specifier: 0.13.0
