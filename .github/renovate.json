@@ -9,6 +9,11 @@
       "description": "Prevent updates to jest-dom utils due to https://github.com/vitest-dev/vitest/issues/7668",
       "matchPackageNames": ["@testing-library/jest-dom"],
       "enabled": false
+    },
+    {
+      "matchFileNames": ["benchmarks/package.json"],
+      "matchPackageNames": ["react", "react-dom", "react-is"],
+      "followTag": "experimental"
     }
   ]
 }
