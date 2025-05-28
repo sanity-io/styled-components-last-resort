@@ -55,8 +55,8 @@
     "stylis": "4.3.6"
   },
   "peerDependencies": {
-    "react": "^18.3",
-    "react-dom": "^18.3"
+    "react": "^18.3 || ^19",
+    "react-dom": "^18.3 || ^19"
   },
   "devDependencies": {
     "@babel/preset-typescript": "7.27.1",
