@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import { cx } from 'classix';
 import type { BoxProps } from '../../types';
 import { style } from './View';
 
@@ -28,9 +28,8 @@ export const Box = ({
   $fixed,
   $layout,
   $outer,
-  ...props
 }: BoxProps & { children?: React.ReactNode; className?: string }) => (
-  <div className={classnames($fixed && 'fixed', className)} {...props}>
+  <div className={cx($fixed && 'fixed', className)}>
     {children}
 
     <style jsx>{style}</style>

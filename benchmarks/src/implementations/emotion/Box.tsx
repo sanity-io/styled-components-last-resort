@@ -1,43 +1,31 @@
 import styled from '@emotion/styled';
-import type { BoxProps } from '../../types';
+import type { BoxColor, BoxProps } from '../../types';
 import { View } from './View';
 
-const styles = {
-  outer: {
-    alignSelf: 'flex-start',
-    padding: 4,
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  color0: {
-    backgroundColor: '#14171A',
-  },
-  color1: {
-    backgroundColor: '#AAB8C2',
-  },
-  color2: {
-    backgroundColor: '#E6ECF0',
-  },
-  color3: {
-    backgroundColor: '#FFAD1F',
-  },
-  color4: {
-    backgroundColor: '#F45D22',
-  },
-  color5: {
-    backgroundColor: '#E0245E',
-  },
-  fixed: {
-    width: 6,
-    height: 6,
-  },
+const getColor = (color: BoxColor | undefined) => {
+  switch (color) {
+    case 0:
+      return '#14171A';
+    case 1:
+      return '#AAB8C2';
+    case 2:
+      return '#E6ECF0';
+    case 3:
+      return '#FFAD1F';
+    case 4:
+      return '#F45D22';
+    case 5:
+      return '#E0245E';
+    default:
+      return 'transparent';
+  }
 };
 
-// @ts-expect-error - fix later
-export const Box = styled(View)(
-  (p: BoxProps) => typeof p.$color === 'number' && styles[`color${p.$color}`],
-  (p: BoxProps) => p.$fixed && styles.fixed,
-  (p: BoxProps) => p.$layout === 'row' && styles.row,
-  (p: BoxProps) => p.$outer && styles.outer
-);
+export const Box = styled(View)<BoxProps>`
+  align-self: flex-start;
+  flex-direction: ${props => (props.$layout === 'column' ? 'column' : 'row')};
+  padding: ${props => (props.$outer ? '4px' : '0')};
+  ${props => props.$fixed && 'height:6px;'}
+  ${props => props.$fixed && 'width:6px;'}
+  background-color: ${props => getColor(props.$color)};
+`;

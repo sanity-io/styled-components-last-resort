@@ -2,15 +2,14 @@ import type { BoxProps } from '../../types';
 import { viewStyle } from './View';
 
 export const Box = ({
+  children,
   $color,
   $fixed = false,
   $layout = 'column',
   $outer = false,
-  ...other
 }: BoxProps) => {
   return (
     <div
-      {...other}
       style={{
         ...viewStyle,
         ...(typeof $color === 'number' && styles[`color${$color}`]),
@@ -18,7 +17,9 @@ export const Box = ({
         ...($layout === 'row' && styles.row),
         ...($outer && styles.outer),
       }}
-    />
+    >
+      {children}
+    </div>
   );
 };
 

@@ -1,19 +1,9 @@
 import type { DotProps } from '../../types';
 import { style } from './View';
 
-export const Dot = ({
-  children,
-  $color,
-  $x,
-  $y,
-  $size,
-  $opacity,
-  ...props
-}: DotProps & { children?: React.ReactNode }) => {
+export const Dot = ({ $color, $x, $y, $size, $opacity }: DotProps) => {
   return (
-    <div {...props} style={{ borderBottomColor: $color }}>
-      {children}
-
+    <div style={{ borderBottomColor: $color }}>
       <style jsx>{style}</style>
 
       <style jsx>

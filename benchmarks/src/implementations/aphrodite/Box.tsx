@@ -35,21 +35,22 @@ const styles = StyleSheet.create({
 });
 
 export function Box({
+  children,
   $color,
   $fixed = false,
   $layout = 'column',
   $outer = false,
-  ...props
 }: BoxProps) {
   return (
     <View
-      {...props}
       styles={[
         typeof $color === 'number' && styles[`color${$color}`],
         $fixed && styles.fixed,
         $layout === 'row' && styles.row,
         $outer && styles.outer,
       ]}
-    />
+    >
+      {children}
+    </View>
   );
 }

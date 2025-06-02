@@ -15,10 +15,9 @@ const dotStyles = StyleSheet.create({
   },
 });
 
-export function Dot({ $color, $size, $x, $y, $opacity, ...props }: DotProps) {
+export function Dot({ $color, $size, $x, $y, $opacity }: DotProps) {
   return (
     <View
-      {...props}
       styles={[dotStyles.base]}
       style={{
         marginLeft: $x,

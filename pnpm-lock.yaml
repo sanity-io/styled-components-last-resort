@@ -44,9 +44,9 @@ importers:
       aphrodite:
         specifier: 2.4.0
         version: 2.4.0
-      classnames:
-        specifier: 2.5.1
-        version: 2.5.1
+      classix:
+        specifier: ^2.2.2
+        version: 2.2.2
       d3-scale-chromatic:
         specifier: 3.1.0
         version: 3.1.0
@@ -2173,8 +2173,8 @@ packages:
     resolution: {integrity: sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==}
     engines: {node: '>=8'}
 
-  classnames@2.5.1:
-    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
+  classix@2.2.2:
+    resolution: {integrity: sha512-sHfNzza/LoiecpfDAjnVyan2SG4Q9fhcO0TrbnjK7nh5rvA9E9k/kFk4WGHdI24upUyzSBSxq+uy4oUPR9Mgig==}
 
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
@@ -6197,7 +6197,7 @@ snapshots:
 
   ci-info@3.9.0: {}
 
-  classnames@2.5.1: {}
+  classix@2.2.2: {}
 
   client-only@0.0.1: {}
 

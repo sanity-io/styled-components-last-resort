@@ -1,21 +1,25 @@
-import classnames from 'classnames';
+import { cx } from 'classix';
 import type { BoxProps } from '../../types';
-import styles from './box.module.css';
 import { View } from './View';
 
+import styles from './box.module.css';
+
 export const Box = ({
+  children,
   $color,
   $fixed = false,
   $layout = 'column',
   $outer = false,
-  ...other
 }: BoxProps) => (
   <View
-    {...other}
-    className={classnames(styles.box, styles[`color${$color}`], {
-      [styles.fixed]: $fixed,
-      [styles.outer]: $outer,
-      [styles.row]: $layout === 'row',
-    })}
-  />
+    className={cx(
+      styles.box,
+      styles[`color${$color}`],
+      $fixed && styles.fixed,
+      $outer && styles.outer,
+      $layout === 'row' && styles.row
+    )}
+  >
+    {children}
+  </View>
 );

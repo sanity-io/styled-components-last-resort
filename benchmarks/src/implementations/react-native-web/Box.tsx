@@ -2,21 +2,22 @@ import { StyleSheet, View } from 'react-native';
 import type { BoxProps } from '../../types';
 
 export const Box = ({
+  children,
   $color,
   $fixed = false,
   $layout = 'column',
   $outer = false,
-  ...other
 }: BoxProps) => (
   <View
-    {...other}
     style={[
       typeof $color === 'number' && styles[`color${$color}`],
       $fixed && styles.fixed,
       $layout === 'row' && styles.row,
       $outer && styles.outer,
     ]}
-  />
+  >
+    {children}
+  </View>
 );
 
 const styles = StyleSheet.create({

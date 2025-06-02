@@ -1,13 +1,18 @@
-import classnames from 'classnames';
+import { cx } from 'classix';
 import styles from './view.module.css';
 
 export function View({
   className,
-  ...props
+  style,
+  children,
 }: {
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
 }) {
-  return <div {...props} className={classnames(styles.initial, className)} />;
+  return (
+    <div className={cx(styles.initial, className)} style={style}>
+      {children}
+    </div>
+  );
 }

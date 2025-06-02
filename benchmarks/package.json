@@ -18,7 +18,7 @@
     "@sanity/css-in-js": "workspace:*",
     "@sanity/styled-components": "workspace:*",
     "aphrodite": "2.4.0",
-    "classnames": "2.5.1",
+    "classix": "^2.2.2",
     "d3-scale-chromatic": "3.1.0",
     "goober": "2.1.16",
     "react": "0.0.0-experimental-b07717d8-20250528",

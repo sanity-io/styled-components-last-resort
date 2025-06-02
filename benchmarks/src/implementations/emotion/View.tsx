@@ -1,18 +1,17 @@
 import styled from '@emotion/styled';
 
-export const View = styled.div({
-  alignItems: 'stretch',
-  borderWidth: 0,
-  borderStyle: 'solid',
-  boxSizing: 'border-box',
-  display: 'flex',
-  flexBasis: 'auto',
-  flexDirection: 'column',
-  flexShrink: 0,
-  margin: 0,
-  padding: 0,
-  position: 'relative',
-  // fix flexbox bugs
-  minHeight: 0,
-  minWidth: 0,
-});
+export const View = styled.div`
+  align-items: stretch;
+  border-width: 0;
+  border-style: solid;
+  box-sizing: border-box;
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+`;

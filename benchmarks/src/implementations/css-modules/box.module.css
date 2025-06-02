@@ -1,12 +1,12 @@
-.box.box {
+.box {
   align-self: flex-start;
 }
 
-.outer.outer {
+.outer {
   padding: 4px;
 }
 
-.row.row {
+.row {
   flex-direction: row;
 }
 
@@ -34,7 +34,7 @@
   background-color: #e0245e;
 }
 
-.fixed.fixed {
+.fixed {
   width: 6px;
   height: 6px;
 }
