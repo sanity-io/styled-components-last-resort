@@ -44,7 +44,7 @@ function Resolve() {
         window.getComputedStyle(node).getPropertyValue('--test') === '0' ? 'fail' : 'pass';
       node.classList.add(result);
       resolve(result);
-    }, 3_000);
+    }, 1_000);
     return () => clearTimeout(timeout);
   }, []);
 

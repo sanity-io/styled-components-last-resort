@@ -1,8 +1,7 @@
 'use client';
 
 import { styled } from 'styled-components';
-import { TestStartTransition } from '../TestStartTransition';
-import { connection } from 'next/server';
+import { TestStartTransition } from '../../TestStartTransition';
 
 const Assert = styled.div`
   .test:not(:has(&)) {
@@ -12,8 +11,7 @@ const Assert = styled.div`
   }
 `;
 
-export default function Fork() {
-  connection();
+export default function ForkTransition() {
   return (
     <TestStartTransition>
       <Assert />
