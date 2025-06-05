@@ -62,7 +62,7 @@
     "@types/js-beautify": "1.14.3",
     "@types/node": "18.19.31",
     "@types/react": "19.1.6",
-    "@types/react-dom": "19.1.5",
+    "@types/react-dom": "19.1.6",
     "@types/react-frame-component": "4.1.6",
     "@types/shallowequal": "1.1.5",
     "@vitejs/plugin-react": "^4.4.1",
