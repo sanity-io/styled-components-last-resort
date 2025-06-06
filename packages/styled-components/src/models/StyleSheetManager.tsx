@@ -19,11 +19,13 @@ export const StyleSheetContext = createContext<IStyleSheetContext>({
   styleSheet: mainSheet,
   stylis: mainStylis,
 });
+StyleSheetContext.displayName = 'StyleSheetContext';
 
 export const StyleSheetConsumer = StyleSheetContext.Consumer;
 
 export type IStylisContext = Stringifier | void;
 export const StylisContext = createContext<IStylisContext>(undefined);
+StylisContext.displayName = 'StylisContext';
 export const StylisConsumer = StylisContext.Consumer;
 
 export function useStyleSheetContext() {

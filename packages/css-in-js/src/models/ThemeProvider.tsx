@@ -41,6 +41,7 @@ type Props = {
 export const ThemeContext: React.Context<DefaultTheme | undefined> = createContext<
   DefaultTheme | undefined
 >(undefined);
+ThemeContext.displayName = 'ThemeContext';
 
 export const ThemeConsumer: React.Consumer<DefaultTheme | undefined> = ThemeContext.Consumer;
 

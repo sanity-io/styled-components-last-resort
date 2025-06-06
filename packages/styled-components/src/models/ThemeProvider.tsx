@@ -39,6 +39,7 @@ type Props = {
 };
 
 export const ThemeContext = createContext<DefaultTheme | undefined>(undefined);
+ThemeContext.displayName = 'ThemeContext';
 
 export const ThemeConsumer = ThemeContext.Consumer;
 

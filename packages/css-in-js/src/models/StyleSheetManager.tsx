@@ -20,12 +20,14 @@ export const StyleSheetContext: React.Context<IStyleSheetContext> =
     styleSheet: mainSheet,
     stylis: mainStylis,
   });
+StyleSheetContext.displayName = 'StyleSheetContext';
 
 export const StyleSheetConsumer: React.Consumer<IStyleSheetContext> = StyleSheetContext.Consumer;
 
 export type IStylisContext = Stringifier | void;
 export const StylisContext: React.Context<IStylisContext> =
   createContext<IStylisContext>(undefined);
+StylisContext.displayName = 'StylisContext';
 export const StylisConsumer: React.Consumer<IStylisContext> = StylisContext.Consumer;
 
 export function useStyleSheetContext() {
