@@ -29,7 +29,7 @@
       "@types/react-dom": "$@types/react-dom"
     },
     "patchedDependencies": {
-      "@vitejs/plugin-react@4.4.1": "patches/@vitejs__plugin-react@4.4.1.patch"
+      "@vitejs/plugin-react": "patches/@vitejs__plugin-react.patch"
     }
   }
 }
