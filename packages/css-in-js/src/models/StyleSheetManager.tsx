@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import shallowequal from 'shallowequal';
 import type stylis from 'stylis';
 import StyleSheet from '../sheet';
@@ -97,9 +97,7 @@ export function StyleSheetManager(props: IStyleSheetManager): React.JSX.Element 
     [props.enableVendorPrefixes, props.namespace, plugins]
   );
 
-  useEffect(() => {
-    if (!shallowequal(plugins, props.stylisPlugins)) setPlugins(props.stylisPlugins);
-  }, [props.stylisPlugins]);
+  if (!shallowequal(plugins, props.stylisPlugins)) setPlugins(props.stylisPlugins);
 
   const styleSheetContextValue = useMemo(
     () => ({
@@ -111,8 +109,8 @@ export function StyleSheetManager(props: IStyleSheetManager): React.JSX.Element 
   );
 
   return (
-    <StyleSheetContext.Provider value={styleSheetContextValue}>
-      <StylisContext.Provider value={stylis}>{props.children}</StylisContext.Provider>
-    </StyleSheetContext.Provider>
+    <StyleSheetContext value={styleSheetContextValue}>
+      <StylisContext value={stylis}>{props.children}</StylisContext>
+    </StyleSheetContext>
   );
 }
