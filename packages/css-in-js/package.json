@@ -76,7 +76,7 @@
     "ts-toolbelt": "9.6.0",
     "tsdown": "0.12.6",
     "typescript": "5.8.3",
-    "vitest": "^3.2.1"
+    "vitest": "^3.2.2"
   },
   "engines": {
     "node": ">= 22"
