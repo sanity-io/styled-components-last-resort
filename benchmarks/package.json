@@ -46,7 +46,7 @@
     "@types/react-native": "^0.73.0",
     "@types/react-native-web": "0.19.1",
     "@types/styled-components-v5": "npm:@types/styled-components@5.1.34",
-    "@vitejs/plugin-react": "4.5.1",
+    "@vitejs/plugin-react": "4.5.2",
     "autoprefixer": "10.4.21",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
     "babel-plugin-react-native-web": "0.19.13",
