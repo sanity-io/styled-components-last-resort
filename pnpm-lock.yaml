@@ -214,7 +214,7 @@ importers:
         specifier: npm:@sanity/styled-components@6.1.18-18
         version: '@sanity/styled-components@6.1.18-18(react-dom@19.1.0(react@19.1.0))(react@19.1.0)'
       styled-components-original:
-        specifier: npm:styled-components@^6.1.18
+        specifier: npm:styled-components@^6.1.19
         version: styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   examples/styled-components/next-pages-router:
