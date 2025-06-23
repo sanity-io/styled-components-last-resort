@@ -8,11 +8,6 @@ overrides:
   '@types/react': 19.1.8
   '@types/react-dom': 19.1.6
 
-patchedDependencies:
-  '@vitejs/plugin-react':
-    hash: dbddf1bce8ebe7035b95d4ff9b5ec4fcc2d24e6f27b2dc6e3af349eb9e42fbf6
-    path: patches/@vitejs__plugin-react.patch
-
 importers:
 
   .:
@@ -125,7 +120,7 @@ importers:
         version: '@types/styled-components@5.1.34'
       '@vitejs/plugin-react':
         specifier: 4.6.0
-        version: 4.6.0(patch_hash=dbddf1bce8ebe7035b95d4ff9b5ec4fcc2d24e6f27b2dc6e3af349eb9e42fbf6)(vite@6.3.5(@types/node@22.15.31)(jiti@2.4.2)(terser@5.42.0))
+        version: 4.6.0(vite@6.3.5(@types/node@22.15.31)(jiti@2.4.2)(terser@5.42.0))
       autoprefixer:
         specifier: 10.4.21
         version: 10.4.21(postcss@8.5.4)
@@ -291,7 +286,7 @@ importers:
         version: 1.1.5
       '@vitejs/plugin-react':
         specifier: 4.6.0
-        version: 4.6.0(patch_hash=dbddf1bce8ebe7035b95d4ff9b5ec4fcc2d24e6f27b2dc6e3af349eb9e42fbf6)(vite@6.3.5(@types/node@18.19.31)(jiti@2.4.2)(terser@5.42.0))
+        version: 4.6.0(vite@6.3.5(@types/node@18.19.31)(jiti@2.4.2)(terser@5.42.0))
       babel-plugin-react-compiler:
         specifier: 19.1.0-rc.2
         version: 19.1.0-rc.2
@@ -403,7 +398,7 @@ importers:
         version: 1.1.5
       '@vitejs/plugin-react':
         specifier: 4.6.0
-        version: 4.6.0(patch_hash=dbddf1bce8ebe7035b95d4ff9b5ec4fcc2d24e6f27b2dc6e3af349eb9e42fbf6)(vite@6.3.5(@types/node@22.15.31)(jiti@2.4.2)(terser@5.42.0))
+        version: 4.6.0(vite@6.3.5(@types/node@22.15.31)(jiti@2.4.2)(terser@5.42.0))
       babel-plugin-react-compiler:
         specifier: 19.1.0-rc.2
         version: 19.1.0-rc.2
@@ -5896,7 +5891,7 @@ snapshots:
       '@typescript-eslint/types': 8.34.1
       eslint-visitor-keys: 4.2.1
 
-  '@vitejs/plugin-react@4.6.0(patch_hash=dbddf1bce8ebe7035b95d4ff9b5ec4fcc2d24e6f27b2dc6e3af349eb9e42fbf6)(vite@6.3.5(@types/node@18.19.31)(jiti@2.4.2)(terser@5.42.0))':
+  '@vitejs/plugin-react@4.6.0(vite@6.3.5(@types/node@18.19.31)(jiti@2.4.2)(terser@5.42.0))':
     dependencies:
       '@babel/core': 7.27.4
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.27.4)
@@ -5908,7 +5903,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-react@4.6.0(patch_hash=dbddf1bce8ebe7035b95d4ff9b5ec4fcc2d24e6f27b2dc6e3af349eb9e42fbf6)(vite@6.3.5(@types/node@22.15.31)(jiti@2.4.2)(terser@5.42.0))':
+  '@vitejs/plugin-react@4.6.0(vite@6.3.5(@types/node@22.15.31)(jiti@2.4.2)(terser@5.42.0))':
     dependencies:
       '@babel/core': 7.27.4
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.27.4)
