@@ -3600,6 +3600,7 @@ packages:
   react-strict-dom@0.0.35:
     resolution: {integrity: sha512-n94uAWOK54R78XL2lG4UsHO+gbH4xdDtashGEjce5fTdyWHgtzv4dBZaUcZreET48U4UqBktuUfh1IUS7F+xrw==}
     engines: {node: '>=20.11.0'}
+    deprecated: This version is no longer supported. Please upgrade.
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
