@@ -22,11 +22,12 @@ export default function createGlobalStyle<Props extends object>(
     checkDynamicCreation(styledComponentId);
   }
 
-  const GlobalStyleComponent: React.ComponentType<ExecutionProps & Props> = props => {
+  const GlobalStyleComponent = (props: ExecutionProps & Props): null => {
     const ssc = useStyleSheetContext();
     const theme = useContext(ThemeContext);
     const [instance] = useState(() => ssc.styleSheet.allocateGSInstance(styledComponentId));
 
+    // @ts-expect-error we're checking if `children` is passed even though we don't allow it
     if (process.env.NODE_ENV !== 'production' && Children.count(props.children)) {
       console.warn(
         `The global style component ${styledComponentId} was given child JSX. createGlobalStyle does not render children.`
@@ -47,10 +48,9 @@ export default function createGlobalStyle<Props extends object>(
     }
 
     useInsertionEffect(() => {
-      if (!ssc.styleSheet.server) {
-        renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis);
-        return () => globalStyle.removeStyles(instance, ssc.styleSheet);
-      }
+      if (ssc.styleSheet.server) return;
+      renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis);
+      return () => globalStyle.removeStyles(instance, ssc.styleSheet);
     }, [instance, props, ssc.styleSheet, theme, ssc.stylis]);
 
     return null;
@@ -73,7 +73,12 @@ export default function createGlobalStyle<Props extends object>(
     } else {
       const context = {
         ...props,
-        theme: determineTheme(props, theme, GlobalStyleComponent.defaultProps),
+        theme: determineTheme(
+          props,
+          theme,
+          // @ts-expect-error - legacy projects might still define defaultProps
+          GlobalStyleComponent.defaultProps
+        ),
       } as ExecutionContext & Props;
 
       globalStyle.renderStyles(instance, context, styleSheet, stylis);

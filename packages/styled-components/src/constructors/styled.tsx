@@ -1,3 +1,4 @@
+import type { ComponentPropsWithRef, JSX } from 'react';
 import createStyledComponent from '../models/StyledComponent';
 import { BaseObject, KnownTarget, WebTarget } from '../types';
 import domElements, { SupportedHTMLElements } from '../utils/domElements';
@@ -9,16 +10,20 @@ const baseStyled = <Target extends WebTarget, InjectedProps extends object = Bas
   constructWithOptions<
     'web',
     Target,
-    Target extends KnownTarget ? React.ComponentPropsWithRef<Target> & InjectedProps : InjectedProps
+    Target extends KnownTarget ? ComponentPropsWithRef<Target> & InjectedProps : InjectedProps
   >(createStyledComponent, tag);
 
 const styled = baseStyled as typeof baseStyled & {
-  [E in SupportedHTMLElements]: StyledInstance<'web', E, React.JSX.IntrinsicElements[E]>;
+  [E in SupportedHTMLElements]: StyledInstance<'web', E, JSX.IntrinsicElements[E]>;
 };
 
 // Shorthands for all valid HTML Elements
 domElements.forEach(domElement => {
-  styled[domElement] = baseStyled<typeof domElement>(domElement);
+  styled[domElement] = baseStyled<typeof domElement>(domElement) as StyledInstance<
+    'web',
+    typeof domElement,
+    JSX.IntrinsicElements[typeof domElement]
+  >;
 });
 
 export default styled;

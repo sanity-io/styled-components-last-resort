@@ -53,6 +53,7 @@ describe('theming', () => {
       color: ${props => props.theme.test!.color};
     `;
 
+    // @ts-expect-error
     Comp1.defaultProps = {
       theme: {
         test: {
@@ -78,6 +79,7 @@ describe('theming', () => {
       color: ${props => props.theme.test?.color};
     `;
 
+    // @ts-expect-error
     Comp1.defaultProps = {
       theme: {
         test: {
@@ -104,6 +106,7 @@ describe('theming', () => {
       color: ${props => props.theme.test!.color};
     `;
 
+    // @ts-expect-error
     Comp1.defaultProps = {
       theme: {
         test: {
@@ -244,6 +247,7 @@ describe('theming', () => {
       color: ${props => props.theme.color};
     `;
 
+    // @ts-expect-error
     Comp1.defaultProps = {
       theme: {
         color: 'purple',

@@ -32,7 +32,7 @@ export const checkDynamicCreation = (displayName: string, componentId?: string |
       };
       // We purposefully call `useRef` outside of a component and expect it to throw
       // If it doesn't, then we're inside another component.
-      useRef();
+      useRef(undefined);
 
       if (didNotCallInvalidHook && !seen.has(message)) {
         console.warn(message);

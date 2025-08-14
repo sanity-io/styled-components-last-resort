@@ -103,6 +103,7 @@ describe('flatten', () => {
     const func = () => 'bar';
     const funcWFunc = () => ['static', (subfunc: Function) => (subfunc ? 'bar' : 'baz')];
     expect(flatten(['foo', func, 'baz'])).toEqual(['foo', func, 'baz']);
+    // @ts-expect-error
     expect(flatten(['foo', funcWFunc, 'baz'])).toEqual(['foo', funcWFunc, 'baz']);
   });
 

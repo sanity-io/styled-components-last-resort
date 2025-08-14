@@ -9,8 +9,10 @@ describe('joinStrings(string?, string?)', () => {
 
   it('ignores falsy inputs', () => {
     expect(joinStrings('a')).toBe('a');
+    // @ts-expect-error
     expect(joinStrings('a', null)).toBe('a');
     expect(joinStrings('a', '')).toBe('a');
+    // @ts-expect-error
     expect(joinStrings(null, 'b')).toBe('b');
     expect(joinStrings('', 'b')).toBe('b');
   });

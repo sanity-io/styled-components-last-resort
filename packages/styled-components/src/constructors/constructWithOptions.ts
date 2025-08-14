@@ -1,3 +1,4 @@
+import type { Component, ComponentPropsWithRef } from 'react';
 import {
   Attrs,
   BaseObject,
@@ -53,11 +54,7 @@ export interface Styled<
   ): IStyledComponent<R, Substitute<OuterProps, Props>> &
     OuterStatics &
     Statics &
-    (R extends 'web'
-      ? Target extends string
-        ? {}
-        : Omit<Target, keyof React.Component<any>>
-      : {});
+    (R extends 'web' ? (Target extends string ? {} : Omit<Target, keyof Component<any>>) : {});
 
   attrs: <
     Props extends object = BaseObject,
@@ -70,10 +67,7 @@ export interface Styled<
     R,
     PrivateResolvedTarget,
     PrivateResolvedTarget extends KnownTarget
-      ? Substitute<
-          Substitute<OuterProps, React.ComponentPropsWithRef<PrivateResolvedTarget>>,
-          Props
-        >
+      ? Substitute<Substitute<OuterProps, ComponentPropsWithRef<PrivateResolvedTarget>>, Props>
       : PrivateMergedProps,
     OuterStatics
   >;
@@ -85,7 +79,7 @@ export default function constructWithOptions<
   R extends Runtime,
   Target extends StyledTarget<R>,
   OuterProps extends object = Target extends KnownTarget
-    ? React.ComponentPropsWithRef<Target>
+    ? ComponentPropsWithRef<Target>
     : BaseObject,
   OuterStatics extends object = BaseObject,
 >(
@@ -133,10 +127,7 @@ export default function constructWithOptions<
       R,
       PrivateResolvedTarget,
       PrivateResolvedTarget extends KnownTarget
-        ? Substitute<
-            Substitute<OuterProps, React.ComponentPropsWithRef<PrivateResolvedTarget>>,
-            Props
-          >
+        ? Substitute<Substitute<OuterProps, ComponentPropsWithRef<PrivateResolvedTarget>>, Props>
         : PrivateMergedProps,
       OuterStatics
     >(componentConstructor, tag, {
