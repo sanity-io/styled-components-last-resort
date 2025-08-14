@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, type ReactNode } from 'react';
 import { render, act } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 import Frame, { FrameContextConsumer } from 'react-frame-component';
@@ -217,7 +217,7 @@ describe('StyleSheetManager', () => {
       <StyleSheetManager target={target}>{children}</StyleSheetManager>
     );
 
-    class Main extends Component<{ children: React.ReactNode; document: Document }> {
+    class Main extends Component<{ children: ReactNode; document: Document }> {
       override componentDidMount() {
         const style = this.props.document.querySelector('style') as HTMLStyleElement;
 

@@ -1,5 +1,12 @@
 import isPropValid from '@emotion/is-prop-valid';
-import { forwardRef, useContext, useDebugValue, useInsertionEffect } from 'react';
+import {
+  forwardRef,
+  useContext,
+  useDebugValue,
+  useInsertionEffect,
+  type HTMLAttributes,
+  type Ref,
+} from 'react';
 import { SC_VERSION } from '../constants';
 import type {
   AnyComponent,
@@ -69,13 +76,13 @@ function useStyles<T extends ExecutionContext>(
 }
 
 function resolveContext<Props extends object>(
-  attrs: Attrs<React.HTMLAttributes<Element> & Props>[],
-  props: React.HTMLAttributes<Element> & ExecutionProps & Props,
+  attrs: Attrs<HTMLAttributes<Element> & Props>[],
+  props: HTMLAttributes<Element> & ExecutionProps & Props,
   theme: DefaultTheme
 ) {
-  const context: React.HTMLAttributes<Element> &
+  const context: HTMLAttributes<Element> &
     ExecutionContext &
-    Props & { [key: string]: any; class?: string; ref?: React.Ref<any> } = {
+    Props & { [key: string]: any; class?: string; ref?: Ref<any> } = {
     ...props,
     // unset, add `props.className` back at the end so props always "wins"
     className: undefined,
@@ -109,7 +116,7 @@ let seenUnknownProps = new Set();
 function useStyledComponent<Props extends object>(
   forwardedComponent: IStyledComponent<'web', Props>,
   props: ExecutionProps & Props,
-  forwardedRef: React.Ref<Element>
+  forwardedRef: Ref<Element>
 ) {
   const {
     attrs: componentAttrs,
@@ -258,7 +265,7 @@ function createStyledComponent<
     isTargetStyledComp ? (styledComponentTarget.componentStyle as ComponentStyle) : undefined
   );
 
-  function forwardRefRender(props: ExecutionProps & OuterProps, ref: React.Ref<Element>) {
+  function forwardRefRender(props: ExecutionProps & OuterProps, ref: Ref<Element>) {
     return useStyledComponent<OuterProps>(WrappedStyledComponent, props, ref);
   }
 

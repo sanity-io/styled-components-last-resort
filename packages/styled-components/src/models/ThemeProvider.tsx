@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo } from 'react';
+import { createContext, useContext, useMemo, type ReactNode, type JSX } from 'react';
 import styledError from '../utils/error';
 import isFunction from '../utils/isFunction';
 
@@ -34,7 +34,7 @@ type ThemeFn = (outerTheme?: DefaultTheme | undefined) => DefaultTheme;
 type ThemeArgument = DefaultTheme | ThemeFn;
 
 type Props = {
-  children?: React.ReactNode;
+  children?: ReactNode;
   theme: ThemeArgument;
 };
 
@@ -89,7 +89,7 @@ export function useTheme(): DefaultTheme {
 /**
  * Provide a theme to an entire react component tree via context
  */
-export default function ThemeProvider(props: Props): React.JSX.Element | null {
+export default function ThemeProvider(props: Props): JSX.Element | null {
   const outerTheme = useContext(ThemeContext);
   const themeContext = useMemo(
     () => mergeTheme(props.theme, outerTheme),

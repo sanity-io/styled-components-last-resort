@@ -1,4 +1,11 @@
-import { createContext, useContext, useMemo, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  type PropsWithChildren,
+  type JSX,
+} from 'react';
 import shallowequal from 'shallowequal';
 import type stylis from 'stylis';
 import StyleSheet from '../sheet';
@@ -32,7 +39,7 @@ export function useStyleSheetContext() {
   return useContext(StyleSheetContext);
 }
 
-export type IStyleSheetManager = React.PropsWithChildren<{
+export type IStyleSheetManager = PropsWithChildren<{
   /**
    * If you are working exclusively with modern browsers, vendor prefixes can often be omitted
    * to reduce the weight of CSS on the page.
@@ -74,7 +81,7 @@ export type IStyleSheetManager = React.PropsWithChildren<{
   target?: undefined | InsertionTarget;
 }>;
 
-export function StyleSheetManager(props: IStyleSheetManager): React.JSX.Element {
+export function StyleSheetManager(props: IStyleSheetManager): JSX.Element {
   const [plugins, setPlugins] = useState(props.stylisPlugins);
   const { styleSheet } = useStyleSheetContext();
 

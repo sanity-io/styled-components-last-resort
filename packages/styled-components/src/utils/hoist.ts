@@ -1,3 +1,4 @@
+import type { ForwardRefExoticComponent, MemoExoticComponent } from 'react';
 import { AnyComponent } from '../types';
 
 const hasSymbol = typeof Symbol === 'function' && Symbol.for;
@@ -59,8 +60,8 @@ type OmniComponent = AnyComponent;
 
 // adapted from react-is
 function isMemo(
-  object: OmniComponent | React.MemoExoticComponent<any>
-): object is React.MemoExoticComponent<any> {
+  object: OmniComponent | MemoExoticComponent<any>
+): object is MemoExoticComponent<any> {
   const $$typeofType = 'type' in object && object.type.$$typeof;
 
   return $$typeofType === REACT_MEMO_TYPE;
@@ -92,9 +93,9 @@ type ExcludeList = {
 export type NonReactStatics<S extends OmniComponent, C extends ExcludeList = {}> = {
   [key in Exclude<
     keyof S,
-    S extends React.MemoExoticComponent<any>
+    S extends MemoExoticComponent<any>
       ? keyof typeof MEMO_STATICS | keyof C
-      : S extends React.ForwardRefExoticComponent<any>
+      : S extends ForwardRefExoticComponent<any>
         ? keyof typeof FORWARD_REF_STATICS | keyof C
         : keyof typeof REACT_STATICS | keyof typeof KNOWN_STATICS | keyof C
   >]: S[key];

@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { SC_ATTR, SC_ATTR_VERSION, SC_VERSION } from '../constants';
 import StyleSheet from '../sheet';
 import styledError from '../utils/error';
@@ -28,7 +29,7 @@ export default class ServerStyleSheet {
     return `<style ${htmlAttr}>${css}</style>`;
   };
 
-  collectStyles(children: any): React.JSX.Element {
+  collectStyles(children: any): JSX.Element {
     if (this.sealed) {
       throw styledError(2);
     }

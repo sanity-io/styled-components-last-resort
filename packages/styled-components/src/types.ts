@@ -1,3 +1,10 @@
+import type {
+  ComponentPropsWithRef,
+  ComponentType,
+  ExoticComponent,
+  ForwardRefExoticComponent,
+  JSX,
+} from 'react';
 import type * as CSS from 'csstype';
 import ComponentStyle from './models/ComponentStyle';
 import { DefaultTheme } from './models/ThemeProvider';
@@ -6,8 +13,7 @@ import type { SupportedHTMLElements } from './utils/domElements';
 
 export { CSS, type DefaultTheme, SupportedHTMLElements };
 
-export interface ExoticComponentWithDisplayName<P extends object = {}>
-  extends React.ExoticComponent<P> {
+export interface ExoticComponentWithDisplayName<P extends object = {}> extends ExoticComponent<P> {
   /**
    * @deprecated `defaultProps` is no longer supported in React 19 https://react.dev/blog/2024/04/25/react-19-upgrade-guide#removed-proptypes-and-defaultprops
    */
@@ -34,7 +40,7 @@ export type Runtime = 'web' | 'native';
 
 export type AnyComponent<P extends object = any> =
   | ExoticComponentWithDisplayName<P>
-  | React.ComponentType<P>;
+  | ComponentType<P>;
 
 export type KnownTarget = SupportedHTMLElements | AnyComponent;
 
@@ -185,11 +191,11 @@ export type PolymorphicComponentProps<
   ForwardedAsTarget extends StyledTarget<R> | void,
   // props extracted from "as"
   AsTargetProps extends object = AsTarget extends KnownTarget
-    ? React.ComponentPropsWithRef<AsTarget>
+    ? ComponentPropsWithRef<AsTarget>
     : {},
   // props extracted from "forwardAs"; note that ref is excluded
   ForwardedAsTargetProps extends object = ForwardedAsTarget extends KnownTarget
-    ? React.ComponentPropsWithRef<ForwardedAsTarget>
+    ? ComponentPropsWithRef<ForwardedAsTarget>
     : {},
 > = NoInfer<
   FastOmit<
@@ -214,13 +220,13 @@ export type PolymorphicComponentProps<
  * any specialized props in the target component.
  */
 export interface PolymorphicComponent<R extends Runtime, BaseProps extends object>
-  extends React.ForwardRefExoticComponent<BaseProps> {
+  extends ForwardRefExoticComponent<BaseProps> {
   <
     AsTarget extends StyledTarget<R> | void = void,
     ForwardedAsTarget extends StyledTarget<R> | void = void,
   >(
     props: PolymorphicComponentProps<R, BaseProps, AsTarget, ForwardedAsTarget>
-  ): React.JSX.Element;
+  ): JSX.Element;
 }
 
 export interface IStyledComponentBase<R extends Runtime, Props extends object = BaseObject>
