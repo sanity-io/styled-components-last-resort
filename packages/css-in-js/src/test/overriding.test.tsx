@@ -82,6 +82,46 @@ describe('extending', () => {
     `);
   });
 
+  it('should not duplicate styles', () => {
+    const Base = styled.div`
+      color: gray;
+    `;
+
+    const Red = styled(Base)`
+      color: red;
+    `;
+
+    const Blue = styled(Base)`
+      color: blue;
+    `;
+
+    render(
+      <>
+        <Base>
+          <div>Gray</div>
+        </Base>
+        <Red>
+          <div>Red</div>
+        </Red>
+        <Blue>
+          <div>Blue</div>
+        </Blue>
+      </>
+    );
+
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`
+      ".d {
+        color: gray;
+      }
+      .e {
+        color: red;
+      }
+      .f {
+        color: blue;
+      }"
+    `);
+  });
+
   describe('inheritance', () => {
     const setupParent = () => {
       const colors = {

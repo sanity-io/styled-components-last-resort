@@ -39,11 +39,9 @@ export default class ComponentStyle {
   generateStyles(
     executionContext: ExecutionContext,
     styleSheet: StyleSheet,
-    stylis: Stringifier,
-    buffer: [name: string, rules: string[]][] = this.buffer
+    stylis: Stringifier
   ): string {
-    let className =
-      this.baseStyle?.generateStyles(executionContext, styleSheet, stylis, buffer) ?? '';
+    let className = this.baseStyle?.generateStyles(executionContext, styleSheet, stylis) ?? '';
 
     // force dynamic classnames if user-supplied stylis plugins are in use
     if (this.isStatic && !stylis.hash) {
@@ -57,7 +55,7 @@ export default class ComponentStyle {
 
         if (!styleSheet.hasNameForId(this.componentId, name)) {
           const cssStaticFormatted = stylis(cssStatic, `.${name}`, undefined, this.componentId);
-          buffer.push([name, cssStaticFormatted]);
+          this.buffer.push([name, cssStaticFormatted]);
         }
 
         className = joinStrings(className, name);
@@ -89,7 +87,7 @@ export default class ComponentStyle {
 
         if (!styleSheet.hasNameForId(this.componentId, name)) {
           const cssFormatted = stylis(css, `.${name}`, undefined, this.componentId);
-          buffer.push([name, cssFormatted]);
+          this.buffer.push([name, cssFormatted]);
         }
 
         className = joinStrings(className, name);
@@ -100,6 +98,8 @@ export default class ComponentStyle {
   }
 
   flushStyles(styleSheet: StyleSheet) {
+    this.baseStyle?.flushStyles(styleSheet);
+
     for (const [name, rules] of this.buffer) {
       if (!styleSheet.hasNameForId(this.componentId, name)) {
         styleSheet.insertRules(this.componentId, name, rules);
