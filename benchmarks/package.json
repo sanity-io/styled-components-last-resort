@@ -39,7 +39,7 @@
     "@babel/preset-typescript": "7.27.1",
     "@eslint/js": "^9.29.0",
     "@stylexjs/babel-plugin": "0.10.0",
-    "@stylexjs/eslint-plugin": "0.10.0",
+    "@stylexjs/eslint-plugin": "0.15.3",
     "@types/d3-scale-chromatic": "3.1.0",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
