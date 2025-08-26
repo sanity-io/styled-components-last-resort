@@ -43,7 +43,6 @@ const basePlugins = [
     presets: ['@babel/preset-typescript'],
     babelHelpers: 'bundled',
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
-    plugins: [['babel-plugin-react-compiler', { target: '18' }]],
   }),
   typescript({
     // The build breaks if the tests are included by the typescript plugin.
