@@ -47,7 +47,7 @@
     "@vitejs/plugin-react": "4.6.0",
     "autoprefixer": "10.4.21",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
-    "babel-plugin-react-native-web": "0.19.13",
+    "babel-plugin-react-native-web": "0.21.1",
     "babel-plugin-styled-components": "2.1.4",
     "postcss-react-strict-dom": "0.0.6",
     "typescript": "5.9.2",
