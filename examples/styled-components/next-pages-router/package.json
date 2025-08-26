@@ -14,7 +14,7 @@
     "next": "15.3.4",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "styled-components": "npm:@sanity/styled-components@6.1.18-18"
+    "styled-components": "npm:@sanity/styled-components@6.1.18-23"
   },
   "engines": {
     "node": ">= 20"
