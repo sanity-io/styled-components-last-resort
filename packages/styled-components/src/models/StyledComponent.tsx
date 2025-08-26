@@ -265,17 +265,17 @@ function createStyledComponent<
     isTargetStyledComp ? (styledComponentTarget.componentStyle as ComponentStyle) : undefined
   );
 
-  function forwardRefRender(props: ExecutionProps & OuterProps, ref: Ref<Element>) {
+  function ForwardRefRender(props: ExecutionProps & OuterProps, ref: Ref<Element>) {
     return useStyledComponent<OuterProps>(WrappedStyledComponent, props, ref);
   }
 
-  forwardRefRender.displayName = displayName;
+  ForwardRefRender.displayName = displayName;
 
   /**
    * forwardRef creates a new interim component, which we'll take advantage of
    * instead of extending ParentComponent to create _another_ interim class
    */
-  let WrappedStyledComponent = forwardRef(forwardRefRender) as unknown as IStyledComponent<
+  let WrappedStyledComponent = forwardRef(ForwardRefRender) as unknown as IStyledComponent<
     'web',
     any
   > &

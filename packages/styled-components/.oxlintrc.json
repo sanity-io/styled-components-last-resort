@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "unicorn",
+    "typescript",
+    "oxc",
+    "react",
+    "react-perf"
+  ],
+  "categories": {
+    "correctness": "deny",
+    "perf": "deny"
+  },
+  "rules": {
+    "no-duplicate-type-constituents": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "jsx-no-new-object-as-prop": "off",
+        "jsx-no-new-function-as-prop": "off",
+        "jsx-no-new-array-as-prop": "off",
+        "no-useless-escape": "off",
+        "no-confusing-void-expression": "off",
+        "await-thenable": "off",
+        "unbound-method": "off",
+        "restrict-template-expressions": "off"
+      }
+    }
+  ],
+  "ignorePatterns": ["**/test/types.tsx"]
+}

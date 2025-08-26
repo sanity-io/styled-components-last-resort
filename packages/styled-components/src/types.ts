@@ -45,7 +45,7 @@ export type AnyComponent<P extends object = any> =
 export type KnownTarget = SupportedHTMLElements | AnyComponent;
 
 export type WebTarget =
-  | string // allow custom elements, etc.
+  | (string & {}) // allow custom elements, etc.
   | KnownTarget;
 
 export type NativeTarget = AnyComponent;

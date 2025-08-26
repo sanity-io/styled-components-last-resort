@@ -45,7 +45,9 @@ function Resolve() {
       node.classList.add(result);
       resolve(result);
     }, 1_000);
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
 
   return 'running...';

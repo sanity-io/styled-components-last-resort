@@ -50,7 +50,9 @@ export default function createGlobalStyle<Props extends object>(
     useInsertionEffect(() => {
       if (ssc.styleSheet.server) return;
       renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis);
-      return () => globalStyle.removeStyles(instance, ssc.styleSheet);
+      return () => {
+        globalStyle.removeStyles(instance, ssc.styleSheet);
+      };
     }, [instance, props, ssc.styleSheet, theme, ssc.stylis]);
 
     return null;

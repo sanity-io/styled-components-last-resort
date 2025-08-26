@@ -33,7 +33,7 @@ export class CSSOMTag implements Tag {
       this.sheet.insertRule(rule, index);
       this.length++;
       return true;
-    } catch (_error) {
+    } catch {
       return false;
     }
   }

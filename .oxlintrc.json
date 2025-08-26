@@ -4,25 +4,23 @@
     "unicorn",
     "typescript",
     "oxc",
-    "react",
-    "react-perf"
+    "react"
   ],
   "categories": {
     "correctness": "deny",
     "perf": "deny"
   },
   "rules": {
-    "rules-of-hooks": "deny"
+    "rules-of-hooks": "deny",
+    "no-useless-escape": "off"
   },
   "overrides": [
     {
-      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "files": ["benchmarks/**/*.tsx"],
       "rules": {
-        "jsx-no-new-object-as-prop": "off",
-        "jsx-no-new-function-as-prop": "off",
-        "jsx-no-new-array-as-prop": "off"
+        "no-children-prop": "off"
       }
     }
   ],
-  "ignorePatterns": []
+  "ignorePatterns": ["**/css-in-js/**/*"]
 }

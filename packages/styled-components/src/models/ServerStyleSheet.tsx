@@ -67,7 +67,7 @@ export default class ServerStyleSheet {
     }
 
     // v4 returned an array for this fn, so we'll do the same for v5 for backward compat
-    return [<style {...props} key="sc-0-0" />];
+    return [<style key="sc-0-0" {...props} />];
   };
 
   seal = (): void => {

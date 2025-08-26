@@ -14,7 +14,11 @@ import { connection } from 'next/server';
 
 function createPromise(tone: CardTone, min = 5_000, max = 10_000) {
   const timeout = Math.random() * (max - min) + min;
-  return new Promise<typeof tone>(resolve => setTimeout(() => resolve(tone), timeout));
+  return new Promise<typeof tone>(resolve =>
+    setTimeout(() => {
+      resolve(tone);
+    }, timeout)
+  );
 }
 
 export default function Index() {

@@ -116,7 +116,7 @@ export default function hoistNonReactStatics<
       }
     }
 
-    let keys: (String | Symbol)[] = getOwnPropertyNames(sourceComponent);
+    let keys: (string | symbol)[] = getOwnPropertyNames(sourceComponent);
 
     if (getOwnPropertySymbols) {
       keys = keys.concat(getOwnPropertySymbols(sourceComponent));
@@ -138,7 +138,7 @@ export default function hoistNonReactStatics<
         try {
           // Avoid failures from read-only properties
           defineProperty(targetComponent, key, descriptor!);
-        } catch (e) {
+        } catch {
           /* ignore */
         }
       }
