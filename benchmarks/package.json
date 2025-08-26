@@ -50,7 +50,7 @@
     "babel-plugin-react-native-web": "0.19.13",
     "babel-plugin-styled-components": "2.1.4",
     "postcss-react-strict-dom": "0.0.6",
-    "typescript": "5.8.3",
+    "typescript": "5.9.2",
     "vite": "^6.3.5",
     "vite-plugin-stylex": "0.13.0",
     "vite-plugin-stylex-dev": "0.8.0"
