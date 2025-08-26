@@ -170,7 +170,6 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       // force style recalc that would otherwise happen before the next frame
       samplesRef.current[cycle].layoutStart = Timing.now();
       if (document.body) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         document.body.offsetWidth;
       }
       samplesRef.current[cycle].layoutEnd = Timing.now();
@@ -178,15 +177,21 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
 
     const now = Timing.now();
     if (!isDone(cycle, sampleCount, type) && now - startTime < timeout) {
-      const done = () => dispatch({ type: 'cycle' });
+      const done = () => {
+        dispatch({ type: 'cycle' });
+      };
       const raf = requestAnimationFrame(() => {
         if (shouldSuspend(cycle, type)) {
-          startTransition(() => dispatch({ type: 'suspend' }));
+          startTransition(() => {
+            dispatch({ type: 'suspend' });
+          });
         } else {
           done();
         }
       });
-      return () => cancelAnimationFrame(raf);
+      return () => {
+        cancelAnimationFrame(raf);
+      };
     } else {
       const samples = samplesRef.current.reduce(
         (memo, { scriptingStart, scriptingEnd, layoutStart, layoutEnd }) => {
@@ -270,7 +275,6 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
                 // force style recalc that would otherwise happen before the next frame
                 samplesRef.current[cycle].layoutStart = Timing.now();
                 if (document.body) {
-                  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                   document.body.offsetWidth;
                 }
                 samplesRef.current[cycle].layoutEnd = Timing.now();
@@ -302,7 +306,9 @@ function Suspend({
   // Once it's no longer suspending it'll run the dispatch
   useEffect(() => {
     const raf = requestAnimationFrame(proceed);
-    return () => cancelAnimationFrame(raf);
+    return () => {
+      cancelAnimationFrame(raf);
+    };
   }, [proceed]);
   return null;
 }

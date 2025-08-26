@@ -2,7 +2,7 @@ import styled from 'styled-components-v6';
 import type { BoxColor, BoxProps } from '../../types';
 import { View } from './View';
 
-const getColor = (color?: BoxColor | undefined) => {
+const getColor = (color?: BoxColor) => {
   switch (color) {
     case 0:
       return '#14171A';

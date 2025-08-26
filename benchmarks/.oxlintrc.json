@@ -1,0 +1,7 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "rules": {
+    "jsx-no-new-object-as-prop": "off",
+    "jsx-no-new-function-as-prop": "off"
+  }
+}

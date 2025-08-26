@@ -3,9 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import type { TestReport } from '../types';
 import { Text } from './Text';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const fmt = (time: any) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const i: any = Number(
     Math.round(
       // @ts-expect-error - fix later
@@ -21,8 +19,6 @@ export const ReportCard = memo(function ReportCard(props: TestReport) {
     libraryName,
     sampleCount,
     mean,
-    meanLayout,
-    meanScripting,
     stdDev,
     libraryVersion,
     meanScriptingP75,

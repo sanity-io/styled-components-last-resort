@@ -70,10 +70,14 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
   const scrollViewRef = useRef<ScrollView>(null);
 
   const handleChangeBenchmark = (value: string) => {
-    startTransition(() => setCurrentBenchmarkName(value));
+    startTransition(() => {
+      setCurrentBenchmarkName(value);
+    });
   };
   const handleChangeLibrary = (value: string) => {
-    startTransition(() => setCurrentLibraryName(value));
+    startTransition(() => {
+      setCurrentLibraryName(value);
+    });
   };
   const handleStart = () => {
     flushSync(() => {
@@ -214,7 +218,11 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
         <View style={styles.viewPanel}>
           <View style={styles.iconEyeContainer}>
             <TouchableOpacity
-              onPress={() => startTransition(() => setShouldHideBenchmark(prev => !prev))}
+              onPress={() => {
+                startTransition(() => {
+                  setShouldHideBenchmark(prev => !prev);
+                });
+              }}
             >
               <IconEye style={styles.iconEye} />
             </TouchableOpacity>
@@ -269,7 +277,13 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                       setStatus('complete');
                     }}
                     ref={ref => {
-                      benchmarkRef.current = ref ? { start: () => ref.start() } : null;
+                      benchmarkRef.current = ref
+                        ? {
+                            start: () => {
+                              ref.start();
+                            },
+                          }
+                        : null;
                     }}
                     sampleCount={sampleCount}
                     timeout={timeout}

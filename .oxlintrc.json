@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": [
+    "unicorn",
+    "typescript",
+    "oxc",
+    "react",
+    "react-perf"
+  ],
+  "categories": {
+    "correctness": "deny",
+    "perf": "deny"
+  },
+  "rules": {
+    "rules-of-hooks": "deny"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "jsx-no-new-object-as-prop": "off",
+        "jsx-no-new-function-as-prop": "off",
+        "jsx-no-new-array-as-prop": "off"
+      }
+    }
+  ],
+  "ignorePatterns": []
+}

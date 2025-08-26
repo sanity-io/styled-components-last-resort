@@ -22,7 +22,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: ./.github/actions/setup
-      - run: pnpm lint
+      - run: pnpm lint --format github
 
   build:
     runs-on: ubuntu-latest

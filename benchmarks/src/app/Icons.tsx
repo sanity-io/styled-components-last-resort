@@ -22,6 +22,7 @@ export const IconClear = () =>
   createElement('svg', {
     ...defaults,
     style: styles.root,
+    // oxlint-disable-line no-children-prop
     children: (
       <>
         <path d="M0 0h24v24H0z" id="bounds" opacity="0" />

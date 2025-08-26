@@ -2,7 +2,6 @@
 
 import type React from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SafeAny = any;
 
 export type BoxColor = 0 | 1 | 2 | 3 | 4 | 5;
