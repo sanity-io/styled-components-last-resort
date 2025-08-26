@@ -34,7 +34,7 @@ export default class StyleSheet implements Sheet {
   }
 
   constructor(
-    options: SheetConstructorArgs = EMPTY_OBJECT as Object,
+    options: SheetConstructorArgs = EMPTY_OBJECT,
     globalStyles: GlobalStylesAllocationMap = {},
     names?: NamesAllocationMap | undefined
   ) {

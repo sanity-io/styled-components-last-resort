@@ -21,6 +21,5 @@
         "no-children-prop": "off"
       }
     }
-  ],
-  "ignorePatterns": ["**/css-in-js/**/*"]
+  ]
 }

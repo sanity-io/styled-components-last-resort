@@ -21,8 +21,8 @@ function createPromise(tone: CardTone, min = 5_000, max = 10_000) {
   );
 }
 
-export default function Index() {
-  connection();
+export default async function Index() {
+  await connection();
 
   const tones: CardTone[] = ['default', 'primary', 'positive', 'caution', 'critical'];
 

@@ -35,18 +35,22 @@ export function Buttons() {
           mode="ghost"
           text="Create"
           loading={hydrating}
-          onClick={() =>
-            startTransition(() => setScheme(scheme => (scheme === 'dark' ? 'light' : 'dark')))
-          }
+          onClick={() => {
+            startTransition(() => {
+              setScheme(scheme => (scheme === 'dark' ? 'light' : 'dark'));
+            });
+          }}
         />
         <StyledButton
           icon={PublishIcon}
           text="Publish"
           tone="primary"
           loading={hydrating}
-          onClick={() =>
-            startTransition(() => setScheme(scheme => (scheme === 'dark' ? 'light' : 'dark')))
-          }
+          onClick={() => {
+            startTransition(() => {
+              setScheme(scheme => (scheme === 'dark' ? 'light' : 'dark'));
+            });
+          }}
         />
         <StyledButton
           iconRight={EditIcon}
@@ -54,9 +58,11 @@ export function Buttons() {
           text="Edit"
           tone="caution"
           loading={hydrating}
-          onClick={() =>
-            startTransition(() => setScheme(scheme => (scheme === 'dark' ? 'light' : 'dark')))
-          }
+          onClick={() => {
+            startTransition(() => {
+              setScheme(scheme => (scheme === 'dark' ? 'light' : 'dark'));
+            });
+          }}
         />
       </Inline>
     </Card>
