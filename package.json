@@ -7,7 +7,8 @@
     "lint": "oxlint --type-aware",
     "build": "pnpm -r build",
     "postinstall": "pnpm -r generateErrors",
-    "test": "pnpm -r test"
+    "test": "pnpm -r test",
+    "release": "changeset publish"
   },
   "dependencies": {
     "@types/react": "19.1.11",
@@ -15,6 +16,8 @@
     "typescript": "5.9.2"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.1",
+    "@changesets/cli": "^2.29.6",
     "@sanity/prettier-config": "^2.0.1",
     "oxlint": "^1.13.0",
     "oxlint-tsgolint": "^0.0.4",
