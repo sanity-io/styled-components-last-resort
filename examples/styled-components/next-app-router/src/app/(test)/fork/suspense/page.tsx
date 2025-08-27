@@ -1,7 +1,7 @@
-'use client';
+'use client'
 
-import { styled } from 'styled-components';
-import { TestSuspenseFallback } from '../../TestSuspenseFallback';
+import {styled} from 'styled-components'
+import {TestSuspenseFallback} from '../../TestSuspenseFallback'
 
 const Assert = styled.div`
   .test:not(:has(&)) {
@@ -9,12 +9,12 @@ const Assert = styled.div`
     color: var(--failure-bg);
     --test: 0;
   }
-`;
+`
 
 export default function ForkSuspense() {
   return (
     <TestSuspenseFallback>
       <Assert />
     </TestSuspenseFallback>
-  );
+  )
 }

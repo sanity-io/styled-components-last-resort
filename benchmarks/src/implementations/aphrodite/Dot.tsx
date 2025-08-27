@@ -1,6 +1,6 @@
-import { StyleSheet } from 'aphrodite/no-important';
-import type { DotProps } from '../../types';
-import { View } from './View';
+import {StyleSheet} from 'aphrodite/no-important'
+import type {DotProps} from '../../types'
+import {View} from './View'
 
 const dotStyles = StyleSheet.create({
   base: {
@@ -13,9 +13,9 @@ const dotStyles = StyleSheet.create({
     borderTopWidth: 0,
     transform: 'translate(50%, 50%)',
   },
-});
+})
 
-export function Dot({ $color, $size, $x, $y, $opacity }: DotProps) {
+export function Dot({$color, $size, $x, $y, $opacity}: DotProps) {
   return (
     <View
       styles={[dotStyles.base]}
@@ -29,5 +29,5 @@ export function Dot({ $color, $size, $x, $y, $opacity }: DotProps) {
         opacity: $opacity,
       }}
     />
-  );
+  )
 }

@@ -1,4 +1,4 @@
-import { css, StyleSheet } from 'aphrodite/no-important';
+import {css, StyleSheet} from 'aphrodite/no-important'
 
 const baseStyles = StyleSheet.create({
   base: {
@@ -16,9 +16,9 @@ const baseStyles = StyleSheet.create({
     minHeight: 0,
     minWidth: 0,
   },
-});
+})
 
 // @ts-expect-error - fix later
-export function View({ styles, ...props }) {
-  return <div {...props} className={css(baseStyles.base, styles)} />;
+export function View({styles, ...props}) {
+  return <div {...props} className={css(baseStyles.base, styles)} />
 }

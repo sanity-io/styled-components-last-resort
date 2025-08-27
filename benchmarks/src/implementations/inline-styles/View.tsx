@@ -1,4 +1,4 @@
-import type { ViewProps } from '../../types';
+import type {ViewProps} from '../../types'
 
 export const viewStyle = {
   alignItems: 'stretch',
@@ -15,8 +15,8 @@ export const viewStyle = {
   // fix flexbox bugs
   minHeight: 0,
   minWidth: 0,
-} as const;
+} as const
 
-export function View({ children }: ViewProps) {
-  return <div style={viewStyle}>{children}</div>;
+export function View({children}: ViewProps) {
+  return <div style={viewStyle}>{children}</div>
 }

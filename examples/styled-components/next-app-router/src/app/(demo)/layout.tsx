@@ -1,10 +1,10 @@
-import { Inter } from 'next/font/google';
-import { LayoutProvider } from './layout.client';
-import { StyledComponentsRegistry } from './registry';
+import {Inter} from 'next/font/google'
+import {LayoutProvider} from './layout.client'
+import {StyledComponentsRegistry} from './registry'
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({subsets: ['latin']})
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({children}: {children: React.ReactNode}) {
   return (
     <html className={inter.className}>
       <body>
@@ -13,5 +13,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </StyledComponentsRegistry>
       </body>
     </html>
-  );
+  )
 }

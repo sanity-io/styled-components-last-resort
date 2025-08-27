@@ -1,6 +1,6 @@
-import { StyleSheet } from 'aphrodite/no-important';
-import type { BoxProps } from '../../types';
-import { View } from './View';
+import {StyleSheet} from 'aphrodite/no-important'
+import type {BoxProps} from '../../types'
+import {View} from './View'
 
 const styles = StyleSheet.create({
   outer: {
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
   },
-});
+})
 
 export function Box({
   children,
@@ -52,5 +52,5 @@ export function Box({
     >
       {children}
     </View>
-  );
+  )
 }

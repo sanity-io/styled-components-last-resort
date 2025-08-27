@@ -1,16 +1,16 @@
-import { StyleSheet, Text, TouchableHighlight } from 'react-native';
+import {StyleSheet, Text, TouchableHighlight} from 'react-native'
 
 export function Button(props: {
-  accessibilityLabel?: string;
-  color?: string;
-  disabled?: boolean;
-  onPress: () => void;
-  style?: any;
-  textStyle?: any;
-  testID: string;
-  title: string;
+  accessibilityLabel?: string
+  color?: string
+  disabled?: boolean
+  onPress: () => void
+  style?: any
+  textStyle?: any
+  testID: string
+  title: string
 }) {
-  const { accessibilityLabel, color, disabled, onPress, style, textStyle, testID, title } = props;
+  const {accessibilityLabel, color, disabled, onPress, style, textStyle, testID, title} = props
 
   return (
     <TouchableHighlight
@@ -21,16 +21,16 @@ export function Button(props: {
       style={[
         styles.button,
         style,
-        color && { backgroundColor: color },
+        color && {backgroundColor: color},
         disabled && styles.buttonDisabled,
       ]}
       testID={testID}
     >
       <Text style={[styles.text, textStyle, disabled && styles.textDisabled]}>{title}</Text>
     </TouchableHighlight>
-  );
+  )
 }
-Button.displayName = '@app/Button';
+Button.displayName = '@app/Button'
 
 const styles = StyleSheet.create({
   button: {
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   textDisabled: {
     color: '#a1a1a1',
   },
-});
+})

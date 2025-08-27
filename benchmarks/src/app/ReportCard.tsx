@@ -1,17 +1,17 @@
-import { memo } from 'react';
-import { StyleSheet, View } from 'react-native';
-import type { TestReport } from '../types';
-import { Text } from './Text';
+import {memo} from 'react'
+import {StyleSheet, View} from 'react-native'
+import type {TestReport} from '../types'
+import {Text} from './Text'
 
 const fmt = (time: any) => {
   const i: any = Number(
     Math.round(
       // @ts-expect-error - fix later
-      time + 'e2'
-    ) + 'e-2'
-  ).toFixed(2);
-  return 10 / i > 1 ? `0${i}` : i;
-};
+      time + 'e2',
+    ) + 'e-2',
+  ).toFixed(2)
+  return 10 / i > 1 ? `0${i}` : i
+}
 
 export const ReportCard = memo(function ReportCard(props: TestReport) {
   const {
@@ -24,9 +24,9 @@ export const ReportCard = memo(function ReportCard(props: TestReport) {
     meanScriptingP75,
     meanScriptingP99,
     runner,
-  } = props;
+  } = props
 
-  const sampleCountText = sampleCount != null ? `(${sampleCount})` : '';
+  const sampleCountText = sampleCount != null ? `(${sampleCount})` : ''
 
   return (
     <View style={styles.root}>
@@ -53,8 +53,8 @@ export const ReportCard = memo(function ReportCard(props: TestReport) {
         )}
       </View>
     </View>
-  );
-});
+  )
+})
 
 const styles = StyleSheet.create({
   root: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: 'bold',
   },
-  smallText: { fontSize: 12 },
+  smallText: {fontSize: 12},
   monoFont: {
     fontFamily: 'monospace',
   },
@@ -82,4 +82,4 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
   },
-});
+})

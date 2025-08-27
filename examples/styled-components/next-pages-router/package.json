@@ -4,8 +4,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
+    "dev": "next dev --turbopack",
     "start": "next start"
   },
   "dependencies": {

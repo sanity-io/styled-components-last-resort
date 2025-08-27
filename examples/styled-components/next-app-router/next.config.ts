@@ -1,4 +1,4 @@
-import type { NextConfig } from 'next';
+import type {NextConfig} from 'next'
 
 const config: NextConfig = {
   compiler: {
@@ -8,7 +8,7 @@ const config: NextConfig = {
       // transpileTemplateLiterals: false,
     },
   },
-  env: { SC_DISABLE_SPEEDY: 'false' },
-};
+  env: {SC_DISABLE_SPEEDY: 'false'},
+}
 
-export default config;
+export default config

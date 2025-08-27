@@ -1,6 +1,6 @@
-import type { DotProps } from '../../types';
+import type {DotProps} from '../../types'
 
-export const Dot = ({ $size, $x, $y, $color, $opacity }: DotProps) => (
+export const Dot = ({$size, $x, $y, $color, $opacity}: DotProps) => (
   <div
     style={{
       position: 'absolute',
@@ -20,4 +20,4 @@ export const Dot = ({ $size, $x, $y, $color, $opacity }: DotProps) => (
       opacity: $opacity,
     }}
   />
-);
+)

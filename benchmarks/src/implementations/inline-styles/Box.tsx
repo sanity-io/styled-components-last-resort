@@ -1,5 +1,5 @@
-import type { BoxProps } from '../../types';
-import { viewStyle } from './View';
+import type {BoxProps} from '../../types'
+import {viewStyle} from './View'
 
 export const Box = ({
   children,
@@ -20,8 +20,8 @@ export const Box = ({
     >
       {children}
     </div>
-  );
-};
+  )
+}
 
 const styles = {
   outer: {
@@ -53,4 +53,4 @@ const styles = {
     width: 6,
     height: 6,
   },
-} as const;
+} as const

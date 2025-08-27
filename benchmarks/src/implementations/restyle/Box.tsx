@@ -1,25 +1,25 @@
-import { styled } from 'restyle';
-import type { BoxProps } from '../../types';
-import { View } from './View';
+import {styled} from 'restyle'
+import type {BoxProps} from '../../types'
+import {View} from './View'
 
 const getColor = (color: number | undefined) => {
   switch (color) {
     case 0:
-      return '#14171A';
+      return '#14171A'
     case 1:
-      return '#AAB8C2';
+      return '#AAB8C2'
     case 2:
-      return '#E6ECF0';
+      return '#E6ECF0'
     case 3:
-      return '#FFAD1F';
+      return '#FFAD1F'
     case 4:
-      return '#F45D22';
+      return '#F45D22'
     case 5:
-      return '#E0245E';
+      return '#E0245E'
     default:
-      return 'transparent';
+      return 'transparent'
   }
-};
+}
 
 export const Box = styled(View, (p: BoxProps) => ({
   alignSelf: 'flex-start',
@@ -28,4 +28,4 @@ export const Box = styled(View, (p: BoxProps) => ({
   height: p.$fixed ? '6px' : 'auto',
   padding: p.$outer ? '4px' : 0,
   width: p.$fixed ? '6px' : 'auto',
-}));
+}))

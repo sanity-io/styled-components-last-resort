@@ -1,7 +1,7 @@
-import { createElement, StyleSheet } from 'react-native';
-import type { DotProps } from '../../types';
+import {createElement, StyleSheet} from 'react-native'
+import type {DotProps} from '../../types'
 
-export const Dot = ({ $size, $x, $y, $color, $opacity }: DotProps) =>
+export const Dot = ({$size, $x, $y, $color, $opacity}: DotProps) =>
   createElement('div', {
     style: [
       styles.root,
@@ -15,7 +15,7 @@ export const Dot = ({ $size, $x, $y, $color, $opacity }: DotProps) =>
         opacity: $opacity,
       },
     ],
-  });
+  })
 
 const styles = StyleSheet.create({
   root: {
@@ -27,6 +27,6 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderTopWidth: 0,
     // @ts-expect-error - fix later
-    transform: [{ translateX: '50%' }, { translateY: '50%' }],
+    transform: [{translateX: '50%'}, {translateY: '50%'}],
   },
-});
+})

@@ -12,61 +12,57 @@ import {
   useTransition,
   use,
   unstable_Activity as Activity,
-} from 'react';
-import type { BenchmarkRef } from '../../types';
-import { BenchmarkType } from './BenchmarkType';
-import { getMean, getMedian, getStdDev, getMeanOfFastestPercent } from './math';
-import * as Timing from './timing';
-import { isDone, shouldRecord, shouldRender, shouldSuspend, sortNumbers } from './utils';
+} from 'react'
+import type {BenchmarkRef} from '../../types'
+import {BenchmarkType} from './BenchmarkType'
+import {getMean, getMedian, getStdDev, getMeanOfFastestPercent} from './math'
+import * as Timing from './timing'
+import {isDone, shouldRecord, shouldRender, shouldSuspend, sortNumbers} from './utils'
 
 export interface BenchmarkResults {
-  startTime: number;
-  endTime: number;
-  runTime: number;
-  sampleCount: number;
+  startTime: number
+  endTime: number
+  runTime: number
+  sampleCount: number
   samples: {
-    start: number;
-    end: number;
-    scriptingStart: number;
-    scriptingEnd: number;
-    layoutStart: number;
-    layoutEnd: number;
-  }[];
-  max: number;
-  min: number;
-  median: number;
-  mean: number;
-  stdDev: number;
-  meanLayout: number;
-  meanScripting: number;
-  meanScriptingP75: number;
-  meanScriptingP99: number;
+    start: number
+    end: number
+    scriptingStart: number
+    scriptingEnd: number
+    layoutStart: number
+    layoutEnd: number
+  }[]
+  max: number
+  min: number
+  median: number
+  mean: number
+  stdDev: number
+  meanLayout: number
+  meanScripting: number
+  meanScriptingP75: number
+  meanScriptingP99: number
 }
 
 export interface BenchmarkProps {
-  sampleCount: number;
-  timeout: number;
-  type: (typeof BenchmarkType)[keyof typeof BenchmarkType];
-  getComponentProps: (props: { cycle: number; opacity: number }) => Record<string, any>;
-  ref: React.Ref<BenchmarkRef>;
-  component: any;
-  onComplete: (results: BenchmarkResults) => void;
+  sampleCount: number
+  timeout: number
+  type: (typeof BenchmarkType)[keyof typeof BenchmarkType]
+  getComponentProps: (props: {cycle: number; opacity: number}) => Record<string, any>
+  ref: React.Ref<BenchmarkRef>
+  component: any
+  onComplete: (results: BenchmarkResults) => void
 }
 
 interface BenchmarkState {
-  cycle: number;
-  running: boolean;
-  componentProps: Record<string, any>;
-  startTime: number;
-  scriptingStart: number;
-  suspend: PromiseWithResolvers<true> | null;
+  cycle: number
+  running: boolean
+  componentProps: Record<string, any>
+  startTime: number
+  scriptingStart: number
+  suspend: PromiseWithResolvers<true> | null
 }
 
-type BenchmarkAction =
-  | { type: 'start' }
-  | { type: 'cycle' }
-  | { type: 'complete' }
-  | { type: 'suspend' };
+type BenchmarkAction = {type: 'start'} | {type: 'cycle'} | {type: 'complete'} | {type: 'suspend'}
 
 export function BenchmarkProfiler(props: BenchmarkProps) {
   const {
@@ -77,28 +73,28 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     ref,
     component: Component,
     onComplete,
-  } = props;
+  } = props
 
   const samplesRef = useRef<
     {
-      scriptingStart: number;
-      scriptingEnd?: number;
-      layoutStart?: number;
-      layoutEnd?: number;
+      scriptingStart: number
+      scriptingEnd?: number
+      layoutStart?: number
+      layoutEnd?: number
     }[]
-  >([]);
+  >([])
 
   useImperativeHandle(
     ref,
     () => ({
       start: () => {
-        samplesRef.current = [];
-        dispatch({ type: 'start' });
+        samplesRef.current = []
+        dispatch({type: 'start'})
       },
     }),
-    []
-  );
-  const [suspending, startTransition] = useTransition();
+    [],
+  )
+  const [suspending, startTransition] = useTransition()
   // const suspending = false;
   // const startTransition = (cb: () => void) => cb();
 
@@ -113,15 +109,15 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             startTime: Timing.now(),
             scriptingStart: Timing.now(),
             suspend: null,
-          };
+          }
         case 'cycle':
           return {
             ...state,
             cycle: state.cycle + 1,
-            componentProps: getComponentProps({ cycle: state.cycle + 1, opacity: 1 }),
+            componentProps: getComponentProps({cycle: state.cycle + 1, opacity: 1}),
             scriptingStart: Timing.now(),
             suspend: null,
-          };
+          }
         case 'complete':
           return {
             ...state,
@@ -129,9 +125,9 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             cycle: 0,
             scriptingStart: 0,
             startTime: 0,
-            componentProps: getComponentProps({ cycle: 0, opacity: 1 }),
+            componentProps: getComponentProps({cycle: 0, opacity: 1}),
             suspend: null,
-          };
+          }
         case 'suspend':
           return {
             ...state,
@@ -143,58 +139,58 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             }),
             scriptingStart: Timing.now(),
             suspend: Promise.withResolvers<true>(),
-          };
+          }
         default:
-          return state;
+          return state
       }
     },
-    { cycle: 0, running: false },
-    ({ cycle, running }) => ({
+    {cycle: 0, running: false},
+    ({cycle, running}) => ({
       startTime: 0,
       scriptingStart: 0,
       cycle,
       running,
-      componentProps: getComponentProps({ cycle, opacity: 1 }),
+      componentProps: getComponentProps({cycle, opacity: 1}),
       suspend: null,
-    })
-  );
-  const { cycle, running, componentProps, scriptingStart, startTime, suspend } = state;
+    }),
+  )
+  const {cycle, running, componentProps, scriptingStart, startTime, suspend} = state
 
   useEffect(() => {
-    if (!running || suspending || suspend) return;
+    if (!running || suspending || suspend) return
 
     if (shouldRecord(cycle, type)) {
-      samplesRef.current[cycle] = { scriptingStart };
-      samplesRef.current[cycle].scriptingEnd = Timing.now();
+      samplesRef.current[cycle] = {scriptingStart}
+      samplesRef.current[cycle].scriptingEnd = Timing.now()
 
       // force style recalc that would otherwise happen before the next frame
-      samplesRef.current[cycle].layoutStart = Timing.now();
+      samplesRef.current[cycle].layoutStart = Timing.now()
       if (document.body) {
-        document.body.offsetWidth;
+        document.body.offsetWidth
       }
-      samplesRef.current[cycle].layoutEnd = Timing.now();
+      samplesRef.current[cycle].layoutEnd = Timing.now()
     }
 
-    const now = Timing.now();
+    const now = Timing.now()
     if (!isDone(cycle, sampleCount, type) && now - startTime < timeout) {
       const done = () => {
-        dispatch({ type: 'cycle' });
-      };
+        dispatch({type: 'cycle'})
+      }
       const raf = requestAnimationFrame(() => {
         if (shouldSuspend(cycle, type)) {
           startTransition(() => {
-            dispatch({ type: 'suspend' });
-          });
+            dispatch({type: 'suspend'})
+          })
         } else {
-          done();
+          done()
         }
-      });
+      })
       return () => {
-        cancelAnimationFrame(raf);
-      };
+        cancelAnimationFrame(raf)
+      }
     } else {
       const samples = samplesRef.current.reduce(
-        (memo, { scriptingStart, scriptingEnd, layoutStart, layoutEnd }) => {
+        (memo, {scriptingStart, scriptingEnd, layoutStart, layoutEnd}) => {
           memo.push({
             start: scriptingStart,
             end: layoutEnd || scriptingEnd || 0,
@@ -202,28 +198,28 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             scriptingEnd: scriptingEnd || 0,
             layoutStart: layoutStart || 0,
             layoutEnd: layoutEnd || 0,
-          });
-          return memo;
+          })
+          return memo
         },
         [] as {
-          start: number;
-          end: number;
-          scriptingStart: number;
-          scriptingEnd: number;
-          layoutStart: number;
-          layoutEnd: number;
-        }[]
-      );
-      const runTime = now - startTime;
-      const sortedElapsedTimes = samples.map(({ start, end }) => end - start).sort(sortNumbers);
+          start: number
+          end: number
+          scriptingStart: number
+          scriptingEnd: number
+          layoutStart: number
+          layoutEnd: number
+        }[],
+      )
+      const runTime = now - startTime
+      const sortedElapsedTimes = samples.map(({start, end}) => end - start).sort(sortNumbers)
       const sortedScriptingElapsedTimes = samples
-        .map(({ scriptingStart, scriptingEnd }) => scriptingEnd - scriptingStart)
-        .sort(sortNumbers);
+        .map(({scriptingStart, scriptingEnd}) => scriptingEnd - scriptingStart)
+        .sort(sortNumbers)
       const sortedLayoutElapsedTimes = samples
-        .map(({ layoutStart, layoutEnd }) => (layoutEnd || 0) - (layoutStart || 0))
-        .sort(sortNumbers);
+        .map(({layoutStart, layoutEnd}) => (layoutEnd || 0) - (layoutStart || 0))
+        .sort(sortNumbers)
 
-      dispatch({ type: 'complete' });
+      dispatch({type: 'complete'})
 
       onComplete({
         startTime,
@@ -240,7 +236,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
         meanScripting: getMean(sortedScriptingElapsedTimes),
         meanScriptingP75: getMeanOfFastestPercent(sortedScriptingElapsedTimes, 75),
         meanScriptingP99: getMeanOfFastestPercent(sortedScriptingElapsedTimes, 99),
-      });
+      })
     }
   }, [
     cycle,
@@ -253,7 +249,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     suspending,
     timeout,
     type,
-  ]);
+  ])
 
   return (
     <>
@@ -269,46 +265,46 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             resolve={suspend.resolve}
             proceed={() => {
               if (shouldRecord(cycle, type)) {
-                samplesRef.current[cycle] = { scriptingStart };
-                samplesRef.current[cycle].scriptingEnd = Timing.now();
+                samplesRef.current[cycle] = {scriptingStart}
+                samplesRef.current[cycle].scriptingEnd = Timing.now()
 
                 // force style recalc that would otherwise happen before the next frame
-                samplesRef.current[cycle].layoutStart = Timing.now();
+                samplesRef.current[cycle].layoutStart = Timing.now()
                 if (document.body) {
-                  document.body.offsetWidth;
+                  document.body.offsetWidth
                 }
-                samplesRef.current[cycle].layoutEnd = Timing.now();
+                samplesRef.current[cycle].layoutEnd = Timing.now()
               }
-              dispatch({ type: 'cycle' });
+              dispatch({type: 'cycle'})
             }}
           />
         )}
       </Activity>
     </>
-  );
+  )
 }
-BenchmarkProfiler.displayName = 'BenchmarkProfiler';
-BenchmarkProfiler.Type = BenchmarkType;
+BenchmarkProfiler.displayName = 'BenchmarkProfiler'
+BenchmarkProfiler.Type = BenchmarkType
 
 function Suspend({
   promise,
   resolve,
   proceed,
 }: {
-  promise: Promise<true>;
-  resolve: PromiseWithResolvers<true>['resolve'];
-  proceed: () => void;
+  promise: Promise<true>
+  resolve: PromiseWithResolvers<true>['resolve']
+  proceed: () => void
 }) {
   // Resolve the promise right away
-  resolve(true);
+  resolve(true)
   // Even though we resolved the promise it won't happen until the next microtask, so it'll suspend here
-  use(promise);
+  use(promise)
   // Once it's no longer suspending it'll run the dispatch
   useEffect(() => {
-    const raf = requestAnimationFrame(proceed);
+    const raf = requestAnimationFrame(proceed)
     return () => {
-      cancelAnimationFrame(raf);
-    };
-  }, [proceed]);
-  return null;
+      cancelAnimationFrame(raf)
+    }
+  }, [proceed])
+  return null
 }

@@ -7,25 +7,25 @@
  * This test case achieves that by only rendering the children prop when a background render is happening (a background render is happening)
  */
 
-import { use, useEffect, useReducer, useTransition } from 'react';
-import { useHydrating } from './hooks';
+import {use, useEffect, useReducer, useTransition} from 'react'
+import {useHydrating} from './hooks'
 
-const { resolve, promise } = Promise.withResolvers<'pass' | 'fail'>();
+const {resolve, promise} = Promise.withResolvers<'pass' | 'fail'>()
 
-export function TestStartTransition({ children }: { children: React.ReactNode }) {
-  const [pending, run] = useReducer(state => !state, false);
-  const [suspending, startTransition] = useTransition();
-  const hydrating = useHydrating();
+export function TestStartTransition({children}: {children: React.ReactNode}) {
+  const [pending, run] = useReducer((state) => !state, false)
+  const [suspending, startTransition] = useTransition()
+  const hydrating = useHydrating()
   useEffect(() => {
-    if (hydrating) return;
-    startTransition(run);
-  }, [hydrating]);
+    if (hydrating) return
+    startTransition(run)
+  }, [hydrating])
 
   return (
     <main
       className="test"
-      ref={node => {
-        node?.classList.add('mounted');
+      ref={(node) => {
+        node?.classList.add('mounted')
       }}
     >
       {hydrating && 'running...'}
@@ -33,26 +33,26 @@ export function TestStartTransition({ children }: { children: React.ReactNode })
       {pending && <Suspend />}
       {suspending && <Resolve />}
     </main>
-  );
+  )
 }
 
 function Resolve() {
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const node = document.querySelector('.test');
+      const node = document.querySelector('.test')
       const result =
-        window.getComputedStyle(node).getPropertyValue('--test') === '0' ? 'fail' : 'pass';
-      node.classList.add(result);
-      resolve(result);
-    }, 1_000);
+        window.getComputedStyle(node).getPropertyValue('--test') === '0' ? 'fail' : 'pass'
+      node.classList.add(result)
+      resolve(result)
+    }, 1_000)
     return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
+      clearTimeout(timeout)
+    }
+  }, [])
 
-  return 'running...';
+  return 'running...'
 }
 
 function Suspend() {
-  return use(promise);
+  return use(promise)
 }

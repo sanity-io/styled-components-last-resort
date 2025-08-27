@@ -1,5 +1,5 @@
-import { StyleSheet, View } from 'react-native';
-import type { BoxProps } from '../../types';
+import {StyleSheet, View} from 'react-native'
+import type {BoxProps} from '../../types'
 
 export const Box = ({
   children,
@@ -18,7 +18,7 @@ export const Box = ({
   >
     {children}
   </View>
-);
+)
 
 const styles = StyleSheet.create({
   outer: {
@@ -50,4 +50,4 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
   },
-});
+})

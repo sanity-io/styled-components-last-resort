@@ -1,4 +1,4 @@
-import { styled } from 'styled-components-use-insertion-effect';
+import {styled} from 'styled-components-use-insertion-effect'
 
 export const View = styled.div`
   align-items: stretch;
@@ -14,4 +14,4 @@ export const View = styled.div`
   position: relative;
   min-height: 0;
   min-width: 0;
-`;
+`

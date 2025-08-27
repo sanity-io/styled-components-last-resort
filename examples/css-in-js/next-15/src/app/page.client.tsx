@@ -1,10 +1,10 @@
-'use client';
+'use client'
 
-import { AddIcon, EditIcon, PublishIcon } from '@sanity/icons';
-import { Button, Card, Inline } from '@sanity/ui';
-import { startTransition, use, useCallback, useSyncExternalStore } from 'react';
-import { styled } from 'styled-components';
-import { SchemeContextSetState } from './scheme.client';
+import {AddIcon, EditIcon, PublishIcon} from '@sanity/icons'
+import {Button, Card, Inline} from '@sanity/ui'
+import {startTransition, use, useCallback, useSyncExternalStore} from 'react'
+import {styled} from 'styled-components'
+import {SchemeContextSetState} from './scheme.client'
 
 export {
   Card,
@@ -15,20 +15,20 @@ export {
   Text,
   Skeleton,
   type CardTone,
-} from '@sanity/ui';
+} from '@sanity/ui'
 
-const StyledButton = styled(Button).attrs({ fontSize: [2, 2, 3], padding: [3, 3, 4] })``;
+const StyledButton = styled(Button).attrs({fontSize: [2, 2, 3], padding: [3, 3, 4]})``
 
 export function Buttons() {
   const hydrating = useSyncExternalStore(
     useCallback(() => () => {}, []),
     () => false,
-    () => true
-  );
-  const setScheme = use(SchemeContextSetState);
+    () => true,
+  )
+  const setScheme = use(SchemeContextSetState)
 
   return (
-    <Card padding={4} style={{ textAlign: 'center' }}>
+    <Card padding={4} style={{textAlign: 'center'}}>
       <Inline space={[3, 3, 4]}>
         <StyledButton
           icon={AddIcon}
@@ -37,8 +37,8 @@ export function Buttons() {
           loading={hydrating}
           onClick={() => {
             startTransition(() => {
-              setScheme(scheme => (scheme === 'dark' ? 'light' : 'dark'));
-            });
+              setScheme((scheme) => (scheme === 'dark' ? 'light' : 'dark'))
+            })
           }}
         />
         <StyledButton
@@ -48,8 +48,8 @@ export function Buttons() {
           loading={hydrating}
           onClick={() => {
             startTransition(() => {
-              setScheme(scheme => (scheme === 'dark' ? 'light' : 'dark'));
-            });
+              setScheme((scheme) => (scheme === 'dark' ? 'light' : 'dark'))
+            })
           }}
         />
         <StyledButton
@@ -60,11 +60,11 @@ export function Buttons() {
           loading={hydrating}
           onClick={() => {
             startTransition(() => {
-              setScheme(scheme => (scheme === 'dark' ? 'light' : 'dark'));
-            });
+              setScheme((scheme) => (scheme === 'dark' ? 'light' : 'dark'))
+            })
           }}
         />
       </Inline>
     </Card>
-  );
+  )
 }

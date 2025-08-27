@@ -1,4 +1,4 @@
-import { styled } from 'restyle';
+import {styled} from 'restyle'
 
 export const View = styled('div', {
   alignItems: 'stretch',
@@ -14,4 +14,4 @@ export const View = styled('div', {
   minWidth: 0,
   padding: 0,
   position: 'relative',
-});
+})

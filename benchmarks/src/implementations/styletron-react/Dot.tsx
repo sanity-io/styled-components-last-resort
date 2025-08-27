@@ -1,5 +1,5 @@
-import { styled } from 'styletron-react';
-import type { DotProps } from '../../types';
+import {styled} from 'styletron-react'
+import type {DotProps} from '../../types'
 
 const staticStyle = {
   position: 'absolute',
@@ -10,9 +10,9 @@ const staticStyle = {
   borderStyle: 'solid',
   borderTopWidth: 0,
   transform: 'translate(50%, 50%)',
-} as const;
+} as const
 
-export const Dot = styled('div', ({ $size, $x, $y, $color, $opacity }: DotProps) => ({
+export const Dot = styled('div', ({$size, $x, $y, $color, $opacity}: DotProps) => ({
   ...staticStyle,
   borderBottomColor: $color,
   borderRightWidth: `${$size / 2}px`,
@@ -21,4 +21,4 @@ export const Dot = styled('div', ({ $size, $x, $y, $color, $opacity }: DotProps)
   marginLeft: `${$x}px`,
   marginTop: `${$y}px`,
   opacity: $opacity,
-}));
+}))

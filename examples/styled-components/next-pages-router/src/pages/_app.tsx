@@ -1,13 +1,13 @@
-import type { AppProps } from 'next/app';
-import { buildTheme } from '@sanity/ui/theme';
-import { ThemeProvider } from '@sanity/ui';
+import type {AppProps} from 'next/app'
+import {buildTheme} from '@sanity/ui/theme'
+import {ThemeProvider} from '@sanity/ui'
 
-const theme = buildTheme();
+const theme = buildTheme()
 
-import { Inter } from 'next/font/google';
-import { createGlobalStyle } from 'styled-components';
+import {Inter} from 'next/font/google'
+import {createGlobalStyle} from 'styled-components'
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({subsets: ['latin']})
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -27,13 +27,13 @@ const GlobalStyle = createGlobalStyle`
   #__next {
     display: contents;
   }
-`;
+`
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({Component, pageProps}: AppProps) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Component {...pageProps} />
     </ThemeProvider>
-  );
+  )
 }

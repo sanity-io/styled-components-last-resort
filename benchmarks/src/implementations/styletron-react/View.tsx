@@ -1,4 +1,4 @@
-import { styled } from 'styletron-react';
+import {styled} from 'styletron-react'
 
 export const View = styled('div', {
   alignItems: 'stretch',
@@ -15,4 +15,4 @@ export const View = styled('div', {
   // fix flexbox bugs
   minHeight: '0px',
   minWidth: '0px',
-});
+})

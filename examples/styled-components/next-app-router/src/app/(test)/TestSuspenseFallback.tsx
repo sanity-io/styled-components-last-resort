@@ -11,19 +11,19 @@
  * time the `<Resolve>` component is rendered and checks the DOM, and the `.test:not(:has(.sc-abc123))` selector will now match and cause the test to fail.
  */
 
-import { Suspense, use, useEffect } from 'react';
-import { useHydrating } from './hooks';
+import {Suspense, use, useEffect} from 'react'
+import {useHydrating} from './hooks'
 
-const { resolve, promise } = Promise.withResolvers<'pass' | 'fail'>();
+const {resolve, promise} = Promise.withResolvers<'pass' | 'fail'>()
 
-export function TestSuspenseFallback({ children }: { children: React.ReactNode }) {
-  const hydrating = useHydrating();
+export function TestSuspenseFallback({children}: {children: React.ReactNode}) {
+  const hydrating = useHydrating()
 
   return (
     <main
       className="test"
-      ref={node => {
-        node?.classList.add('mounted');
+      ref={(node) => {
+        node?.classList.add('mounted')
       }}
     >
       {hydrating ? (
@@ -35,26 +35,26 @@ export function TestSuspenseFallback({ children }: { children: React.ReactNode }
         </Suspense>
       )}
     </main>
-  );
+  )
 }
 
 function Resolve() {
   useEffect(() => {
     const timeout = setTimeout(() => {
-      const node = document.querySelector('.test');
+      const node = document.querySelector('.test')
       const result =
-        window.getComputedStyle(node).getPropertyValue('--test') === '0' ? 'fail' : 'pass';
-      node.classList.add(result);
-      resolve(result);
-    }, 1_000);
+        window.getComputedStyle(node).getPropertyValue('--test') === '0' ? 'fail' : 'pass'
+      node.classList.add(result)
+      resolve(result)
+    }, 1_000)
     return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
+      clearTimeout(timeout)
+    }
+  }, [])
 
-  return 'running...';
+  return 'running...'
 }
 
 function Suspend() {
-  return use(promise);
+  return use(promise)
 }

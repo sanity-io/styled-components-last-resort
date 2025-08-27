@@ -8,6 +8,6 @@ export default {
         'node_modules/react-strict-dom/*.js',
       ],
     },
-    autoprefixer: {},
+    'autoprefixer': {},
   },
-};
+}

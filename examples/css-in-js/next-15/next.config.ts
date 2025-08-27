@@ -1,7 +1,7 @@
-import type { NextConfig } from 'next';
+import type {NextConfig} from 'next'
 
 const config: NextConfig = {
-  compiler: { styledComponents: { transpileTemplateLiterals: false } },
+  compiler: {styledComponents: {transpileTemplateLiterals: false}},
   async headers() {
     return [
       {
@@ -21,8 +21,8 @@ const config: NextConfig = {
           },
         ],
       },
-    ];
+    ]
   },
-};
+}
 
-export default config;
+export default config

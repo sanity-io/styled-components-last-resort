@@ -1,9 +1,9 @@
-import react from '@vitejs/plugin-react';
-import { stylex } from 'vite-plugin-stylex-dev';
+import react from '@vitejs/plugin-react'
+import {stylex} from 'vite-plugin-stylex-dev'
 
 // import { createRequire } from 'module';
 
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite'
 
 // const require = createRequire(import.meta.url);
 
@@ -15,7 +15,7 @@ export default defineConfig({
     sourcemap: true,
     // minify: false,
   },
-  define: { __VERSION__: JSON.stringify('benchmark') },
+  define: {__VERSION__: JSON.stringify('benchmark')},
   resolve: {
     alias: {
       'react-native': 'react-native-web',
@@ -29,8 +29,8 @@ export default defineConfig({
       babel: {
         plugins: [
           'babel-plugin-react-native-web',
-          ['styled-jsx/babel', { optimizeForSpeed: true }],
-          ['babel-plugin-react-compiler', { target: '19' }],
+          ['styled-jsx/babel', {optimizeForSpeed: true}],
+          ['babel-plugin-react-compiler', {target: '19'}],
         ],
         // presets: [[reactStrictDomPreset, { debug: true, dev: true }]],
       },
@@ -38,4 +38,4 @@ export default defineConfig({
       // include: ['node_modules/react-strict-dom/*.js'],
     }),
   ],
-});
+})

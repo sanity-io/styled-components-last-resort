@@ -1,8 +1,8 @@
-import { cx } from 'classix';
-import type { BoxProps } from '../../types';
-import { View } from './View';
+import {cx} from 'classix'
+import type {BoxProps} from '../../types'
+import {View} from './View'
 
-import styles from './box.module.css';
+import styles from './box.module.css'
 
 export const Box = ({
   children,
@@ -17,9 +17,9 @@ export const Box = ({
       styles[`color${$color}`],
       $fixed && styles.fixed,
       $outer && styles.outer,
-      $layout === 'row' && styles.row
+      $layout === 'row' && styles.row,
     )}
   >
     {children}
   </View>
-);
+)

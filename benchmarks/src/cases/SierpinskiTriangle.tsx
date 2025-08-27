@@ -1,7 +1,7 @@
-import { interpolateBuPu, interpolatePurples, interpolateRdPu } from 'd3-scale-chromatic';
-import type { SierpinskiTriangleProps } from '../types';
+import {interpolateBuPu, interpolatePurples, interpolateRdPu} from 'd3-scale-chromatic'
+import type {SierpinskiTriangleProps} from '../types'
 
-const targetSize = 6;
+const targetSize = 6
 
 export function SierpinskiTriangle({
   components,
@@ -12,25 +12,25 @@ export function SierpinskiTriangle({
   renderCount = 0,
   opacity = 1,
 }: SierpinskiTriangleProps) {
-  const { Dot } = components;
+  const {Dot} = components
 
   if (Dot) {
     if (s <= targetSize) {
-      let fn;
+      let fn
       switch (depth) {
         case 1:
-          fn = interpolatePurples;
-          break;
+          fn = interpolatePurples
+          break
         case 2:
-          fn = interpolateBuPu;
-          break;
+          fn = interpolateBuPu
+          break
         case 3:
         default:
-          fn = interpolateRdPu;
+          fn = interpolateRdPu
       }
 
       // introduce randomness to ensure that repeated runs don't produce the same colors
-      const color = fn((renderCount * Math.random()) / 20);
+      const color = fn((renderCount * Math.random()) / 20)
       return (
         <Dot
           $color={color}
@@ -39,10 +39,10 @@ export function SierpinskiTriangle({
           $y={y - targetSize / 2}
           $opacity={opacity}
         />
-      );
+      )
     }
 
-    s /= 2;
+    s /= 2
 
     return (
       <>
@@ -74,10 +74,10 @@ export function SierpinskiTriangle({
           opacity={opacity}
         />
       </>
-    );
+    )
   } else {
-    return <span style={{ color: 'white' }}>No implementation available</span>;
+    return <span style={{color: 'white'}}>No implementation available</span>
   }
 }
 
-SierpinskiTriangle.displayName = 'SierpinskiTriangle';
+SierpinskiTriangle.displayName = 'SierpinskiTriangle'

@@ -1,5 +1,5 @@
-import css from 'styled-jsx/css';
-import type { ViewProps } from '../../types';
+import css from 'styled-jsx/css'
+import type {ViewProps} from '../../types'
 
 export const style = css`
   align-items: stretch;
@@ -15,6 +15,6 @@ export const style = css`
   position: relative;
   min-height: 0;
   min-width: 0;
-`;
+`
 
-export const View = (props: ViewProps) => <div {...props} />;
+export const View = (props: ViewProps) => <div {...props} />

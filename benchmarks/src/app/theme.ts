@@ -1,14 +1,14 @@
-import { Dimensions, Platform } from 'react-native';
+import {Dimensions, Platform} from 'react-native'
 
-const baseFontSize = 14;
-const baseUnit = 1.3125;
+const baseFontSize = 14
+const baseUnit = 1.3125
 
 const createPlatformLength = (multiplier: number) =>
   Platform.select({
     web: `${multiplier}rem`,
     // @ts-expect-error - fix later
     default: multiplier * baseFontSize,
-  });
+  })
 
 /**
  * Exported variables
@@ -21,14 +21,14 @@ export const borderRadii = {
     default: 5,
   }),
   infinite: '9999px',
-};
+}
 
 export const breakpoints = {
   small: 360,
   medium: 600,
   large: 800,
   xLarge: 1100,
-};
+}
 
 /**
  * Color palette
@@ -53,7 +53,7 @@ export const colors = {
   faintGray: '#F5F8FA',
   white: '#FFF',
   textBlue: '#1B95E0',
-} as const;
+} as const
 
 export const fontFamilies = {
   normal: 'System',
@@ -61,8 +61,8 @@ export const fontFamilies = {
     web: 'Arial, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", Osaka, "メイリオ", Meiryo, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif',
     default: 'System',
   }),
-  rtl: Platform.select({ web: 'Tahoma, Arial, sans-serif', default: 'System' }),
-};
+  rtl: Platform.select({web: 'Tahoma, Arial, sans-serif', default: 'System'}),
+}
 
 export const fontSizes = {
   // font scale
@@ -71,9 +71,9 @@ export const fontSizes = {
   large: createPlatformLength(1.25),
   xLarge: createPlatformLength(1.5),
   jumbo: createPlatformLength(2),
-};
+}
 
-export const lineHeight = Platform.select({ web: `${baseUnit}` });
+export const lineHeight = Platform.select({web: `${baseUnit}`})
 
 export const spaces = {
   // This set of space variables should be used for margin, padding
@@ -86,22 +86,22 @@ export const spaces = {
   xLarge: createPlatformLength(baseUnit * 2),
   xxLarge: createPlatformLength(baseUnit * 2.5),
   jumbo: createPlatformLength(baseUnit * 3),
-};
+}
 
 // On web, change the root font-size at specific breakpoints to scale the UI
 // for larger viewports.
 if (Platform.OS === 'web') {
-  const { medium, large } = breakpoints;
-  const htmlElement = document.documentElement;
+  const {medium, large} = breakpoints
+  const htmlElement = document.documentElement
   const setFontSize = (width: number) => {
-    const fontSize = width > medium ? (width > large ? '18px' : '17px') : '16px';
+    const fontSize = width > medium ? (width > large ? '18px' : '17px') : '16px'
     if (htmlElement) {
-      htmlElement.style.fontSize = fontSize;
+      htmlElement.style.fontSize = fontSize
     }
-  };
+  }
 
-  setFontSize(Dimensions.get('window').width);
-  Dimensions.addEventListener('change', dimensions => {
-    setFontSize(dimensions.window.width);
-  });
+  setFontSize(Dimensions.get('window').width)
+  Dimensions.addEventListener('change', (dimensions) => {
+    setFontSize(dimensions.window.width)
+  })
 }

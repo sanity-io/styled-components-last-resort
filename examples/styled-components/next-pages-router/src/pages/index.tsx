@@ -1,13 +1,13 @@
-import { Button, Card, Container, Heading, Inline, Stack, Text } from '@sanity/ui';
-import { AddIcon, EditIcon, PublishIcon } from '@sanity/icons';
-import { useCallback, useSyncExternalStore } from 'react';
+import {Button, Card, Container, Heading, Inline, Stack, Text} from '@sanity/ui'
+import {AddIcon, EditIcon, PublishIcon} from '@sanity/icons'
+import {useCallback, useSyncExternalStore} from 'react'
 
 export default function Index() {
   const hydrating = useSyncExternalStore(
     useCallback(() => () => {}, []),
     () => false,
-    () => true
-  );
+    () => true,
+  )
   return (
     <>
       <Container paddingY={6} paddingX={[3, 4, 5]} sizing="border">
@@ -15,7 +15,7 @@ export default function Index() {
           <Heading>Welcome to Sanity UI</Heading>
         </Card>
 
-        <Card padding={4} style={{ textAlign: 'center' }}>
+        <Card padding={4} style={{textAlign: 'center'}}>
           <Inline space={[3, 3, 4]}>
             <Button
               fontSize={[2, 2, 3]}
@@ -80,5 +80,5 @@ export default function Index() {
         </Card>
       </Container>
     </>
-  );
+  )
 }

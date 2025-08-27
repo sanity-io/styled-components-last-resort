@@ -1,5 +1,5 @@
-import { useRef, useState, useTransition } from 'react';
-import { flushSync } from 'react-dom';
+import {useRef, useState, useTransition} from 'react'
+import {flushSync} from 'react-dom'
 import {
   // @ts-expect-error - fix later
   Picker,
@@ -7,99 +7,98 @@ import {
   StyleSheet,
   TouchableOpacity,
   View,
-} from 'react-native';
-import type { BenchmarkRef, SafeAny, Tests } from '../types';
-import { Benchmark, type BenchmarkResults } from './Benchmark';
-import { BenchmarkProfiler } from './Benchmark/Profiler';
-import { Button } from './Button';
-import { IconClear, IconEye } from './Icons';
-import { Layout } from './Layout';
-import { ReportCard } from './ReportCard';
-import { Text } from './Text';
-import { colors } from './theme';
+} from 'react-native'
+import type {BenchmarkRef, SafeAny, Tests} from '../types'
+import {Benchmark, type BenchmarkResults} from './Benchmark'
+import {BenchmarkProfiler} from './Benchmark/Profiler'
+import {Button} from './Button'
+import {IconClear, IconEye} from './Icons'
+import {Layout} from './Layout'
+import {ReportCard} from './ReportCard'
+import {Text} from './Text'
+import {colors} from './theme'
 
-const overlay = <View style={[StyleSheet.absoluteFill, { zIndex: 2 }]} />;
+const overlay = <View style={[StyleSheet.absoluteFill, {zIndex: 2}]} />
 
-const runnerTypes = ['Concurrent', 'Synchronous'] as const;
-type RunnerType = (typeof runnerTypes)[number];
+const runnerTypes = ['Concurrent', 'Synchronous'] as const
+type RunnerType = (typeof runnerTypes)[number]
 
 function isRunnerType(value: string): value is RunnerType {
-  return runnerTypes.includes(value as RunnerType);
+  return runnerTypes.includes(value as RunnerType)
 }
 function getRunnerLabel(runner: RunnerType) {
   switch (runner) {
     default:
-      return runner;
+      return runner
   }
 }
 
 function shouldUseBenchmarkProfiler(runner: RunnerType) {
   switch (runner) {
     case 'Concurrent':
-      return true;
+      return true
     default:
-      return false;
+      return false
   }
 }
 
-const timeout = 20_000;
+const timeout = 20_000
 
-export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
-  const { tests } = props;
+export function App(props: {tests: Tests<React.ComponentType<SafeAny>>}) {
+  const {tests} = props
   const [currentBenchmarkName, setCurrentBenchmarkName] = useState(
-    () => Object.keys(props.tests)[0]
-  );
-  const [currentBenchmarkRunner, setCurrentBenchmarkRunner] = useState<RunnerType>('Concurrent');
-  const [currentLibraryName, setCurrentLibraryName] = useState('inline-styles');
-  const [status, setStatus] = useState<'idle' | 'running' | 'complete'>('idle');
+    () => Object.keys(props.tests)[0],
+  )
+  const [currentBenchmarkRunner, setCurrentBenchmarkRunner] = useState<RunnerType>('Concurrent')
+  const [currentLibraryName, setCurrentLibraryName] = useState('inline-styles')
+  const [status, setStatus] = useState<'idle' | 'running' | 'complete'>('idle')
   const [results, setResults] = useState<
     (BenchmarkResults & {
-      benchmarkName: string;
-      libraryName: string;
-      libraryVersion?: string;
-      runner: RunnerType;
+      benchmarkName: string
+      libraryName: string
+      libraryVersion?: string
+      runner: RunnerType
     })[]
-  >([]);
-  const [shouldHideBenchmark, setShouldHideBenchmark] = useState(false);
+  >([])
+  const [shouldHideBenchmark, setShouldHideBenchmark] = useState(false)
   // Loading a new benchmark might take a moment, so we hide the benchmark while it is loading to make it clear it is not ready yet
-  const [pending, startTransition] = useTransition();
+  const [pending, startTransition] = useTransition()
 
-  const isBenchmarkProfiler = shouldUseBenchmarkProfiler(currentBenchmarkRunner);
+  const isBenchmarkProfiler = shouldUseBenchmarkProfiler(currentBenchmarkRunner)
 
-  const benchmarkRef = useRef<BenchmarkRef>(null);
-  const scrollViewRef = useRef<ScrollView>(null);
+  const benchmarkRef = useRef<BenchmarkRef>(null)
+  const scrollViewRef = useRef<ScrollView>(null)
 
   const handleChangeBenchmark = (value: string) => {
     startTransition(() => {
-      setCurrentBenchmarkName(value);
-    });
-  };
+      setCurrentBenchmarkName(value)
+    })
+  }
   const handleChangeLibrary = (value: string) => {
     startTransition(() => {
-      setCurrentLibraryName(value);
-    });
-  };
+      setCurrentLibraryName(value)
+    })
+  }
   const handleStart = () => {
     flushSync(() => {
-      setStatus('running');
-    });
-    benchmarkRef.current!.start();
-    _scrollToEnd();
-  };
+      setStatus('running')
+    })
+    benchmarkRef.current!.start()
+    _scrollToEnd()
+  }
   const _handleClear = () => {
-    setResults([]);
-  };
+    setResults([])
+  }
 
   // scroll the most recent result into view
   const _scrollToEnd = () => {
     window.requestAnimationFrame(() => {
-      scrollViewRef.current?.scrollToEnd();
-    });
-  };
+      scrollViewRef.current?.scrollToEnd()
+    })
+  }
 
-  const currentImplementation = tests[currentBenchmarkName][currentLibraryName];
-  const { Component, Provider, getComponentProps, sampleCount, benchmarkType } =
-    currentImplementation;
+  const currentImplementation = tests[currentBenchmarkName][currentLibraryName]
+  const {Component, Provider, getComponentProps, sampleCount, benchmarkType} = currentImplementation
 
   return (
     <Layout
@@ -108,7 +107,7 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
           <View style={styles.pickers}>
             <View style={styles.pickerContainer}>
               <Text style={styles.pickerTitle}>Library</Text>
-              <Text style={{ fontWeight: 'bold' }}>{currentLibraryName}</Text>
+              <Text style={{fontWeight: 'bold'}}>{currentLibraryName}</Text>
 
               <Picker
                 enabled={status !== 'running'}
@@ -116,12 +115,12 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                 selectedValue={currentLibraryName}
                 style={styles.picker}
               >
-                {Object.keys(tests[currentBenchmarkName]).map(libraryName => (
+                {Object.keys(tests[currentBenchmarkName]).map((libraryName) => (
                   <Picker.Item key={libraryName} label={libraryName} value={libraryName} />
                 ))}
               </Picker>
             </View>
-            <View style={{ width: 1, backgroundColor: colors.fadedGray }} />
+            <View style={{width: 1, backgroundColor: colors.fadedGray}} />
             <View style={styles.pickerContainer}>
               <Text style={styles.pickerTitle}>Benchmark</Text>
               <Text testID="current-benchmark-name">{currentBenchmarkName}</Text>
@@ -132,12 +131,12 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                 style={styles.picker}
                 testID="benchmark-picker"
               >
-                {Object.keys(tests).map(test => (
+                {Object.keys(tests).map((test) => (
                   <Picker.Item key={test} label={test} value={test} />
                 ))}
               </Picker>
             </View>
-            <View style={{ width: 1, backgroundColor: colors.fadedGray }} />
+            <View style={{width: 1, backgroundColor: colors.fadedGray}} />
             <View style={styles.pickerContainer}>
               <Text style={styles.pickerTitle}>Runner</Text>
               <Text testID="current-runner">{getRunnerLabel(currentBenchmarkRunner)}</Text>
@@ -145,21 +144,21 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                 enabled={status !== 'running'}
                 onValueChange={(value: string) => {
                   if (isRunnerType(value)) {
-                    setCurrentBenchmarkRunner(value);
+                    setCurrentBenchmarkRunner(value)
                   }
                 }}
                 selectedValue={currentBenchmarkRunner}
                 style={styles.picker}
                 testID="benchmark-runner-picker"
               >
-                {runnerTypes.map(runner => (
+                {runnerTypes.map((runner) => (
                   <Picker.Item key={runner} label={getRunnerLabel(runner)} value={runner} />
                 ))}
               </Picker>
             </View>
           </View>
 
-          <View style={{ flexDirection: 'row', height: 50 }}>
+          <View style={{flexDirection: 'row', height: 50}}>
             <View style={styles.grow}>
               <Button
                 onPress={handleStart}
@@ -220,8 +219,8 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
             <TouchableOpacity
               onPress={() => {
                 startTransition(() => {
-                  setShouldHideBenchmark(prev => !prev);
-                });
+                  setShouldHideBenchmark((prev) => !prev)
+                })
               }}
             >
               <IconEye style={styles.iconEye} />
@@ -230,15 +229,15 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
           <Provider>
             <View
               // optionally hide the benchmark as it is performed (no flashing on screen), or if it is pending
-              style={{ opacity: pending || shouldHideBenchmark ? 0 : 1 }}
+              style={{opacity: pending || shouldHideBenchmark ? 0 : 1}}
             >
               {status === 'running' ? (
                 isBenchmarkProfiler ? (
                   <BenchmarkProfiler
                     component={Component}
                     getComponentProps={getComponentProps}
-                    onComplete={results => {
-                      setResults(state =>
+                    onComplete={(results) => {
+                      setResults((state) =>
                         state.concat([
                           {
                             ...results,
@@ -247,9 +246,9 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                             libraryVersion: tests[currentBenchmarkName][currentLibraryName].version,
                             runner: currentBenchmarkRunner,
                           },
-                        ])
-                      );
-                      setStatus('complete');
+                        ]),
+                      )
+                      setStatus('complete')
                     }}
                     ref={benchmarkRef}
                     sampleCount={sampleCount}
@@ -261,8 +260,8 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                     Component={Component}
                     forceLayout
                     getComponentProps={getComponentProps}
-                    onComplete={results => {
-                      setResults(state =>
+                    onComplete={(results) => {
+                      setResults((state) =>
                         state.concat([
                           {
                             ...results,
@@ -272,18 +271,18 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
                             libraryVersion: tests[currentBenchmarkName][currentLibraryName].version,
                             runner: currentBenchmarkRunner,
                           },
-                        ])
-                      );
-                      setStatus('complete');
+                        ]),
+                      )
+                      setStatus('complete')
                     }}
-                    ref={ref => {
+                    ref={(ref) => {
                       benchmarkRef.current = ref
                         ? {
                             start: () => {
-                              ref.start();
+                              ref.start()
                             },
                           }
-                        : null;
+                        : null
                     }}
                     sampleCount={sampleCount}
                     timeout={timeout}
@@ -305,9 +304,9 @@ export function App(props: { tests: Tests<React.ComponentType<SafeAny>> }) {
         </View>
       }
     />
-  );
+  )
 }
-App.displayName = '@app/App';
+App.displayName = '@app/App'
 
 const styles = StyleSheet.create({
   viewPanel: {
@@ -369,4 +368,4 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     flex: 1,
   },
-});
+})

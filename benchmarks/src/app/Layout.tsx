@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { colors } from './theme';
+import {useState} from 'react'
+import {StyleSheet, View} from 'react-native'
+import {colors} from './theme'
 
 export function Layout(props: {
-  actionPanel: React.ReactNode;
-  listPanel: React.ReactNode;
-  viewPanel: React.ReactNode;
+  actionPanel: React.ReactNode
+  listPanel: React.ReactNode
+  viewPanel: React.ReactNode
 }) {
-  const { viewPanel, actionPanel, listPanel } = props;
-  const [widescreen, setWidescreen] = useState(false);
+  const {viewPanel, actionPanel, listPanel} = props
+  const [widescreen, setWidescreen] = useState(false)
 
   return (
     <View
-      onLayout={({ nativeEvent }) => {
-        const { layout } = nativeEvent;
-        const { width } = layout;
-        setWidescreen(width >= 740);
+      onLayout={({nativeEvent}) => {
+        const {layout} = nativeEvent
+        const {width} = layout
+        setWidescreen(width >= 740)
       }}
       style={[styles.root, widescreen && styles.row]}
     >
@@ -26,7 +26,7 @@ export function Layout(props: {
         <View style={styles.layer}>{actionPanel}</View>
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
       },
     ],
   },
-});
+})

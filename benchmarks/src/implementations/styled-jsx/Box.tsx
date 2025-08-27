@@ -1,25 +1,25 @@
-import { cx } from 'classix';
-import type { BoxProps } from '../../types';
-import { style } from './View';
+import {cx} from 'classix'
+import type {BoxProps} from '../../types'
+import {style} from './View'
 
 const getColor = (color: number | undefined) => {
   switch (color) {
     case 0:
-      return '#14171A';
+      return '#14171A'
     case 1:
-      return '#AAB8C2';
+      return '#AAB8C2'
     case 2:
-      return '#E6ECF0';
+      return '#E6ECF0'
     case 3:
-      return '#FFAD1F';
+      return '#FFAD1F'
     case 4:
-      return '#F45D22';
+      return '#F45D22'
     case 5:
-      return '#E0245E';
+      return '#E0245E'
     default:
-      return 'transparent';
+      return 'transparent'
   }
-};
+}
 
 export const Box = ({
   children,
@@ -28,7 +28,7 @@ export const Box = ({
   $fixed,
   $layout,
   $outer,
-}: BoxProps & { children?: React.ReactNode; className?: string }) => (
+}: BoxProps & {children?: React.ReactNode; className?: string}) => (
   <div className={cx($fixed && 'fixed', className)}>
     {children}
 
@@ -57,4 +57,4 @@ export const Box = ({
       `}
     </style>
   </div>
-);
+)

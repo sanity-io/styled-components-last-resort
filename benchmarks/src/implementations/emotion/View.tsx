@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled'
 
 export const View = styled.div`
   align-items: stretch;
@@ -14,4 +14,4 @@ export const View = styled.div`
   position: relative;
   min-height: 0;
   min-width: 0;
-`;
+`

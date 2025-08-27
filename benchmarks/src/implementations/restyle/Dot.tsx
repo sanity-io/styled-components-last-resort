@@ -1,6 +1,6 @@
-import { css, styled } from 'restyle';
-import type { DotProps } from '../../types';
-import { View } from './View';
+import {css, styled} from 'restyle'
+import type {DotProps} from '../../types'
+import {View} from './View'
 
 const StyledView = styled(View, {
   borderColor: 'transparent',
@@ -11,10 +11,10 @@ const StyledView = styled(View, {
   position: 'absolute',
   transform: 'translate(50%, 50%)',
   width: 0,
-});
+})
 
 export function Dot(props: DotProps) {
-  const { $color, $x, $y, $size, $opacity } = props;
+  const {$color, $x, $y, $size, $opacity} = props
   const [classNames, Styles] = css({
     borderBottomWidth: `${$size / 2}px`,
     borderLeftWidth: `${$size / 2}px`,
@@ -22,11 +22,11 @@ export function Dot(props: DotProps) {
     marginTop: `${$y}px`,
     marginLeft: `${$x}px`,
     opacity: $opacity,
-  });
+  })
   return (
     <>
-      <StyledView className={classNames} style={{ borderBottomColor: $color }} />
+      <StyledView className={classNames} style={{borderBottomColor: $color}} />
       <Styles />
     </>
-  );
+  )
 }

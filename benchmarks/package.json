@@ -1,13 +1,13 @@
 {
   "name": "@repo/benchmarks",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "open": "vite preview",
-    "lint": "oxlint --type-aware --react-plugin --react-perf-plugin -D correctness -D rules-of-hooks"
+    "dev": "vite",
+    "lint": "oxlint --type-aware --react-plugin --react-perf-plugin -D correctness -D rules-of-hooks",
+    "open": "vite preview"
   },
   "browserslist": [
     "last 1 version"

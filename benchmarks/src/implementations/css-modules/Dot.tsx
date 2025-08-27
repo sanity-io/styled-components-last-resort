@@ -1,9 +1,9 @@
-import type { DotProps } from '../../types';
-import { View } from './View';
+import type {DotProps} from '../../types'
+import {View} from './View'
 
-import styles from './dot.module.css';
+import styles from './dot.module.css'
 
-export const Dot = ({ $size, $x, $y, $color, $opacity }: DotProps) => (
+export const Dot = ({$size, $x, $y, $color, $opacity}: DotProps) => (
   <View
     className={styles.dot}
     style={
@@ -16,4 +16,4 @@ export const Dot = ({ $size, $x, $y, $color, $opacity }: DotProps) => (
       } as React.CSSProperties
     }
   />
-);
+)
