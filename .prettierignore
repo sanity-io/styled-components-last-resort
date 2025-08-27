@@ -1,4 +1,4 @@
 **/__snapshots__
 pnpm-lock.yaml
 **/*/src/utils/errors.js
-
+.changeset/*.md

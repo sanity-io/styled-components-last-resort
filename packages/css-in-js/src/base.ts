@@ -1,8 +1,8 @@
 /* Import singletons */
-import { SC_VERSION } from './constants';
-import createGlobalStyle from './constructors/createGlobalStyle';
-import css from './constructors/css';
-import keyframes from './constructors/keyframes';
+import {SC_VERSION} from './constants'
+import createGlobalStyle from './constructors/createGlobalStyle'
+import css from './constructors/css'
+import keyframes from './constructors/keyframes'
 /* Import hooks */
 import {
   IStyleSheetContext,
@@ -11,14 +11,14 @@ import {
   StyleSheetConsumer,
   StyleSheetContext,
   StyleSheetManager,
-} from './models/StyleSheetManager';
+} from './models/StyleSheetManager'
 /* Import components */
-import ThemeProvider, { ThemeConsumer, ThemeContext, useTheme } from './models/ThemeProvider';
-import isStyledComponent from './utils/isStyledComponent';
+import ThemeProvider, {ThemeContext, useTheme} from './models/ThemeProvider'
+import isStyledComponent from './utils/isStyledComponent'
 
 /* Export everything */
-export * from './secretInternals';
-export type { Attrs, DefaultTheme, ShouldForwardProp } from './types';
+export * from './secretInternals'
+export type {Attrs, DefaultTheme, ShouldForwardProp} from './types'
 export {
   type IStyleSheetContext,
   type IStyleSheetManager,
@@ -26,7 +26,6 @@ export {
   StyleSheetConsumer,
   StyleSheetContext,
   StyleSheetManager,
-  ThemeConsumer,
   ThemeContext,
   ThemeProvider,
   createGlobalStyle,
@@ -35,4 +34,4 @@ export {
   keyframes,
   useTheme,
   SC_VERSION as version,
-};
+}
