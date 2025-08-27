@@ -3,7 +3,7 @@ declare let __VERSION__: string
 export const SC_ATTR: string =
   (typeof process !== 'undefined' &&
     typeof process.env !== 'undefined' &&
-    (process.env.REACT_APP_SC_ATTR || process.env.SC_ATTR)) ||
+    (process.env.REACT_APP_SC_ATTR || process.env.SC_ATTR || process.env.SANITY_SC_ATTR)) ||
   'data-styled'
 
 export const SC_ATTR_ACTIVE = 'active'

@@ -15,7 +15,11 @@ export default defineConfig({
     sourcemap: true,
     // minify: false,
   },
-  define: {__VERSION__: JSON.stringify('benchmark')},
+  define: {
+    '__VERSION__': JSON.stringify('benchmark'),
+    'process.env.CSS_IN_JS_ATTR': 'data-css-in-js',
+    'process.env.SANITY_SC_ATTR': 'data-sanity-styled',
+  },
   resolve: {
     alias: {
       'react-native': 'react-native-web',
