@@ -21,6 +21,7 @@ export default defineConfig({
       'react-native': 'react-native-web',
       'react-dom/client': 'react-dom/profiling',
     },
+    dedupe: ['react', 'react-dom'],
   },
   plugins: [
     stylex(),

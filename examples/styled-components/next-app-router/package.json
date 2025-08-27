@@ -12,8 +12,8 @@
     "@sanity/icons": "^3.7.4",
     "@sanity/ui": "^3.0.7",
     "next": "15.5.2",
-    "react": "19.1.1",
-    "react-dom": "19.1.1",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "styled-components": "npm:@sanity/styled-components@6.1.18-23",
     "styled-components-original": "npm:styled-components@^6.1.19"
   },

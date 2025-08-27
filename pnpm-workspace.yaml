@@ -4,5 +4,17 @@ packages:
   - examples/styled-components/*
   - packages/*
 
+catalog:
+  react: ^19.1.1
+  react-dom: ^19.1.1
+
 onlyBuiltDependencies:
   - esbuild
+
+strictPeerDependencies: false
+
+publicHoistPattern:
+  - '*prettier*'
+
+syncInjectedDepsAfterScripts:
+  - install
