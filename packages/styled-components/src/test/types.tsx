@@ -76,7 +76,6 @@ declare module 'react' {
     color: blue;
   `}
 />
-
 ;<div
   css={css`
     color: ${Math.random() > 0.5 ? 'blue' : 'red'};
@@ -117,7 +116,6 @@ const RuntimePropDeepestOverrideTest = styled.button<{color?: 'vermillion'}>``
 ;<RuntimePropTest as={RuntimePropOverrideTest} color="indigo" />
 // ok
 ;<RuntimePropTest as={RuntimePropOverrideTest} color="cerulean" />
-
 ;<RuntimePropTest
   as={RuntimePropOverrideTest}
   forwardedAs={RuntimePropDeepestOverrideTest}
@@ -510,7 +508,6 @@ const ParentStyledComponent3 = styled(ParentStyledComponent2)<{$prop3?: boolean}
 
 ;<ParentStyledComponent2 $prop1={true} $prop2={true} />
 ;<ParentStyledComponent3 $prop1={true} $prop2={true} $prop3={true} />
-
 ;<ParentStyledComponent2
   $prop1={true}
   $prop2={true}
