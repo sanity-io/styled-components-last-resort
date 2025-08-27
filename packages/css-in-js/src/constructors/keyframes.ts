@@ -1,8 +1,8 @@
-import Keyframes from '../models/Keyframes';
-import { Interpolation, Styles } from '../types';
-import generateComponentId from '../utils/generateComponentId';
-import { joinStringArray } from '../utils/joinStrings';
-import css from './css';
+import Keyframes from '../models/Keyframes'
+import {Interpolation, Styles} from '../types'
+import generateComponentId from '../utils/generateComponentId'
+import {joinStringArray} from '../utils/joinStrings'
+import css from './css'
 
 export default function keyframes<Props extends object = {}>(
   strings: Styles<Props>,
@@ -15,11 +15,11 @@ export default function keyframes<Props extends object = {}>(
     navigator.product === 'ReactNative'
   ) {
     console.warn(
-      '`keyframes` cannot be used on ReactNative, only on the web. To do animation in ReactNative please use Animated.'
-    );
+      '`keyframes` cannot be used on ReactNative, only on the web. To do animation in ReactNative please use Animated.',
+    )
   }
 
-  const rules = joinStringArray(css<Props>(strings, ...interpolations) as string[]);
-  const name = generateComponentId(rules);
-  return new Keyframes(name, rules);
+  const rules = joinStringArray(css<Props>(strings, ...interpolations) as string[])
+  const name = generateComponentId(rules)
+  return new Keyframes(name, rules)
 }

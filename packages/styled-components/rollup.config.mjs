@@ -1,11 +1,11 @@
-import typescript from '@rollup/plugin-typescript';
-import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
-import nodeResolve from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
-import terser from '@rollup/plugin-terser';
-import { babel } from '@rollup/plugin-babel';
-import pkg from './package.json' with { type: 'json' };
+import typescript from '@rollup/plugin-typescript'
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
+import nodeResolve from '@rollup/plugin-node-resolve'
+import replace from '@rollup/plugin-replace'
+import terser from '@rollup/plugin-terser'
+import {babel} from '@rollup/plugin-babel'
+import pkg from './package.json' with {type: 'json'}
 
 /**
  * NODE_ENV explicit replacement is only needed for standalone packages, as webpack
@@ -17,16 +17,16 @@ const cjs = {
   interop: 'auto',
   format: 'cjs',
   sourcemap: true,
-};
+}
 
 const esm = {
   format: 'esm',
   interop: 'auto',
   sourcemap: true,
-};
+}
 
-const getCJS = override => ({ ...cjs, ...override });
-const getESM = override => ({ ...esm, ...override });
+const getCJS = (override) => ({...cjs, ...override})
+const getESM = (override) => ({...esm, ...override})
 
 const basePlugins = [
   json(),
@@ -63,18 +63,18 @@ const basePlugins = [
         // minified:
         code = code.replace(
           /([a-zA-Z$_]+)="undefined"!=typeof globalThis\?globalThis:(\1\|\|self)/,
-          '$2'
-        );
+          '$2',
+        )
         // unminified:
         code = code.replace(
           /(global *= *)typeof +globalThis *!== *['"]undefined['"] *\? *globalThis *: *(global *\|\| *self)/,
-          '$1$2'
-        );
-        return { code, map: null };
+          '$1$2',
+        )
+        return {code, map: null}
       }
     },
   }),
-];
+]
 
 // this should always be last
 const minifierPlugin = terser({
@@ -90,42 +90,42 @@ const minifierPlugin = terser({
     preserve_annotations: true,
   },
   keep_fnames: true,
-});
+})
 
 const configBase = {
   input: './src/index.ts',
 
   // \0 is rollup convention for generated in memory modules
-  external: id => !id.startsWith('\0') && !id.startsWith('.') && !id.startsWith('/'),
+  external: (id) => !id.startsWith('\0') && !id.startsWith('.') && !id.startsWith('/'),
   plugins: basePlugins,
-};
+}
 
 const serverConfig = {
   ...configBase,
   output: [
-    getESM({ file: 'dist/styled-components.esm.js' }),
-    getCJS({ file: 'dist/styled-components.cjs.js' }),
+    getESM({file: 'dist/styled-components.esm.js'}),
+    getCJS({file: 'dist/styled-components.cjs.js'}),
   ],
   plugins: configBase.plugins.concat(
     replace({
       __SERVER__: JSON.stringify(true),
     }),
-    minifierPlugin
+    minifierPlugin,
   ),
-};
+}
 
 const browserConfig = {
   ...configBase,
   output: [
-    getESM({ file: 'dist/styled-components.browser.esm.js' }),
-    getCJS({ file: 'dist/styled-components.browser.cjs.js' }),
+    getESM({file: 'dist/styled-components.browser.esm.js'}),
+    getCJS({file: 'dist/styled-components.browser.cjs.js'}),
   ],
   plugins: configBase.plugins.concat(
     replace({
       __SERVER__: JSON.stringify(false),
     }),
-    minifierPlugin
+    minifierPlugin,
   ),
-};
+}
 
-export default [serverConfig, browserConfig];
+export default [serverConfig, browserConfig]

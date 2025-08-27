@@ -1,44 +1,44 @@
-import { render } from '@testing-library/react';
-import { getRenderedCSS, resetStyled } from './utils';
+import {render} from '@testing-library/react'
+import {getRenderedCSS, resetStyled} from './utils'
 
 // Disable isStaticRules optimisation since we're not
 // testing for ComponentStyle specifics here
-vi.mock('../utils/isStaticRules', () => ({ default: () => false }));
+vi.mock('../utils/isStaticRules', () => ({default: () => false}))
 
-let styled: ReturnType<typeof resetStyled>;
+let styled: ReturnType<typeof resetStyled>
 
 describe('css features', () => {
   beforeEach(() => {
-    styled = resetStyled();
-  });
+    styled = resetStyled()
+  })
 
   it('should add vendor prefixes in the right order', () => {
     const Comp = styled.div`
       transition: opacity 0.3s;
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         transition: opacity 0.3s;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should add vendor prefixes for display', () => {
     const Comp = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         display: flex;
         flex-direction: column;
         align-items: center;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should generate styles for nested media queries', () => {
     const Comp = styled.div`
@@ -47,8 +47,8 @@ describe('css features', () => {
           color: red;
         }
       }
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "@media (min-width:10px) {
         @media (min-height:20px) {
@@ -57,18 +57,18 @@ describe('css features', () => {
           }
         }
       }"
-    `);
-  });
+    `)
+  })
 
   it('should pass through custom properties', () => {
     const Comp = styled.div`
       --custom-prop: some-val;
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".b {
         --custom-prop: some-val;
       }"
-    `);
-  });
-});
+    `)
+  })
+})

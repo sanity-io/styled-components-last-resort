@@ -1,37 +1,36 @@
-import { createContext, useContext, useMemo, useState } from 'react';
-import shallowequal from 'shallowequal';
-import type stylis from 'stylis';
-import StyleSheet from '../sheet';
-import { InsertionTarget, ShouldForwardProp, Stringifier } from '../types';
-import createStylisInstance from '../utils/stylis';
+import {createContext, useContext, useMemo, useState} from 'react'
+import shallowequal from 'shallowequal'
+import type stylis from 'stylis'
+import StyleSheet from '../sheet'
+import {InsertionTarget, ShouldForwardProp, Stringifier} from '../types'
+import createStylisInstance from '../utils/stylis'
 
-export const mainSheet: StyleSheet = new StyleSheet();
-export const mainStylis: Stringifier = createStylisInstance();
+export const mainSheet: StyleSheet = new StyleSheet()
+export const mainStylis: Stringifier = createStylisInstance()
 
 export type IStyleSheetContext = {
-  shouldForwardProp?: ShouldForwardProp<'web'> | undefined;
-  styleSheet: StyleSheet;
-  stylis: Stringifier;
-};
+  shouldForwardProp?: ShouldForwardProp<'web'> | undefined
+  styleSheet: StyleSheet
+  stylis: Stringifier
+}
 
 export const StyleSheetContext: React.Context<IStyleSheetContext> =
   createContext<IStyleSheetContext>({
     shouldForwardProp: undefined,
     styleSheet: mainSheet,
     stylis: mainStylis,
-  });
-StyleSheetContext.displayName = 'StyleSheetContext';
+  })
+StyleSheetContext.displayName = 'StyleSheetContext'
 
-export const StyleSheetConsumer: React.Consumer<IStyleSheetContext> = StyleSheetContext.Consumer;
+export const StyleSheetConsumer: React.Consumer<IStyleSheetContext> = StyleSheetContext.Consumer
 
-export type IStylisContext = Stringifier | void;
-export const StylisContext: React.Context<IStylisContext> =
-  createContext<IStylisContext>(undefined);
-StylisContext.displayName = 'StylisContext';
-export const StylisConsumer: React.Consumer<IStylisContext> = StylisContext.Consumer;
+export type IStylisContext = Stringifier | void
+export const StylisContext: React.Context<IStylisContext> = createContext<IStylisContext>(undefined)
+StylisContext.displayName = 'StylisContext'
+export const StylisConsumer: React.Consumer<IStylisContext> = StylisContext.Consumer
 
 export function useStyleSheetContext() {
-  return useContext(StyleSheetContext);
+  return useContext(StyleSheetContext)
 }
 
 export type IStyleSheetManager = React.PropsWithChildren<{
@@ -39,15 +38,15 @@ export type IStyleSheetManager = React.PropsWithChildren<{
    * If you are working exclusively with modern browsers, vendor prefixes can often be omitted
    * to reduce the weight of CSS on the page.
    */
-  enableVendorPrefixes?: undefined | boolean;
+  enableVendorPrefixes?: undefined | boolean
   /**
    * Provide an optional selector to be prepended to all generated style rules.
    */
-  namespace?: undefined | string;
+  namespace?: undefined | string
   /**
    * @deprecated the `sheet` prop is no longer supported as it's not needed for SSR
    */
-  sheet?: never;
+  sheet?: never
   /**
    * Starting in v6, styled-components no longer does its own prop validation
    * and recommends use of transient props "$prop" to pass style-only props to
@@ -62,44 +61,44 @@ export type IStyleSheetManager = React.PropsWithChildren<{
    * Manually composing `styled.{element}.withConfig({shouldForwardProp})` will
    * override this default.
    */
-  shouldForwardProp?: undefined | IStyleSheetContext['shouldForwardProp'];
+  shouldForwardProp?: undefined | IStyleSheetContext['shouldForwardProp']
   /**
    * An array of plugins to be run by stylis (style processor) during compilation.
    * Check out [what's available on npm*](https://www.npmjs.com/search?q=keywords%3Astylis).
    *
    * \* The plugin(s) must be compatible with stylis v4 or above.
    */
-  stylisPlugins?: undefined | stylis.Middleware[];
+  stylisPlugins?: undefined | stylis.Middleware[]
   /**
    * Provide an alternate DOM node to host generated styles; useful for iframes.
    */
-  target?: undefined | InsertionTarget;
-}>;
+  target?: undefined | InsertionTarget
+}>
 
 export function StyleSheetManager(props: IStyleSheetManager): React.JSX.Element {
-  const [plugins, setPlugins] = useState(props.stylisPlugins);
-  const { styleSheet } = useStyleSheetContext();
+  const [plugins, setPlugins] = useState(props.stylisPlugins)
+  const {styleSheet} = useStyleSheetContext()
 
   const resolvedStyleSheet = useMemo(() => {
-    let sheet = styleSheet;
+    let sheet = styleSheet
 
     if (props.target) {
-      sheet = sheet.reconstructWithOptions({ target: props.target }, false);
+      sheet = sheet.reconstructWithOptions({target: props.target}, false)
     }
 
-    return sheet;
-  }, [props.target, styleSheet]);
+    return sheet
+  }, [props.target, styleSheet])
 
   const stylis = useMemo(
     () =>
       createStylisInstance({
-        options: { namespace: props.namespace, prefix: props.enableVendorPrefixes },
+        options: {namespace: props.namespace, prefix: props.enableVendorPrefixes},
         plugins,
       }),
-    [props.enableVendorPrefixes, props.namespace, plugins]
-  );
+    [props.enableVendorPrefixes, props.namespace, plugins],
+  )
 
-  if (!shallowequal(plugins, props.stylisPlugins)) setPlugins(props.stylisPlugins);
+  if (!shallowequal(plugins, props.stylisPlugins)) setPlugins(props.stylisPlugins)
 
   const styleSheetContextValue = useMemo(
     () => ({
@@ -107,12 +106,12 @@ export function StyleSheetManager(props: IStyleSheetManager): React.JSX.Element 
       styleSheet: resolvedStyleSheet,
       stylis,
     }),
-    [props.shouldForwardProp, resolvedStyleSheet, stylis]
-  );
+    [props.shouldForwardProp, resolvedStyleSheet, stylis],
+  )
 
   return (
     <StyleSheetContext value={styleSheetContextValue}>
       <StylisContext value={stylis}>{props.children}</StylisContext>
     </StyleSheetContext>
-  );
+  )
 }

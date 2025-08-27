@@ -1,6 +1,6 @@
-import styled, { LibraryStyled, Styled, StyledInstance } from './constructors/styled';
+import styled, {LibraryStyled, Styled, StyledInstance} from './constructors/styled'
 
-export * from './base';
+export * from './base'
 export type {
   CSSKeyframes,
   CSSObject,
@@ -25,6 +25,6 @@ export type {
   StyledOptions,
   SupportedHTMLElements,
   WebTarget,
-} from './types';
-export { type LibraryStyled, type Styled, type StyledInstance, styled };
-export default styled;
+} from './types'
+export {type LibraryStyled, type Styled, type StyledInstance, styled}
+export default styled

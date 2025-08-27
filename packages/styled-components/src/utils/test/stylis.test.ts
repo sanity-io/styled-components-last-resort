@@ -1,9 +1,9 @@
-import createStylisInstance, { ICreateStylisInstance } from '../stylis';
+import createStylisInstance, {ICreateStylisInstance} from '../stylis'
 
 function stylisTest(css: string, options: ICreateStylisInstance = {}): string[] {
-  const stylis = createStylisInstance(options);
-  const componentId = 'a';
-  return stylis(css, `.${componentId}`, undefined, componentId);
+  const stylis = createStylisInstance(options)
+  const componentId = 'a'
+  return stylis(css, `.${componentId}`, undefined, componentId)
 }
 
 describe('stylis', () => {
@@ -11,14 +11,14 @@ describe('stylis', () => {
     const css = stylisTest(`
       background: yellow;
       color: red;
-    `);
+    `)
 
     expect(css).toMatchInlineSnapshot(`
       [
         ".a{background:yellow;color:red;}",
       ]
-    `);
-  });
+    `)
+  })
 
   it('splits css with multiple rules', () => {
     const css = stylisTest(`
@@ -27,15 +27,15 @@ describe('stylis', () => {
       @media (min-width: 500px) {
         color: blue;
       }
-    `);
+    `)
 
     expect(css).toMatchInlineSnapshot(`
       [
         ".a{background:yellow;color:red;}",
         "@media (min-width: 500px){.a{color:blue;}}",
       ]
-    `);
-  });
+    `)
+  })
 
   it('splits css with encoded closing curly brace', () => {
     const css = stylisTest(`
@@ -44,14 +44,14 @@ describe('stylis', () => {
           content: "}";
         }
       }
-    `);
+    `)
 
     expect(css).toMatchInlineSnapshot(`
       [
         "@media (min-width: 500px){.a::before{content:"}";}}",
       ]
-    `);
-  });
+    `)
+  })
 
   it('splits vendor-prefixed rules', () => {
     const css = stylisTest(
@@ -67,8 +67,8 @@ describe('stylis', () => {
         }
       }
     `,
-      { options: { prefix: true } }
-    );
+      {options: {prefix: true}},
+    )
 
     expect(css).toMatchInlineSnapshot(`
       [
@@ -81,6 +81,6 @@ describe('stylis', () => {
         "@media (min-width: 500px){.a:-ms-input-placeholder{content:"}";}}",
         "@media (min-width: 500px){.a::placeholder{content:"}";}}",
       ]
-    `);
-  });
-});
+    `)
+  })
+})

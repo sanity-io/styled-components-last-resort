@@ -1,4 +1,4 @@
-import addUnitIfNeeded from '../addUnitIfNeeded';
+import addUnitIfNeeded from '../addUnitIfNeeded'
 
 it('adds a px prefix if needed for properties that require a unit', () => {
   const pairs: Array<[string, number]> = [
@@ -7,9 +7,9 @@ it('adds a px prefix if needed for properties that require a unit', () => {
     ['flexBasis', 100],
     ['gridTemplateColumns', 200],
     ['fontSize', 10],
-  ];
-  pairs.forEach(([key, value]) => expect(addUnitIfNeeded(key, value)).toEqual(`${value}px`));
-});
+  ]
+  pairs.forEach(([key, value]) => expect(addUnitIfNeeded(key, value)).toEqual(`${value}px`))
+})
 
 it('does not add a px prefix for unitless properties', () => {
   const pairs: Array<[string, number]> = [
@@ -17,6 +17,6 @@ it('does not add a px prefix for unitless properties', () => {
     ['flex', 2],
     ['fontWeight', 400],
     ['--tooltip-z-index', 1000],
-  ];
-  pairs.forEach(([key, value]) => expect(addUnitIfNeeded(key, value)).toEqual(String(value)));
-});
+  ]
+  pairs.forEach(([key, value]) => expect(addUnitIfNeeded(key, value)).toEqual(String(value)))
+})

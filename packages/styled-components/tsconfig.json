@@ -36,6 +36,6 @@
     "noImplicitAny": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
-    "noImplicitOverride": true,
+    "noImplicitOverride": true
   }
 }

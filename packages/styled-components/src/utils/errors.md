@@ -78,7 +78,7 @@ ThemeProvider: "theme" prop is required.
 A stylis plugin has been supplied that is not named. We need a name for each plugin to be able to prevent styling collisions between different stylis configurations within the same app. Before you pass your plugin to `<StyleSheetManager stylisPlugins={[]}>`, please make sure each plugin is uniquely-named, e.g.
 
 ```js
-Object.defineProperty(importedPlugin, 'name', { value: 'some-unique-name' });
+Object.defineProperty(importedPlugin, 'name', {value: 'some-unique-name'})
 ```
 
 ## 16
@@ -97,20 +97,20 @@ Has styled-components' style tag been unmounted or altered by another script?
 Accessing `useTheme` hook outside of a `<ThemeProvider>` element.
 
 ```jsx
-import { useTheme } from 'styled-components';
-export function StyledCompoent({ children }) {
-  const theme = useTheme();
-  return <div style={{ width: theme.sizes.full }}>{children}</div>;
+import {useTheme} from 'styled-components'
+export function StyledCompoent({children}) {
+  const theme = useTheme()
+  return <div style={{width: theme.sizes.full}}>{children}</div>
 }
 
-import { StyledComponent } from './StyledComponent';
-import { theme } from './theme';
+import {StyledComponent} from './StyledComponent'
+import {theme} from './theme'
 export function App() {
   return (
     <ThemeProvider theme={theme}>
       <StyledComponent />
     </ThemeProvider>
-  );
+  )
 }
 ```
 

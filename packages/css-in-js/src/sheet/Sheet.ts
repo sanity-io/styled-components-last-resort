@@ -1,111 +1,111 @@
-import { IS_BROWSER } from '../constants';
-import { InsertionTarget } from '../types';
-import { EMPTY_OBJECT } from '../utils/empties';
-import { makeGroupedTag } from './GroupedTag';
-import { getGroupForId } from './GroupIDAllocator';
-import { makeTag } from './Tag';
-import { GroupedTag, Sheet, SheetOptions } from './types';
+import {IS_BROWSER} from '../constants'
+import {InsertionTarget} from '../types'
+import {EMPTY_OBJECT} from '../utils/empties'
+import {makeGroupedTag} from './GroupedTag'
+import {getGroupForId} from './GroupIDAllocator'
+import {makeTag} from './Tag'
+import {GroupedTag, Sheet, SheetOptions} from './types'
 
 type SheetConstructorArgs = {
-  isServer?: boolean;
-  target?: InsertionTarget | undefined;
-};
+  isServer?: boolean
+  target?: InsertionTarget | undefined
+}
 
 type GlobalStylesAllocationMap = {
-  [key: string]: number;
-};
-type NamesAllocationMap = Map<string, Set<string>>;
+  [key: string]: number
+}
+type NamesAllocationMap = Map<string, Set<string>>
 
 const defaultOptions: SheetOptions = {
   isServer: !IS_BROWSER,
-};
+}
 
 /** Contains the main stylesheet logic for stringification and caching */
 export default class StyleSheet implements Sheet {
-  gs: GlobalStylesAllocationMap;
-  names: NamesAllocationMap;
-  options: SheetOptions;
-  server: boolean;
-  tag?: GroupedTag | undefined;
+  gs: GlobalStylesAllocationMap
+  names: NamesAllocationMap
+  options: SheetOptions
+  server: boolean
+  tag?: GroupedTag | undefined
 
   /** Register a group ID to give it an index */
   static registerId(id: string): number {
-    return getGroupForId(id);
+    return getGroupForId(id)
   }
 
   constructor(
     options: SheetConstructorArgs = EMPTY_OBJECT,
     globalStyles: GlobalStylesAllocationMap = {},
-    names?: NamesAllocationMap | undefined
+    names?: NamesAllocationMap | undefined,
   ) {
     this.options = {
       ...defaultOptions,
       ...options,
-    };
+    }
 
-    this.gs = globalStyles;
-    this.names = new Map(names as NamesAllocationMap);
-    this.server = !!options.isServer;
+    this.gs = globalStyles
+    this.names = new Map(names as NamesAllocationMap)
+    this.server = !!options.isServer
   }
 
   reconstructWithOptions(options: SheetConstructorArgs, withNames = true) {
     return new StyleSheet(
-      { ...this.options, ...options },
+      {...this.options, ...options},
       this.gs,
-      (withNames && this.names) || undefined
-    );
+      (withNames && this.names) || undefined,
+    )
   }
 
   allocateGSInstance(id: string) {
-    return (this.gs[id] = (this.gs[id] || 0) + 1);
+    return (this.gs[id] = (this.gs[id] || 0) + 1)
   }
 
   /** Lazily initialises a GroupedTag for when it's actually needed */
   getTag() {
-    return this.tag || (this.tag = makeGroupedTag(makeTag(this.options)));
+    return this.tag || (this.tag = makeGroupedTag(makeTag(this.options)))
   }
 
   /** Check whether a name is known for caching */
   hasNameForId(id: string, name: string): boolean {
-    return this.names.has(id) && (this.names.get(id) as any).has(name);
+    return this.names.has(id) && (this.names.get(id) as any).has(name)
   }
 
   /** Mark a group's name as known for caching */
   registerName(id: string, name: string) {
-    getGroupForId(id);
+    getGroupForId(id)
 
     if (!this.names.has(id)) {
-      const groupNames = new Set<string>();
-      groupNames.add(name);
-      this.names.set(id, groupNames);
+      const groupNames = new Set<string>()
+      groupNames.add(name)
+      this.names.set(id, groupNames)
     } else {
-      (this.names.get(id) as any).add(name);
+      ;(this.names.get(id) as any).add(name)
     }
   }
 
   /** Insert new rules which also marks the name as known */
   insertRules(id: string, name: string, rules: string | string[]) {
-    this.registerName(id, name);
-    this.getTag().insertRules(getGroupForId(id), rules);
+    this.registerName(id, name)
+    this.getTag().insertRules(getGroupForId(id), rules)
   }
 
   /** Clears all cached names for a given group ID */
   clearNames(id: string) {
     if (this.names.has(id)) {
-      (this.names.get(id) as any).clear();
+      ;(this.names.get(id) as any).clear()
     }
   }
 
   /** Clears all rules for a given group ID */
   clearRules(id: string) {
-    this.getTag().clearGroup(getGroupForId(id));
-    this.clearNames(id);
+    this.getTag().clearGroup(getGroupForId(id))
+    this.clearNames(id)
   }
 
   /** Clears the entire tag which deletes all rules but not its names */
   clearTag() {
     // NOTE: This does not clear the names, since it's only used during SSR
     // so that we can continuously output only new rules
-    this.tag = undefined;
+    this.tag = undefined
   }
 }

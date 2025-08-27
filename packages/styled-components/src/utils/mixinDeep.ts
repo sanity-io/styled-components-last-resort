@@ -1,23 +1,23 @@
-import isPlainObject from './isPlainObject';
+import isPlainObject from './isPlainObject'
 
 function mixinRecursively(target: any, source: any, forceMerge = false) {
   /* only merge into POJOs, Arrays, but for top level objects only
    * allow to merge into anything by passing forceMerge = true */
   if (!forceMerge && !isPlainObject(target) && !Array.isArray(target)) {
-    return source;
+    return source
   }
 
   if (Array.isArray(source)) {
     for (let key = 0; key < source.length; key++) {
-      target[key] = mixinRecursively(target[key], source[key]);
+      target[key] = mixinRecursively(target[key], source[key])
     }
   } else if (isPlainObject(source)) {
     for (const key in source) {
-      target[key] = mixinRecursively(target[key], source[key]);
+      target[key] = mixinRecursively(target[key], source[key])
     }
   }
 
-  return target;
+  return target
 }
 
 /**
@@ -27,8 +27,8 @@ function mixinRecursively(target: any, source: any, forceMerge = false) {
  */
 export default function mixinDeep(target: any, ...sources: any[]) {
   for (const source of sources) {
-    mixinRecursively(target, source, true);
+    mixinRecursively(target, source, true)
   }
 
-  return target;
+  return target
 }

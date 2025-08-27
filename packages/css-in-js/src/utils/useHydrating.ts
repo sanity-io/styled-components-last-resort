@@ -1,17 +1,17 @@
-import { useSyncExternalStore } from 'react';
+import {useSyncExternalStore} from 'react'
 
 export function useHydrating(): boolean {
-  return useSyncExternalStore(noop, getSnapshot, getServerSnapshot);
+  return useSyncExternalStore(noop, getSnapshot, getServerSnapshot)
 }
 
 function noop() {
-  return () => {};
+  return () => {}
 }
 
 function getSnapshot() {
-  return false;
+  return false
 }
 
 function getServerSnapshot() {
-  return true;
+  return true
 }
