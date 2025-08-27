@@ -14,7 +14,7 @@
   ],
   "dependencies": {
     "@emotion/react": "11.14.0",
-    "@emotion/styled": "11.14.0",
+    "@emotion/styled": "11.14.1",
     "@sanity/css-in-js": "workspace:*",
     "@sanity/styled-components": "workspace:*",
     "aphrodite": "2.4.0",
