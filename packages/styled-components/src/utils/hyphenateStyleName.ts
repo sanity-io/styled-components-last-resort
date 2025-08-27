@@ -1,4 +1,4 @@
-const isUpper = (c: string) => c >= 'A' && c <= 'Z';
+const isUpper = (c: string) => c >= 'A' && c <= 'Z'
 
 /**
  * Hyphenates a camelcased CSS property name, for example:
@@ -14,21 +14,21 @@ const isUpper = (c: string) => c >= 'A' && c <= 'Z';
  * is converted to `-ms-`.
  */
 export default function hyphenateStyleName(string: string): string {
-  let output = '';
+  let output = ''
 
   for (let i = 0; i < string.length; i++) {
-    const c = string[i];
+    const c = string[i]
     // Check for CSS variable prefix
     if (i === 1 && c === '-' && string[0] === '-') {
-      return string;
+      return string
     }
 
     if (isUpper(c)) {
-      output += '-' + c.toLowerCase();
+      output += '-' + c.toLowerCase()
     } else {
-      output += c;
+      output += c
     }
   }
 
-  return output.startsWith('ms-') ? '-' + output : output;
+  return output.startsWith('ms-') ? '-' + output : output
 }

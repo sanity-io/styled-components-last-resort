@@ -1,4 +1,4 @@
-import { StyledTarget } from '../types';
+import {StyledTarget} from '../types'
 
 export default function getComponentName(target: StyledTarget<any>) {
   return (
@@ -6,5 +6,5 @@ export default function getComponentName(target: StyledTarget<any>) {
     (target as Exclude<StyledTarget<any>, string>).displayName ||
     (target as Function).name ||
     'Component'
-  );
+  )
 }

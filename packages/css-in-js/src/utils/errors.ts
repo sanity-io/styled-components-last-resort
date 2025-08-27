@@ -17,4 +17,4 @@ export default {
   '16': "Reached the limit of how many styled components may be created at group %s.\nYou may only create up to 1,073,741,824 components. If you're creating components dynamically,\nas for instance in your render method then you may be running into this limitation.\n\n",
   '17': "CSSStyleSheet could not be found on HTMLStyleElement.\nHas styled-components' style tag been unmounted or altered by another script?\n",
   '18': 'ThemeProvider: Please make sure your useTheme hook is within a `<ThemeProvider>`',
-};
+}

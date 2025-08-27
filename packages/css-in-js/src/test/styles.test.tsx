@@ -1,56 +1,56 @@
-import { render } from '@testing-library/react';
-import { ThemeProvider } from '../base';
-import css from '../constructors/css';
-import { mainSheet } from '../models/StyleSheetManager';
-import * as nonce from '../utils/nonce';
-import { getRenderedCSS, resetStyled } from './utils';
+import {render} from '@testing-library/react'
+import {ThemeProvider} from '../base'
+import css from '../constructors/css'
+import {mainSheet} from '../models/StyleSheetManager'
+import * as nonce from '../utils/nonce'
+import {getRenderedCSS, resetStyled} from './utils'
 
-vi.mock('../utils/nonce');
-vi.spyOn(nonce, 'default').mockImplementation(() => 'foo');
+vi.mock('../utils/nonce')
+vi.spyOn(nonce, 'default').mockImplementation(() => 'foo')
 
-let styled: ReturnType<typeof resetStyled>;
+let styled: ReturnType<typeof resetStyled>
 
 describe('with styles', () => {
   /**
    * Make sure the setup is the same for every test
    */
   beforeEach(() => {
-    document.head.innerHTML = '';
-    styled = resetStyled();
-  });
+    document.head.innerHTML = ''
+    styled = resetStyled()
+  })
 
   it('should append a style', () => {
-    const rule = 'color: blue;';
+    const rule = 'color: blue;'
     const Comp = styled.div`
       ${rule};
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         color: blue;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should append multiple styles', () => {
-    const rule1 = 'color: blue;';
-    const rule2 = 'background: red;';
+    const rule1 = 'color: blue;'
+    const rule2 = 'background: red;'
     const Comp = styled.div`
       ${rule1} ${rule2};
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         color: blue;
         background: red;
       }"
-    `);
-  });
+    `)
+  })
 
   it('amperstand should refer to the static class when making a self-referential combo selector', () => {
-    const Comp = styled.div<{ $color: string }>`
+    const Comp = styled.div<{$color: string}>`
       background: red;
-      color: ${p => p.$color};
+      color: ${(p) => p.$color};
 
       & {
         display: flex;
@@ -99,13 +99,13 @@ describe('with styles', () => {
       &:not(& ~ &) {
         color: cornflowerblue;
       }
-    `;
+    `
     render(
       <>
         <Comp $color="white" />
         <Comp $color="red" />
-      </>
-    );
+      </>,
+    )
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         background: red;
@@ -187,35 +187,35 @@ describe('with styles', () => {
       .b:not(.b ~ .b) {
         color: cornflowerblue;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should handle inline style objects', () => {
     const rule1 = {
       backgroundColor: 'blue',
-    };
+    }
     const Comp = styled.div`
       ${rule1};
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         background-color: blue;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should handle inline style objects with media queries', () => {
     const rule1 = {
-      backgroundColor: 'blue',
+      'backgroundColor': 'blue',
       '@media screen and (min-width: 250px)': {
         backgroundColor: 'red',
       },
-    };
+    }
     const Comp = styled.div`
       ${rule1};
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         background-color: blue;
@@ -225,20 +225,20 @@ describe('with styles', () => {
           background-color: red;
         }
       }"
-    `);
-  });
+    `)
+  })
 
   it('should handle inline style objects with pseudo selectors', () => {
     const rule1 = {
-      backgroundColor: 'blue',
+      'backgroundColor': 'blue',
       '&:hover': {
         color: 'green',
       },
-    };
+    }
     const Comp = styled.div`
       ${rule1};
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         background-color: blue;
@@ -246,20 +246,20 @@ describe('with styles', () => {
       .a:hover {
         color: green;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should handle inline style objects with nesting', () => {
     const rule1 = {
-      backgroundColor: 'blue',
+      'backgroundColor': 'blue',
       '> h1': {
         color: 'white',
       },
-    };
+    }
     const Comp = styled.div`
       ${rule1};
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         background-color: blue;
@@ -267,20 +267,20 @@ describe('with styles', () => {
       .a > h1 {
         color: white;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should handle inline style objects with contextual selectors', () => {
     const rule1 = {
-      backgroundColor: 'blue',
+      'backgroundColor': 'blue',
       'html.something &': {
         color: 'white',
       },
-    };
+    }
     const Comp = styled.div`
       ${rule1};
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         background-color: blue;
@@ -288,21 +288,21 @@ describe('with styles', () => {
       html.something .a {
         color: white;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should inject styles of multiple components', () => {
-    const firstRule = 'background: blue;';
-    const secondRule = 'background: red;';
+    const firstRule = 'background: blue;'
+    const secondRule = 'background: red;'
     const FirstComp = styled.div`
       ${firstRule};
-    `;
+    `
     const SecondComp = styled.div`
       ${secondRule};
-    `;
+    `
 
-    render(<FirstComp />);
-    render(<SecondComp />);
+    render(<FirstComp />)
+    render(<SecondComp />)
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
@@ -311,22 +311,22 @@ describe('with styles', () => {
       .b {
         background: red;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should inject styles of multiple components based on creation, not rendering order', () => {
-    const firstRule = 'content: "first rule";';
-    const secondRule = 'content: "second rule";';
+    const firstRule = 'content: "first rule";'
+    const secondRule = 'content: "second rule";'
     const FirstComp = styled.div`
       ${firstRule};
-    `;
+    `
     const SecondComp = styled.div`
       ${secondRule};
-    `;
+    `
 
     // Switch rendering order, shouldn't change injection order
-    render(<SecondComp />);
-    render(<FirstComp />);
+    render(<SecondComp />)
+    render(<FirstComp />)
 
     // Classes _do_ get generated in the order of rendering but that's ok
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -336,82 +336,82 @@ describe('with styles', () => {
       .a {
         content: "second rule";
       }"
-    `);
-  });
+    `)
+  })
 
   it('should strip a JS-style (invalid) comment in the styles', () => {
-    const comment = '// This is an invalid comment';
-    const rule = 'color: blue;';
+    const comment = '// This is an invalid comment'
+    const rule = 'color: blue;'
     // prettier-ignore
     const Comp = styled.div`
       ${comment}
       ${rule}
     `;
-    render(<Comp />);
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         color: blue;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should respect removed rules', () => {
     const Heading = styled.h1`
       color: red;
-    `;
+    `
     const Text = styled.span`
       color: green;
-    `;
+    `
 
     render(
       <Heading>
         <Text />
-      </Heading>
-    );
-    mainSheet.clearRules(Text.styledComponentId);
+      </Heading>,
+    )
+    mainSheet.clearRules(Text.styledComponentId)
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         color: red;
       }"
-    `);
-  });
+    `)
+  })
 
   it('should add a webpack nonce to the style tags if one is available in the global scope', () => {
-    const rule = 'color: blue;';
+    const rule = 'color: blue;'
     const Comp = styled.div`
       ${rule};
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         color: blue;
       }"
-    `);
+    `)
 
-    Array.from(document.querySelectorAll('style')).forEach(el => {
-      expect(el.getAttribute('nonce')).toBe('foo');
-    });
-  });
+    Array.from(document.querySelectorAll('style')).forEach((el) => {
+      expect(el.getAttribute('nonce')).toBe('foo')
+    })
+  })
 
   it('should handle functions inside TTL that return css constructor', () => {
-    const Comp = styled.div<{ $variant: 'foo' | 'bar' }>`
-      color: ${p => (p.$variant === 'bar' ? css`green` : 'red')};
-    `;
+    const Comp = styled.div<{$variant: 'foo' | 'bar'}>`
+      color: ${(p) => (p.$variant === 'bar' ? css`green` : 'red')};
+    `
 
-    render(<Comp $variant="bar" />);
+    render(<Comp $variant="bar" />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         color: green;
       }"
-    `);
-  });
+    `)
+  })
 
   it('conditional styles should only apply to the relevant component instance', () => {
     interface IconProps {
-      color?: string;
-      rounded?: boolean;
-      spin?: boolean;
+      color?: string
+      rounded?: boolean
+      spin?: boolean
     }
 
     const spinCss = css`
@@ -428,37 +428,37 @@ describe('with styles', () => {
       animation-duration: 1000ms;
       animation-iteration-count: infinite;
       animation-timing-function: linear;
-    `;
+    `
 
     const Wrapper = styled.span<IconProps>`
       vertical-align: middle;
       display: inline-block;
-      line-height: ${({ theme }) => theme.lineHeights!.sm};
-      font-size: ${({ theme }) => theme.fontSizes!.sm};
+      line-height: ${({theme}) => theme.lineHeights!.sm};
+      font-size: ${({theme}) => theme.fontSizes!.sm};
 
       & > svg {
-        stroke: ${({ theme, color }): string =>
+        stroke: ${({theme, color}): string =>
           color && color !== 'inherit' ? theme.colors![color] : 'currentColor'};
-        ${({ spin }): any => (spin ? spinCss : '')};
+        ${({spin}): any => (spin ? spinCss : '')};
       }
-      ${({ rounded }): string => (rounded ? 'border-radius: 9999px;' : '')};
-    `;
+      ${({rounded}): string => (rounded ? 'border-radius: 9999px;' : '')};
+    `
 
     render(
       // spinCss should only be added if spin is true. Meanwhile, when any icon component in the application receives spin=true prop, all icons in the app start spinning (see video).
 
       <ThemeProvider
         theme={{
-          colors: { red: 'darkred' },
-          fontSizes: { sm: '14px' },
-          lineHeights: { sm: '20px' },
+          colors: {red: 'darkred'},
+          fontSizes: {sm: '14px'},
+          lineHeights: {sm: '20px'},
         }}
       >
         <Wrapper />
         <Wrapper spin />
         <Wrapper color="red" />
-      </ThemeProvider>
-    );
+      </ThemeProvider>,
+    )
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a {
         vertical-align: middle;
@@ -499,8 +499,8 @@ describe('with styles', () => {
       .c > svg {
         stroke: darkred;
       }"
-    `);
-  });
+    `)
+  })
 
   it('comma-joined complex selector chains should be namespaced', () => {
     const Comp = styled.h1`
@@ -508,14 +508,14 @@ describe('with styles', () => {
       p:not(:last-child) {
         color: red;
       }
-    `;
+    `
 
-    render(<Comp />);
+    render(<Comp />)
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".a.foo, .a p:not(:last-child) {
         color: red;
       }"
-    `);
-  });
-});
+    `)
+  })
+})

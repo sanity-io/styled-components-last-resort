@@ -1,21 +1,21 @@
-import { render } from '@testing-library/react';
-import stylisRTLPlugin from 'stylis-plugin-rtl';
-import Keyframes from '../../models/Keyframes';
-import { StyleSheetManager } from '../../models/StyleSheetManager';
-import { getRenderedCSS, resetStyled } from '../../test/utils';
-import css from '../css';
-import keyframes from '../keyframes';
+import {render} from '@testing-library/react'
+import stylisRTLPlugin from 'stylis-plugin-rtl'
+import Keyframes from '../../models/Keyframes'
+import {StyleSheetManager} from '../../models/StyleSheetManager'
+import {getRenderedCSS, resetStyled} from '../../test/utils'
+import css from '../css'
+import keyframes from '../keyframes'
 
 // Disable isStaticRules optimisation since we're not
 // testing for ComponentStyle specifics here
-vi.mock('../../utils/isStaticRules', () => ({ default: () => false }));
+vi.mock('../../utils/isStaticRules', () => ({default: () => false}))
 
-let styled: ReturnType<typeof resetStyled>;
+let styled: ReturnType<typeof resetStyled>
 
 describe('keyframes', () => {
   beforeEach(() => {
-    styled = resetStyled();
-  });
+    styled = resetStyled()
+  })
 
   it('should return Keyframes instance', () => {
     expect(keyframes`
@@ -25,8 +25,8 @@ describe('keyframes', () => {
       100% {
         opacity: 1;
       }
-    `).toBeInstanceOf(Keyframes);
-  });
+    `).toBeInstanceOf(Keyframes)
+  })
 
   it('should return its name via .getName()', () => {
     expect(
@@ -37,9 +37,9 @@ describe('keyframes', () => {
       100% {
         opacity: 1;
       }
-    `.getName()
-    ).toMatchInlineSnapshot(`"a"`);
-  });
+    `.getName(),
+    ).toMatchInlineSnapshot(`"a"`)
+  })
 
   it('should insert the correct styles', () => {
     const rules = `
@@ -49,16 +49,16 @@ describe('keyframes', () => {
       100% {
         opacity: 1;
       }
-    `;
+    `
 
-    const animation = keyframes`${rules}`;
+    const animation = keyframes`${rules}`
 
-    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`);
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`)
 
     const Comp = styled.div`
       animation: ${animation} 2s linear infinite;
-    `;
-    render(<Comp />);
+    `
+    render(<Comp />)
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -72,8 +72,8 @@ describe('keyframes', () => {
           opacity: 1;
         }
       }"
-    `);
-  });
+    `)
+  })
 
   it('should insert the correct styles for objects', () => {
     const rules = `
@@ -83,19 +83,19 @@ describe('keyframes', () => {
       100% {
         opacity: 1;
       }
-    `;
+    `
 
-    const animation = keyframes`${rules}`;
+    const animation = keyframes`${rules}`
 
-    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`);
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`)
 
     const Comp = styled.div({
       animation: css`
         ${animation} 2s linear infinite
       `,
-    });
+    })
 
-    render(<Comp />);
+    render(<Comp />)
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -109,8 +109,8 @@ describe('keyframes', () => {
           opacity: 1;
         }
       }"
-    `);
-  });
+    `)
+  })
 
   it('should insert the correct styles for objects with nesting', () => {
     const rules = `
@@ -120,15 +120,15 @@ describe('keyframes', () => {
       100% {
         opacity: 1;
       }
-    `;
+    `
 
-    const animation = keyframes`${rules}`;
+    const animation = keyframes`${rules}`
 
-    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`);
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`)
 
     const Comp = styled.div({
       '@media(max-width: 700px)': {
-        animation: css`
+        'animation': css`
           ${animation} 2s linear infinite
         `,
         ':hover': {
@@ -137,9 +137,9 @@ describe('keyframes', () => {
           `,
         },
       },
-    });
+    })
 
-    render(<Comp />);
+    render(<Comp />)
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       "@media (max-width:700px) {
@@ -158,8 +158,8 @@ describe('keyframes', () => {
           opacity: 1;
         }
       }"
-    `);
-  });
+    `)
+  })
 
   it('should insert the correct styles when keyframes in props', () => {
     const rules = `
@@ -169,16 +169,16 @@ describe('keyframes', () => {
       100% {
         opacity: 1;
       }
-    `;
+    `
 
-    const animation = keyframes`${rules}`;
+    const animation = keyframes`${rules}`
 
-    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`);
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`)
 
-    const Comp = styled.div<{ $animation: any }>`
-      animation: ${props => props.$animation} 2s linear infinite;
-    `;
-    render(<Comp $animation={animation} />);
+    const Comp = styled.div<{$animation: any}>`
+      animation: ${(props) => props.$animation} 2s linear infinite;
+    `
+    render(<Comp $animation={animation} />)
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -192,11 +192,11 @@ describe('keyframes', () => {
           opacity: 1;
         }
       }"
-    `);
-  });
+    `)
+  })
 
   it('should handle interpolations', () => {
-    const opacity = ['opacity: 0;', 'opacity: 1;'];
+    const opacity = ['opacity: 0;', 'opacity: 1;']
 
     const opacityAnimation = keyframes`
       from {
@@ -205,7 +205,7 @@ describe('keyframes', () => {
       to {
         ${opacity[1]}
       }
-    `;
+    `
 
     const slideAnimation = keyframes`
       from {
@@ -214,7 +214,7 @@ describe('keyframes', () => {
       to {
         transform: none;
       }
-    `;
+    `
 
     const getAnimation = (animation: any): any => {
       if (Array.isArray(animation)) {
@@ -222,18 +222,18 @@ describe('keyframes', () => {
           (ret, a, index) => css`
             ${ret}${index > 0 ? ',' : ''} ${getAnimation(a)}
           `,
-          ''
-        );
+          '',
+        )
       } else {
         return css`
           ${animation === 'slide' ? slideAnimation : opacityAnimation} 1s linear
-        `;
+        `
       }
-    };
+    }
 
-    const Foo = styled.div<{ animation?: any }>`
-      animation: ${props => (props.animation ? getAnimation(props.animation) : 'none')};
-    `;
+    const Foo = styled.div<{animation?: any}>`
+      animation: ${(props) => (props.animation ? getAnimation(props.animation) : 'none')};
+    `
 
     const App = () => (
       <>
@@ -242,9 +242,9 @@ describe('keyframes', () => {
         <Foo animation="fade">hi I fade</Foo>
         <Foo animation="slide">hi I slide</Foo>
       </>
-    );
+    )
 
-    render(<App />);
+    render(<App />)
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".d {
@@ -275,14 +275,14 @@ describe('keyframes', () => {
           opacity: 1;
         }
       }"
-    `);
-  });
+    `)
+  })
 
   it('should throw an error when interpolated in a vanilla string', () => {
-    const animation = keyframes``;
+    const animation = keyframes``
 
-    expect(() => `animation-name: ${animation};`).toThrow();
-  });
+    expect(() => `animation-name: ${animation};`).toThrow()
+  })
 
   it('should use the local stylis instance', () => {
     const rules = `
@@ -292,20 +292,20 @@ describe('keyframes', () => {
       100% {
         left: 100%;
       }
-    `;
+    `
 
-    const animation = keyframes`${rules}`;
+    const animation = keyframes`${rules}`
 
-    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`);
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`)
 
     const Comp = styled.div`
       animation: ${animation} 2s linear infinite;
-    `;
+    `
     render(
       <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
         <Comp />
-      </StyleSheetManager>
-    );
+      </StyleSheetManager>,
+    )
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -319,8 +319,8 @@ describe('keyframes', () => {
           right: 100%;
         }
       }"
-    `);
-  });
+    `)
+  })
 
   it('should reinject if used in different stylis contexts', () => {
     const rules = `
@@ -330,23 +330,23 @@ describe('keyframes', () => {
       100% {
         left: 100%;
       }
-    `;
+    `
 
-    const animation = keyframes`${rules}`;
+    const animation = keyframes`${rules}`
 
-    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`);
+    expect(getRenderedCSS()).toMatchInlineSnapshot(`""`)
 
     const Comp = styled.div`
       animation: ${animation} 2s linear infinite;
-    `;
+    `
     render(
       <>
         <Comp />
         <StyleSheetManager stylisPlugins={[stylisRTLPlugin]}>
           <Comp />
         </StyleSheetManager>
-      </>
-    );
+      </>,
+    )
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".c {
@@ -371,8 +371,8 @@ describe('keyframes', () => {
           right: 100%;
         }
       }"
-    `);
-  });
+    `)
+  })
   it('namespaced StyleSheetManager works with animations', () => {
     const rotate = keyframes`
     0% {
@@ -381,20 +381,20 @@ describe('keyframes', () => {
     100% {
       transform: rotate(360deg)
     }
-  `;
+  `
 
     const TestAnim = styled.div`
       color: blue;
       animation: ${rotate} 0.75s infinite linear;
-    `;
+    `
 
     render(
       <StyleSheetManager namespace=".animparent">
         <div>
           <TestAnim>Foo</TestAnim>
         </div>
-      </StyleSheetManager>
-    );
+      </StyleSheetManager>,
+    )
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
       ".animparent .c {
@@ -409,6 +409,6 @@ describe('keyframes', () => {
           transform: rotate(360deg);
         }
       }"
-    `);
-  });
-});
+    `)
+  })
+})

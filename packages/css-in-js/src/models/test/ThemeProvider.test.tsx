@@ -1,62 +1,62 @@
-import { render, screen, act } from '@testing-library/react';
-import { expectCSSMatches, resetStyled } from '../../test/utils';
-import ThemeProvider, { useTheme } from '../ThemeProvider';
+import {render, screen, act} from '@testing-library/react'
+import {expectCSSMatches, resetStyled} from '../../test/utils'
+import ThemeProvider, {useTheme} from '../ThemeProvider'
 
-let styled: ReturnType<typeof resetStyled>;
+let styled: ReturnType<typeof resetStyled>
 
 describe('ThemeProvider', () => {
   beforeEach(() => {
-    styled = resetStyled();
-  });
+    styled = resetStyled()
+  })
 
   it('should not throw an error when no children are passed', () => {
-    render(<ThemeProvider theme={{}} />);
-  });
+    render(<ThemeProvider theme={{}} />)
+  })
 
   it("should accept a theme prop that's a plain object", () => {
-    render(<ThemeProvider theme={{ main: 'black' }} />);
-  });
+    render(<ThemeProvider theme={{main: 'black'}} />)
+  })
 
   it('should render its child', () => {
-    const child = <p>Child!</p>;
-    const { container } = render(<ThemeProvider theme={{ main: 'black' }}>{child}</ThemeProvider>);
+    const child = <p>Child!</p>
+    const {container} = render(<ThemeProvider theme={{main: 'black'}}>{child}</ThemeProvider>)
 
-    expect(container).toMatchSnapshot();
-  });
+    expect(container).toMatchSnapshot()
+  })
 
   it('should merge its theme with an outer theme', () => {
-    const outerTheme = { main: 'black' };
-    const innerTheme = { secondary: 'black' };
+    const outerTheme = {main: 'black'}
+    const innerTheme = {secondary: 'black'}
 
     const MyDiv = styled.div`
-      --main: ${props => props.theme.main};
-      --secondary: ${props => props.theme.secondary};
-    `;
+      --main: ${(props) => props.theme.main};
+      --secondary: ${(props) => props.theme.secondary};
+    `
 
     render(
       <ThemeProvider theme={outerTheme}>
         <ThemeProvider theme={innerTheme}>
           <MyDiv />
         </ThemeProvider>
-      </ThemeProvider>
-    );
+      </ThemeProvider>,
+    )
 
     expectCSSMatches(`
       .b {
         --main: black;
         --secondary: black;
-      }`);
-  });
+      }`)
+  })
 
   it('should merge its theme with multiple outer themes', () => {
-    const outerestTheme = { main: 'black' };
-    const outerTheme = { main: 'blue' };
-    const innerTheme = { secondary: 'black' };
+    const outerestTheme = {main: 'black'}
+    const outerTheme = {main: 'blue'}
+    const innerTheme = {secondary: 'black'}
 
     const MyDiv = styled.div`
-      --main: ${props => props.theme.main};
-      --secondary: ${props => props.theme.secondary};
-    `;
+      --main: ${(props) => props.theme.main};
+      --secondary: ${(props) => props.theme.secondary};
+    `
 
     render(
       <ThemeProvider theme={outerestTheme}>
@@ -65,30 +65,30 @@ describe('ThemeProvider', () => {
             <MyDiv />
           </ThemeProvider>
         </ThemeProvider>
-      </ThemeProvider>
-    );
+      </ThemeProvider>,
+    )
 
     expectCSSMatches(`
       .b {
         --main: blue;
         --secondary: black;
-      }`);
-  });
+      }`)
+  })
 
   it('should be able to render two independent themes', () => {
     const themes = {
-      one: { main: 'black', secondary: 'red' },
-      two: { main: 'blue', other: 'green' },
-    };
+      one: {main: 'black', secondary: 'red'},
+      two: {main: 'blue', other: 'green'},
+    }
 
     const MyDivOne = styled.div`
-      --main: ${props => props.theme.main};
-      --secondary: ${props => props.theme.secondary};
-    `;
+      --main: ${(props) => props.theme.main};
+      --secondary: ${(props) => props.theme.secondary};
+    `
     const MyDivTwo = styled.div`
-      --main: ${props => props.theme.main};
-      --other: ${props => props.theme.other};
-    `;
+      --main: ${(props) => props.theme.main};
+      --other: ${(props) => props.theme.other};
+    `
 
     render(
       <div>
@@ -98,8 +98,8 @@ describe('ThemeProvider', () => {
         <ThemeProvider theme={themes.two}>
           <MyDivTwo />
         </ThemeProvider>
-      </div>
-    );
+      </div>,
+    )
 
     expectCSSMatches(`
       .c {
@@ -109,40 +109,39 @@ describe('ThemeProvider', () => {
       .d {
         --main: blue;
         --other: green;
-      }`);
-  });
+      }`)
+  })
 
   it('ThemeProvider propagates theme updates through nested ThemeProviders', async () => {
-    const theme = { themed: true };
-    const augment = (outerTheme: typeof theme) =>
-      Object.assign({}, outerTheme, { augmented: true });
-    const update = { updated: true };
+    const theme = {themed: true}
+    const augment = (outerTheme: typeof theme) => Object.assign({}, outerTheme, {augmented: true})
+    const update = {updated: true}
 
     const MyDiv = styled.div`
-      --themed: ${props => props.theme.themed};
-      --augmented: ${props => props.theme.augmented};
-      --updated: ${props => props.theme.updated};
-    `;
+      --themed: ${(props) => props.theme.themed};
+      --augmented: ${(props) => props.theme.augmented};
+      --updated: ${(props) => props.theme.updated};
+    `
 
-    function Component(props: { theme: React.ComponentProps<typeof ThemeProvider>['theme'] }) {
+    function Component(props: {theme: React.ComponentProps<typeof ThemeProvider>['theme']}) {
       return (
         <ThemeProvider theme={props.theme}>
           <ThemeProvider theme={augment}>
             <MyDiv />
           </ThemeProvider>
         </ThemeProvider>
-      );
+      )
     }
 
-    const { rerender } = await act(() => render(<Component theme={theme} />));
+    const {rerender} = await act(() => render(<Component theme={theme} />))
 
     expectCSSMatches(`
       .b {
         --themed: true;
         --augmented: true;
-      }`);
+      }`)
 
-    await act(() => rerender(<Component theme={{ ...theme, ...update }} />));
+    await act(() => rerender(<Component theme={{...theme, ...update}} />))
 
     expectCSSMatches(`
       .b {
@@ -153,25 +152,25 @@ describe('ThemeProvider', () => {
         --themed: true;
         --augmented: true;
         --updated: true;
-      }`);
-  });
-});
+      }`)
+  })
+})
 
 describe('useTheme', () => {
   beforeEach(() => {
-    styled = resetStyled();
-  });
+    styled = resetStyled()
+  })
 
   it('useTheme should get the same theme that is serving ThemeProvider', async () => {
-    const mainTheme = { main: 'black' };
+    const mainTheme = {main: 'black'}
 
     const MyDivOne = styled.div`
-      --main: ${props => props.theme.main};
-    `;
+      --main: ${(props) => props.theme.main};
+    `
     const MyDivWithThemeContext = () => {
-      const theme = useTheme();
-      return <div data-testid="theme" data-theme={theme.main} />;
-    };
+      const theme = useTheme()
+      return <div data-testid="theme" data-theme={theme.main} />
+    }
 
     await act(() =>
       render(
@@ -182,15 +181,15 @@ describe('useTheme', () => {
               <MyDivWithThemeContext />
             </>
           </ThemeProvider>
-        </div>
-      )
-    );
+        </div>,
+      ),
+    )
 
     expectCSSMatches(`
       .b {
         --main: black;
-      }`);
+      }`)
 
-    expect(screen.getByTestId('theme')).toHaveAttribute('data-theme', mainTheme.main);
-  });
-});
+    expect(screen.getByTestId('theme')).toHaveAttribute('data-theme', mainTheme.main)
+  })
+})

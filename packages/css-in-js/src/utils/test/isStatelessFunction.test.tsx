@@ -1,21 +1,21 @@
-import { Component } from 'react';
-import { styled } from '../../';
-import isStatelessFunction from '../isStatelessFunction';
+import {Component} from 'react'
+import {styled} from '../../'
+import isStatelessFunction from '../isStatelessFunction'
 
 class MockComponent extends Component {
   override render() {
-    return <div {...this.props} />;
+    return <div {...this.props} />
   }
 }
 describe('isStatelessFunction(something)', () => {
   it('returns true if stateless', () => {
-    expect(isStatelessFunction(() => {})).toBe(true);
-  });
+    expect(isStatelessFunction(() => {})).toBe(true)
+  })
 
   it('returns false for everything else', () => {
-    expect(isStatelessFunction(styled.div``)).toBe(false);
-    expect(isStatelessFunction(MockComponent)).toBe(false);
-    expect(isStatelessFunction({})).toBe(false);
-    expect(isStatelessFunction([])).toBe(false);
-  });
-});
+    expect(isStatelessFunction(styled.div``)).toBe(false)
+    expect(isStatelessFunction(MockComponent)).toBe(false)
+    expect(isStatelessFunction({})).toBe(false)
+    expect(isStatelessFunction([])).toBe(false)
+  })
+})

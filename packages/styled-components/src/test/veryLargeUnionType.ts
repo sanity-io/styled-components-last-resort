@@ -571,4 +571,4 @@ export type VeryLargeUnionType =
   | 'wrench'
   | 'zoom-in'
   | 'zoom-out'
-  | 'zoom-to-fit';
+  | 'zoom-to-fit'

@@ -1,49 +1,49 @@
-import * as stylis from 'stylis';
-import { Stringifier } from '../types';
-import { EMPTY_ARRAY, EMPTY_OBJECT } from './empties';
-import throwStyledError from './error';
-import { SEED, phash } from './hash';
+import * as stylis from 'stylis'
+import {Stringifier} from '../types'
+import {EMPTY_ARRAY, EMPTY_OBJECT} from './empties'
+import throwStyledError from './error'
+import {SEED, phash} from './hash'
 
-const AMP_REGEX = /&/g;
-const COMMENT_REGEX = /^\s*\/\/.*$/gm;
+const AMP_REGEX = /&/g
+const COMMENT_REGEX = /^\s*\/\/.*$/gm
 
 export type ICreateStylisInstance = {
-  options?: { namespace?: string | undefined; prefix?: boolean | undefined } | undefined;
-  plugins?: stylis.Middleware[] | undefined;
-};
+  options?: {namespace?: string | undefined; prefix?: boolean | undefined} | undefined
+  plugins?: stylis.Middleware[] | undefined
+}
 
 /**
  * Takes an element and recurses through it's rules added the namespace to the start of each selector.
  * Takes into account media queries by recursing through child rules if they are present.
  */
 function recursivelySetNamepace(compiled: stylis.Element[], namespace: string): stylis.Element[] {
-  return compiled.map(rule => {
+  return compiled.map((rule) => {
     if (rule.type === 'rule') {
       // add the namespace to the start
-      rule.value = `${namespace} ${rule.value}`;
+      rule.value = `${namespace} ${rule.value}`
       // add the namespace after each comma for subsequent selectors.
-      rule.value = rule.value.replaceAll(',', `,${namespace} `);
-      rule.props = (rule.props as string[]).map(prop => {
-        return `${namespace} ${prop}`;
-      });
+      rule.value = rule.value.replaceAll(',', `,${namespace} `)
+      rule.props = (rule.props as string[]).map((prop) => {
+        return `${namespace} ${prop}`
+      })
     }
 
     if (Array.isArray(rule.children) && rule.type !== '@keyframes') {
-      rule.children = recursivelySetNamepace(rule.children, namespace);
+      rule.children = recursivelySetNamepace(rule.children, namespace)
     }
-    return rule;
-  });
+    return rule
+  })
 }
 
 export default function createStylisInstance(
   {
     options = EMPTY_OBJECT as object,
     plugins = EMPTY_ARRAY as unknown as stylis.Middleware[],
-  }: ICreateStylisInstance = EMPTY_OBJECT as object
+  }: ICreateStylisInstance = EMPTY_OBJECT as object,
 ) {
-  let _componentId: string;
-  let _selector: string;
-  let _selectorRegexp: RegExp;
+  let _componentId: string
+  let _selector: string
+  let _selectorRegexp: RegExp
 
   const selfReferenceReplacer = (match: string, offset: number, string: string) => {
     if (
@@ -55,11 +55,11 @@ export default function createStylisInstance(
       string.endsWith(_selector) &&
       string.replaceAll(_selector, '').length > 0
     ) {
-      return `.${_componentId}`;
+      return `.${_componentId}`
     }
 
-    return match;
-  };
+    return match
+  }
 
   /**
    * When writing a style like
@@ -73,27 +73,27 @@ export default function createStylisInstance(
    *
    * https://github.com/thysultan/stylis.js/tree/v4.0.2#abstract-syntax-structure
    */
-  const selfReferenceReplacementPlugin: stylis.Middleware = element => {
+  const selfReferenceReplacementPlugin: stylis.Middleware = (element) => {
     if (element.type === stylis.RULESET && element.value.includes('&')) {
-      (element.props as string[])[0] = element.props[0]
+      ;(element.props as string[])[0] = element.props[0]
         // catch any hanging references that stylis missed
         .replace(AMP_REGEX, _selector)
-        .replace(_selectorRegexp, selfReferenceReplacer);
+        .replace(_selectorRegexp, selfReferenceReplacer)
     }
-  };
+  }
 
-  const middlewares = plugins.slice();
+  const middlewares = plugins.slice()
 
-  middlewares.push(selfReferenceReplacementPlugin);
+  middlewares.push(selfReferenceReplacementPlugin)
 
   /**
    * Enables automatic vendor-prefixing for styles.
    */
   if (options.prefix) {
-    middlewares.push(stylis.prefixer);
+    middlewares.push(stylis.prefixer)
   }
 
-  middlewares.push(stylis.stringify);
+  middlewares.push(stylis.stringify)
 
   const stringifyRules: Stringifier = (
     css: string,
@@ -102,45 +102,45 @@ export default function createStylisInstance(
      * This "prefix" referes to a _selector_ prefix.
      */
     prefix = '',
-    componentId = '&'
+    componentId = '&',
   ) => {
     // stylis has no concept of state to be passed to plugins
     // but since JS is single-threaded, we can rely on that to ensure
     // these properties stay in sync with the current stylis run
-    _componentId = componentId;
-    _selector = selector;
-    _selectorRegexp = new RegExp(`\\${_selector}\\b`, 'g');
+    _componentId = componentId
+    _selector = selector
+    _selectorRegexp = new RegExp(`\\${_selector}\\b`, 'g')
 
-    const flatCSS = css.replace(COMMENT_REGEX, '');
+    const flatCSS = css.replace(COMMENT_REGEX, '')
     let compiled = stylis.compile(
-      prefix || selector ? `${prefix} ${selector} { ${flatCSS} }` : flatCSS
-    );
+      prefix || selector ? `${prefix} ${selector} { ${flatCSS} }` : flatCSS,
+    )
 
     if (options.namespace) {
-      compiled = recursivelySetNamepace(compiled, options.namespace);
+      compiled = recursivelySetNamepace(compiled, options.namespace)
     }
 
-    const stack: string[] = [];
+    const stack: string[] = []
 
     stylis.serialize(
       compiled,
-      stylis.middleware(middlewares.concat(stylis.rulesheet(value => stack.push(value))))
-    );
+      stylis.middleware(middlewares.concat(stylis.rulesheet((value) => stack.push(value)))),
+    )
 
-    return stack;
-  };
+    return stack
+  }
 
   stringifyRules.hash = plugins.length
     ? plugins
         .reduce((acc, plugin) => {
           if (!plugin.name) {
-            throwStyledError(15);
+            throwStyledError(15)
           }
 
-          return phash(acc, plugin.name);
+          return phash(acc, plugin.name)
         }, SEED)
         .toString()
-    : '';
+    : ''
 
-  return stringifyRules;
+  return stringifyRules
 }

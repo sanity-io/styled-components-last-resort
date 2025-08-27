@@ -12,10 +12,10 @@ import {
   StyledTarget,
   Styles,
   Substitute,
-} from '../types';
-import { EMPTY_OBJECT } from '../utils/empties';
-import styledError from '../utils/error';
-import css from './css';
+} from '../types'
+import {EMPTY_OBJECT} from '../utils/empties'
+import styledError from '../utils/error'
+import css from './css'
 
 type AttrsResult<T extends Attrs<any>> = T extends (...args: any) => infer P
   ? P extends object
@@ -23,7 +23,7 @@ type AttrsResult<T extends Attrs<any>> = T extends (...args: any) => infer P
     : never
   : T extends object
     ? T
-    : never;
+    : never
 
 /**
  * Based on Attrs being a simple object or function that returns
@@ -35,11 +35,11 @@ type AttrsTarget<
   T extends Attrs<any>,
   FallbackTarget extends StyledTarget<R>,
   Result extends ExecutionProps = AttrsResult<T>,
-> = Result extends { as: infer RuntimeTarget }
+> = Result extends {as: infer RuntimeTarget}
   ? RuntimeTarget extends KnownTarget
     ? RuntimeTarget
     : FallbackTarget
-  : FallbackTarget;
+  : FallbackTarget
 
 export interface Styled<
   R extends Runtime,
@@ -53,11 +53,7 @@ export interface Styled<
   ): IStyledComponent<R, Substitute<OuterProps, Props>> &
     OuterStatics &
     Statics &
-    (R extends 'web'
-      ? Target extends string
-        ? {}
-        : Omit<Target, keyof React.Component<any>>
-      : {});
+    (R extends 'web' ? (Target extends string ? {} : Omit<Target, keyof React.Component<any>>) : {})
 
   attrs: <
     Props extends object = BaseObject,
@@ -65,7 +61,7 @@ export interface Styled<
     PrivateAttrsArg extends Attrs<PrivateMergedProps> = Attrs<PrivateMergedProps>,
     PrivateResolvedTarget extends StyledTarget<R> = AttrsTarget<R, PrivateAttrsArg, Target>,
   >(
-    attrs: PrivateAttrsArg
+    attrs: PrivateAttrsArg,
   ) => Styled<
     R,
     PrivateResolvedTarget,
@@ -76,9 +72,9 @@ export interface Styled<
         >
       : PrivateMergedProps,
     OuterStatics
-  >;
+  >
 
-  withConfig: (config: StyledOptions<R, OuterProps>) => Styled<R, Target, OuterProps, OuterStatics>;
+  withConfig: (config: StyledOptions<R, OuterProps>) => Styled<R, Target, OuterProps, OuterStatics>
 }
 
 export default function constructWithOptions<
@@ -91,7 +87,7 @@ export default function constructWithOptions<
 >(
   componentConstructor: IStyledComponentFactory<R, StyledTarget<R>, object, any>,
   tag: StyledTarget<R>,
-  options: StyledOptions<R, OuterProps> = EMPTY_OBJECT
+  options: StyledOptions<R, OuterProps> = EMPTY_OBJECT,
 ): Styled<R, Target, OuterProps, OuterStatics> {
   /**
    * We trust that the tag is a valid component as long as it isn't
@@ -101,7 +97,7 @@ export default function constructWithOptions<
    * output an appropriate warning however if the `tag` isn't valid.
    */
   if (!tag) {
-    throw styledError(1, tag);
+    throw styledError(1, tag)
   }
 
   /* This is callable directly as a template function */
@@ -112,8 +108,8 @@ export default function constructWithOptions<
     componentConstructor<Substitute<OuterProps, Props>, Statics>(
       tag,
       options as StyledOptions<R, Substitute<OuterProps, Props>>,
-      css<Substitute<OuterProps, Props>>(initialStyles, ...interpolations)
-    );
+      css<Substitute<OuterProps, Props>>(initialStyles, ...interpolations),
+    )
 
   /**
    * Attrs allows for accomplishing two goals:
@@ -127,7 +123,7 @@ export default function constructWithOptions<
     PrivateAttrsArg extends Attrs<PrivateMergedProps> = Attrs<PrivateMergedProps>,
     PrivateResolvedTarget extends StyledTarget<R> = AttrsTarget<R, PrivateAttrsArg, Target>,
   >(
-    attrs: PrivateAttrsArg
+    attrs: PrivateAttrsArg,
   ) =>
     constructWithOptions<
       R,
@@ -142,7 +138,7 @@ export default function constructWithOptions<
     >(componentConstructor, tag, {
       ...options,
       attrs: Array.prototype.concat(options.attrs, attrs).filter(Boolean),
-    });
+    })
 
   /**
    * If config methods are called, wrap up a new template function
@@ -156,7 +152,7 @@ export default function constructWithOptions<
       componentId: options.componentId || config.componentId,
       // The same goes for displayName
       displayName: options.displayName || config.displayName,
-    });
+    })
 
-  return templateFunction;
+  return templateFunction
 }

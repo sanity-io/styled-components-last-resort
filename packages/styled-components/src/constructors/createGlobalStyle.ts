@@ -1,77 +1,77 @@
-import { Children, memo, useContext, useInsertionEffect, useState } from 'react';
-import { STATIC_EXECUTION_CONTEXT } from '../constants';
-import GlobalStyle from '../models/GlobalStyle';
-import { useStyleSheetContext } from '../models/StyleSheetManager';
-import { DefaultTheme, ThemeContext } from '../models/ThemeProvider';
-import StyleSheet from '../sheet';
-import { ExecutionContext, ExecutionProps, Interpolation, Stringifier, Styles } from '../types';
-import { checkDynamicCreation } from '../utils/checkDynamicCreation';
-import determineTheme from '../utils/determineTheme';
-import generateComponentId from '../utils/generateComponentId';
-import css from './css';
+import {Children, memo, useContext, useInsertionEffect, useState} from 'react'
+import {STATIC_EXECUTION_CONTEXT} from '../constants'
+import GlobalStyle from '../models/GlobalStyle'
+import {useStyleSheetContext} from '../models/StyleSheetManager'
+import {DefaultTheme, ThemeContext} from '../models/ThemeProvider'
+import StyleSheet from '../sheet'
+import {ExecutionContext, ExecutionProps, Interpolation, Stringifier, Styles} from '../types'
+import {checkDynamicCreation} from '../utils/checkDynamicCreation'
+import determineTheme from '../utils/determineTheme'
+import generateComponentId from '../utils/generateComponentId'
+import css from './css'
 
 export default function createGlobalStyle<Props extends object>(
   strings: Styles<Props>,
   ...interpolations: Array<Interpolation<Props>>
 ) {
-  const rules = css<Props>(strings, ...interpolations);
-  const styledComponentId = `sc-global-${generateComponentId(JSON.stringify(rules))}`;
-  const globalStyle = new GlobalStyle<Props>(rules, styledComponentId);
+  const rules = css<Props>(strings, ...interpolations)
+  const styledComponentId = `sc-global-${generateComponentId(JSON.stringify(rules))}`
+  const globalStyle = new GlobalStyle<Props>(rules, styledComponentId)
 
   if (process.env.NODE_ENV !== 'production') {
-    checkDynamicCreation(styledComponentId);
+    checkDynamicCreation(styledComponentId)
   }
 
   const GlobalStyleComponent = (props: ExecutionProps & Props): null => {
-    const ssc = useStyleSheetContext();
-    const theme = useContext(ThemeContext);
-    const [instance] = useState(() => ssc.styleSheet.allocateGSInstance(styledComponentId));
+    const ssc = useStyleSheetContext()
+    const theme = useContext(ThemeContext)
+    const [instance] = useState(() => ssc.styleSheet.allocateGSInstance(styledComponentId))
 
     // @ts-expect-error we're checking if `children` is passed even though we don't allow it
     if (process.env.NODE_ENV !== 'production' && Children.count(props.children)) {
       console.warn(
-        `The global style component ${styledComponentId} was given child JSX. createGlobalStyle does not render children.`
-      );
+        `The global style component ${styledComponentId} was given child JSX. createGlobalStyle does not render children.`,
+      )
     }
 
     if (
       process.env.NODE_ENV !== 'production' &&
-      rules.some(rule => typeof rule === 'string' && rule.indexOf('@import') !== -1)
+      rules.some((rule) => typeof rule === 'string' && rule.indexOf('@import') !== -1)
     ) {
       console.warn(
-        `Please do not use @import CSS syntax in createGlobalStyle at this time, as the CSSOM APIs we use in production do not handle it well. Instead, we recommend using a library such as react-helmet to inject a typical <link> meta tag to the stylesheet, or simply embedding it manually in your index.html <head> section for a simpler app.`
-      );
+        `Please do not use @import CSS syntax in createGlobalStyle at this time, as the CSSOM APIs we use in production do not handle it well. Instead, we recommend using a library such as react-helmet to inject a typical <link> meta tag to the stylesheet, or simply embedding it manually in your index.html <head> section for a simpler app.`,
+      )
     }
 
     if (ssc.styleSheet.server) {
-      renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis);
+      renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis)
     }
 
     useInsertionEffect(() => {
-      if (ssc.styleSheet.server) return;
-      renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis);
+      if (ssc.styleSheet.server) return
+      renderStyles(instance, props, ssc.styleSheet, theme, ssc.stylis)
       return () => {
-        globalStyle.removeStyles(instance, ssc.styleSheet);
-      };
-    }, [instance, props, ssc.styleSheet, theme, ssc.stylis]);
+        globalStyle.removeStyles(instance, ssc.styleSheet)
+      }
+    }, [instance, props, ssc.styleSheet, theme, ssc.stylis])
 
-    return null;
-  };
+    return null
+  }
 
   function renderStyles(
     instance: number,
     props: ExecutionProps,
     styleSheet: StyleSheet,
     theme: DefaultTheme | undefined,
-    stylis: Stringifier
+    stylis: Stringifier,
   ) {
     if (globalStyle.isStatic) {
       globalStyle.renderStyles(
         instance,
         STATIC_EXECUTION_CONTEXT as unknown as ExecutionContext & Props,
         styleSheet,
-        stylis
-      );
+        stylis,
+      )
     } else {
       const context = {
         ...props,
@@ -79,13 +79,13 @@ export default function createGlobalStyle<Props extends object>(
           props,
           theme,
           // @ts-expect-error - legacy projects might still define defaultProps
-          GlobalStyleComponent.defaultProps
+          GlobalStyleComponent.defaultProps,
         ),
-      } as ExecutionContext & Props;
+      } as ExecutionContext & Props
 
-      globalStyle.renderStyles(instance, context, styleSheet, stylis);
+      globalStyle.renderStyles(instance, context, styleSheet, stylis)
     }
   }
 
-  return memo(GlobalStyleComponent);
+  return memo(GlobalStyleComponent)
 }

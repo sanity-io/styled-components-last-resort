@@ -1,8 +1,8 @@
-import { render } from '@testing-library/react';
-import { SC_ATTR, SC_ATTR_VERSION } from '../constants';
-import { getRenderedCSS, rehydrateTestStyles, resetStyled, seedNextClassnames } from './utils';
+import {render} from '@testing-library/react'
+import {SC_ATTR, SC_ATTR_VERSION} from '../constants'
+import {getRenderedCSS, rehydrateTestStyles, resetStyled, seedNextClassnames} from './utils'
 
-declare const __VERSION__: string;
+declare const __VERSION__: string
 
 /* NOTE:
    Sometimes we add an empty function interpolation into some
@@ -10,19 +10,19 @@ declare const __VERSION__: string;
    ComponentStyle. This will look like this:
    ${() => ''}
    */
-let styled: ReturnType<typeof resetStyled>;
-let createGlobalStyle: Awaited<typeof import('../constructors/createGlobalStyle')>['default'];
-let keyframes: Awaited<typeof import('../constructors/keyframes')>['default'];
+let styled: ReturnType<typeof resetStyled>
+let createGlobalStyle: Awaited<typeof import('../constructors/createGlobalStyle')>['default']
+let keyframes: Awaited<typeof import('../constructors/keyframes')>['default']
 
 describe('rehydration', () => {
   /**
    * Make sure the setup is the same for every test
    */
   beforeEach(async () => {
-    createGlobalStyle = (await import('../constructors/createGlobalStyle')).default;
-    keyframes = (await import('../constructors/keyframes')).default;
-    styled = resetStyled();
-  });
+    createGlobalStyle = (await import('../constructors/createGlobalStyle')).default
+    keyframes = (await import('../constructors/keyframes')).default
+    styled = resetStyled()
+  })
 
   describe('with existing styled components', () => {
     beforeEach(() => {
@@ -31,25 +31,25 @@ describe('rehydration', () => {
           .b { color: red; }/*!sc*/
           ${SC_ATTR}.g1[id="TWO"]{content: "b,"}/*!sc*/
         </style>
-      `;
+      `
 
-      rehydrateTestStyles();
-    });
+      rehydrateTestStyles()
+    })
 
     it('should preserve the styles', () => {
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".b {
           color: red;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should append a new component like normal', () => {
-      const Comp = styled.div.withConfig({ componentId: 'ONE' })`
+      const Comp = styled.div.withConfig({componentId: 'ONE'})`
         color: blue;
         ${() => ''}
-      `;
-      render(<Comp />);
+      `
+      render(<Comp />)
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".b {
           color: red;
@@ -57,17 +57,17 @@ describe('rehydration', () => {
         .a {
           color: blue;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should reuse a componentId', () => {
-      const A = styled.div.withConfig({ componentId: 'ONE' })`
+      const A = styled.div.withConfig({componentId: 'ONE'})`
         color: blue;
         ${() => ''}
-      `;
-      render(<A />);
-      const B = styled.div.withConfig({ componentId: 'TWO' })``;
-      render(<B />);
+      `
+      render(<A />)
+      const B = styled.div.withConfig({componentId: 'TWO'})``
+      render(<B />)
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".b {
           color: red;
@@ -75,20 +75,20 @@ describe('rehydration', () => {
         .a {
           color: blue;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should reuse a componentId and generated class', () => {
-      const A = styled.div.withConfig({ componentId: 'ONE' })`
+      const A = styled.div.withConfig({componentId: 'ONE'})`
         color: blue;
         ${() => ''}
-      `;
-      render(<A />);
-      const B = styled.div.withConfig({ componentId: 'TWO' })`
+      `
+      render(<A />)
+      const B = styled.div.withConfig({componentId: 'TWO'})`
         color: red;
         ${() => ''}
-      `;
-      render(<B />);
+      `
+      render(<B />)
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".b {
           color: red;
@@ -96,23 +96,23 @@ describe('rehydration', () => {
         .a {
           color: blue;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should reuse a componentId and inject new classes', () => {
-      const A = styled.div.withConfig({ componentId: 'ONE' })`
+      const A = styled.div.withConfig({componentId: 'ONE'})`
         color: blue;
         ${() => ''}
-      `;
-      render(<A />);
-      const B = styled.div.withConfig({ componentId: 'TWO' })`
+      `
+      render(<A />)
+      const B = styled.div.withConfig({componentId: 'TWO'})`
         color: ${() => 'red'};
-      `;
-      render(<B />);
-      const C = styled.div.withConfig({ componentId: 'TWO' })`
+      `
+      render(<B />)
+      const C = styled.div.withConfig({componentId: 'TWO'})`
         color: ${() => 'green'};
-      `;
-      render(<C />);
+      `
+      render(<C />)
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".b {
           color: red;
@@ -123,9 +123,9 @@ describe('rehydration', () => {
         .a {
           color: blue;
         }"
-      `);
-    });
-  });
+      `)
+    })
+  })
 
   describe('with styled components with props', () => {
     beforeEach(() => {
@@ -138,10 +138,10 @@ describe('rehydration', () => {
           .b { color: red; }/*!sc*/
           ${SC_ATTR}.g2[id="TWO"]{content: "b,"}/*!sc*/
         </style>
-      `;
+      `
 
-      rehydrateTestStyles();
-    });
+      rehydrateTestStyles()
+    })
 
     it('should preserve the styles', () => {
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -151,14 +151,14 @@ describe('rehydration', () => {
         .b {
           color: red;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should not inject new styles for a component already rendered', () => {
-      const Comp = styled.div.withConfig({ componentId: 'ONE' })`
-        color: ${props => props.color};
-      `;
-      render(<Comp color="blue" />);
+      const Comp = styled.div.withConfig({componentId: 'ONE'})`
+        color: ${(props) => props.color};
+      `
+      render(<Comp color="blue" />)
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".a {
           color: blue;
@@ -166,15 +166,15 @@ describe('rehydration', () => {
         .b {
           color: red;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should inject new styles for a new computed style of a component', () => {
-      seedNextClassnames(['x']);
-      const Comp = styled.div.withConfig({ componentId: 'ONE' })`
-        color: ${props => props.color};
-      `;
-      render(<Comp color="green" />);
+      seedNextClassnames(['x'])
+      const Comp = styled.div.withConfig({componentId: 'ONE'})`
+        color: ${(props) => props.color};
+      `
+      render(<Comp color="green" />)
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         ".a {
           color: blue;
@@ -185,9 +185,9 @@ describe('rehydration', () => {
         .b {
           color: red;
         }"
-      `);
-    });
-  });
+      `)
+    })
+  })
 
   describe('with inline styles that werent rendered by us', () => {
     beforeEach(() => {
@@ -197,10 +197,10 @@ describe('rehydration', () => {
           .b { color: red; }/*!sc*/
           ${SC_ATTR}.g2[id="TWO"]{content: "b,"}/*!sc*/
         </style>
-      `;
+      `
 
-      rehydrateTestStyles();
-    });
+      rehydrateTestStyles()
+    })
 
     it('should leave the existing styles there', () => {
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -210,9 +210,9 @@ describe('rehydration', () => {
         data-styled.g2[id="TWO"] {
           content: "b,";
         }"
-      `);
-    });
-  });
+      `)
+    })
+  })
 
   describe('with global styles', () => {
     beforeEach(() => {
@@ -228,10 +228,10 @@ describe('rehydration', () => {
           .a { color: red; }/*!sc*/
           ${SC_ATTR}.g2[id="TWO"]{content: "a,"}/*!sc*/
         </style>
-      `;
+      `
 
-      rehydrateTestStyles();
-    });
+      rehydrateTestStyles()
+    })
 
     it('should leave the existing styles there', () => {
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -241,14 +241,14 @@ describe('rehydration', () => {
         .a {
           color: red;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should inject new global styles at the end', () => {
       const Component = createGlobalStyle`
         body { color: tomato; }
-      `;
-      render(<Component />);
+      `
+      render(<Component />)
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "body {
           background: papayawhip;
@@ -259,21 +259,21 @@ describe('rehydration', () => {
         body {
           color: tomato;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should interleave global and local styles', () => {
       const Component = createGlobalStyle`
         body { color: tomato; }
-      `;
+      `
 
-      const A = styled.div.withConfig({ componentId: 'ONE' })`
+      const A = styled.div.withConfig({componentId: 'ONE'})`
         color: blue;
         ${() => ''}
-      `;
+      `
 
-      render(<Component />);
-      render(<A />);
+      render(<Component />)
+      render(<A />)
 
       // although `<Component />` is rendered before `<A />`, the global style isn't registered until render time
       // compared to typical component styles which are registered at creation time
@@ -290,9 +290,9 @@ describe('rehydration', () => {
         .b {
           color: blue;
         }"
-      `);
-    });
-  });
+      `)
+    })
+  })
 
   describe('with all styles already rendered', () => {
     beforeEach(() => {
@@ -307,10 +307,10 @@ describe('rehydration', () => {
           .d { color: red; }/*!sc*/
           ${SC_ATTR}.g4[id="TWO"]{content: "d,"}/*!sc*/
         </style>
-      `;
+      `
 
-      rehydrateTestStyles();
-    });
+      rehydrateTestStyles()
+    })
 
     it('should not touch existing styles', () => {
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -326,26 +326,26 @@ describe('rehydration', () => {
         .d {
           color: red;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should not change styles if rendered in the same order they were created with', () => {
       const Component1 = createGlobalStyle`
         html { font-size: 16px; }
-      `;
-      render(<Component1 />);
+      `
+      render(<Component1 />)
       const Component2 = createGlobalStyle`
         body { background: papayawhip; }
-      `;
-      render(<Component2 />);
-      const A = styled.div.withConfig({ componentId: 'ONE' })`
+      `
+      render(<Component2 />)
+      const A = styled.div.withConfig({componentId: 'ONE'})`
         color: blue;
-      `;
-      render(<A />);
-      const B = styled.div.withConfig({ componentId: 'TWO' })`
+      `
+      render(<A />)
+      const B = styled.div.withConfig({componentId: 'TWO'})`
         color: red;
-      `;
-      render(<B />);
+      `
+      render(<B />)
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "html {
@@ -360,28 +360,28 @@ describe('rehydration', () => {
         .d {
           color: red;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should still not change styles if rendered in a different order', () => {
-      seedNextClassnames(['d', 'a', 'b', 'c']);
+      seedNextClassnames(['d', 'a', 'b', 'c'])
 
-      const B = styled.div.withConfig({ componentId: 'TWO' })`
+      const B = styled.div.withConfig({componentId: 'TWO'})`
         color: red;
-      `;
-      render(<B />);
+      `
+      render(<B />)
       const Component1 = createGlobalStyle`
         html { font-size: 16px; }
-      `;
-      render(<Component1 />);
+      `
+      render(<Component1 />)
       const Component2 = createGlobalStyle`
         body { background: papayawhip; }
-      `;
-      render(<Component2 />);
-      const A = styled.div.withConfig({ componentId: 'ONE' })`
+      `
+      render(<Component2 />)
+      const A = styled.div.withConfig({componentId: 'ONE'})`
         color: blue;
-      `;
-      render(<A />);
+      `
+      render(<A />)
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "html {
@@ -396,9 +396,9 @@ describe('rehydration', () => {
         .d {
           color: red;
         }"
-      `);
-    });
-  });
+      `)
+    })
+  })
 
   describe('with keyframes', () => {
     beforeEach(() => {
@@ -408,10 +408,10 @@ describe('rehydration', () => {
           @keyframes keyframe_880 {from {opacity: 0;}}/*!sc*/
           ${SC_ATTR}.g1[id="sc-keyframes-keyframe_880"]{content: "keyframe_880,"}/*!sc*/
         </style>
-      `;
+      `
 
-      rehydrateTestStyles();
-    });
+      rehydrateTestStyles()
+    })
 
     it('should not touch existing styles', () => {
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
@@ -425,22 +425,22 @@ describe('rehydration', () => {
             opacity: 0;
           }
         }"
-      `);
-    });
+      `)
+    })
 
     it('should not regenerate keyframes', () => {
-      seedNextClassnames(['keyframe_880']);
+      seedNextClassnames(['keyframe_880'])
 
       const fadeIn = keyframes`
         from { opacity: 0; }
-      `;
+      `
 
       const A = styled.div`
         animation: ${fadeIn} 1s both;
         ${() => ''}
-      `;
+      `
 
-      render(<A />);
+      render(<A />)
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "@-webkit-keyframes keyframe_880 {
@@ -456,22 +456,22 @@ describe('rehydration', () => {
         .b {
           animation: keyframe_880 1s both;
         }"
-      `);
-    });
+      `)
+    })
 
     it('should still inject new keyframes', () => {
-      seedNextClassnames(['keyframe_144']);
+      seedNextClassnames(['keyframe_144'])
 
       const fadeOut = keyframes`
         from { opacity: 1; }
-      `;
+      `
 
       const A = styled.div`
         animation: ${fadeOut} 1s both;
         ${() => ''}
-      `;
+      `
 
-      render(<A />);
+      render(<A />)
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "@-webkit-keyframes keyframe_880 {
@@ -492,30 +492,30 @@ describe('rehydration', () => {
             opacity: 1;
           }
         }"
-      `);
-    });
+      `)
+    })
 
     it('should pass the keyframes name along as well', () => {
-      seedNextClassnames(['keyframe_880', 'keyframe_144']);
+      seedNextClassnames(['keyframe_880', 'keyframe_144'])
 
       const fadeIn = keyframes`
         from { opacity: 0; }
-      `;
+      `
       const fadeOut = keyframes`
         from { opacity: 1; }
-      `;
+      `
       const A = styled.div`
         animation: ${fadeIn} 1s both;
         ${() => ''}
-      `;
+      `
       const B = styled.div`
         animation: ${fadeOut} 1s both;
         ${() => ''}
-      `;
+      `
 
       /* Purposely rendering out of order to make sure the output looks right */
-      render(<B />);
-      render(<A />);
+      render(<B />)
+      render(<A />)
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "@-webkit-keyframes keyframe_880 {
@@ -539,28 +539,28 @@ describe('rehydration', () => {
             opacity: 1;
           }
         }"
-      `);
-    });
+      `)
+    })
 
     it('should pass the keyframes name through props along as well', () => {
-      seedNextClassnames(['keyframe_880', 'keyframe_144']);
+      seedNextClassnames(['keyframe_880', 'keyframe_144'])
 
       const fadeIn = keyframes`
         from { opacity: 0; }
-      `;
+      `
       const fadeOut = keyframes`
         from { opacity: 1; }
-      `;
-      const A = styled.div<{ $animation: typeof fadeIn }>`
-        animation: ${props => props.$animation} 1s both;
-      `;
-      const B = styled.div<{ $animation: typeof fadeOut }>`
-        animation: ${props => props.$animation} 1s both;
-      `;
+      `
+      const A = styled.div<{$animation: typeof fadeIn}>`
+        animation: ${(props) => props.$animation} 1s both;
+      `
+      const B = styled.div<{$animation: typeof fadeOut}>`
+        animation: ${(props) => props.$animation} 1s both;
+      `
 
       /* Purposely rendering out of order to make sure the output looks right */
-      render(<B $animation={fadeOut} />);
-      render(<A $animation={fadeIn} />);
+      render(<B $animation={fadeOut} />)
+      render(<A $animation={fadeIn} />)
 
       expect(getRenderedCSS()).toMatchInlineSnapshot(`
         "@-webkit-keyframes keyframe_880 {
@@ -584,7 +584,7 @@ describe('rehydration', () => {
             opacity: 1;
           }
         }"
-      `);
-    });
-  });
-});
+      `)
+    })
+  })
+})

@@ -134,7 +134,7 @@ const elements = [
   'svg',
   'text',
   'tspan',
-] as const;
+] as const
 
-export default new Set(elements);
-export type SupportedHTMLElements = (typeof elements)[number];
+export default new Set(elements)
+export type SupportedHTMLElements = (typeof elements)[number]

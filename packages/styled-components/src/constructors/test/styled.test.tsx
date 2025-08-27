@@ -1,48 +1,48 @@
-import { render } from '@testing-library/react';
-import { getRenderedCSS, resetStyled } from '../../test/utils';
-import domElements from '../../utils/domElements';
+import {render} from '@testing-library/react'
+import {getRenderedCSS, resetStyled} from '../../test/utils'
+import domElements from '../../utils/domElements'
 
-let styled: ReturnType<typeof resetStyled>;
+let styled: ReturnType<typeof resetStyled>
 
 describe('styled', () => {
   beforeEach(() => {
-    styled = resetStyled();
-  });
+    styled = resetStyled()
+  })
 
   it('should have all valid HTML5 elements defined as properties', () => {
-    domElements.forEach(domElement => {
-      expect(styled[domElement]).toBeTruthy();
-    });
-  });
+    domElements.forEach((domElement) => {
+      expect(styled[domElement]).toBeTruthy()
+    })
+  })
 
   it('should expose the component static attribute like components', () => {
     const CollapseComponent = (props: React.ComponentProps<'div'>) => {
-      return <div {...props} />;
-    };
+      return <div {...props} />
+    }
 
     const Panel = (props: React.ComponentProps<'div'>) => {
-      return <div {...props} />;
-    };
+      return <div {...props} />
+    }
 
-    const Collapse = Object.assign(CollapseComponent, { Panel, PI: '3.14' });
+    const Collapse = Object.assign(CollapseComponent, {Panel, PI: '3.14'})
 
     const StyledCollapse = styled(Collapse)`
       background: red;
-    `;
+    `
 
-    expect(Collapse).toBeTruthy();
-    expect(Collapse.Panel).toBeTruthy();
-    expect(Collapse.PI).toBe('3.14');
+    expect(Collapse).toBeTruthy()
+    expect(Collapse.Panel).toBeTruthy()
+    expect(Collapse.PI).toBe('3.14')
 
-    expect(StyledCollapse).toBeTruthy();
-    expect(StyledCollapse.Panel).toBeTruthy();
-    expect(StyledCollapse.PI).toBe('3.14');
+    expect(StyledCollapse).toBeTruthy()
+    expect(StyledCollapse.Panel).toBeTruthy()
+    expect(StyledCollapse.PI).toBe('3.14')
 
-    render(<StyledCollapse />);
+    render(<StyledCollapse />)
     expect(getRenderedCSS()).toMatchInlineSnapshot(`
     ".b {
       background: red;
     }"
-    `);
-  });
-});
+    `)
+  })
+})

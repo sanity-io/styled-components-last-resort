@@ -1,26 +1,26 @@
-import getComponentName from '../getComponentName';
+import getComponentName from '../getComponentName'
 
 describe('getComponentName', () => {
-  let Test: React.FC;
+  let Test: React.FC
   beforeEach(() => {
-    Test = () => <div />;
-  });
+    Test = () => <div />
+  })
 
   it('defaults to reusing the component displayName', () => {
-    Test.displayName = 'Foo';
+    Test.displayName = 'Foo'
 
-    expect(getComponentName(Test)).toEqual('Foo');
-  });
+    expect(getComponentName(Test)).toEqual('Foo')
+  })
 
   it('falls back to the class name', () => {
-    expect(getComponentName(Test)).toEqual('Test');
-  });
+    expect(getComponentName(Test)).toEqual('Test')
+  })
 
   it('ultimately falls back to "Component"', () => {
     Object.defineProperty(Test, 'name', {
       value: '',
-    });
+    })
 
-    expect(getComponentName(Test)).toEqual('Component');
-  });
-});
+    expect(getComponentName(Test)).toEqual('Component')
+  })
+})

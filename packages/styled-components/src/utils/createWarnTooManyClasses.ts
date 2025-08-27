@@ -1,18 +1,18 @@
-import { Dict } from '../types';
+import {Dict} from '../types'
 
-export const LIMIT = 200;
+export const LIMIT = 200
 
 export default (displayName: string, componentId: string) => {
-  let generatedClasses: Dict<any> = {};
-  let warningSeen = false;
+  let generatedClasses: Dict<any> = {}
+  let warningSeen = false
 
   return (className: string) => {
     if (!warningSeen) {
-      generatedClasses[className] = true;
+      generatedClasses[className] = true
       if (Object.keys(generatedClasses).length >= LIMIT) {
         // Unable to find latestRule in test environment.
 
-        const parsedIdString = componentId ? ` with the id of "${componentId}"` : '';
+        const parsedIdString = componentId ? ` with the id of "${componentId}"` : ''
 
         console.warn(
           `Over ${LIMIT} classes were generated for component ${displayName}${parsedIdString}.\n` +
@@ -23,11 +23,11 @@ export default (displayName: string, componentId: string) => {
             '      background: props.background,\n' +
             '    },\n' +
             '  }))`width: 100%;`\n\n' +
-            '  <Component />'
-        );
-        warningSeen = true;
-        generatedClasses = {};
+            '  <Component />',
+        )
+        warningSeen = true
+        generatedClasses = {}
       }
     }
-  };
-};
+  }
+}
