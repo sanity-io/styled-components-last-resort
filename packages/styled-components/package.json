@@ -78,7 +78,6 @@
     "@vitejs/plugin-react": "5.0.1",
     "js-beautify": "1.15.4",
     "jsdom": "^26.1.0",
-    "prettier": "3.6.2",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-frame-component": "4.1.3",

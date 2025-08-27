@@ -67,7 +67,6 @@
     "@vitejs/plugin-react": "5.0.1",
     "babel-plugin-react-compiler": "19.1.0-rc.2",
     "js-beautify": "1.15.4",
-    "prettier": "3.6.2",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-frame-component": "4.1.3",

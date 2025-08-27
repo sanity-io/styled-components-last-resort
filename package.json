@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "format": "prettier --write .",
     "lint": "oxlint --type-aware",
     "build": "pnpm -r build",
     "postinstall": "pnpm -r generateErrors",
@@ -14,9 +15,12 @@
     "typescript": "5.9.2"
   },
   "devDependencies": {
+    "@sanity/prettier-config": "^2.0.1",
     "oxlint": "^1.13.0",
-    "oxlint-tsgolint": "^0.0.4"
+    "oxlint-tsgolint": "^0.0.4",
+    "prettier": "^3.6.2"
   },
+  "prettier": "@sanity/prettier-config",
   "packageManager": "pnpm@10.15.0",
   "engines": {
     "node": ">=20.0.0"
