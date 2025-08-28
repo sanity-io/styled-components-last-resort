@@ -1,6 +1,6 @@
 {
   "name": "@sanity/styled-components",
-  "version": "6.1.19",
+  "version": "6.1.20",
   "description": "A fork of styled-components that supports concurrent rendering",
   "keywords": [
     "react",
