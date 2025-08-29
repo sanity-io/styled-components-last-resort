@@ -1,5 +1,11 @@
 # @sanity/styled-components
 
+## 6.1.22
+
+### Patch Changes
+
+- [`f52de1f`](https://github.com/sanity-io/styled-components-last-resort/commit/f52de1f7fd2fe84a40bf288cce08b978b464d4cf) Thanks [@stipsan](https://github.com/stipsan)! - GitHub repo renamed
+
 ## 6.1.21
 
 ### Patch Changes
