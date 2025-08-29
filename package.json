@@ -6,8 +6,8 @@
     "build": "pnpm -r build",
     "format": "prettier --write .",
     "postinstall": "pnpm -r generateErrors",
-    "release": "changeset publish",
     "lint": "oxlint --type-aware",
+    "release": "changeset publish",
     "test": "pnpm -r test"
   },
   "prettier": "@sanity/prettier-config",
