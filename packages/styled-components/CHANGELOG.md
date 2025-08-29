@@ -1,5 +1,11 @@
 # @sanity/styled-components
 
+## 6.1.21
+
+### Patch Changes
+
+- [`551f1e3`](https://github.com/sanity-io/css-in-js/commit/551f1e3af2c295986fbe63cfd7af5c8ccf3c172e) Thanks [@stipsan](https://github.com/stipsan)! - Update README
+
 ## 6.1.20
 
 ### Patch Changes
