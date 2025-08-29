@@ -12,10 +12,12 @@ export const Box = ({
     <div
       style={{
         ...viewStyle,
-        ...(typeof $color === 'number' && styles[`color${$color}`]),
-        ...($fixed && styles.fixed),
-        ...($layout === 'row' && styles.row),
-        ...($outer && styles.outer),
+        backgroundColor: getColor($color),
+        height: $fixed ? 6 : undefined,
+        width: $fixed ? 6 : undefined,
+        flexDirection: $layout === 'row' ? 'row' : viewStyle.flexDirection,
+        alignSelf: $outer ? 'flex-start' : undefined,
+        padding: $outer ? 4 : viewStyle.padding,
       }}
     >
       {children}
@@ -23,34 +25,21 @@ export const Box = ({
   )
 }
 
-const styles = {
-  outer: {
-    alignSelf: 'flex-start',
-    padding: 4,
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  color0: {
-    backgroundColor: '#14171A',
-  },
-  color1: {
-    backgroundColor: '#AAB8C2',
-  },
-  color2: {
-    backgroundColor: '#E6ECF0',
-  },
-  color3: {
-    backgroundColor: '#FFAD1F',
-  },
-  color4: {
-    backgroundColor: '#F45D22',
-  },
-  color5: {
-    backgroundColor: '#E0245E',
-  },
-  fixed: {
-    width: 6,
-    height: 6,
-  },
-} as const
+const getColor = (color: BoxProps['$color']) => {
+  switch (color) {
+    case 0:
+      return '#14171A'
+    case 1:
+      return '#AAB8C2'
+    case 2:
+      return '#E6ECF0'
+    case 3:
+      return '#FFAD1F'
+    case 4:
+      return '#F45D22'
+    case 5:
+      return '#E0245E'
+    default:
+      return 'transparent'
+  }
+}
