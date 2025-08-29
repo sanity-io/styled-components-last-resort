@@ -40,7 +40,7 @@
     "@stylexjs/babel-plugin": "0.15.3",
     "@types/d3-scale-chromatic": "3.1.0",
     "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.8",
+    "@types/react-dom": "^19.1.9",
     "@types/react-native": "^0.73.0",
     "@types/react-native-web": "0.19.2",
     "@types/styled-components-v5": "npm:@types/styled-components@5.1.34",
