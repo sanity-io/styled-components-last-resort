@@ -56,6 +56,7 @@ Since the convention for `style-components` libraries are to always declare `"pe
 React 18:
 ```bash
 pnpm add --save-exact styled-components@npm:@sanity/styled-components
+```
 
 ## Usage
 
