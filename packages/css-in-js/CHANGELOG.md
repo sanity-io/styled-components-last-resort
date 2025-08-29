@@ -4,22 +4,22 @@
 
 ### Patch Changes
 
-- [`551f1e3`](https://github.com/sanity-io/css-in-js/commit/551f1e3af2c295986fbe63cfd7af5c8ccf3c172e) Thanks [@stipsan](https://github.com/stipsan)! - Update README
+- [`551f1e3`](https://github.com/sanity-io/styled-components-last-resort/commit/551f1e3af2c295986fbe63cfd7af5c8ccf3c172e) Thanks [@stipsan](https://github.com/stipsan)! - Update README
 
 ## 6.1.20
 
 ### Patch Changes
 
-- [`fd09c99`](https://github.com/sanity-io/css-in-js/commit/fd09c99ad1d76e872bb619da94d20f6cd8a1a928) Thanks [@stipsan](https://github.com/stipsan)! - Update LICENSE file
+- [`fd09c99`](https://github.com/sanity-io/styled-components-last-resort/commit/fd09c99ad1d76e872bb619da94d20f6cd8a1a928) Thanks [@stipsan](https://github.com/stipsan)! - Update LICENSE file
 
 ## 6.1.19
 
 ### Patch Changes
 
-- [`db218de`](https://github.com/sanity-io/css-in-js/commit/db218de8d95a927da1f8fbd250f3804a76040f38) Thanks [@stipsan](https://github.com/stipsan)! - Add support for setting SC_ATTR with process.env.CSS_IN_JS_ATTR
+- [`db218de`](https://github.com/sanity-io/styled-components-last-resort/commit/db218de8d95a927da1f8fbd250f3804a76040f38) Thanks [@stipsan](https://github.com/stipsan)! - Add support for setting SC_ATTR with process.env.CSS_IN_JS_ATTR
 
 ## 6.1.18
 
 ### Patch Changes
 
-- [`4a29c82`](https://github.com/sanity-io/css-in-js/commit/4a29c82a409d17f5c89ad2f7941d9a32e34613b6) Thanks [@stipsan](https://github.com/stipsan)! - Remove legacy ThemeConsumer export
+- [`4a29c82`](https://github.com/sanity-io/styled-components-last-resort/commit/4a29c82a409d17f5c89ad2f7941d9a32e34613b6) Thanks [@stipsan](https://github.com/stipsan)! - Remove legacy ThemeConsumer export

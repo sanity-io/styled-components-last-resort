@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
-  "changelog": ["@changesets/changelog-github", {"repo": "sanity-io/css-in-js"}],
+  "changelog": ["@changesets/changelog-github", {"repo": "sanity-io/styled-components-last-resort"}],
   "commit": false,
   "fixed": [],
   "linked": [],
