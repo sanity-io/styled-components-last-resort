@@ -15,9 +15,10 @@ Following styled-components' end of maintenance, we created **drop-in replacemen
 
 ## 🚨 Migration path expectation
 
-**These packages are meant to be a bridge, not a destination.** 
+**These packages are meant to be a bridge, not a destination.**
 
 While we'll address critical bugs and security issues, you should plan to migrate to a long-term CSS-in-JS solution like:
+
 - [vanilla-extract](https://vanilla-extract.style/) (our choice)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Linaria](https://linaria.dev/)
@@ -28,6 +29,7 @@ While we'll address critical bugs and security issues, you should plan to migrat
 ## Which package should I use?
 
 ### `@sanity/styled-components`
+
 **For React 18+ apps needing immediate performance gains**
 
 - ✅ Drop-in replacement for `styled-components`
@@ -38,12 +40,13 @@ While we'll address critical bugs and security issues, you should plan to migrat
 - ❌ `ServerStyleSheet` does not have the `interleaveWithStream` [as it's broken](https://github.com/styled-components/styled-components/issues/3658).
 
 ### `@sanity/css-in-js`
-**For React 19+ apps, as it leverages new React 19 APIs to further improve performance, and fully  support streaming SSR**
+
+**For React 19+ apps, as it leverages new React 19 APIs to further improve performance, and fully support streaming SSR**
 
 - ✅ Built for React 19's streaming SSR with native `<style href precedence>` [API support for inline stylesheets.](https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet)
 - ✅ No `sheet.collectStyles` or `ServerStyleSheet` complexity since React 19 natively supports inserting and re-ordering `<style>` tags during streaming SSR, and APIs like `renderToString` knows how to handle inline stylesheets.
 - ❌ Requires React 19+
-- ❌ No `styled-components/native` support  
+- ❌ No `styled-components/native` support
 - ❌ `createGlobalStyle` can only be used after hydration when using `hydrateRoot`, or with `createRoot`. This is because React 19 [never unmounts CSS it inserts in the new `href precedence` mode](https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet). Alternatively you can use `<styled.html>` instead, if you render your app with `createRoot(document, <App />)` and use React to render `<html>`, `<body>` and `<head>` like Next.js App Router.
 - Still requires `'use client'` directives in your code.
 
@@ -54,15 +57,50 @@ Since the convention for `style-components` libraries are to always declare `"pe
 ### Install the drop-in with an npm alias
 
 React 18:
+
 ```bash
 pnpm add --save-exact styled-components@npm:@sanity/styled-components
+```
+
+React 19:
+
+```bash
+pnpm add --save-exact styled-components@npm:@sanity/css-in-js
+```
+
+### The alias isn't fully working, my app now has both `styled-components` and `@sanity/styled-components`/`@sanity/css-in-js`
+
+This can happen if one of your dependencies have a direct dependency on `styled-components`, instead of declaring it in `peerDependencies`. Using `pnpm` you can force all packages to use the fork in these ways in your `package.json`:
+
+React 18:
+
+```json
+{
+  "pnpm": {
+    "overrides": {
+      "styled-components": "npm:@sanity/styled-components@^6.1.19"
+    }
+  }
+}
+```
+
+React 19:
+
+```json
+{
+  "pnpm": {
+    "overrides": {
+      "styled-components": "npm:@sanity/css-in-js@^6.1.19"
+    }
+  }
+}
 ```
 
 ## Usage
 
 Using the above overrides method there's no need to change any import statements or update tooling like `babel-plugin-styled-components`, this is what it means to be a "drop-in" replacement after all.
 
-For the React 19 version though it doesn't need, or have, `<ServerStyleSheet>` anymore with its `.collectStyles` pattern. 
+For the React 19 version though it doesn't need, or have, `<ServerStyleSheet>` anymore with its `.collectStyles` pattern.
 
 ### Next.js App Router SSR
 
@@ -95,11 +133,20 @@ View live performance comparisons at [css-in-js-benchmarks.sanity.dev](https://c
 
 ## Versioning
 
-We follow `major.minor.patch-release` versioning:
-- `major.minor.patch` matches the upstream styled-components version
-- `release` increments with our iterations
+Our forks are strictly a subset of `styled-components@6.1.18`. There are features we've removed, which can be breaking in some ways. But we're not adding new exports and features that would make it difficult to move away from the fork and back to the official `styled-components` library.
+Initially we had a version scheme that reflected this: `major.minor.patch-release`, where `@sanity/styled-components@6.1.18-30` meant it matches `styled-components@6.1.18`, and it's the 30th release on that shared API.
 
-Example: `@sanity/styled-components@6.1.19-0` contains all changes from `styled-components@6.1.19`
+Since we want to be compatible with libraries that have styled components v6 as a peer dependency we use pragmatic versioning instead:
+
+```json
+{
+  "peerDependencies": {
+    "styled-components": "^6.1"
+  }
+}
+```
+
+We now try to stay within the same `major.minor` as the baseline of the fork. The consequence of this is that our `patch` versions may have breaking changes in them.
 
 ## Contributing & Maintenance
 
