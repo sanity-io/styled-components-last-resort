@@ -21,7 +21,9 @@ While we'll address critical bugs and security issues, you should plan to migrat
 - [vanilla-extract](https://vanilla-extract.style/) (our choice)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Linaria](https://linaria.dev/)
-- [Emotion](https://emotion.sh/)
+- [StyleX](https://stylexjs.com/)
+- [Panda CSS](https://panda-css.com/)
+- [React Strict DOM](https://facebook.github.io/react-strict-dom/)
 
 ## Which package should I use?
 
@@ -33,73 +35,57 @@ While we'll address critical bugs and security issues, you should plan to migrat
 - ✅ Compatible with React 18 and 19
 - ❌ No `styled-components/native` support
 - ❌ Uses legacy SSR techniques
+- ❌ `ServerStyleSheet` does not have the `interleaveWithStream` [as it's broken](https://github.com/styled-components/styled-components/issues/3658).
 
 ### `@sanity/css-in-js`
-**For React 19+ apps with streaming SSR**
+**For React 19+ apps, as it leverages new React 19 APIs to further improve performance, and fully  support streaming SSR**
 
-- ✅ Built for React 19's streaming SSR with native `<style>` API support
-- ✅ Uses `href` and `precedence` attributes for optimal performance
-- ✅ No `sheet.collectStyles` or `ServerStyleSheet` complexity
+- ✅ Built for React 19's streaming SSR with native `<style href precedence>` [API support for inline stylesheets.](https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet)
+- ✅ No `sheet.collectStyles` or `ServerStyleSheet` complexity since React 19 natively supports inserting and re-ordering `<style>` tags during streaming SSR, and APIs like `renderToString` knows how to handle inline stylesheets.
 - ❌ Requires React 19+
 - ❌ No `styled-components/native` support  
-- ❌ No `createGlobalStyle` (use `<styled.html>` instead)
+- ❌ `createGlobalStyle` can only be used after hydration when using `hydrateRoot`, or with `createRoot`. This is because React 19 [never unmounts CSS it inserts in the new `href precedence` mode](https://react.dev/reference/react-dom/components/style#rendering-an-inline-css-stylesheet). Alternatively you can use `<styled.html>` instead, if you render your app with `createRoot(document, <App />)` and use React to render `<html>`, `<body>` and `<head>` like Next.js App Router.
+- Still requires `'use client'` directives in your code.
 
 ## Installation
 
-```bash
-# For React 18+
-npm install @sanity/styled-components
+Since the convention for `style-components` libraries are to always declare `"peerDependencies": {"styled-components": "^6"}` we strongly recommend you use `pnpm`, [as pnpm is the only package manager where peer dependency resolution isn't broken](https://bsky.app/profile/kitten.sh/post/3lx7xyzkilc2s).
 
-# For React 19+ with streaming SSR
-npm install @sanity/css-in-js
-```
+### Install the drop-in with an npm alias
+
+React 18:
+```bash
+pnpm add --save-exact styled-components@npm:@sanity/styled-components
 
 ## Usage
 
-### Basic usage (both packages)
+Using the above overrides method there's no need to change any import statements or update tooling like `babel-plugin-styled-components`, this is what it means to be a "drop-in" replacement after all.
 
-```jsx
-import styled from '@sanity/styled-components'
-// or
-import styled from '@sanity/css-in-js'
+For the React 19 version though it doesn't need, or have, `<ServerStyleSheet>` anymore with its `.collectStyles` pattern. 
 
-const Button = styled.button`
-  background: blue;
-  color: white;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-`
-```
+### Next.js App Router SSR
 
-### Server-side rendering
+You no longer need to follow the steps outlined here: https://nextjs.org/docs/app/guides/css-in-js#styled-components
 
-#### `@sanity/styled-components` (React 18+)
-```jsx
-import { ServerStyleSheet } from '@sanity/styled-components'
+You can delete the `lib/registry.ts` file in your app and its `StyleSheetManager`, `ServerStyleSheet` usage.
+No more `<StyledComponentsRegistry>` wrappers.
 
-// Use existing styled-components SSR patterns
-const sheet = new ServerStyleSheet()
-// ... rest of your SSR setup
-```
+### Render to string
 
-#### `@sanity/css-in-js` (React 19+)
-```jsx
-// No special setup needed! 
-// Styles are automatically handled by React 19's streaming SSR
-function App() {
-  return (
-    <html>
-      <head>
-        {/* React 19 handles style injection automatically */}
-      </head>
-      <body>
-        <YourStyledComponents />
-      </body>
-    </html>
-  )
-}
-```
+It's the same story here, you no longer need `ServerStyleSheet`, your string will have the needed `<style>` tags in the string `renderToString` gives you:
+
+```diff
+-import {styled, ServerStyleSheet} from 'styled-components'
++import {styled} from 'styled-components'
+import {renderToString} from 'react-dom/server'
+
+const H1 = styled.h1`font-size: 2rem;`
+-const sheet = new ServerStyleSheet()
+-const element = renderToString(sheet.collectStyles(<H1>Hi!</H1>))
++const element = renderToString(<H1>Hi!</H1>)
+-const styleTags = sheet.getStyleTags()
+-return `${styleTags}${element}`.trim()
++return element.trim()
 
 ## Performance benchmarks
 
