@@ -8,7 +8,7 @@
 
 Following styled-components' end of maintenance, we created **drop-in replacement** forks that solve critical issues:
 
-- **🔥 Significant performance improvements**: [Linear](https://linear.app) saw **40% performance gains** in their Electron app
+- **🔥 Significant performance improvements**: [Linear](https://linear.app) saw **up to 40% performance increase** on initial component rendering
 - **⚡ React 19 streaming SSR support**: Unblocks [React 19 streaming scenarios](https://github.com/styled-components/styled-components/issues/3658) that were broken in the original
 - **🔄 True drop-in replacement**: Change your import and you're done - no API changes needed
 - **🚀 Modern React compatibility**: Leverages `useInsertionEffect` and React 19 features
