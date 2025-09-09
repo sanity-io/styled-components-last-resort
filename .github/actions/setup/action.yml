@@ -14,7 +14,6 @@ runs:
 
     - uses: actions/setup-node@v5
       with:
-        cache: pnpm
         node-version: ${{ inputs.node-version }}
 
     - run: pnpm install
