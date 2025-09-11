@@ -1,7 +1,7 @@
 # styled-components-last-resort
 
 > **📖 Full Story**: [How we made styled-components 40% faster and why Linear loves it](https://www.sanity.io/blog/cut-styled-components-into-pieces-this-is-our-last-resort)
-> 
+>
 > TL;DR: styled-components never implemented React 18's useInsertionEffect. We fixed that, plus streaming SSR. Linear saw 40% faster renders on first render.
 
 Last resort forks for styled-components which include significant performance gains when used with React 18+.
@@ -35,7 +35,6 @@ Following styled-components' end of maintenance, we created **drop-in replacemen
 - **🚀 Modern React compatibility**: Leverages `useInsertionEffect` and React 19 features
 
 <img width="600" height="600" alt="A black background graphic with the Linear logo and a testimonial: “Linear now renders first page visits up to 40% faster thanks to your hard work! Thank you so much. Been a pleasure with such a quick turnaround.” At the bottom is a black-and-white headshot of Kenneth Skovhus, Software Engineer at Linear." src="https://github.com/user-attachments/assets/12f4ec79-4f47-44ac-a983-0d472d25f918" />
-
 
 ## Which package should I use?
 
@@ -158,7 +157,6 @@ Since we want to be compatible with libraries that have styled components v6 as 
 ```
 
 We now try to stay within the same `major.minor` as the baseline of the fork. The consequence of this is that our `patch` versions may have breaking changes in them.
-
 
 ## FAQ
 
