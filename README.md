@@ -1,8 +1,29 @@
-# ⚠️ Performance-focused styled-components forks
+# styled-components-last-resort
 
-> **Important**: [Sanity](https://www.sanity.io) is not actively maintaining these packages long-term. We're transitioning away from CSS-in-JS solutions to [vanilla-extract](https://vanilla-extract.style/). These forks exist to help the community during the transition period after styled-components [ceased active maintenance](https://opencollective.com/styled-components/updates/thank-you).
+> **📖 Full Story**: [How we made styled-components 40% faster and why Linear loves it](https://www.sanity.io/blog/cut-styled-components-into-pieces-this-is-our-last-resort)
+> 
+> TL;DR: styled-components never implemented React 18's useInsertionEffect. We fixed that, plus streaming SSR. Linear saw 40% faster renders on first render.
 
-**Looking to maintain this?** See our [maintainer opportunity section](#-looking-for-a-maintainer) below.
+Last resort forks for styled-components which include significant performance gains when used with React 18+.
+
+This repository contains two forks, currently considered a last resort for existing applications deeply invested in styled-components. They provide a drop-in replacement with performance improvements while you plan a migration to a modern styling solution.
+
+## ⚠️ Important: Not a long-term solution
+
+We do **not** recommend styled-components for new projects. Both its maintainer and the React team recommend exploring modern alternatives that better align with React's current architecture. This fork exists solely to improve performance for existing applications while teams plan their migration strategy.
+
+**[Why we built this and what you should do next →](https://www.sanity.io/blog/cut-styled-components-into-pieces-this-is-our-last-resort#your-three-stage-treatment-plan)**
+
+<img width="642" height="643" alt="Four simple illustrations showing how to put on and secure a life vest, ending with a playful depiction where the vest looks like a jetpack." src="https://github.com/user-attachments/assets/f1633a66-c3c8-4eb1-9e6a-ff80656d72f3" />
+
+## What's Fixed
+
+- ✅ React 18's `useInsertionEffect` for [faster first renders](https://www.sanity.io/blog/cut-styled-components-into-pieces-this-is-our-last-resort#the-40-performance-gap)
+- ✅ Streaming SSR for React 19 support
+- ✅ Modern JS output (ES2020 vs ES5)
+- ✅ Next.js App Router without boilerplate
+- ✅ Flattened component arrays for better performance
+- ✅ Optimized hash function with Math.imul
 
 ## Why use these forks?
 
@@ -13,18 +34,8 @@ Following styled-components' end of maintenance, we created **drop-in replacemen
 - **🔄 True drop-in replacement**: Change your import and you're done - no API changes needed
 - **🚀 Modern React compatibility**: Leverages `useInsertionEffect` and React 19 features
 
-## 🚨 Migration path expectation
+<img width="600" height="600" alt="A black background graphic with the Linear logo and a testimonial: “Linear now renders first page visits up to 40% faster thanks to your hard work! Thank you so much. Been a pleasure with such a quick turnaround.” At the bottom is a black-and-white headshot of Kenneth Skovhus, Software Engineer at Linear." src="https://github.com/user-attachments/assets/12f4ec79-4f47-44ac-a983-0d472d25f918" />
 
-**These packages are meant to be a bridge, not a destination.**
-
-While we'll address critical bugs and security issues, you should plan to migrate to a long-term CSS-in-JS solution like:
-
-- [vanilla-extract](https://vanilla-extract.style/) (our choice)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Linaria](https://linaria.dev/)
-- [StyleX](https://stylexjs.com/)
-- [Panda CSS](https://panda-css.com/)
-- [React Strict DOM](https://facebook.github.io/react-strict-dom/)
 
 ## Which package should I use?
 
@@ -147,6 +158,36 @@ Since we want to be compatible with libraries that have styled components v6 as 
 ```
 
 We now try to stay within the same `major.minor` as the baseline of the fork. The consequence of this is that our `patch` versions may have breaking changes in them.
+
+
+## FAQ
+
+### Why not contribute upstream?
+
+We did! We opened [PR #4332](https://github.com/styled-components/styled-components/pull/4332) in July 2024. With styled-components now in maintenance mode and the maintainer recommending against new adoption, we've made our optimizations available as this fork.
+
+### Will you maintain this long-term?
+
+No. This is explicitly a temporary solution. We're actively migrating away from styled-components ourselves. This fork exists to buy teams time for proper migration while maintaining performance.
+
+### What about security updates?
+
+We'll apply critical security patches if they arise, but no new features will be added.
+
+### Can I help maintain this?
+
+If you want to become the long-term maintainer of a styled-components fork, please reach out. We'd be happy to transfer ownership to someone committed to its future.
+
+### What should I migrate to?
+
+While we'll address critical bugs and security issues, you should plan to migrate to a long-term CSS-in-JS solution like:
+
+- [vanilla-extract](https://vanilla-extract.style/) (our choice)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Linaria](https://linaria.dev/)
+- [StyleX](https://stylexjs.com/)
+- [Panda CSS](https://panda-css.com/)
+- [React Strict DOM](https://facebook.github.io/react-strict-dom/)
 
 ## Contributing & Maintenance
 
