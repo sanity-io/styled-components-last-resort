@@ -21,7 +21,7 @@
     "@changesets/cli": "^2.29.6",
     "@sanity/prettier-config": "^2.0.1",
     "@types/node": "^24.3.1",
-    "oxlint": "^1.14.0",
+    "oxlint": "^1.15.0",
     "oxlint-tsgolint": "^0.2.0",
     "prettier": "^3.6.2"
   },
