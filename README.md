@@ -181,6 +181,7 @@ If you want to become the long-term maintainer of a styled-components fork, plea
 While we'll address critical bugs and security issues, you should plan to migrate to a long-term CSS-in-JS solution like:
 
 - [vanilla-extract](https://vanilla-extract.style/) (our choice)
+- [Emotion CSS](https://emotion.sh/docs/introduction) (near-identical API)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Linaria](https://linaria.dev/)
 - [StyleX](https://stylexjs.com/)
