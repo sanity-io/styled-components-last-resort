@@ -180,7 +180,7 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4(react@19.1.1)
       '@sanity/ui':
-        specifier: ^3.0.8
+        specifier: ^3.1.0
         version: 3.1.0(@emotion/is-prop-valid@1.4.0)(@sanity/css-in-js@6.1.22(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react-is@18.3.1)(react@19.1.1)
       next:
         specifier: 15.5.2
@@ -201,7 +201,7 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4(react@19.1.1)
       '@sanity/ui':
-        specifier: ^3.0.8
+        specifier: ^3.1.0
         version: 3.1.0(@emotion/is-prop-valid@1.4.0)(@sanity/styled-components@6.1.22(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react-is@18.3.1)(react@19.1.1)
       next:
         specifier: 15.5.2
@@ -225,7 +225,7 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4(react@19.1.1)
       '@sanity/ui':
-        specifier: ^3.0.8
+        specifier: ^3.1.0
         version: 3.1.0(@emotion/is-prop-valid@1.4.0)(@sanity/styled-components@6.1.22(react-dom@19.1.1(react@19.1.1))(react@19.1.1))(react-dom@19.1.1(react@19.1.1))(react-is@18.3.1)(react@19.1.1)
       next:
         specifier: 15.5.2
