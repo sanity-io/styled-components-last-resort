@@ -1,5 +1,11 @@
 # @sanity/styled-components
 
+## 6.1.23
+
+### Patch Changes
+
+- [#187](https://github.com/sanity-io/styled-components-last-resort/pull/187) [`0b16591`](https://github.com/sanity-io/styled-components-last-resort/commit/0b1659137a024744720af2429eef250ac36dbfaf) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): Update dependency @emotion/is-prop-valid to v1.4.0
+
 ## 6.1.22
 
 ### Patch Changes
