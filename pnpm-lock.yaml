@@ -71,8 +71,8 @@ importers:
         specifier: 2.4.0
         version: 2.4.0
       classix:
-        specifier: ^2.2.2
-        version: 2.2.2
+        specifier: ^2.2.4
+        version: 2.2.4
       d3-scale-chromatic:
         specifier: 3.1.0
         version: 3.1.0
@@ -2353,8 +2353,8 @@ packages:
     resolution: {integrity: sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==}
     engines: {node: '>=8'}
 
-  classix@2.2.2:
-    resolution: {integrity: sha512-sHfNzza/LoiecpfDAjnVyan2SG4Q9fhcO0TrbnjK7nh5rvA9E9k/kFk4WGHdI24upUyzSBSxq+uy4oUPR9Mgig==}
+  classix@2.2.4:
+    resolution: {integrity: sha512-65KooDcEetBS3qNCOIO1H4ULIYENfT81YFfubbvYDbN/jq0THDPTwB6sk0JMneWIG3a8MfX2834MbkS3irnY+A==}
 
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
@@ -6399,7 +6399,7 @@ snapshots:
 
   ci-info@3.9.0: {}
 
-  classix@2.2.2: {}
+  classix@2.2.4: {}
 
   client-only@0.0.1: {}
 
