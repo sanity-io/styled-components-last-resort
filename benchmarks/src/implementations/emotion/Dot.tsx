@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import type {DotProps} from '../../types'
 import {View} from './View'
 
-const StyledDot = styled(View)<Omit<DotProps, '$color'>>`
+export const Dot = styled(View)<DotProps>`
   position: absolute;
   cursor: pointer;
   width: 0;
@@ -16,17 +16,5 @@ const StyledDot = styled(View)<Omit<DotProps, '$color'>>`
   border-right-width: ${(props) => `${props.$size / 2}px`};
   border-bottom-width: ${(props) => `${props.$size / 2}px`};
   border-left-width: ${(props) => `${props.$size / 2}px`};
-  opacity: ${(props) => props.$opacity};
+  border-bottom-color: ${(props) => props.$color};
 `
-
-export function Dot({$color, $opacity, $size, $x, $y}: DotProps) {
-  return (
-    <StyledDot
-      $opacity={$opacity}
-      $size={$size}
-      $x={$x}
-      $y={$y}
-      style={{borderBottomColor: $color}}
-    />
-  )
-}

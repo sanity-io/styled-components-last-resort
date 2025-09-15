@@ -2,9 +2,7 @@ import {styled} from 'styled-components-use-insertion-effect'
 import type {DotProps} from '../../types'
 import {View} from './View'
 
-export const Dot = styled(View).attrs((p) => ({
-  style: {borderBottomColor: (p as unknown as DotProps).$color},
-}))<DotProps>`
+export const Dot = styled(View)<DotProps>`
   position: absolute;
   cursor: pointer;
   width: 0;
@@ -18,5 +16,5 @@ export const Dot = styled(View).attrs((p) => ({
   border-right-width: ${(props) => `${props.$size / 2}px`};
   border-bottom-width: ${(props) => `${props.$size / 2}px`};
   border-left-width: ${(props) => `${props.$size / 2}px`};
-  opacity: ${(props) => props.$opacity};
+  border-bottom-color: ${(props) => props.$color};
 `

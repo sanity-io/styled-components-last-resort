@@ -2,9 +2,7 @@ import styled from 'styled-components-v6'
 import type {DotProps} from '../../types'
 import {View} from './View'
 
-export const Dot = styled(View).attrs((p) => ({
-  style: {borderBottomColor: (p as unknown as DotProps).$color},
-}))<DotProps>((props) => ({
+export const Dot = styled(View)<DotProps>((props) => ({
   borderBottomWidth: `${props.$size / 2}px`,
   borderColor: 'transparent',
   borderLeftWidth: `${props.$size / 2}px`,
@@ -18,5 +16,5 @@ export const Dot = styled(View).attrs((p) => ({
   position: 'absolute',
   transform: 'translate(50%, 50%)',
   width: 0,
-  opacity: props.$opacity,
+  borderBottomColor: props.$color,
 }))
