@@ -11,7 +11,7 @@
     {
       "matchFileNames": ["benchmarks/package.json"],
       "matchPackageNames": ["react", "react-dom", "react-is"],
-      "followTag": "experimental"
+      "followTag": "canary"
     }
   ]
 }

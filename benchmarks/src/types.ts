@@ -18,7 +18,6 @@ export interface DotProps {
   $size: number
   $x: number
   $y: number
-  $opacity: number
 }
 export interface ProviderProps {
   children: React.ReactNode
@@ -47,7 +46,6 @@ export interface SierpinskiTriangleProps {
   s: number
   x: number
   y: number
-  opacity: number
 }
 
 export interface TreeProps {
@@ -75,10 +73,7 @@ export interface TestReport {
 
 export interface Test<ComponentType extends React.ComponentType<SafeAny>> {
   Component: ComponentType
-  getComponentProps: (props: {
-    cycle: number
-    opacity?: number
-  }) => React.ComponentProps<ComponentType>
+  getComponentProps: (props: {cycle: number}) => React.ComponentProps<ComponentType>
   sampleCount: number
   Provider: React.ComponentType<ProviderProps>
   benchmarkType: 'mount' | 'update'

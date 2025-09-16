@@ -3,7 +3,7 @@ import {View} from './View'
 
 import styles from './dot.module.css'
 
-export const Dot = ({$size, $x, $y, $color, $opacity}: DotProps) => (
+export const Dot = ({$size, $x, $y, $color}: DotProps) => (
   <View
     className={styles.dot}
     style={
@@ -12,7 +12,6 @@ export const Dot = ({$size, $x, $y, $color, $opacity}: DotProps) => (
         ['--css-module-dot-size']: `${$size / 2}px`,
         ['--css-module-dot-x']: `${$x}px`,
         ['--css-module-dot-y']: `${$y}px`,
-        ['--css-module-dot-opacity']: $opacity,
       } as React.CSSProperties
     }
   />

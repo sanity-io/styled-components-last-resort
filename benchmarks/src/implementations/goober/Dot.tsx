@@ -8,7 +8,6 @@ export const Dot = styled(View)<DotProps>`
   width: 0;
   height: 0;
   border-color: transparent;
-  border-bottom-color: ${(p) => p.$color};
   border-style: solid;
   border-top-width: 0;
   transform: translate(50%, 50%);
@@ -17,5 +16,5 @@ export const Dot = styled(View)<DotProps>`
   border-right-width: ${(p) => `${p.$size / 2}px`};
   border-bottom-width: ${(p) => `${p.$size / 2}px`};
   border-left-width: ${(p) => `${p.$size / 2}px`};
-  opacity: ${(p) => p.$opacity};
+  border-bottom-color: ${(p) => p.$color};
 `

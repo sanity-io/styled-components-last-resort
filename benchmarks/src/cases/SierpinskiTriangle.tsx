@@ -3,19 +3,13 @@ import type {SierpinskiTriangleProps} from '../types'
 
 const targetSize = 6
 
-export function SierpinskiTriangle({
-  components,
-  s,
-  x,
-  y,
-  depth = 0,
-  renderCount = 0,
-  opacity = 1,
-}: SierpinskiTriangleProps) {
+export function SierpinskiTriangle(props: SierpinskiTriangleProps) {
+  const {components, x, y, depth = 0, renderCount = 0} = props
+
   const {Dot} = components
 
   if (Dot) {
-    if (s <= targetSize) {
+    if (props.s <= targetSize) {
       let fn
       switch (depth) {
         case 1:
@@ -32,17 +26,11 @@ export function SierpinskiTriangle({
       // introduce randomness to ensure that repeated runs don't produce the same colors
       const color = fn((renderCount * Math.random()) / 20)
       return (
-        <Dot
-          $color={color}
-          $size={targetSize}
-          $x={x - targetSize / 2}
-          $y={y - targetSize / 2}
-          $opacity={opacity}
-        />
+        <Dot $color={color} $size={targetSize} $x={x - targetSize / 2} $y={y - targetSize / 2} />
       )
     }
 
-    s /= 2
+    const s = props.s / 2
 
     return (
       <>
@@ -53,7 +41,6 @@ export function SierpinskiTriangle({
           s={s}
           x={x}
           y={y - s / 2}
-          opacity={opacity}
         />
         <SierpinskiTriangle
           components={components}
@@ -62,7 +49,6 @@ export function SierpinskiTriangle({
           s={s}
           x={x - s}
           y={y + s / 2}
-          opacity={opacity}
         />
         <SierpinskiTriangle
           components={components}
@@ -71,7 +57,6 @@ export function SierpinskiTriangle({
           s={s}
           x={x + s}
           y={y + s / 2}
-          opacity={opacity}
         />
       </>
     )

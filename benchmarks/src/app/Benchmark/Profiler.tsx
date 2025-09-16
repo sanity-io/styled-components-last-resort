@@ -11,7 +11,8 @@ import {
   useRef,
   useTransition,
   use,
-  unstable_Activity as Activity,
+  Activity,
+  useState,
 } from 'react'
 import type {BenchmarkRef} from '../../types'
 import {BenchmarkType} from './BenchmarkType'
@@ -47,7 +48,7 @@ export interface BenchmarkProps {
   sampleCount: number
   timeout: number
   type: (typeof BenchmarkType)[keyof typeof BenchmarkType]
-  getComponentProps: (props: {cycle: number; opacity: number}) => Record<string, any>
+  getComponentProps: (props: {cycle: number}) => Record<string, any>
   ref: React.Ref<BenchmarkRef>
   component: any
   onComplete: (results: BenchmarkResults) => void
@@ -84,16 +85,6 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
     }[]
   >([])
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      start: () => {
-        samplesRef.current = []
-        dispatch({type: 'start'})
-      },
-    }),
-    [],
-  )
   const [suspending, startTransition] = useTransition()
   // const suspending = false;
   // const startTransition = (cb: () => void) => cb();
@@ -114,7 +105,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
           return {
             ...state,
             cycle: state.cycle + 1,
-            componentProps: getComponentProps({cycle: state.cycle + 1, opacity: 1}),
+            componentProps: getComponentProps({cycle: state.cycle + 1}),
             scriptingStart: Timing.now(),
             suspend: null,
           }
@@ -125,7 +116,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             cycle: 0,
             scriptingStart: 0,
             startTime: 0,
-            componentProps: getComponentProps({cycle: 0, opacity: 1}),
+            componentProps: getComponentProps({cycle: 0}),
             suspend: null,
           }
         case 'suspend':
@@ -134,8 +125,6 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
             cycle: state.cycle + 1,
             componentProps: getComponentProps({
               cycle: state.cycle + 1,
-              // generate a random opacity that is less than 1 and 0 or larger, to force generating new CSS styles during background rendering
-              opacity: +Math.random().toFixed(1),
             }),
             scriptingStart: Timing.now(),
             suspend: Promise.withResolvers<true>(),
@@ -150,11 +139,23 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       scriptingStart: 0,
       cycle,
       running,
-      componentProps: getComponentProps({cycle, opacity: 1}),
+      componentProps: getComponentProps({cycle}),
       suspend: null,
     }),
   )
+
   const {cycle, running, componentProps, scriptingStart, startTime, suspend} = state
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      start: () => {
+        samplesRef.current = []
+        dispatch({type: 'start'})
+      },
+    }),
+    [],
+  )
 
   useEffect(() => {
     if (!running || suspending || suspend) return
@@ -259,10 +260,10 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
           key={type === BenchmarkType.UPDATE ? undefined : `cycle:${cycle}`}
           {...componentProps}
         />
-        {!suspending && suspend && (
+        {suspend && (
           <Suspend
             promise={suspend.promise}
-            resolve={suspend.resolve}
+            // resolve={suspend.resolve}
             proceed={() => {
               if (shouldRecord(cycle, type)) {
                 samplesRef.current[cycle] = {scriptingStart}
@@ -288,23 +289,31 @@ BenchmarkProfiler.Type = BenchmarkType
 
 function Suspend({
   promise,
-  resolve,
+  // resolve,
   proceed,
 }: {
   promise: Promise<true>
-  resolve: PromiseWithResolvers<true>['resolve']
+  // resolve: PromiseWithResolvers<true>['resolve']
   proceed: () => void
 }) {
+  const [proceeded, setProceeded] = useState(false)
   // Resolve the promise right away
-  resolve(true)
+  // resolve(true)
+  if (!proceeded) {
+    // requestAnimationFrame(() => {
+    //   console.log('Suspend render resolved')
+    //   // resolve(true)
+    //   proceed()
+    // })
+    // Go to the cycle right away, do not resolve the promise
+    void Promise.resolve().then(() => {
+      proceed()
+    })
+    // startTransition(() => setProceeded(true))
+    setProceeded(true)
+  }
   // Even though we resolved the promise it won't happen until the next microtask, so it'll suspend here
   use(promise)
-  // Once it's no longer suspending it'll run the dispatch
-  useEffect(() => {
-    const raf = requestAnimationFrame(proceed)
-    return () => {
-      cancelAnimationFrame(raf)
-    }
-  }, [proceed])
+
   return null
 }

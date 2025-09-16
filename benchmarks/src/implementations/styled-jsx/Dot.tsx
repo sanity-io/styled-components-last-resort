@@ -1,9 +1,9 @@
 import type {DotProps} from '../../types'
 import {style} from './View'
 
-export const Dot = ({$color, $x, $y, $size, $opacity}: DotProps) => {
+export const Dot = ({$color, $x, $y, $size}: DotProps) => {
   return (
-    <div style={{borderBottomColor: $color}}>
+    <div>
       <style jsx>{style}</style>
 
       <style jsx>
@@ -29,7 +29,7 @@ export const Dot = ({$color, $x, $y, $size, $opacity}: DotProps) => {
             border-right-width: ${$size / 2}px;
             border-bottom-width: ${$size / 2}px;
             border-left-width: ${$size / 2}px;
-            opacity: ${$opacity};
+            border-bottom-color: ${$color};
         `}
       </style>
     </div>
