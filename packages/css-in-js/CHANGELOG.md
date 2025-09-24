@@ -1,5 +1,11 @@
 # @sanity/css-in-js
 
+## 6.1.24
+
+### Patch Changes
+
+- [#218](https://github.com/sanity-io/styled-components-last-resort/pull/218) [`ac01512`](https://github.com/sanity-io/styled-components-last-resort/commit/ac01512945c656aa9c2c5d169315c9aae29dd038) Thanks [@renovate](https://github.com/apps/renovate)! - chore(deps): update dependency tsdown to v0.15.4
+
 ## 6.1.23
 
 ### Patch Changes
