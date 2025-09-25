@@ -47,6 +47,7 @@ export type {
   ExecutionProps,
   FastOmit,
   IStyledComponent,
+  IStyledComponentBase,
   IStyledComponentFactory,
   IStyledStatics,
   Interpolation,
