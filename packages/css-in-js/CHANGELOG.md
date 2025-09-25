@@ -1,5 +1,11 @@
 # @sanity/css-in-js
 
+## 6.1.25
+
+### Patch Changes
+
+- [#220](https://github.com/sanity-io/styled-components-last-resort/pull/220) [`8b48eb5`](https://github.com/sanity-io/styled-components-last-resort/commit/8b48eb52fc4ef64562b68bbee1455c4c0f6e8d00) Thanks [@stipsan](https://github.com/stipsan)! - Add `IStyledComponentBase` export
+
 ## 6.1.24
 
 ### Patch Changes
