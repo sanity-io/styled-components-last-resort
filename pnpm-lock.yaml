@@ -89,8 +89,8 @@ importers:
         specifier: canary
         version: 19.3.0-canary-71b3a03c-20251021
       react-native-web:
-        specifier: 0.21.1
-        version: 0.21.1(react-dom@19.3.0-canary-71b3a03c-20251021(react@19.3.0-canary-71b3a03c-20251021))(react@19.3.0-canary-71b3a03c-20251021)
+        specifier: 0.21.2
+        version: 0.21.2(react-dom@19.3.0-canary-71b3a03c-20251021(react@19.3.0-canary-71b3a03c-20251021))(react@19.3.0-canary-71b3a03c-20251021)
       react-strict-dom:
         specifier: 0.0.50
         version: 0.0.50(react-dom@19.3.0-canary-71b3a03c-20251021(react@19.3.0-canary-71b3a03c-20251021))(react-native@0.81.1(@babel/core@7.28.4)(@types/react@19.2.2)(react@19.3.0-canary-71b3a03c-20251021))(react@19.3.0-canary-71b3a03c-20251021)
@@ -3627,8 +3627,8 @@ packages:
   react-is@19.3.0-canary-71b3a03c-20251021:
     resolution: {integrity: sha512-AIINtOmqwWcO0kPOvsmF11qaROKlW7M1cld0FCb2RCELHijGN089KJBiRxhEEFXK/Q5PoDEKDTUXHyZ5h9rdPw==}
 
-  react-native-web@0.21.1:
-    resolution: {integrity: sha512-BeNsgwwe4AXUFPAoFU+DKjJ+CVQa3h54zYX77p7GVZrXiiNo3vl03WYDYVEy5R2J2HOPInXtQZB5gmj3vuzrKg==}
+  react-native-web@0.21.2:
+    resolution: {integrity: sha512-SO2t9/17zM4iEnFvlu2DA9jqNbzNhoUP+AItkoCOyFmDMOhUnBBznBDCYN92fGdfAkfQlWzPoez6+zLxFNsZEg==}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
@@ -7818,7 +7818,7 @@ snapshots:
 
   react-is@19.3.0-canary-71b3a03c-20251021: {}
 
-  react-native-web@0.21.1(react-dom@19.3.0-canary-71b3a03c-20251021(react@19.3.0-canary-71b3a03c-20251021))(react@19.3.0-canary-71b3a03c-20251021):
+  react-native-web@0.21.2(react-dom@19.3.0-canary-71b3a03c-20251021(react@19.3.0-canary-71b3a03c-20251021))(react@19.3.0-canary-71b3a03c-20251021):
     dependencies:
       '@babel/runtime': 7.28.4
       '@react-native/normalize-colors': 0.74.89
