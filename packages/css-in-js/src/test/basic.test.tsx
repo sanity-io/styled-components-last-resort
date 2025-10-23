@@ -34,6 +34,7 @@ describe('basic', () => {
   })
 
   it('should not inject anything by default', () => {
+    // oxlint-disable-next-line no-unused-expressions
     styled.div``
 
     expect(getRenderedCSS()).toMatchInlineSnapshot(`""`)

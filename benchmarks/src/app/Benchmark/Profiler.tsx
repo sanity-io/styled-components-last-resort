@@ -167,6 +167,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
       // force style recalc that would otherwise happen before the next frame
       samplesRef.current[cycle].layoutStart = Timing.now()
       if (document.body) {
+        // oxlint-disable-next-line no-unused-expressions
         document.body.offsetWidth
       }
       samplesRef.current[cycle].layoutEnd = Timing.now()
@@ -272,6 +273,7 @@ export function BenchmarkProfiler(props: BenchmarkProps) {
                 // force style recalc that would otherwise happen before the next frame
                 samplesRef.current[cycle].layoutStart = Timing.now()
                 if (document.body) {
+                  // oxlint-disable-next-line no-unused-expressions
                   document.body.offsetWidth
                 }
                 samplesRef.current[cycle].layoutEnd = Timing.now()

@@ -28,6 +28,7 @@ describe('ssr', () => {
   })
 
   it('should emit nothing when no styles were generated', () => {
+    // oxlint-disable-next-line no-unused-expressions
     styled.h1`
       color: red;
     `

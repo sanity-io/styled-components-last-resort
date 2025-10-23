@@ -116,6 +116,7 @@ export class Benchmark extends Component<BenchmarkProps, BenchmarkState> {
       if (forceLayout) {
         // this._samples[cycle].layoutStart = Timing.now();
         if (document.body) {
+          // oxlint-disable-next-line no-unused-expressions
           document.body.offsetWidth
         }
         // this._samples[cycle].layoutEnd = Timing.now();
