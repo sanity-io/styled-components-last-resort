@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "7.27.1",
-    "@babel/preset-typescript": "7.27.1",
+    "@babel/preset-typescript": "7.28.5",
     "@stylexjs/babel-plugin": "0.15.4",
     "@types/d3-scale-chromatic": "3.1.0",
     "@types/react": "^19.2.2",
