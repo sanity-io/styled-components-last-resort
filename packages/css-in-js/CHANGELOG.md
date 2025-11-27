@@ -1,5 +1,11 @@
 # @sanity/css-in-js
 
+## 6.1.26
+
+### Patch Changes
+
+- [#258](https://github.com/sanity-io/styled-components-last-resort/pull/258) [`b5a916e`](https://github.com/sanity-io/styled-components-last-resort/commit/b5a916ec541e8a8243a71899a7829ef2ab5489b9) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): Update dependency csstype to v3.2.3
+
 ## 6.1.25
 
 ### Patch Changes
