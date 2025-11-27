@@ -11,7 +11,7 @@
   "dependencies": {
     "@sanity/icons": "^3.7.4",
     "@sanity/ui": "^3.1.11",
-    "next": "15.5.6",
+    "next": "16.0.3",
     "react": "catalog:",
     "react-dom": "catalog:",
     "styled-components": "npm:@sanity/styled-components@6.1.23",
