@@ -69,7 +69,7 @@
     "@types/shallowequal": "1.1.5",
     "@vitejs/plugin-react": "5.1.1",
     "js-beautify": "1.15.4",
-    "jsdom": "^27.0.0",
+    "jsdom": "^27.2.0",
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-frame-component": "4.1.3",
