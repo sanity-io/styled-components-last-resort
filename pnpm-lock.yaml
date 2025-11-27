@@ -153,8 +153,8 @@ importers:
         specifier: 19.1.0-rc.3
         version: 19.1.0-rc.3
       babel-plugin-react-native-web:
-        specifier: 0.21.1
-        version: 0.21.1
+        specifier: 0.21.2
+        version: 0.21.2
       babel-plugin-styled-components:
         specifier: 2.1.4
         version: 2.1.4(@babel/core@7.28.5)(styled-components@6.1.19(react-dom@19.3.0-canary-fd524fe0-20251121(react@19.3.0-canary-fd524fe0-20251121))(react@19.3.0-canary-fd524fe0-20251121))(supports-color@5.5.0)
@@ -2225,8 +2225,8 @@ packages:
   babel-plugin-react-compiler@19.1.0-rc.3:
     resolution: {integrity: sha512-mjRn69WuTz4adL0bXGx8Rsyk1086zFJeKmes6aK0xPuK3aaXmDJdLHqwKKMrpm6KAI1MCoUK72d2VeqQbu8YIA==}
 
-  babel-plugin-react-native-web@0.21.1:
-    resolution: {integrity: sha512-7XywfJ5QIRMwjOL+pwJt2w47Jmi5fFLvK7/So4fV4jIN6PcRbylCp9/l3cJY4VJbSz3lnWTeHDTD1LKIc1C09Q==}
+  babel-plugin-react-native-web@0.21.2:
+    resolution: {integrity: sha512-SPD0J6qjJn8231i0HZhlAGH6NORe+QvRSQM2mwQEzJ2Fb3E4ruWTiiicPlHjmeWShDXLcvoorOCXjeR7k/lyWA==}
 
   babel-plugin-styled-components@2.1.4:
     resolution: {integrity: sha512-Xgp9g+A/cG47sUyRwwYxGM4bR/jDRg5N6it/8+HxCnbT5XNKSKDT9xm4oag/osgqjC2It/vH0yXsomOG6k558g==}
@@ -6281,7 +6281,7 @@ snapshots:
     dependencies:
       '@babel/types': 7.28.5
 
-  babel-plugin-react-native-web@0.21.1: {}
+  babel-plugin-react-native-web@0.21.2: {}
 
   babel-plugin-styled-components@2.1.4(@babel/core@7.28.5)(styled-components@6.1.19(react-dom@19.3.0-canary-fd524fe0-20251121(react@19.3.0-canary-fd524fe0-20251121))(react@19.3.0-canary-fd524fe0-20251121))(supports-color@5.5.0):
     dependencies:
