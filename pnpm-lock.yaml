@@ -174,7 +174,7 @@ importers:
         specifier: 0.8.0
         version: 0.8.0(rollup@4.53.3)
 
-  examples/css-in-js/next-15:
+  examples/css-in-js/next:
     dependencies:
       '@sanity/icons':
         specifier: ^3.7.4
