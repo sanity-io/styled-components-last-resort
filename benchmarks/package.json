@@ -25,7 +25,7 @@
     "react-dom": "canary",
     "react-is": "canary",
     "react-native-web": "0.21.2",
-    "react-strict-dom": "0.0.50",
+    "react-strict-dom": "0.0.54",
     "restyle": "3.4.2",
     "styled-components-use-insertion-effect": "npm:@sanity/styled-components@6.1.13",
     "styled-components-v5": "npm:styled-components@5.3.11",
