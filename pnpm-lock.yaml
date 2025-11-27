@@ -159,8 +159,8 @@ importers:
         specifier: 2.1.4
         version: 2.1.4(@babel/core@7.28.5)(styled-components@6.1.19(react-dom@19.3.0-canary-fd524fe0-20251121(react@19.3.0-canary-fd524fe0-20251121))(react@19.3.0-canary-fd524fe0-20251121))(supports-color@5.5.0)
       postcss-react-strict-dom:
-        specifier: 0.0.6
-        version: 0.0.6(postcss@8.5.6)(react-strict-dom@0.0.50(react-dom@19.3.0-canary-fd524fe0-20251121(react@19.3.0-canary-fd524fe0-20251121))(react-native@0.81.1(@babel/core@7.28.5)(@types/react@19.2.2)(react@19.3.0-canary-fd524fe0-20251121))(react@19.3.0-canary-fd524fe0-20251121))
+        specifier: 0.0.54
+        version: 0.0.54(postcss@8.5.6)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -3506,12 +3506,10 @@ packages:
     resolution: {integrity: sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==}
     engines: {node: '>= 6'}
 
-  postcss-react-strict-dom@0.0.6:
-    resolution: {integrity: sha512-Mro1JGGL6NTWzHgel/kc0rY7SQhxwRJuAg/5nhRWbcKQkYrYoZy87+xrvUDQe6f6mtNXf4sPOYHoK1rWFv2G0w==}
-    engines: {node: '>=18.0.0'}
+  postcss-react-strict-dom@0.0.54:
+    resolution: {integrity: sha512-z2TiEQ9hC5XL1SZvJrbI9P2idMxoljpN5ipJlda1/ckLQrD6708y/1wES+HoLTL0ndrLc4rNCY14gy6Nqx9clQ==}
     peerDependencies:
-      postcss: '*'
-      react-strict-dom: '*'
+      postcss: ^8.4.49
 
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
@@ -7696,13 +7694,16 @@ snapshots:
 
   pirates@4.0.7: {}
 
-  postcss-react-strict-dom@0.0.6(postcss@8.5.6)(react-strict-dom@0.0.50(react-dom@19.3.0-canary-fd524fe0-20251121(react@19.3.0-canary-fd524fe0-20251121))(react-native@0.81.1(@babel/core@7.28.5)(@types/react@19.2.2)(react@19.3.0-canary-fd524fe0-20251121))(react@19.3.0-canary-fd524fe0-20251121)):
+  postcss-react-strict-dom@0.0.54(postcss@8.5.6):
     dependencies:
+      '@babel/core': 7.28.5
+      '@stylexjs/babel-plugin': 0.15.4
       fast-glob: 3.3.3
       glob-parent: 6.0.2
       is-glob: 4.0.3
       postcss: 8.5.6
-      react-strict-dom: 0.0.50(react-dom@19.3.0-canary-fd524fe0-20251121(react@19.3.0-canary-fd524fe0-20251121))(react-native@0.81.1(@babel/core@7.28.5)(@types/react@19.2.2)(react@19.3.0-canary-fd524fe0-20251121))(react@19.3.0-canary-fd524fe0-20251121)
+    transitivePeerDependencies:
+      - supports-color
 
   postcss-value-parser@4.2.0: {}
 
