@@ -49,7 +49,7 @@
     "babel-plugin-react-compiler": "19.1.0-rc.3",
     "babel-plugin-react-native-web": "0.21.2",
     "babel-plugin-styled-components": "2.1.4",
-    "postcss-react-strict-dom": "0.0.6",
+    "postcss-react-strict-dom": "0.0.54",
     "typescript": "5.9.3",
     "vite": "^7.1.6",
     "vite-plugin-stylex": "0.13.0",
