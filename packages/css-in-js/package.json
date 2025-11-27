@@ -66,7 +66,7 @@
     "ts-toolbelt": "9.6.0",
     "tsdown": "0.15.8",
     "typescript": "5.9.3",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.13"
   },
   "peerDependencies": {
     "react": "^19",

@@ -78,7 +78,7 @@
     "stylis-plugin-rtl": "2.1.1",
     "ts-toolbelt": "9.6.0",
     "typescript": "5.9.3",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.13"
   },
   "peerDependencies": {
     "react": "^18.3 || ^19",
