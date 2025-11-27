@@ -22,7 +22,7 @@
     "@sanity/prettier-config": "^2.0.1",
     "@types/node": "^24.5.2",
     "oxlint": "^1.23.0",
-    "oxlint-tsgolint": "^0.2.0",
+    "oxlint-tsgolint": "^0.8.3",
     "prettier": "^3.6.2"
   },
   "packageManager": "pnpm@10.17.0",
