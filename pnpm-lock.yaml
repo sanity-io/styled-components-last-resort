@@ -252,8 +252,8 @@ importers:
         specifier: 4.2.7
         version: 4.2.7
       csstype:
-        specifier: 3.1.3
-        version: 3.1.3
+        specifier: 3.2.3
+        version: 3.2.3
       shallowequal:
         specifier: 1.1.0
         version: 1.1.0
@@ -331,8 +331,8 @@ importers:
         specifier: 4.2.7
         version: 4.2.7
       csstype:
-        specifier: 3.1.3
-        version: 3.1.3
+        specifier: 3.2.3
+        version: 3.2.3
       shallowequal:
         specifier: 1.1.0
         version: 1.1.0
@@ -4987,7 +4987,7 @@ snapshots:
       '@emotion/memoize': 0.9.0
       '@emotion/unitless': 0.10.0
       '@emotion/utils': 1.4.2
-      csstype: 3.1.3
+      csstype: 3.2.3
 
   '@emotion/sheet@1.4.0': {}
 
@@ -5801,7 +5801,7 @@ snapshots:
       '@juggle/resize-observer': 3.4.0
       '@sanity/color': 3.0.6
       '@sanity/icons': 3.7.4(react@19.2.0)
-      csstype: 3.1.3
+      csstype: 3.2.3
       motion: 12.23.24(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react: 19.2.0
       react-compiler-runtime: 1.0.0(react@19.2.0)
@@ -5819,7 +5819,7 @@ snapshots:
       '@juggle/resize-observer': 3.4.0
       '@sanity/color': 3.0.6
       '@sanity/icons': 3.7.4(react@19.2.0)
-      csstype: 3.1.3
+      csstype: 3.2.3
       motion: 12.23.24(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react: 19.2.0
       react-compiler-runtime: 1.0.0(react@19.2.0)
@@ -6086,7 +6086,7 @@ snapshots:
 
   '@types/react@19.2.2':
     dependencies:
-      csstype: 3.1.3
+      csstype: 3.2.3
 
   '@types/resolve@1.20.2': {}
 
@@ -8327,7 +8327,7 @@ snapshots:
   styletron-standard@3.1.0:
     dependencies:
       '@rtsao/csstype': 2.6.5-forked.0
-      csstype: 3.1.3
+      csstype: 3.2.3
       inline-style-prefixer: 5.1.2
 
   stylis-plugin-rtl@2.1.1(stylis@4.3.6):
