@@ -17,7 +17,7 @@ export default defineConfig([
     platform: 'node',
   },
   {
-    entry: {'browser': entry},
+    entry: {browser: entry},
     sourcemap,
     dts,
     env,
@@ -31,5 +31,5 @@ export default defineConfig([
     env,
     platform: 'neutral',
     plugins,
-  }
+  },
 ])
