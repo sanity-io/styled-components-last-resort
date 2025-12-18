@@ -1,5 +1,11 @@
 # @sanity/css-in-js
 
+## 6.2.1
+
+### Patch Changes
+
+- [`ed48c73`](https://github.com/sanity-io/styled-components-last-resort/commit/ed48c7328a4c5a12f63219feb76283c144790e65) Thanks [@stipsan](https://github.com/stipsan)! - Add `browser` export condition
+
 ## 6.2.0
 
 ### Minor Changes
