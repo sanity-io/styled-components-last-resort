@@ -25,6 +25,7 @@
   "exports": {
     ".": {
       "react-server": "./dist/react-server.mjs",
+      "browser": "./dist/browser.js",
       "default": "./dist/index.js"
     },
     "./package.json": "./package.json"
