@@ -1,5 +1,11 @@
 # @sanity/css-in-js
 
+## 6.2.0
+
+### Minor Changes
+
+- [`947d26d`](https://github.com/sanity-io/styled-components-last-resort/commit/947d26d975a610385450e683e0afdaa968f53f9f) Thanks [@stipsan](https://github.com/stipsan)! - Add `react-server` export condition that does not have React Compiler enabled
+
 ## 6.1.26
 
 ### Patch Changes
